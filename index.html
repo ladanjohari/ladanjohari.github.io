@@ -41,529 +41,276 @@
       min-height: 100vh;
     }
 
-    /* ─ Shell ─ */
-    .shell {
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 0 28px;
-    }
+    .shell { max-width: 700px; margin: 0 auto; padding: 0 28px; }
 
-    /* ─ Custom cursor dot ─ */
+    /* Cursor dot */
     .cursor-dot {
-      position: fixed;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: opacity 0.2s;
-      opacity: 0;
-      mix-blend-mode: multiply;
+      position: fixed; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent); pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%); opacity: 0; mix-blend-mode: multiply;
     }
 
-    /* ─ Nav ─ */
+    /* Nav */
     nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex; justify-content: space-between; align-items: center;
       padding: 40px 0 0;
     }
-
     .nav-name {
-      font-size: 0.875rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-      text-decoration: none;
+      font-size: 0.875rem; font-weight: 600; letter-spacing: -0.02em;
+      color: var(--ink); text-decoration: none;
     }
-
-    .nav-links {
-      display: flex;
-      gap: 28px;
-      list-style: none;
-    }
-
+    .nav-links { display: flex; gap: 28px; list-style: none; }
     .nav-links a {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--mid);
-      text-decoration: none;
-      letter-spacing: 0.01em;
-      transition: color 0.15s;
+      font-size: 0.8rem; font-weight: 500; color: var(--mid);
+      text-decoration: none; letter-spacing: 0.01em; transition: color 0.15s;
     }
-
     .nav-links a:hover { color: var(--ink); }
 
-    /* ─ Hero ─ */
-    .hero {
-      padding: 80px 0 64px;
-    }
+    /* Hero */
+    .hero { padding: 80px 0 72px; }
 
     .available {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: #2d7a3a;
-      margin-bottom: 28px;
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: #2d7a3a; margin-bottom: 28px;
     }
-
     .available-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #2d7a3a;
-      animation: breathe 2.4s ease-in-out infinite;
+      width: 7px; height: 7px; border-radius: 50%; background: #2d7a3a;
+      animation: breathe 2.4s ease-in-out infinite; flex-shrink: 0;
     }
-
     @keyframes breathe {
       0%, 100% { opacity: 1; transform: scale(1); }
       50%       { opacity: 0.35; transform: scale(0.65); }
     }
 
     .hero-eyebrow {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--mid);
-      margin-bottom: 18px;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--mid); margin-bottom: 18px;
     }
-
     .hero-name {
-      font-size: clamp(2.4rem, 5.5vw, 3.2rem);
-      font-weight: 700;
-      letter-spacing: -0.045em;
-      line-height: 1.06;
-      color: var(--ink);
-      margin-bottom: 22px;
+      font-size: clamp(2.4rem, 5.5vw, 3.2rem); font-weight: 700;
+      letter-spacing: -0.045em; line-height: 1.06; color: var(--ink);
+      margin-bottom: 24px;
     }
-
-    .hero-name em {
-      font-style: normal;
-      color: var(--accent);
-    }
-
+    .hero-name em { font-style: normal; color: var(--accent); }
     .hero-desc {
-      font-size: 0.975rem;
-      line-height: 1.7;
-      color: var(--mid);
-      max-width: 460px;
-      font-weight: 400;
+      font-size: 0.975rem; line-height: 1.7; color: var(--mid);
+      max-width: 460px; font-weight: 400;
     }
+    .hero-desc strong { color: var(--ink); font-weight: 600; }
 
-    .hero-desc strong {
-      color: var(--ink);
-      font-weight: 600;
-    }
-
-    /* ─ Section label ─ */
+    /* Section label */
     .section-label {
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--mid);
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--rule);
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--mid);
+      padding-bottom: 14px; border-bottom: 1px solid var(--rule);
+      margin-bottom: 0;
     }
 
-    /* ─ Work list ─ */
-    .work-list {
-      list-style: none;
-      margin-bottom: 72px;
-    }
-
-    .work-item {
-      border-bottom: 1px solid var(--rule);
-    }
+    /* Work list */
+    .work-list { list-style: none; margin-bottom: 80px; }
+    .work-item { border-bottom: 1px solid var(--rule); }
 
     .work-link {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 18px 0;
-      text-decoration: none;
-      color: var(--ink);
-      border-radius: 6px;
-      transition: background 0.12s;
-      margin: 0 -10px;
-      padding-left: 10px;
-      padding-right: 10px;
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 10px; text-decoration: none; color: var(--ink);
+      border-radius: 6px; transition: background 0.12s; margin: 0 -10px;
     }
+    .work-link:hover { background: var(--hover-row); }
 
-    .work-link:hover {
-      background: var(--hover-row);
-    }
-
-    /* Small always-visible thumbnail */
+    /* Thumbnail — fixed size, no broken-image state */
     .work-thumb-small {
-      width: 60px;
-      height: 42px;
-      border-radius: 5px;
-      flex-shrink: 0;
-      overflow: hidden;
-      border: none;
-      background: #1A1A18;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.12s;
+      width: 60px; height: 42px; border-radius: 5px; flex-shrink: 0;
+      overflow: hidden; border: 1px solid var(--rule);
+      display: flex; align-items: center; justify-content: center;
     }
-
-    .work-thumb-small img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .work-thumb-small img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* Fallback shown when no img — the colored div */
+    .thumb-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 4px;
     }
-
-    .work-thumb-small .thumb-label {
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
+    .thumb-placeholder span {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em;
       text-transform: uppercase;
     }
 
-    .work-info {
-      flex: 1;
-      min-width: 0;
-    }
-
+    .work-info { flex: 1; min-width: 0; }
     .work-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-      margin-bottom: 4px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 0.95rem; font-weight: 600; letter-spacing: -0.02em;
+      color: var(--ink); margin-bottom: 5px;
     }
-
     .work-tags {
-      font-size: 0.68rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--mid);
+      font-size: 0.67rem; font-weight: 500; letter-spacing: 0.05em;
+      text-transform: uppercase; color: var(--mid);
+      /* prevent wrapping — clip with ellipsis if needed */
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
     .work-right {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-shrink: 0;
+      display: flex; align-items: center; gap: 14px; flex-shrink: 0;
     }
-
     .work-year {
-      font-size: 0.75rem;
-      color: var(--mid);
-      font-variant-numeric: tabular-nums;
+      font-size: 0.75rem; color: var(--mid); font-variant-numeric: tabular-nums;
     }
-
     .work-arrow {
-      font-size: 0.85rem;
-      color: var(--rule);
+      font-size: 0.85rem; color: var(--rule);
       transition: color 0.12s, transform 0.14s;
     }
+    .work-link:hover .work-arrow { color: var(--accent); transform: translateX(4px); }
 
-    .work-link:hover .work-arrow {
-      color: var(--accent);
-      transform: translateX(4px);
-    }
-
-    /* ─ Floating hover preview ─ */
+    /* Floating hover preview */
     .hover-preview {
-      position: fixed;
-      width: 260px;
-      height: 174px;
-      border-radius: 10px;
-      overflow: hidden;
-      pointer-events: none;
-      z-index: 200;
-      opacity: 0;
-      transform: translateY(10px) scale(0.96);
+      position: fixed; width: 260px; height: 174px; border-radius: 10px;
+      overflow: hidden; pointer-events: none; z-index: 200;
+      opacity: 0; transform: translateY(10px) scale(0.96);
       transition: opacity 0.2s ease, transform 0.2s ease;
       box-shadow: 0 12px 40px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08);
       border: 1px solid rgba(255,255,255,0.12);
     }
-
-    .hover-preview.show {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
+    .hover-preview.show { opacity: 1; transform: translateY(0) scale(1); }
     .hover-preview-inner {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
+      width: 100%; height: 100%; position: relative;
+      display: flex; align-items: center; justify-content: center;
     }
-
     .hover-preview-inner img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      position: absolute;
-      top: 0; left: 0;
+      width: 100%; height: 100%; object-fit: cover;
+      position: absolute; top: 0; left: 0; display: block;
     }
-
     .preview-label {
-      font-family: 'Geist', system-ui, sans-serif;
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      position: relative;
-      z-index: 1;
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; position: relative; z-index: 1;
     }
 
-    /* ─ Stack ─ */
-    .stack-section {
-      margin-bottom: 72px;
-    }
+    /* Stack */
+    .stack-section { margin-bottom: 80px; }
 
-    .stack-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-      padding-top: 18px;
+    .stack-group { margin-top: 20px; display: flex; align-items: baseline; gap: 10px; }
+    .stack-cat-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--rule);
+      white-space: nowrap; flex-shrink: 0; min-width: 62px;
     }
-
+    .stack-tags { display: flex; flex-wrap: wrap; gap: 7px; }
     .stack-tag {
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      color: var(--mid);
-      border: 1px solid var(--rule);
-      border-radius: 4px;
-      padding: 5px 11px;
-      transition: border-color 0.12s, color 0.12s;
-      cursor: default;
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.03em;
+      color: var(--mid); border: 1px solid var(--rule);
+      border-radius: 4px; padding: 5px 11px;
+      transition: border-color 0.12s, color 0.12s; cursor: default;
+    }
+    .stack-tag:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* WorkflowReel */
+    .workflow-section { margin-top: 40px; }
+
+    .wf-track {
+      display: flex; margin-top: 18px;
+      border: 1px solid var(--rule); border-radius: 8px 8px 0 0; overflow: hidden;
+    }
+    .wf-step {
+      flex: 1; display: flex; flex-direction: column; gap: 4px;
+      padding: 14px 14px 13px; border-right: 1px solid var(--rule);
+      cursor: pointer; transition: background 0.12s; position: relative;
+      min-width: 0;
+    }
+    .wf-step:last-child { border-right: none; }
+    .wf-step:hover { background: var(--hover-row); }
+    .wf-step.active { background: var(--hover-row); }
+    .wf-step.active::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px; background: var(--accent);
     }
 
-    .stack-tag:hover {
-      border-color: var(--accent);
-      color: var(--accent);
+    .wf-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--rule); margin-bottom: 4px; flex-shrink: 0;
+      transition: background 0.12s;
+    }
+    .wf-step.active .wf-dot { background: var(--accent); }
+
+    .wf-name {
+      font-size: 0.82rem; font-weight: 600; letter-spacing: -0.01em;
+      color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .wf-tool {
+      font-size: 0.63rem; font-weight: 500; color: var(--mid);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
-    /* ─ About ─ */
-    .about-strip {
-      padding: 52px 0 72px;
-      border-top: 1px solid var(--rule);
+    .wf-detail {
+      border: 1px solid var(--rule); border-top: none;
+      border-radius: 0 0 8px 8px; padding: 16px 18px;
+      background: var(--bg); min-height: 76px;
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 20px;
+    }
+    .wf-detail-text {
+      font-size: 0.83rem; line-height: 1.65; color: var(--mid); flex: 1; margin: 0;
+    }
+    .wf-detail-tag {
+      font-size: 0.62rem; font-weight: 600; letter-spacing: 0.06em;
+      padding: 4px 10px; border: 1px solid var(--accent);
+      border-radius: 4px; color: var(--accent);
+      white-space: nowrap; flex-shrink: 0; margin-top: 1px;
     }
 
+    .wf-pips { display: flex; gap: 5px; padding: 10px 0 0; }
+    .wf-pip {
+      height: 2px; flex: 1; border-radius: 1px; background: var(--rule);
+      transition: background 0.2s;
+    }
+    .wf-pip.active { background: var(--accent); }
+
+    /* About */
+    .about-strip { padding: 56px 0 80px; border-top: 1px solid var(--rule); }
     .about-text {
-      font-size: 0.925rem;
-      line-height: 1.8;
-      color: var(--mid);
-      max-width: 500px;
+      font-size: 0.925rem; line-height: 1.8; color: var(--mid); max-width: 500px;
     }
-
-    .about-text strong {
-      color: var(--ink);
-      font-weight: 600;
-    }
-
+    .about-text strong { color: var(--ink); font-weight: 600; }
     .about-text a {
-      color: var(--mid);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-color: var(--rule);
-      transition: color 0.12s, text-decoration-color 0.12s;
+      color: var(--mid); text-decoration: underline; text-underline-offset: 3px;
+      text-decoration-color: var(--rule); transition: color 0.12s, text-decoration-color 0.12s;
     }
+    .about-text a:hover { color: var(--accent); text-decoration-color: var(--accent-dim); }
 
-    .about-text a:hover {
-      color: var(--accent);
-      text-decoration-color: var(--accent-dim);
-    }
-
-    /* ─ Footer ─ */
+    /* Footer */
     footer {
-      border-top: 1px solid var(--rule);
-      padding: 26px 0 48px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      border-top: 1px solid var(--rule); padding: 26px 0 52px;
+      display: flex; justify-content: space-between; align-items: center;
     }
-
-    .footer-left {
-      font-size: 0.76rem;
-      color: var(--mid);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 22px;
-      list-style: none;
-    }
-
+    .footer-left { font-size: 0.76rem; color: var(--mid); }
+    .footer-links { display: flex; gap: 22px; list-style: none; }
     .footer-links a {
-      font-size: 0.76rem;
-      color: var(--mid);
-      text-decoration: none;
-      transition: color 0.12s;
+      font-size: 0.76rem; color: var(--mid); text-decoration: none; transition: color 0.12s;
     }
-
     .footer-links a:hover { color: var(--accent); }
 
-    /* ─ Responsive ─ */
+    /* Responsive */
     @media (max-width: 540px) {
       .shell { padding: 0 20px; }
       nav { padding-top: 28px; }
-      .hero { padding: 56px 0 44px; }
+      .hero { padding: 56px 0 48px; }
       .hero-name { font-size: 2rem; }
       .hover-preview { display: none; }
       .cursor-dot { display: none; }
       footer { flex-direction: column; gap: 14px; align-items: flex-start; }
       .nav-links { gap: 18px; }
+      .wf-tool { display: none; }
+      .stack-group { flex-direction: column; gap: 6px; }
+      .stack-cat-label { min-width: auto; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       .available-dot { animation: none; }
-      .hover-preview, .work-arrow, .cursor-dot { transition: none; }
+      .hover-preview, .work-arrow, .wf-pip { transition: none; }
     }
-
-    .stack-tag--dim {
-      color: var(--rule);
-      border-color: transparent;
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      padding-right: 4px;
-      cursor: default;
-      pointer-events: none;
-    }
-    .stack-tag--dim:hover {
-      border-color: transparent;
-      color: var(--rule);
-    }
-
-    .workflow-reel { margin-top: 16px; margin-bottom: 0; }
-
-    .wf-track {
-      display: flex;
-      border: 1px solid var(--rule);
-      border-radius: 8px;
-      overflow: hidden;
-      margin-bottom: 0;
-    }
-
-    .wf-step {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      padding: 14px 12px 12px;
-      border-right: 1px solid var(--rule);
-      cursor: pointer;
-      transition: background 0.12s;
-      position: relative;
-      min-width: 0;
-    }
-
-    .wf-step:last-child { border-right: none; }
-    .wf-step:hover { background: var(--hover-row); }
-
-    .wf-step.active { background: var(--hover-row); }
-    .wf-step.active::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--accent);
-    }
-
-    .wf-icon {
-      font-size: 0.6rem;
-      color: var(--rule);
-      transition: color 0.12s;
-    }
-    .wf-step.active .wf-icon { color: var(--accent); }
-
-    .wf-name {
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      color: var(--ink);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .wf-tool {
-      font-size: 0.65rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      color: var(--mid);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .wf-detail {
-      border: 1px solid var(--rule);
-      border-top: none;
-      border-radius: 0 0 8px 8px;
-      padding: 14px 16px;
-      background: var(--bg);
-      min-height: 68px;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .wf-detail-text {
-      font-size: 0.82rem;
-      line-height: 1.65;
-      color: var(--mid);
-      flex: 1;
-      margin: 0;
-    }
-
-    .wf-detail-tag {
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      padding: 4px 9px;
-      border: 1px solid var(--accent);
-      border-radius: 4px;
-      color: var(--accent);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .wf-pips {
-      display: flex;
-      gap: 5px;
-      padding: 10px 0 0;
-    }
-
-    .wf-pip {
-      height: 2px;
-      flex: 1;
-      border-radius: 1px;
-      background: var(--rule);
-      transition: background 0.2s;
-    }
-
-    .wf-pip.active { background: var(--accent); }
   </style>
 </head>
 <body>
 
-<!-- Cursor dot -->
 <div class="cursor-dot" id="cursorDot"></div>
 
-<!-- Floating hover preview -->
 <div class="hover-preview" id="hoverPreview">
   <div class="hover-preview-inner" id="hoverInner">
     <span class="preview-label" id="previewLabel"></span>
@@ -572,7 +319,6 @@
 
 <div class="shell">
 
-  <!-- Nav -->
   <nav>
     <a href="/" class="nav-name">Ladan Johari</a>
     <ul class="nav-links">
@@ -582,7 +328,6 @@
     </ul>
   </nav>
 
-  <!-- Hero -->
   <header class="hero">
     <div class="available">
       <span class="available-dot"></span>
@@ -597,19 +342,18 @@
     </p>
   </header>
 
-  <!-- Work -->
-  <section aria-label="Selected work" style="margin-bottom: 0;">
+  <section aria-label="Selected work" style="margin-bottom:0;">
     <p class="section-label">Selected Work</p>
     <ul class="work-list">
 
       <li class="work-item">
         <a class="work-link" href="/projects/session-indicator.html"
-           data-preview-bg="#111111"
-           data-preview-color="#555555"
-           data-preview-label="Session Indicator"
+           data-preview-bg="#111111" data-preview-color="#555" data-preview-label="Session Indicator"
            data-img="/assets/previews/session-indicator.jpg">
           <div class="work-thumb-small">
-            <img src="/assets/thumbs/session-indicator.jpg" alt="Session Indicator" />
+            <div class="thumb-placeholder" style="background:#111111;">
+              <span style="color:#444;">SI</span>
+            </div>
           </div>
           <div class="work-info">
             <div class="work-title">Session Indicator</div>
@@ -624,12 +368,12 @@
 
       <li class="work-item">
         <a class="work-link" href="/projects/promptedfind.html"
-           data-preview-bg="#0a1828"
-           data-preview-color="#2a8855"
-           data-preview-label="PromptedFind"
+           data-preview-bg="#0a1828" data-preview-color="#2a8855" data-preview-label="PromptedFind"
            data-img="/assets/previews/promptedfind.jpg">
           <div class="work-thumb-small">
-            <img src="/assets/thumbs/promptedfind.jpg" alt="PromptedFind" />
+            <div class="thumb-placeholder" style="background:#0a1828;">
+              <span style="color:#2a5540;">PF</span>
+            </div>
           </div>
           <div class="work-info">
             <div class="work-title">PromptedFind</div>
@@ -644,12 +388,12 @@
 
       <li class="work-item">
         <a class="work-link" href="/projects/xcode-symbol-browser.html"
-           data-preview-bg="#1C1C1E"
-           data-preview-color="#666666"
-           data-preview-label="Xcode Symbol Browser"
+           data-preview-bg="#1C1C1E" data-preview-color="#666" data-preview-label="Xcode Symbol Browser"
            data-img="/assets/previews/xcode-symbol-browser.jpg">
           <div class="work-thumb-small">
-            <img src="/assets/thumbs/xcode-symbol-browser.jpg" alt="Xcode Symbol Browser" />
+            <div class="thumb-placeholder" style="background:#1C1C1E;">
+              <span style="color:#555;">XS</span>
+            </div>
           </div>
           <div class="work-info">
             <div class="work-title">Xcode Symbol Browser</div>
@@ -664,12 +408,12 @@
 
       <li class="work-item">
         <a class="work-link" href="/projects/trails.html"
-           data-preview-bg="#EDE9E0"
-           data-preview-color="#B0A898"
-           data-preview-label="Trails"
+           data-preview-bg="#EDE9E0" data-preview-color="#999080" data-preview-label="Trails"
            data-img="/assets/previews/trails.jpg">
           <div class="work-thumb-small">
-            <img src="/assets/thumbs/trails.jpg" alt="Trails" />
+            <div class="thumb-placeholder" style="background:#EDE9E0; border:1px solid #D4D0C8;">
+              <span style="color:#C0BAB0;">TR</span>
+            </div>
           </div>
           <div class="work-info">
             <div class="work-title">Trails</div>
@@ -685,82 +429,91 @@
     </ul>
   </section>
 
-  <!-- Stack -->
-  <section class="stack-section" aria-label="Tools and workflow">
-  <p class="section-label">Stack</p>
-  <div class="stack-row" style="margin-bottom: 16px;">
-    <span class="stack-tag stack-tag--dim">Thinking</span>
-    <span class="stack-tag">Claude</span>
-    <span class="stack-tag">Cursor</span>
-    <span class="stack-tag">Notion</span>
-  </div>
-  <div class="stack-row" style="margin-bottom: 16px;">
-    <span class="stack-tag stack-tag--dim">Building</span>
-    <span class="stack-tag">Claude Code</span>
-    <span class="stack-tag">SwiftUI</span>
-    <span class="stack-tag">HTML & CSS</span>
-    <span class="stack-tag">JavaScript</span>
-    <span class="stack-tag">Node.js</span>
-    <span class="stack-tag">PostgreSQL</span>
-  </div>
-  <div class="stack-row" style="margin-bottom: 28px;">
-    <span class="stack-tag stack-tag--dim">Craft</span>
-    <span class="stack-tag">Interaction Design</span>
-    <span class="stack-tag">Design Systems</span>
-    <span class="stack-tag">Product Storytelling</span>
-    <span class="stack-tag">Video</span>
-  </div>
+  <section class="stack-section" aria-label="Stack and workflow">
+    <p class="section-label">Stack</p>
 
-  <p class="section-label">How this was built</p>
-  <div class="workflow-reel" id="workflowReel">
-    <div class="wf-track">
-      <div class="wf-step active" data-step="0">
-        <span class="wf-icon">&#9656;</span>
-        <span class="wf-name">Think</span>
-        <span class="wf-tool">Claude</span>
-      </div>
-      <div class="wf-step" data-step="1">
-        <span class="wf-icon">&#9656;</span>
-        <span class="wf-name">Prototype</span>
-        <span class="wf-tool">Claude + Code</span>
-      </div>
-      <div class="wf-step" data-step="2">
-        <span class="wf-icon">&#9656;</span>
-        <span class="wf-name">Build</span>
-        <span class="wf-tool">Claude Code CLI</span>
-      </div>
-      <div class="wf-step" data-step="3">
-        <span class="wf-icon">&#9656;</span>
-        <span class="wf-name">Ship</span>
-        <span class="wf-tool">GitHub Pages</span>
-      </div>
-      <div class="wf-step" data-step="4">
-        <span class="wf-icon">&#9656;</span>
-        <span class="wf-name">Iterate</span>
-        <span class="wf-tool">Loop</span>
+    <div class="stack-group">
+      <span class="stack-cat-label">Thinking</span>
+      <div class="stack-tags">
+        <span class="stack-tag">Claude</span>
+        <span class="stack-tag">Cursor</span>
+        <span class="stack-tag">Notion</span>
       </div>
     </div>
-    <div class="wf-detail">
-      <p class="wf-detail-text" id="wfDetailText">Strategy, direction, and decisions happen in conversation. The chat is the brief, the spec, and the creative review — all in one.</p>
-      <span class="wf-detail-tag" id="wfDetailTag">Claude</span>
-    </div>
-    <div class="wf-pips" id="wfPips">
-      <span class="wf-pip active"></span>
-      <span class="wf-pip"></span>
-      <span class="wf-pip"></span>
-      <span class="wf-pip"></span>
-      <span class="wf-pip"></span>
-    </div>
-  </div>
-</section>
 
-  <!-- About -->
+    <div class="stack-group">
+      <span class="stack-cat-label">Building</span>
+      <div class="stack-tags">
+        <span class="stack-tag">Claude Code</span>
+        <span class="stack-tag">SwiftUI</span>
+        <span class="stack-tag">HTML &amp; CSS</span>
+        <span class="stack-tag">JavaScript</span>
+        <span class="stack-tag">Node.js</span>
+        <span class="stack-tag">PostgreSQL</span>
+      </div>
+    </div>
+
+    <div class="stack-group" style="margin-bottom:0;">
+      <span class="stack-cat-label">Craft</span>
+      <div class="stack-tags">
+        <span class="stack-tag">Interaction Design</span>
+        <span class="stack-tag">Design Systems</span>
+        <span class="stack-tag">Product Storytelling</span>
+        <span class="stack-tag">Video</span>
+      </div>
+    </div>
+
+    <div class="workflow-section" aria-label="How this was built">
+      <p class="section-label" style="margin-top: 40px;">How this was built</p>
+
+      <div class="wf-track" id="wfTrack">
+        <div class="wf-step active" data-step="0">
+          <div class="wf-dot"></div>
+          <span class="wf-name">Think</span>
+          <span class="wf-tool">Claude</span>
+        </div>
+        <div class="wf-step" data-step="1">
+          <div class="wf-dot"></div>
+          <span class="wf-name">Prototype</span>
+          <span class="wf-tool">Claude + Code</span>
+        </div>
+        <div class="wf-step" data-step="2">
+          <div class="wf-dot"></div>
+          <span class="wf-name">Build</span>
+          <span class="wf-tool">Claude Code CLI</span>
+        </div>
+        <div class="wf-step" data-step="3">
+          <div class="wf-dot"></div>
+          <span class="wf-name">Ship</span>
+          <span class="wf-tool">GitHub Pages</span>
+        </div>
+        <div class="wf-step" data-step="4">
+          <div class="wf-dot"></div>
+          <span class="wf-name">Iterate</span>
+          <span class="wf-tool">Loop</span>
+        </div>
+      </div>
+
+      <div class="wf-detail">
+        <p class="wf-detail-text" id="wfDetailText">Strategy, direction, and decisions happen in conversation. The chat is the brief, the spec, and the creative review — all in one.</p>
+        <span class="wf-detail-tag" id="wfDetailTag">Claude</span>
+      </div>
+
+      <div class="wf-pips" id="wfPips">
+        <span class="wf-pip active"></span>
+        <span class="wf-pip"></span>
+        <span class="wf-pip"></span>
+        <span class="wf-pip"></span>
+        <span class="wf-pip"></span>
+      </div>
+    </div>
+  </section>
+
   <section class="about-strip" aria-label="About">
     <p class="about-text">
       <strong>I don't come from a traditional UX background.</strong>
       I come from architecture, bronze sculpture, and making physical things.
-      That turned out to be better preparation for building AI interfaces
-      than any design program.<br><br>
+      That turned out to be better preparation for building AI interfaces than any design program.<br><br>
       MFA in Design from UC Davis. Based in the Bay Area.
       Currently building at the intersection of AI, interaction craft, and code —
       where the design tool is the conversation and the prototype is the product.
@@ -768,7 +521,6 @@
     </p>
   </section>
 
-  <!-- Footer -->
   <footer>
     <span class="footer-left">&copy; 2026 Ladan Johari</span>
     <ul class="footer-links">
@@ -781,44 +533,36 @@
 </div>
 
 <script>
-  // ── Cursor dot ──
+  /* Cursor dot — RAF lerp */
   const dot = document.getElementById('cursorDot');
   let dotX = 0, dotY = 0, curX = 0, curY = 0;
-
   document.addEventListener('mousemove', e => {
-    curX = e.clientX;
-    curY = e.clientY;
-    dot.style.opacity = '1';
+    curX = e.clientX; curY = e.clientY; dot.style.opacity = '1';
   });
-
-  (function animateDot() {
+  (function tick() {
     dotX += (curX - dotX) * 0.18;
     dotY += (curY - dotY) * 0.18;
     dot.style.left = dotX + 'px';
     dot.style.top  = dotY + 'px';
-    requestAnimationFrame(animateDot);
+    requestAnimationFrame(tick);
   })();
-
   document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; });
 
-  // ── Hover preview ──
-  const preview   = document.getElementById('hoverPreview');
-  const inner     = document.getElementById('hoverInner');
-  const labelEl   = document.getElementById('previewLabel');
-  let mx = 0, my = 0, previewActive = false;
+  /* Hover preview */
+  const preview = document.getElementById('hoverPreview');
+  const inner   = document.getElementById('hoverInner');
+  const lbl     = document.getElementById('previewLabel');
+  let mx = 0, my = 0, pActive = false;
 
   document.addEventListener('mousemove', e => {
-    mx = e.clientX;
-    my = e.clientY;
-    if (previewActive) positionPreview();
+    mx = e.clientX; my = e.clientY;
+    if (pActive) positionPreview();
   });
 
   function positionPreview() {
-    const pw = 260, ph = 174;
+    const pw = 260, ph = 174, pad = 20;
     const vw = window.innerWidth, vh = window.innerHeight;
-    const pad = 20;
-    let x = mx + 28;
-    let y = my - ph / 2;
+    let x = mx + 28, y = my - ph / 2;
     if (x + pw > vw - pad) x = mx - pw - 28;
     if (y < pad) y = pad;
     if (y + ph > vh - pad) y = vh - ph - pad;
@@ -830,27 +574,27 @@
     const bg    = link.dataset.previewBg    || '#1A1A18';
     const color = link.dataset.previewColor || '#555';
     const label = link.dataset.previewLabel || '';
+    const img   = link.dataset.img          || '';
 
     link.addEventListener('mouseenter', () => {
-      previewActive = true;
-      if (link.dataset.img) {
-        inner.innerHTML = `<img src="${link.dataset.img}" alt="${label}" style="width:100%;height:100%;object-fit:cover;display:block;" />`;
+      pActive = true;
+      if (img) {
+        inner.innerHTML = `<img src="${img}" alt="${label}" />`;
       } else {
+        inner.innerHTML = `<span class="preview-label" style="color:${color}">${label}</span>`;
         inner.style.background = bg;
-        labelEl.style.color = color;
-        labelEl.textContent = label;
       }
       positionPreview();
       preview.classList.add('show');
     });
-
     link.addEventListener('mouseleave', () => {
-      previewActive = false;
+      pActive = false;
       preview.classList.remove('show');
     });
   });
 
-  const wfSteps = [
+  /* WorkflowReel — always starts on step 0 */
+  const wfData = [
     { text: "Strategy, direction, and decisions happen in conversation. The chat is the brief, the spec, and the creative review — all in one.", tag: "Claude" },
     { text: "Interfaces are prototyped directly in HTML/CSS/JS — no mockup stage. The artifact is the prototype. Conversation drives every iteration.", tag: "Claude + Code" },
     { text: "Claude Code CLI implements specs from the terminal. Design decisions stay in chat. Engineering execution stays in CLI. Clean separation.", tag: "Claude Code CLI" },
@@ -858,31 +602,30 @@
     { text: "Each cycle takes minutes. Live review → spec → implement → live. This portfolio was built entirely this way.", tag: "AI-native loop" }
   ];
 
-  let wfCurrent = 0;
-  let wfTimer;
+  let wfCur = 0, wfTimer;
+  const wfSteps = document.querySelectorAll('.wf-step');
+  const wfPips  = document.querySelectorAll('.wf-pip');
+  const wfText  = document.getElementById('wfDetailText');
+  const wfTag   = document.getElementById('wfDetailTag');
 
-  function wfActivate(i) {
-    wfCurrent = i;
-    document.querySelectorAll('.wf-step').forEach((s, idx) => {
-      s.classList.toggle('active', idx === i);
-    });
-    document.querySelectorAll('.wf-pip').forEach((p, idx) => {
-      p.classList.toggle('active', idx <= i);
-    });
-    document.getElementById('wfDetailText').textContent = wfSteps[i].text;
-    document.getElementById('wfDetailTag').textContent = wfSteps[i].tag;
+  function wfGo(i) {
+    wfCur = i;
+    wfSteps.forEach((s, idx) => s.classList.toggle('active', idx === i));
+    wfPips.forEach((p, idx)  => p.classList.toggle('active', idx <= i));
+    wfText.textContent = wfData[i].text;
+    wfTag.textContent  = wfData[i].tag;
   }
 
-  document.querySelectorAll('.wf-step').forEach(s => {
+  wfSteps.forEach(s => {
     s.addEventListener('click', () => {
       clearInterval(wfTimer);
-      wfActivate(parseInt(s.dataset.step));
+      wfGo(parseInt(s.dataset.step));
     });
   });
 
-  wfTimer = setInterval(() => {
-    wfActivate((wfCurrent + 1) % wfSteps.length);
-  }, 2800);
+  /* Start from 0, advance every 2.8s */
+  wfGo(0);
+  wfTimer = setInterval(() => wfGo((wfCur + 1) % wfData.length), 2800);
 </script>
 
 </body>
