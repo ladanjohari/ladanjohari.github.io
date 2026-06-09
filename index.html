@@ -208,7 +208,7 @@
       border-radius: 5px;
       flex-shrink: 0;
       overflow: hidden;
-      border: 1px solid var(--rule);
+      border: none;
       background: #1A1A18;
       display: flex;
       align-items: center;
@@ -431,6 +431,131 @@
       .available-dot { animation: none; }
       .hover-preview, .work-arrow, .cursor-dot { transition: none; }
     }
+
+    .stack-tag--dim {
+      color: var(--rule);
+      border-color: transparent;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      padding-right: 4px;
+      cursor: default;
+      pointer-events: none;
+    }
+    .stack-tag--dim:hover {
+      border-color: transparent;
+      color: var(--rule);
+    }
+
+    .workflow-reel { margin-top: 16px; margin-bottom: 0; }
+
+    .wf-track {
+      display: flex;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 0;
+    }
+
+    .wf-step {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding: 14px 12px 12px;
+      border-right: 1px solid var(--rule);
+      cursor: pointer;
+      transition: background 0.12s;
+      position: relative;
+      min-width: 0;
+    }
+
+    .wf-step:last-child { border-right: none; }
+    .wf-step:hover { background: var(--hover-row); }
+
+    .wf-step.active { background: var(--hover-row); }
+    .wf-step.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .wf-icon {
+      font-size: 0.6rem;
+      color: var(--rule);
+      transition: color 0.12s;
+    }
+    .wf-step.active .wf-icon { color: var(--accent); }
+
+    .wf-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .wf-tool {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--mid);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .wf-detail {
+      border: 1px solid var(--rule);
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      padding: 14px 16px;
+      background: var(--bg);
+      min-height: 68px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .wf-detail-text {
+      font-size: 0.82rem;
+      line-height: 1.65;
+      color: var(--mid);
+      flex: 1;
+      margin: 0;
+    }
+
+    .wf-detail-tag {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 4px 9px;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      color: var(--accent);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .wf-pips {
+      display: flex;
+      gap: 5px;
+      padding: 10px 0 0;
+    }
+
+    .wf-pip {
+      height: 2px;
+      flex: 1;
+      border-radius: 1px;
+      background: var(--rule);
+      transition: background 0.2s;
+    }
+
+    .wf-pip.active { background: var(--accent); }
   </style>
 </head>
 <body>
@@ -481,9 +606,10 @@
         <a class="work-link" href="/projects/session-indicator.html"
            data-preview-bg="#111111"
            data-preview-color="#555555"
-           data-preview-label="Session Indicator">
-          <div class="work-thumb-small" style="background:#111111;">
-            <span class="thumb-label" style="color:#444;">SI</span>
+           data-preview-label="Session Indicator"
+           data-img="/assets/previews/session-indicator.jpg">
+          <div class="work-thumb-small">
+            <img src="/assets/thumbs/session-indicator.jpg" alt="Session Indicator" />
           </div>
           <div class="work-info">
             <div class="work-title">Session Indicator</div>
@@ -500,9 +626,10 @@
         <a class="work-link" href="/projects/promptedfind.html"
            data-preview-bg="#0a1828"
            data-preview-color="#2a8855"
-           data-preview-label="PromptedFind">
-          <div class="work-thumb-small" style="background:#0a1828;">
-            <span class="thumb-label" style="color:#2a5540;">PF</span>
+           data-preview-label="PromptedFind"
+           data-img="/assets/previews/promptedfind.jpg">
+          <div class="work-thumb-small">
+            <img src="/assets/thumbs/promptedfind.jpg" alt="PromptedFind" />
           </div>
           <div class="work-info">
             <div class="work-title">PromptedFind</div>
@@ -519,9 +646,10 @@
         <a class="work-link" href="/projects/xcode-symbol-browser.html"
            data-preview-bg="#1C1C1E"
            data-preview-color="#666666"
-           data-preview-label="Xcode Symbol Browser">
-          <div class="work-thumb-small" style="background:#1C1C1E;">
-            <span class="thumb-label" style="color:#555;">XS</span>
+           data-preview-label="Xcode Symbol Browser"
+           data-img="/assets/previews/xcode-symbol-browser.jpg">
+          <div class="work-thumb-small">
+            <img src="/assets/thumbs/xcode-symbol-browser.jpg" alt="Xcode Symbol Browser" />
           </div>
           <div class="work-info">
             <div class="work-title">Xcode Symbol Browser</div>
@@ -538,9 +666,10 @@
         <a class="work-link" href="/projects/trails.html"
            data-preview-bg="#EDE9E0"
            data-preview-color="#B0A898"
-           data-preview-label="Trails">
-          <div class="work-thumb-small" style="background:#EDE9E0; border-color:#D4D0C8;">
-            <span class="thumb-label" style="color:#C0BAB0;">TR</span>
+           data-preview-label="Trails"
+           data-img="/assets/previews/trails.jpg">
+          <div class="work-thumb-small">
+            <img src="/assets/thumbs/trails.jpg" alt="Trails" />
           </div>
           <div class="work-info">
             <div class="work-title">Trails</div>
@@ -557,22 +686,73 @@
   </section>
 
   <!-- Stack -->
-  <section class="stack-section" aria-label="Tools and technologies">
-    <p class="section-label">Stack</p>
-    <div class="stack-row">
-      <span class="stack-tag">Figma</span>
-      <span class="stack-tag">SwiftUI</span>
-      <span class="stack-tag">HTML &amp; CSS</span>
-      <span class="stack-tag">JavaScript</span>
-      <span class="stack-tag">Node.js</span>
-      <span class="stack-tag">PostgreSQL</span>
-      <span class="stack-tag">Design Systems</span>
-      <span class="stack-tag">Prototyping</span>
-      <span class="stack-tag">Motion Design</span>
-      <span class="stack-tag">AI Interfaces</span>
-      <span class="stack-tag">Product Storytelling</span>
+  <section class="stack-section" aria-label="Tools and workflow">
+  <p class="section-label">Stack</p>
+  <div class="stack-row" style="margin-bottom: 16px;">
+    <span class="stack-tag stack-tag--dim">Thinking</span>
+    <span class="stack-tag">Claude</span>
+    <span class="stack-tag">Cursor</span>
+    <span class="stack-tag">Notion</span>
+  </div>
+  <div class="stack-row" style="margin-bottom: 16px;">
+    <span class="stack-tag stack-tag--dim">Building</span>
+    <span class="stack-tag">Claude Code</span>
+    <span class="stack-tag">SwiftUI</span>
+    <span class="stack-tag">HTML & CSS</span>
+    <span class="stack-tag">JavaScript</span>
+    <span class="stack-tag">Node.js</span>
+    <span class="stack-tag">PostgreSQL</span>
+  </div>
+  <div class="stack-row" style="margin-bottom: 28px;">
+    <span class="stack-tag stack-tag--dim">Craft</span>
+    <span class="stack-tag">Interaction Design</span>
+    <span class="stack-tag">Design Systems</span>
+    <span class="stack-tag">Product Storytelling</span>
+    <span class="stack-tag">Video</span>
+  </div>
+
+  <p class="section-label">How this was built</p>
+  <div class="workflow-reel" id="workflowReel">
+    <div class="wf-track">
+      <div class="wf-step active" data-step="0">
+        <span class="wf-icon">&#9656;</span>
+        <span class="wf-name">Think</span>
+        <span class="wf-tool">Claude</span>
+      </div>
+      <div class="wf-step" data-step="1">
+        <span class="wf-icon">&#9656;</span>
+        <span class="wf-name">Prototype</span>
+        <span class="wf-tool">Claude + Code</span>
+      </div>
+      <div class="wf-step" data-step="2">
+        <span class="wf-icon">&#9656;</span>
+        <span class="wf-name">Build</span>
+        <span class="wf-tool">Claude Code CLI</span>
+      </div>
+      <div class="wf-step" data-step="3">
+        <span class="wf-icon">&#9656;</span>
+        <span class="wf-name">Ship</span>
+        <span class="wf-tool">GitHub Pages</span>
+      </div>
+      <div class="wf-step" data-step="4">
+        <span class="wf-icon">&#9656;</span>
+        <span class="wf-name">Iterate</span>
+        <span class="wf-tool">Loop</span>
+      </div>
     </div>
-  </section>
+    <div class="wf-detail">
+      <p class="wf-detail-text" id="wfDetailText">Strategy, direction, and decisions happen in conversation. The chat is the brief, the spec, and the creative review — all in one.</p>
+      <span class="wf-detail-tag" id="wfDetailTag">Claude</span>
+    </div>
+    <div class="wf-pips" id="wfPips">
+      <span class="wf-pip active"></span>
+      <span class="wf-pip"></span>
+      <span class="wf-pip"></span>
+      <span class="wf-pip"></span>
+      <span class="wf-pip"></span>
+    </div>
+  </div>
+</section>
 
   <!-- About -->
   <section class="about-strip" aria-label="About">
@@ -651,9 +831,13 @@
 
     link.addEventListener('mouseenter', () => {
       previewActive = true;
-      inner.style.background = bg;
-      labelEl.style.color = color;
-      labelEl.textContent = label;
+      if (link.dataset.img) {
+        inner.innerHTML = `<img src="${link.dataset.img}" alt="${label}" style="width:100%;height:100%;object-fit:cover;display:block;" />`;
+      } else {
+        inner.style.background = bg;
+        labelEl.style.color = color;
+        labelEl.textContent = label;
+      }
       positionPreview();
       preview.classList.add('show');
     });
@@ -664,16 +848,39 @@
     });
   });
 
-  // ── Swap in real screenshots ──
-  // When you have screenshots, replace the placeholder thumbnails like this:
-  //
-  // document.querySelector('[data-preview-label="Session Indicator"] .work-thumb-small')
-  //   .innerHTML = '<img src="assets/session-indicator-thumb.jpg" alt="Session Indicator" />';
-  // document.querySelector('[data-preview-label="Session Indicator"]')
-  //   .querySelector('#hoverInner') ... use data-img attr instead (see below)
-  //
-  // Simpler: add data-img="assets/session-thumb.jpg" to each .work-link,
-  // then in the mouseenter handler: inner.innerHTML = `<img src="${link.dataset.img}" alt="${label}" />`
+  const wfSteps = [
+    { text: "Strategy, direction, and decisions happen in conversation. The chat is the brief, the spec, and the creative review — all in one.", tag: "Claude" },
+    { text: "Interfaces are prototyped directly in HTML/CSS/JS — no mockup stage. The artifact is the prototype. Conversation drives every iteration.", tag: "Claude + Code" },
+    { text: "Claude Code CLI implements specs from the terminal. Design decisions stay in chat. Engineering execution stays in CLI. Clean separation.", tag: "Claude Code CLI" },
+    { text: "Auto-deploys on every push to main. The live URL is the source of truth — not a Figma file, not a prototype. The real thing.", tag: "GitHub Pages" },
+    { text: "Each cycle takes minutes. Live review → spec → implement → live. This portfolio was built entirely this way.", tag: "AI-native loop" }
+  ];
+
+  let wfCurrent = 0;
+  let wfTimer;
+
+  function wfActivate(i) {
+    wfCurrent = i;
+    document.querySelectorAll('.wf-step').forEach((s, idx) => {
+      s.classList.toggle('active', idx === i);
+    });
+    document.querySelectorAll('.wf-pip').forEach((p, idx) => {
+      p.classList.toggle('active', idx <= i);
+    });
+    document.getElementById('wfDetailText').textContent = wfSteps[i].text;
+    document.getElementById('wfDetailTag').textContent = wfSteps[i].tag;
+  }
+
+  document.querySelectorAll('.wf-step').forEach(s => {
+    s.addEventListener('click', () => {
+      clearInterval(wfTimer);
+      wfActivate(parseInt(s.dataset.step));
+    });
+  });
+
+  wfTimer = setInterval(() => {
+    wfActivate((wfCurrent + 1) % wfSteps.length);
+  }, 2800);
 </script>
 
 </body>
