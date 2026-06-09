@@ -17,294 +17,109 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg:        #F7F6F3;
-      --ink:       #111111;
-      --mid:       #6B6B6B;
-      --rule:      #D4D3CF;
-      --hover-row: #F0EFEC;
-      --accent:    #0066FF;
-      --accent-dim:#D6E4FF;
+      --bg: #F7F6F3; --ink: #111111; --mid: #6B6B6B;
+      --rule: #D4D3CF; --hover-row: #F0EFEC;
+      --accent: #0066FF; --accent-dim: #D6E4FF;
     }
-
     html { background: var(--bg); }
-
-    body {
-      font-family: 'Geist', system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--ink);
-      -webkit-font-smoothing: antialiased;
-      min-height: 100vh;
-    }
-
+    body { font-family: 'Geist', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; min-height: 100vh; }
     .shell { max-width: 700px; margin: 0 auto; padding: 0 28px; }
 
-    /* Cursor dot */
-    .cursor-dot {
-      position: fixed; width: 8px; height: 8px; border-radius: 50%;
-      background: var(--accent); pointer-events: none; z-index: 9999;
-      transform: translate(-50%, -50%); opacity: 0; mix-blend-mode: multiply;
-    }
+    .cursor-dot { position: fixed; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); opacity: 0; mix-blend-mode: multiply; }
 
-    /* Nav */
-    nav {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 40px 0 0;
-    }
-    .nav-name {
-      font-size: 0.875rem; font-weight: 600; letter-spacing: -0.02em;
-      color: var(--ink); text-decoration: none;
-    }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 40px 0 0; }
+    .nav-name { font-size: 0.875rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
     .nav-links { display: flex; gap: 28px; list-style: none; }
-    .nav-links a {
-      font-size: 0.8rem; font-weight: 500; color: var(--mid);
-      text-decoration: none; letter-spacing: 0.01em; transition: color 0.15s;
-    }
+    .nav-links a { font-size: 0.8rem; font-weight: 500; color: var(--mid); text-decoration: none; transition: color 0.15s; }
     .nav-links a:hover { color: var(--ink); }
 
-    /* Hero */
     .hero { padding: 80px 0 72px; }
-
-    .available {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
-      text-transform: uppercase; color: #2d7a3a; margin-bottom: 28px;
-    }
-    .available-dot {
-      width: 7px; height: 7px; border-radius: 50%; background: #2d7a3a;
-      animation: breathe 2.4s ease-in-out infinite; flex-shrink: 0;
-    }
-    @keyframes breathe {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.35; transform: scale(0.65); }
-    }
-
-    .hero-eyebrow {
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--mid); margin-bottom: 18px;
-    }
-    .hero-name {
-      font-size: clamp(2.4rem, 5.5vw, 3.2rem); font-weight: 700;
-      letter-spacing: -0.045em; line-height: 1.06; color: var(--ink);
-      margin-bottom: 24px;
-    }
+    .available { display: inline-flex; align-items: center; gap: 8px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #2d7a3a; margin-bottom: 28px; }
+    .available-dot { width: 7px; height: 7px; border-radius: 50%; background: #2d7a3a; animation: breathe 2.4s ease-in-out infinite; flex-shrink: 0; }
+    @keyframes breathe { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.35;transform:scale(.65)} }
+    .hero-eyebrow { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); margin-bottom: 18px; }
+    .hero-name { font-size: clamp(2.4rem,5.5vw,3.2rem); font-weight: 700; letter-spacing: -0.045em; line-height: 1.06; color: var(--ink); margin-bottom: 24px; }
     .hero-name em { font-style: normal; color: var(--accent); }
-    .hero-desc {
-      font-size: 0.975rem; line-height: 1.7; color: var(--mid);
-      max-width: 460px; font-weight: 400;
-    }
+    .hero-desc { font-size: 0.975rem; line-height: 1.7; color: var(--mid); max-width: 460px; }
     .hero-desc strong { color: var(--ink); font-weight: 600; }
 
-    /* Section label */
-    .section-label {
-      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--mid);
-      padding-bottom: 14px; border-bottom: 1px solid var(--rule);
-      margin-bottom: 0;
-    }
+    .section-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
 
-    /* Work list */
     .work-list { list-style: none; margin-bottom: 80px; }
     .work-item { border-bottom: 1px solid var(--rule); }
-
-    .work-link {
-      display: flex; align-items: center; gap: 16px;
-      padding: 16px 10px; text-decoration: none; color: var(--ink);
-      border-radius: 6px; transition: background 0.12s; margin: 0 -10px;
-    }
+    .work-link { display: flex; align-items: center; gap: 16px; padding: 16px 10px; text-decoration: none; color: var(--ink); border-radius: 6px; transition: background 0.12s; margin: 0 -10px; }
     .work-link:hover { background: var(--hover-row); }
-
-    /* Thumbnail — fixed size, no broken-image state */
-    .work-thumb-small {
-      width: 60px; height: 42px; border-radius: 5px; flex-shrink: 0;
-      overflow: hidden; border: 1px solid var(--rule);
-      display: flex; align-items: center; justify-content: center;
-      position: relative;
-    }
-    .work-thumb-small img {
-      position: absolute; top: 0; left: 0;
-      width: 100%; height: 100%; object-fit: cover; display: block; z-index: 1;
-    }
-    /* Fallback shown when no img — the colored div */
-    .thumb-placeholder {
-      width: 100%; height: 100%;
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 4px;
-    }
-    .thumb-placeholder span {
-      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
+    .work-thumb-small { width: 60px; height: 42px; border-radius: 5px; flex-shrink: 0; overflow: hidden; border: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; }
+    .work-thumb-small img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .thumb-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+    .thumb-placeholder span { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
     .work-info { flex: 1; min-width: 0; }
-    .work-title {
-      font-size: 0.95rem; font-weight: 600; letter-spacing: -0.02em;
-      color: var(--ink); margin-bottom: 5px;
-    }
-    .work-tags {
-      font-size: 0.67rem; font-weight: 500; letter-spacing: 0.05em;
-      text-transform: uppercase; color: var(--mid);
-      /* prevent wrapping — clip with ellipsis if needed */
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-
-    .work-right {
-      display: flex; align-items: center; gap: 14px; flex-shrink: 0;
-    }
-    .work-year {
-      font-size: 0.75rem; color: var(--mid); font-variant-numeric: tabular-nums;
-    }
-    .work-arrow {
-      font-size: 0.85rem; color: var(--rule);
-      transition: color 0.12s, transform 0.14s;
-    }
+    .work-title { font-size: 0.95rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 5px; }
+    .work-tags { font-size: 0.67rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--mid); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .work-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+    .work-year { font-size: 0.75rem; color: var(--mid); font-variant-numeric: tabular-nums; }
+    .work-arrow { font-size: 0.85rem; color: var(--rule); transition: color 0.12s, transform 0.14s; }
     .work-link:hover .work-arrow { color: var(--accent); transform: translateX(4px); }
 
-    /* Floating hover preview */
-    .hover-preview {
-      position: fixed; width: 260px; height: 174px; border-radius: 10px;
-      overflow: hidden; pointer-events: none; z-index: 200;
-      opacity: 0; transform: translateY(10px) scale(0.96);
-      transition: opacity 0.2s ease, transform 0.2s ease;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-    }
+    .hover-preview { position: fixed; width: 260px; height: 174px; border-radius: 10px; overflow: hidden; pointer-events: none; z-index: 200; opacity: 0; transform: translateY(10px) scale(0.96); transition: opacity 0.2s ease, transform 0.2s ease; box-shadow: 0 12px 40px rgba(0,0,0,.14),0 2px 8px rgba(0,0,0,.08); border: 1px solid rgba(255,255,255,.12); }
     .hover-preview.show { opacity: 1; transform: translateY(0) scale(1); }
-    .hover-preview-inner {
-      width: 100%; height: 100%; position: relative;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .hover-preview-inner img {
-      width: 100%; height: 100%; object-fit: cover;
-      position: absolute; top: 0; left: 0; display: block;
-    }
-    .preview-label {
-      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em;
-      text-transform: uppercase; position: relative; z-index: 1;
-    }
+    .hover-preview-inner { width: 100%; height: 100%; position: relative; display: flex; align-items: center; justify-content: center; }
+    .hover-preview-inner img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; display: block; }
+    .preview-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; position: relative; z-index: 1; }
 
-    /* Stack */
     .stack-section { margin-bottom: 80px; }
-
     .stack-group { margin-top: 20px; display: flex; align-items: baseline; gap: 10px; }
-    .stack-cat-label {
-      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--rule);
-      white-space: nowrap; flex-shrink: 0; min-width: 62px;
-    }
+    .stack-cat-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rule); white-space: nowrap; flex-shrink: 0; min-width: 62px; }
     .stack-tags { display: flex; flex-wrap: wrap; gap: 7px; }
-    .stack-tag {
-      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.03em;
-      color: var(--mid); border: 1px solid var(--rule);
-      border-radius: 4px; padding: 5px 11px;
-      transition: border-color 0.12s, color 0.12s; cursor: default;
-    }
+    .stack-tag { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.03em; color: var(--mid); border: 1px solid var(--rule); border-radius: 4px; padding: 5px 11px; transition: border-color 0.12s, color 0.12s; cursor: default; }
     .stack-tag:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* WorkflowReel */
     .workflow-section { margin-top: 40px; }
-
-    .wf-track {
-      display: flex; margin-top: 18px;
-      border: 1px solid var(--rule); border-radius: 8px 8px 0 0; overflow: hidden;
-    }
-    .wf-step {
-      flex: 1; display: flex; flex-direction: column; gap: 4px;
-      padding: 14px 14px 13px; border-right: 1px solid var(--rule);
-      cursor: pointer; transition: background 0.12s; position: relative;
-      min-width: 0;
-    }
+    .wf-track { display: flex; margin-top: 18px; border: 1px solid var(--rule); border-radius: 8px 8px 0 0; overflow: hidden; }
+    .wf-step { flex: 1; display: flex; flex-direction: column; gap: 4px; padding: 14px 14px 13px; border-right: 1px solid var(--rule); cursor: pointer; transition: background 0.12s; position: relative; min-width: 0; }
     .wf-step:last-child { border-right: none; }
     .wf-step:hover { background: var(--hover-row); }
     .wf-step.active { background: var(--hover-row); }
-    .wf-step.active::after {
-      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-      height: 2px; background: var(--accent);
-    }
-
-    .wf-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--rule); margin-bottom: 4px; flex-shrink: 0;
-      transition: background 0.12s;
-    }
+    .wf-step.active::after { content:''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--accent); }
+    .wf-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rule); margin-bottom: 4px; flex-shrink: 0; transition: background 0.12s; }
     .wf-step.active .wf-dot { background: var(--accent); }
-
-    .wf-name {
-      font-size: 0.82rem; font-weight: 600; letter-spacing: -0.01em;
-      color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .wf-tool {
-      font-size: 0.63rem; font-weight: 500; color: var(--mid);
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-
-    .wf-detail {
-      border: 1px solid var(--rule); border-top: none;
-      border-radius: 0 0 8px 8px; padding: 16px 18px;
-      background: var(--bg); min-height: 76px;
-      display: flex; align-items: flex-start;
-      justify-content: space-between; gap: 20px;
-    }
-    .wf-detail-text {
-      font-size: 0.83rem; line-height: 1.65; color: var(--mid); flex: 1; margin: 0;
-    }
-    .wf-detail-tag {
-      font-size: 0.62rem; font-weight: 600; letter-spacing: 0.06em;
-      padding: 4px 10px; border: 1px solid var(--accent);
-      border-radius: 4px; color: var(--accent);
-      white-space: nowrap; flex-shrink: 0; margin-top: 1px;
-    }
-
+    .wf-name { font-size: 0.82rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .wf-tool { font-size: 0.63rem; font-weight: 500; color: var(--mid); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .wf-detail { border: 1px solid var(--rule); border-top: none; border-radius: 0 0 8px 8px; padding: 16px 18px; background: var(--bg); min-height: 76px; display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+    .wf-detail-text { font-size: 0.83rem; line-height: 1.65; color: var(--mid); flex: 1; margin: 0; }
+    .wf-detail-tag { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.06em; padding: 4px 10px; border: 1px solid var(--accent); border-radius: 4px; color: var(--accent); white-space: nowrap; flex-shrink: 0; margin-top: 1px; }
     .wf-pips { display: flex; gap: 5px; padding: 10px 0 0; }
-    .wf-pip {
-      height: 2px; flex: 1; border-radius: 1px; background: var(--rule);
-      transition: background 0.2s;
-    }
+    .wf-pip { height: 2px; flex: 1; border-radius: 1px; background: var(--rule); transition: background 0.2s; }
     .wf-pip.active { background: var(--accent); }
 
-    /* About */
     .about-strip { padding: 56px 0 80px; border-top: 1px solid var(--rule); }
-    .about-text {
-      font-size: 0.925rem; line-height: 1.8; color: var(--mid); max-width: 500px;
-    }
+    .about-text { font-size: 0.925rem; line-height: 1.85; color: var(--mid); max-width: 500px; }
     .about-text strong { color: var(--ink); font-weight: 600; }
-    .about-text a {
-      color: var(--mid); text-decoration: underline; text-underline-offset: 3px;
-      text-decoration-color: var(--rule); transition: color 0.12s, text-decoration-color 0.12s;
-    }
+    .about-text em { font-style: italic; }
+    .about-text a { color: var(--mid); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--rule); transition: color 0.12s, text-decoration-color 0.12s; }
     .about-text a:hover { color: var(--accent); text-decoration-color: var(--accent-dim); }
 
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--rule); padding: 26px 0 52px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
+    footer { border-top: 1px solid var(--rule); padding: 26px 0 52px; display: flex; justify-content: space-between; align-items: center; }
     .footer-left { font-size: 0.76rem; color: var(--mid); }
     .footer-links { display: flex; gap: 22px; list-style: none; }
-    .footer-links a {
-      font-size: 0.76rem; color: var(--mid); text-decoration: none; transition: color 0.12s;
-    }
+    .footer-links a { font-size: 0.76rem; color: var(--mid); text-decoration: none; transition: color 0.12s; }
     .footer-links a:hover { color: var(--accent); }
 
-    /* Responsive */
     @media (max-width: 540px) {
       .shell { padding: 0 20px; }
       nav { padding-top: 28px; }
       .hero { padding: 56px 0 48px; }
       .hero-name { font-size: 2rem; }
-      .hover-preview { display: none; }
-      .cursor-dot { display: none; }
+      .hover-preview, .cursor-dot { display: none; }
       footer { flex-direction: column; gap: 14px; align-items: flex-start; }
       .nav-links { gap: 18px; }
       .wf-tool { display: none; }
       .stack-group { flex-direction: column; gap: 6px; }
       .stack-cat-label { min-width: auto; }
     }
-
     @media (prefers-reduced-motion: reduce) {
       .available-dot { animation: none; }
       .hover-preview, .work-arrow, .wf-pip { transition: none; }
@@ -314,7 +129,6 @@
 <body>
 
 <div class="cursor-dot" id="cursorDot"></div>
-
 <div class="hover-preview" id="hoverPreview">
   <div class="hover-preview-inner" id="hoverInner">
     <span class="preview-label" id="previewLabel"></span>
@@ -333,15 +147,11 @@
   </nav>
 
   <header class="hero">
-    <div class="available">
-      <span class="available-dot"></span>
-      Available for new roles
-    </div>
+    <div class="available"><span class="available-dot"></span>Available for new roles</div>
     <p class="hero-eyebrow">Design Engineer &mdash; Bay Area, CA</p>
     <h1 class="hero-name">I build interfaces<br>that <em>think.</em></h1>
     <p class="hero-desc">
       <strong>Design &times; engineering</strong> for AI tools, developer surfaces, and interaction systems.
-      MFA Design, UC Davis. Architecture and sculpture background.
       I work where craft, code, and systems thinking converge.
     </p>
   </header>
@@ -352,10 +162,9 @@
 
       <li class="work-item">
         <a class="work-link" href="/projects/session-indicator.html"
-           data-preview-bg="#111111" data-preview-color="#555" data-preview-label="Session Indicator"
-           data-img="/assets/previews/session-indicator.jpg">
+           data-preview-bg="#111111" data-preview-color="#555"
+           data-preview-label="Session Indicator" data-img="/assets/previews/session-indicator.jpg">
           <div class="work-thumb-small">
-            <img src="/assets/thumbs/session-indicator.jpg" alt="Session Indicator" onerror="this.style.display='none'">
             <div class="thumb-placeholder" style="background:#111111;">
               <span style="color:#444;">SI</span>
             </div>
@@ -373,10 +182,9 @@
 
       <li class="work-item">
         <a class="work-link" href="/projects/promptedfind.html"
-           data-preview-bg="#0a1828" data-preview-color="#2a8855" data-preview-label="PromptedFind"
-           data-img="/assets/previews/promptedfind.jpg">
+           data-preview-bg="#0a1828" data-preview-color="#2a8855"
+           data-preview-label="PromptedFind" data-img="/assets/previews/promptedfind.jpg">
           <div class="work-thumb-small">
-            <img src="/assets/thumbs/promptedfind.jpg" alt="PromptedFind" onerror="this.style.display='none'">
             <div class="thumb-placeholder" style="background:#0a1828;">
               <span style="color:#2a5540;">PF</span>
             </div>
@@ -394,10 +202,9 @@
 
       <li class="work-item">
         <a class="work-link" href="/projects/xcode-symbol-browser.html"
-           data-preview-bg="#1C1C1E" data-preview-color="#666" data-preview-label="Xcode Symbol Browser"
-           data-img="/assets/previews/xcode-symbol-browser.jpg">
+           data-preview-bg="#1C1C1E" data-preview-color="#666"
+           data-preview-label="Xcode Symbol Browser" data-img="/assets/previews/xcode-symbol-browser.jpg">
           <div class="work-thumb-small">
-            <img src="/assets/thumbs/xcode-symbol-browser.jpg" alt="Xcode Symbol Browser" onerror="this.style.display='none'">
             <div class="thumb-placeholder" style="background:#1C1C1E;">
               <span style="color:#555;">XS</span>
             </div>
@@ -415,10 +222,9 @@
 
       <li class="work-item">
         <a class="work-link" href="/projects/trails.html"
-           data-preview-bg="#EDE9E0" data-preview-color="#999080" data-preview-label="Trails"
-           data-img="/assets/previews/trails.jpg">
+           data-preview-bg="#EDE9E0" data-preview-color="#999080"
+           data-preview-label="Trails" data-img="/assets/previews/trails.jpg">
           <div class="work-thumb-small">
-            <img src="/assets/thumbs/trails.jpg" alt="Trails" onerror="this.style.display='none'">
             <div class="thumb-placeholder" style="background:#EDE9E0; border:1px solid #D4D0C8;">
               <span style="color:#C0BAB0;">TR</span>
             </div>
@@ -439,7 +245,6 @@
 
   <section class="stack-section" aria-label="Stack and workflow">
     <p class="section-label">Stack</p>
-
     <div class="stack-group">
       <span class="stack-cat-label">Thinking</span>
       <div class="stack-tags">
@@ -448,7 +253,6 @@
         <span class="stack-tag">Notion</span>
       </div>
     </div>
-
     <div class="stack-group">
       <span class="stack-cat-label">Building</span>
       <div class="stack-tags">
@@ -460,7 +264,6 @@
         <span class="stack-tag">PostgreSQL</span>
       </div>
     </div>
-
     <div class="stack-group" style="margin-bottom:0;">
       <span class="stack-cat-label">Craft</span>
       <div class="stack-tags">
@@ -472,8 +275,7 @@
     </div>
 
     <div class="workflow-section" aria-label="How this was built">
-      <p class="section-label" style="margin-top: 40px;">How this was built</p>
-
+      <p class="section-label" style="margin-top:40px;">How this was built</p>
       <div class="wf-track" id="wfTrack">
         <div class="wf-step active" data-step="0">
           <div class="wf-dot"></div>
@@ -501,12 +303,10 @@
           <span class="wf-tool">Loop</span>
         </div>
       </div>
-
       <div class="wf-detail">
         <p class="wf-detail-text" id="wfDetailText">Strategy, direction, and decisions happen in conversation. The chat is the brief, the spec, and the creative review — all in one.</p>
         <span class="wf-detail-tag" id="wfDetailTag">Claude</span>
       </div>
-
       <div class="wf-pips" id="wfPips">
         <span class="wf-pip active"></span>
         <span class="wf-pip"></span>
@@ -519,12 +319,12 @@
 
   <section class="about-strip" aria-label="About">
     <p class="about-text">
-      <strong>I don't come from a traditional UX background.</strong>
-      I come from architecture, bronze sculpture, and making physical things.
-      That turned out to be better preparation for building AI interfaces than any design program.<br><br>
-      MFA in Design from UC Davis. Based in the Bay Area.
-      Currently building at the intersection of AI, interaction craft, and code —
-      where the design tool is the conversation and the prototype is the product.
+      I started as an architect. Then a sculptor. An MFA in Design at UC Davis &mdash;
+      spatial work, light, exhibition environments. The same question followed me through
+      every material: <em>how does a space make you feel something without explaining itself?</em><br><br>
+      The materials changed. Stone. Bronze. Light. Code. AI.
+      The instinct didn&rsquo;t &mdash; make what surrounds people easier to read,
+      easier to move through, easier to trust. The tools evolve. I evolve with them.<br><br>
       <a href="/art">Before all this, I made physical things &rarr;</a>
     </p>
   </section>
@@ -541,100 +341,53 @@
 </div>
 
 <script>
-  /* Cursor dot — RAF lerp */
   const dot = document.getElementById('cursorDot');
-  let dotX = 0, dotY = 0, curX = 0, curY = 0;
-  document.addEventListener('mousemove', e => {
-    curX = e.clientX; curY = e.clientY; dot.style.opacity = '1';
-  });
-  (function tick() {
-    dotX += (curX - dotX) * 0.18;
-    dotY += (curY - dotY) * 0.18;
-    dot.style.left = dotX + 'px';
-    dot.style.top  = dotY + 'px';
-    requestAnimationFrame(tick);
-  })();
-  document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; });
+  let dotX=0,dotY=0,curX=0,curY=0;
+  document.addEventListener('mousemove',e=>{curX=e.clientX;curY=e.clientY;dot.style.opacity='1';});
+  (function tick(){dotX+=(curX-dotX)*.18;dotY+=(curY-dotY)*.18;dot.style.left=dotX+'px';dot.style.top=dotY+'px';requestAnimationFrame(tick);})();
+  document.addEventListener('mouseleave',()=>{dot.style.opacity='0';});
 
-  /* Hover preview */
-  const preview = document.getElementById('hoverPreview');
-  const inner   = document.getElementById('hoverInner');
-  const lbl     = document.getElementById('previewLabel');
-  let mx = 0, my = 0, pActive = false;
-
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    if (pActive) positionPreview();
-  });
-
-  function positionPreview() {
-    const pw = 260, ph = 174, pad = 20;
-    const vw = window.innerWidth, vh = window.innerHeight;
-    let x = mx + 28, y = my - ph / 2;
-    if (x + pw > vw - pad) x = mx - pw - 28;
-    if (y < pad) y = pad;
-    if (y + ph > vh - pad) y = vh - ph - pad;
-    preview.style.left = x + 'px';
-    preview.style.top  = y + 'px';
+  const preview=document.getElementById('hoverPreview'),inner=document.getElementById('hoverInner'),lbl=document.getElementById('previewLabel');
+  let mx=0,my=0,pActive=false;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(pActive)pos();});
+  function pos(){
+    const pw=260,ph=174,pad=20,vw=window.innerWidth,vh=window.innerHeight;
+    let x=mx+28,y=my-ph/2;
+    if(x+pw>vw-pad)x=mx-pw-28;
+    if(y<pad)y=pad;
+    if(y+ph>vh-pad)y=vh-ph-pad;
+    preview.style.left=x+'px';preview.style.top=y+'px';
   }
-
-  document.querySelectorAll('.work-link').forEach(link => {
-    const bg    = link.dataset.previewBg    || '#1A1A18';
-    const color = link.dataset.previewColor || '#555';
-    const label = link.dataset.previewLabel || '';
-    const img   = link.dataset.img          || '';
-
-    link.addEventListener('mouseenter', () => {
-      pActive = true;
-      if (img) {
-        inner.innerHTML = `<img src="${img}" alt="${label}" />`;
-      } else {
-        inner.innerHTML = `<span class="preview-label" style="color:${color}">${label}</span>`;
-        inner.style.background = bg;
-      }
-      positionPreview();
-      preview.classList.add('show');
+  document.querySelectorAll('.work-link').forEach(link=>{
+    const bg=link.dataset.previewBg||'#1A1A18',color=link.dataset.previewColor||'#555',label=link.dataset.previewLabel||'',img=link.dataset.img||'';
+    link.addEventListener('mouseenter',()=>{
+      pActive=true;
+      if(img){inner.innerHTML=`<img src="${img}" alt="${label}" />`;}
+      else{inner.innerHTML=`<span class="preview-label" style="color:${color}">${label}</span>`;inner.style.background=bg;}
+      pos();preview.classList.add('show');
     });
-    link.addEventListener('mouseleave', () => {
-      pActive = false;
-      preview.classList.remove('show');
-    });
+    link.addEventListener('mouseleave',()=>{pActive=false;preview.classList.remove('show');});
   });
 
-  /* WorkflowReel — always starts on step 0 */
-  const wfData = [
-    { text: "Strategy, direction, and decisions happen in conversation. The chat is the brief, the spec, and the creative review — all in one.", tag: "Claude" },
-    { text: "Interfaces are prototyped directly in HTML/CSS/JS — no mockup stage. The artifact is the prototype. Conversation drives every iteration.", tag: "Claude + Code" },
-    { text: "Claude Code CLI implements specs from the terminal. Design decisions stay in chat. Engineering execution stays in CLI. Clean separation.", tag: "Claude Code CLI" },
-    { text: "Auto-deploys on every push to main. The live URL is the source of truth — not a Figma file, not a prototype. The real thing.", tag: "GitHub Pages" },
-    { text: "Each cycle takes minutes. Live review → spec → implement → live. This portfolio was built entirely this way.", tag: "AI-native loop" }
+  const wfData=[
+    {text:"Strategy, direction, and decisions happen in conversation. The chat is the brief, the spec, and the creative review — all in one.",tag:"Claude"},
+    {text:"Interfaces are prototyped directly in HTML/CSS/JS — no mockup stage. The artifact is the prototype. Conversation drives every iteration.",tag:"Claude + Code"},
+    {text:"Claude Code CLI implements specs from the terminal. Design decisions stay in chat. Engineering execution stays in CLI. Clean separation.",tag:"Claude Code CLI"},
+    {text:"Auto-deploys on every push to main. The live URL is the source of truth — not a Figma file, not a prototype. The real thing.",tag:"GitHub Pages"},
+    {text:"Each cycle takes minutes. Live review → spec → implement → live. This portfolio was built entirely this way.",tag:"AI-native loop"}
   ];
-
-  let wfCur = 0, wfTimer;
-  const wfSteps = document.querySelectorAll('.wf-step');
-  const wfPips  = document.querySelectorAll('.wf-pip');
-  const wfText  = document.getElementById('wfDetailText');
-  const wfTag   = document.getElementById('wfDetailTag');
-
-  function wfGo(i) {
-    wfCur = i;
-    wfSteps.forEach((s, idx) => s.classList.toggle('active', idx === i));
-    wfPips.forEach((p, idx)  => p.classList.toggle('active', idx <= i));
-    wfText.textContent = wfData[i].text;
-    wfTag.textContent  = wfData[i].tag;
+  let wfCur=0,wfTimer;
+  const wfSteps=document.querySelectorAll('.wf-step'),wfPips=document.querySelectorAll('.wf-pip'),wfText=document.getElementById('wfDetailText'),wfTag=document.getElementById('wfDetailTag');
+  function wfGo(i){
+    wfCur=i;
+    wfSteps.forEach((s,idx)=>s.classList.toggle('active',idx===i));
+    wfPips.forEach((p,idx)=>p.classList.toggle('active',idx<=i));
+    wfText.textContent=wfData[i].text;
+    wfTag.textContent=wfData[i].tag;
   }
-
-  wfSteps.forEach(s => {
-    s.addEventListener('click', () => {
-      clearInterval(wfTimer);
-      wfGo(parseInt(s.dataset.step));
-    });
-  });
-
-  /* Start from 0, advance every 2.8s */
+  wfSteps.forEach(s=>s.addEventListener('click',()=>{clearInterval(wfTimer);wfGo(parseInt(s.dataset.step));}));
   wfGo(0);
-  wfTimer = setInterval(() => wfGo((wfCur + 1) % wfData.length), 2800);
+  wfTimer=setInterval(()=>wfGo((wfCur+1)%wfData.length),2800);
 </script>
-
 </body>
 </html>
