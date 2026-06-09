@@ -123,8 +123,12 @@
       width: 60px; height: 42px; border-radius: 5px; flex-shrink: 0;
       overflow: hidden; border: 1px solid var(--rule);
       display: flex; align-items: center; justify-content: center;
+      position: relative;
     }
-    .work-thumb-small img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .work-thumb-small img {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%; object-fit: cover; display: block; z-index: 1;
+    }
     /* Fallback shown when no img — the colored div */
     .thumb-placeholder {
       width: 100%; height: 100%;
@@ -351,6 +355,7 @@
            data-preview-bg="#111111" data-preview-color="#555" data-preview-label="Session Indicator"
            data-img="/assets/previews/session-indicator.jpg">
           <div class="work-thumb-small">
+            <img src="/assets/thumbs/session-indicator.jpg" alt="Session Indicator" onerror="this.style.display='none'">
             <div class="thumb-placeholder" style="background:#111111;">
               <span style="color:#444;">SI</span>
             </div>
@@ -371,6 +376,7 @@
            data-preview-bg="#0a1828" data-preview-color="#2a8855" data-preview-label="PromptedFind"
            data-img="/assets/previews/promptedfind.jpg">
           <div class="work-thumb-small">
+            <img src="/assets/thumbs/promptedfind.jpg" alt="PromptedFind" onerror="this.style.display='none'">
             <div class="thumb-placeholder" style="background:#0a1828;">
               <span style="color:#2a5540;">PF</span>
             </div>
@@ -391,6 +397,7 @@
            data-preview-bg="#1C1C1E" data-preview-color="#666" data-preview-label="Xcode Symbol Browser"
            data-img="/assets/previews/xcode-symbol-browser.jpg">
           <div class="work-thumb-small">
+            <img src="/assets/thumbs/xcode-symbol-browser.jpg" alt="Xcode Symbol Browser" onerror="this.style.display='none'">
             <div class="thumb-placeholder" style="background:#1C1C1E;">
               <span style="color:#555;">XS</span>
             </div>
@@ -411,6 +418,7 @@
            data-preview-bg="#EDE9E0" data-preview-color="#999080" data-preview-label="Trails"
            data-img="/assets/previews/trails.jpg">
           <div class="work-thumb-small">
+            <img src="/assets/thumbs/trails.jpg" alt="Trails" onerror="this.style.display='none'">
             <div class="thumb-placeholder" style="background:#EDE9E0; border:1px solid #D4D0C8;">
               <span style="color:#C0BAB0;">TR</span>
             </div>
