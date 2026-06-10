@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sculptures & Wearable Sculptures — Ladan Johari</title>
+  <meta name="robots" content="index, follow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #F7F6F3; --ink: #111111; --mid: #6B6B6B;
+      --rule: #D4D3CF; --hover: #F0EFEC; --accent: #0066FF;
+    }
+    html { background: var(--bg); }
+    body { font-family: 'Geist', system-ui, sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+    /* Nav */
+    .pf-nav { max-width: 700px; margin: 0 auto; padding: 40px 28px 0; display: flex; align-items: center; justify-content: space-between; }
+    .pf-wordmark { font-size: 0.875rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
+    .pf-links { display: flex; gap: 28px; list-style: none; }
+    .pf-links a { font-size: 0.8rem; font-weight: 500; color: var(--mid); text-decoration: none; transition: color 0.15s; }
+    .pf-links a:hover { color: var(--accent); }
+
+    /* Page header */
+    .page-header { max-width: 700px; margin: 0 auto; padding: 48px 28px 0; }
+    .back-link { font-size: 0.78rem; font-weight: 500; color: var(--mid); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; margin-bottom: 32px; transition: color 0.15s; }
+    .back-link:hover { color: var(--accent); }
+    .page-eyebrow { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); margin-bottom: 12px; }
+    .page-title { font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1.06; color: var(--ink); margin-bottom: 16px; }
+    .page-desc { font-size: 0.925rem; line-height: 1.75; color: var(--mid); max-width: 500px; padding-bottom: 40px; border-bottom: 1px solid var(--rule); }
+    .page-desc em { font-style: italic; }
+
+    /* Main content */
+    .content { max-width: 700px; margin: 0 auto; padding: 0 28px 80px; }
+
+    /* ── Piece section ── */
+    .piece { padding: 56px 0 0; }
+    .piece + .piece { border-top: 1px solid var(--rule); }
+
+    /* Hero row: text left, image right — 50/50 */
+    .piece-hero { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; margin-bottom: 20px; }
+
+    .piece-meta { padding-top: 6px; }
+    .piece-title { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.025em; color: var(--ink); margin-bottom: 10px; line-height: 1.2; }
+    .piece-details { font-size: 0.78rem; color: var(--mid); line-height: 1.9; margin-bottom: 12px; }
+    .piece-statement { font-size: 0.875rem; line-height: 1.75; color: var(--mid); }
+    .piece-statement strong { color: var(--ink); font-weight: 600; }
+
+    /* Hero image */
+    .img-main { border-radius: 8px; overflow: hidden; border: 1px solid var(--rule); background: var(--hover); }
+    .img-main img { width: 100%; display: block; object-fit: cover; }
+    .img-placeholder { aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rule); text-align: center; padding: 12px; }
+
+    /* Asymmetric grid: tall-left | 2-stacked-center | tall-right */
+    .piece-grid-asym {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 8px;
+      height: 360px;
+    }
+    .cell-tall-left  { grid-column: 1; grid-row: 1 / 3; }
+    .cell-mid-top    { grid-column: 2; grid-row: 1; }
+    .cell-mid-bot    { grid-column: 2; grid-row: 2; }
+    .cell-tall-right { grid-column: 3; grid-row: 1 / 3; }
+
+    .img-cell { border-radius: 8px; overflow: hidden; border: 1px solid var(--rule); background: var(--hover); height: 100%; }
+    .img-cell img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .img-cell .img-placeholder { height: 100%; aspect-ratio: unset; }
+
+    /* 3-col equal grid for Edge / jewelry */
+    .piece-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .piece-grid-3 .img-cell { aspect-ratio: 3/4; }
+
+    /* 2-col grid for smaller sets */
+    .piece-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .piece-grid-2 .img-cell { aspect-ratio: 4/3; }
+
+    /* Jewelry masonry-style */
+    .piece-grid-jewelry {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto auto auto;
+      gap: 8px;
+    }
+    .piece-grid-jewelry .img-cell { aspect-ratio: 1; }
+
+    /* Footer */
+    .pf-footer { max-width: 700px; margin: 0 auto; border-top: 1px solid var(--rule); padding: 26px 28px 52px; display: flex; align-items: center; justify-content: space-between; }
+    .pf-footer-copy { font-size: 0.76rem; color: var(--mid); }
+    .pf-footer-links { display: flex; gap: 22px; list-style: none; }
+    .pf-footer-links a { font-size: 0.76rem; color: var(--mid); text-decoration: none; transition: color 0.15s; }
+    .pf-footer-links a:hover { color: var(--accent); }
+
+    @media (max-width: 560px) {
+      .pf-nav, .page-header, .content { padding-left: 20px; padding-right: 20px; }
+      .pf-nav { padding-top: 28px; }
+      .piece-hero { grid-template-columns: 1fr; }
+      .piece-grid-asym { height: auto; grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .cell-tall-left, .cell-tall-right { grid-column: auto; grid-row: auto; }
+      .piece-grid-3, .piece-grid-jewelry { grid-template-columns: repeat(2, 1fr); }
+      .pf-footer { flex-direction: column; gap: 14px; align-items: flex-start; padding-left: 20px; padding-right: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="pf-nav">
+    <a class="pf-wordmark" href="/">Ladan Johari</a>
+    <ul class="pf-links">
+      <li><a href="/art.html">← Before this</a></li>
+      <li><a href="/">Work</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-header">
+    <a class="back-link" href="/art.html">← Before this</a>
+    <p class="page-eyebrow">Sculpture · Ceramic · Bronze · Wearable</p>
+    <h1 class="page-title">Sculptures &<br>Wearable Sculptures</h1>
+    <p class="page-desc">
+      Bronze and ceramic works exploring architectural form, cultural tension, and the body as site.
+      Made in Tehran, 2014–2018. <em>The same instinct that shapes a bronze — minimum form, maximum presence — still runs through every interface I design.</em>
+    </p>
+  </div>
+
+  <div class="content">
+
+    <!-- ── Urban Lion ── -->
+    <div class="piece">
+      <div class="piece-hero">
+        <div class="piece-meta">
+          <h2 class="piece-title">Urban Lion</h2>
+          <div class="piece-details">
+            Ceramic<br>
+            45 × 40 × 60 cm<br>
+            2018
+          </div>
+          <p class="piece-statement">
+            Ceramic pipe structures with <strong>colored circular openings</strong> — industrial infrastructure reimagined as organism. The city's hidden systems made visible and tactile. Color fires only where attention is needed.
+          </p>
+        </div>
+        <div class="img-main">
+          <div class="img-placeholder">urban-lion-hero.jpg</div>
+        </div>
+      </div>
+      <div class="piece-grid-asym">
+        <div class="img-cell cell-tall-left"><div class="img-placeholder">01</div></div>
+        <div class="img-cell cell-mid-top"><div class="img-placeholder">02</div></div>
+        <div class="img-cell cell-mid-bot"><div class="img-placeholder">03</div></div>
+        <div class="img-cell cell-tall-right"><div class="img-placeholder">04</div></div>
+      </div>
+    </div>
+
+    <!-- ── Edge ── -->
+    <div class="piece">
+      <div class="piece-hero">
+        <div class="piece-meta">
+          <h2 class="piece-title">Edge</h2>
+          <div class="piece-details">
+            Bronze<br>
+            45 × 40 × 60 cm<br>
+            2017
+          </div>
+          <p class="piece-statement">
+            A figure at the limit of balance — <strong>bronze holding a moment of pure tension</strong>. The body as architecture. Every gram of material placed in service of a single instant.
+          </p>
+        </div>
+        <div class="img-main">
+          <div class="img-placeholder">edge-hero.jpg</div>
+        </div>
+      </div>
+      <div class="piece-grid-3">
+        <div class="img-cell"><div class="img-placeholder">01</div></div>
+        <div class="img-cell"><div class="img-placeholder">02</div></div>
+        <div class="img-cell"><div class="img-placeholder">03</div></div>
+      </div>
+    </div>
+
+    <!-- ── Inner Conflict ── -->
+    <div class="piece">
+      <div class="piece-hero">
+        <div class="piece-meta">
+          <h2 class="piece-title">Inner Conflict</h2>
+          <div class="piece-details">
+            Bronze and Ceramic<br>
+            15 × 18 × 50 cm<br>
+            2018
+          </div>
+          <p class="piece-statement">
+            <strong>Bronze exterior, ceramic interior</strong> — two materials that don't agree with each other, held together by the form. Structural permanence wrapped around organic softness. The tension is the content.
+          </p>
+        </div>
+        <div class="img-main">
+          <div class="img-placeholder">inner-conflict-hero.jpg</div>
+        </div>
+      </div>
+      <div class="piece-grid-3">
+        <div class="img-cell"><div class="img-placeholder">01</div></div>
+        <div class="img-cell"><div class="img-placeholder">02</div></div>
+        <div class="img-cell"><div class="img-placeholder">03</div></div>
+      </div>
+    </div>
+
+    <!-- ── Inverted City ── -->
+    <div class="piece">
+      <div class="piece-hero">
+        <div class="piece-meta">
+          <h2 class="piece-title">Inverted City</h2>
+          <div class="piece-details">
+            Bronze<br>
+            17 × 25 × 19 cm<br>
+            2017
+          </div>
+          <p class="piece-statement">
+            Urban geometry cast in bronze — <strong>a city seen from below, or from above, depending on how you hold it</strong>. Architecture distilled to its structural logic. No facades, no ornament. Just the skeleton of how cities hold themselves together.
+          </p>
+        </div>
+        <div class="img-main">
+          <div class="img-placeholder">inverted-city-hero.jpg</div>
+        </div>
+      </div>
+      <div class="piece-grid-2">
+        <div class="img-cell"><div class="img-placeholder">01</div></div>
+        <div class="img-cell"><div class="img-placeholder">02</div></div>
+      </div>
+    </div>
+
+    <!-- ── Contemporary Jewelry ── -->
+    <div class="piece">
+      <div class="piece-hero">
+        <div class="piece-meta">
+          <h2 class="piece-title">Contemporary Jewelry</h2>
+          <div class="piece-details">
+            Gold<br>
+            Wearable sculpture<br>
+            2018
+          </div>
+          <p class="piece-statement">
+            Minimal gold line forms worn against skin and earth. <strong>The body as the final material</strong> — the jewelry only exists completely when worn. Same question as every other piece: what is the minimum form that holds the most presence?
+          </p>
+        </div>
+        <div class="img-main">
+          <div class="img-placeholder">jewelry-hero.jpg</div>
+        </div>
+      </div>
+      <div class="piece-grid-jewelry">
+        <div class="img-cell"><div class="img-placeholder">01</div></div>
+        <div class="img-cell"><div class="img-placeholder">02</div></div>
+        <div class="img-cell"><div class="img-placeholder">03</div></div>
+        <div class="img-cell"><div class="img-placeholder">04</div></div>
+        <div class="img-cell"><div class="img-placeholder">05</div></div>
+        <div class="img-cell"><div class="img-placeholder">06</div></div>
+        <div class="img-cell"><div class="img-placeholder">07</div></div>
+        <div class="img-cell"><div class="img-placeholder">08</div></div>
+        <div class="img-cell"><div class="img-placeholder">09</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="pf-footer">
+    <span class="pf-footer-copy">&copy; 2026 Ladan Johari</span>
+    <ul class="pf-footer-links">
+      <li><a href="/art.html">← Before this</a></li>
+      <li><a href="/">Work</a></li>
+    </ul>
+  </footer>
+
+</body>
+</html>
