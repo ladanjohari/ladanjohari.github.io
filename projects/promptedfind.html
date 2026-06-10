@@ -1,172 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PromptedFind &mdash; Ladan Johari</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PromptedFind &mdash; Ladan Johari</title>
+  <meta name="description" content="PromptedFind — semantic video navigation. Ask a question, jump to the moment. A new interaction pattern for long-form video." />
+  <meta name="robots" content="index, follow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-body {
-  font-family: 'Geist', sans-serif;
-  background: #F7F6F3;
-  color: #111111;
-  min-height: 100vh;
-}
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── Portfolio NavBar ── */
-.pf-nav{
-  max-width:700px;margin:0 auto;
-  padding:40px 28px 0;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.pf-wordmark{font-size:0.875rem;font-weight:600;color:#111111;text-decoration:none;letter-spacing:-0.02em;font-family:'Geist',sans-serif}
-.pf-wordmark:hover{color:#0066FF}
-.pf-links{display:flex;gap:28px;list-style:none}
-.pf-links a{font-size:0.8rem;font-weight:500;color:#6B6B6B;text-decoration:none;font-family:'Geist',sans-serif;transition:color .15s}
-.pf-links a:hover{color:#0066FF}
+    :root {
+      --bg: #F7F6F3; --ink: #111111; --mid: #6B6B6B;
+      --rule: #D4D3CF; --hover-row: #F0EFEC;
+      --accent: #0066FF; --accent-dim: #D6E4FF;
+    }
 
-/* ── Portfolio FooterBar ── */
-.pf-footer{
-  max-width:700px;margin:0 auto;
-  border-top:1px solid #D4D3CF;
-  padding:26px 28px 52px;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.pf-footer-copy{font-size:0.76rem;color:#6B6B6B;font-family:'Geist',sans-serif}
-.pf-footer-links{display:flex;gap:22px;list-style:none}
-.pf-footer-links a{font-size:0.76rem;color:#6B6B6B;text-decoration:none;font-family:'Geist',sans-serif;transition:color .15s}
-.pf-footer-links a:hover{color:#0066FF}
+    html { background: var(--bg); }
+    body {
+      font-family: 'Geist', system-ui, -apple-system, sans-serif;
+      background: var(--bg); color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
 
-/* ── Case Study Header ── */
-.cs-header{
-  max-width:700px;margin:0 auto;
-  padding:48px 28px 0;
-}
-.cs-eyebrow{font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#6B6B6B;margin-bottom:16px;font-family:'Geist',sans-serif}
-.cs-title{font-size:32px;font-weight:500;letter-spacing:-0.03em;line-height:1.15;color:#111111;margin-bottom:12px;font-family:'Geist',sans-serif}
-.cs-descriptor{font-size:17px;color:#6B6B6B;font-weight:400;line-height:1.5;margin-bottom:20px;max-width:540px;font-family:'Geist',sans-serif}
-.cs-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:#6B6B6B;font-family:'Geist',sans-serif;margin-bottom:32px}
-.cs-meta .sep{color:#D4D3CF}
-.cs-meta a{color:#0066FF;text-decoration:none;font-weight:500}
-.cs-meta a:hover{text-decoration:underline}
+    /* ── Nav ── */
+    .pf-nav {
+      max-width: 700px; margin: 0 auto;
+      padding: 40px 28px 0;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .pf-wordmark {
+      font-size: 0.875rem; font-weight: 600; letter-spacing: -0.02em;
+      color: var(--ink); text-decoration: none;
+    }
+    .pf-links { display: flex; gap: 28px; list-style: none; }
+    .pf-links a {
+      font-size: 0.8rem; font-weight: 500; color: var(--mid);
+      text-decoration: none; transition: color 0.15s;
+    }
+    .pf-links a:hover { color: var(--accent); }
 
-/* ── Video ── */
-.cs-video-wrap{
-  max-width:700px;margin:0 auto;padding:0 28px 64px;
-}
-.cs-video{
-  width:100%;display:block;border-radius:10px;border:1px solid #D4D3CF;
-  background:#111111;
-  box-shadow:0 12px 40px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
-}
+    /* ── Case study header ── */
+    .cs-header {
+      max-width: 700px; margin: 0 auto;
+      padding: 48px 28px 0;
+    }
+    .cs-eyebrow {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--mid); margin-bottom: 16px;
+    }
+    .cs-title {
+      font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700;
+      letter-spacing: -0.04em; line-height: 1.08;
+      color: var(--ink); margin-bottom: 14px;
+    }
+    .cs-descriptor {
+      font-size: 1rem; color: var(--mid); font-weight: 400;
+      line-height: 1.65; margin-bottom: 20px; max-width: 520px;
+    }
+    .cs-meta {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 0.78rem; color: var(--mid);
+      padding-bottom: 40px; border-bottom: 1px solid var(--rule);
+      flex-wrap: wrap;
+    }
+    .cs-meta .sep { color: var(--rule); }
+    .cs-meta a {
+      color: var(--accent); text-decoration: none; font-weight: 500;
+    }
+    .cs-meta a:hover { text-decoration: underline; }
 
-/* ── Case study sections below the video ── */
-.cs-below{max-width:700px;margin:0 auto;padding:0 28px 80px}
-.cs-section-gap{margin-bottom:64px}
-.cs-section-decisions{margin-bottom:64px}
+    /* ── Video hero ── */
+    .video-hero {
+      max-width: 700px; margin: 0 auto;
+      padding: 40px 28px 0;
+    }
+    .video-wrap {
+      width: 100%; aspect-ratio: 16/9;
+      border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--rule);
+      background: #0a0a0a;
+      position: relative;
+    }
+    .video-wrap video {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .video-caption {
+      margin-top: 12px; font-size: 0.75rem;
+      color: var(--mid); text-align: center; letter-spacing: 0.01em;
+    }
 
-.cs-lbl{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#6B6B6B;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #D4D3CF;font-family:'Geist',sans-serif}
-.cs-statement{font-size:15px;color:#6B6B6B;font-style:italic;line-height:1.6;margin-bottom:24px;padding-left:16px;border-left:2px solid #D4D3CF;font-family:'Geist',sans-serif}
-.cs-gap-body{font-size:18px;font-weight:400;line-height:1.6;color:#111111;letter-spacing:-0.01em;font-family:'Geist',sans-serif;margin-bottom:16px}
-.cs-gap-body:last-child{margin-bottom:0}
+    /* ── Case study body ── */
+    .cs-body {
+      max-width: 700px; margin: 0 auto;
+      padding: 0 28px 80px;
+    }
 
-.cs-decisions-intro{font-size:15px;color:#6B6B6B;line-height:1.65;margin-bottom:28px;font-family:'Geist',sans-serif}
-.cs-decisions-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#D4D3CF;border:1px solid #D4D3CF;border-radius:8px;overflow:hidden;margin-bottom:0}
-.cs-decision-col{background:#F7F6F3;padding:20px 18px 22px}
-.cs-dec-num{font-size:11px;font-weight:500;letter-spacing:.08em;color:#6B6B6B;margin-bottom:6px;font-family:'Geist',sans-serif}
-.cs-dec-title{font-size:14px;font-weight:500;color:#111111;margin-bottom:6px;letter-spacing:-0.01em;line-height:1.35;font-family:'Geist',sans-serif}
-.cs-dec-principle{font-size:12px;font-style:italic;color:#0066FF;margin-bottom:10px;font-family:'Geist',sans-serif}
-.cs-dec-body{font-size:13px;color:#6B6B6B;line-height:1.6;margin-bottom:10px;font-family:'Geist',sans-serif}
-.cs-dec-rejected{font-size:12px;color:#999999;line-height:1.5;padding-left:10px;border-left:1.5px solid #D4D3CF;font-family:'Geist',sans-serif}
-.cs-dec-rejected strong{font-weight:500;color:#6B6B6B}
+    .cs-section { margin-top: 56px; }
 
-.cs-signal-text{font-size:18px;font-weight:400;line-height:1.6;color:#111111;letter-spacing:-0.01em;font-family:'Geist',sans-serif}
-.cs-signal-text strong{font-weight:500}
+    .cs-label {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--mid);
+      padding-bottom: 14px; border-bottom: 1px solid var(--rule);
+      margin-bottom: 24px;
+    }
 
-@media(max-width:600px){.cs-decisions-grid{grid-template-columns:1fr}}
-</style>
+    .cs-pullquote {
+      font-size: 1rem; line-height: 1.7; color: var(--mid);
+      font-style: italic; padding-left: 18px;
+      border-left: 2px solid var(--rule); margin-bottom: 20px;
+    }
+
+    .cs-body-text {
+      font-size: 0.925rem; line-height: 1.8;
+      color: var(--mid); max-width: 560px;
+    }
+    .cs-body-text strong { color: var(--ink); font-weight: 600; }
+
+    /* ── Three frames ── */
+    .frames-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--rule);
+      border: 1px solid var(--rule); border-radius: 8px;
+      overflow: hidden; margin-top: 28px;
+    }
+    .frame-col {
+      background: var(--bg); padding: 20px 18px 22px;
+    }
+    .frame-num {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em;
+      color: var(--mid); margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .frame-title {
+      font-size: 0.875rem; font-weight: 600; letter-spacing: -0.01em;
+      color: var(--ink); margin-bottom: 6px; line-height: 1.35;
+    }
+    .frame-principle {
+      font-size: 0.75rem; font-style: italic;
+      color: var(--accent); margin-bottom: 10px;
+    }
+    .frame-body {
+      font-size: 0.8rem; color: var(--mid);
+      line-height: 1.65; margin-bottom: 10px;
+    }
+    .frame-rejected {
+      font-size: 0.75rem; color: #999;
+      line-height: 1.55; padding-left: 10px;
+      border-left: 1.5px solid var(--rule);
+    }
+    .frame-rejected strong { font-weight: 500; color: var(--mid); }
+
+    /* ── Pattern note ── */
+    .pattern-note {
+      margin-top: 28px;
+      border: 1px solid var(--accent-dim);
+      background: rgba(0, 102, 255, 0.03);
+      border-radius: 8px; padding: 18px 22px;
+    }
+    .pattern-note p {
+      font-size: 0.875rem; color: var(--mid); line-height: 1.75;
+    }
+    .pattern-note strong { color: var(--ink); font-weight: 600; }
+
+    /* ── Footer ── */
+    .pf-footer {
+      max-width: 700px; margin: 0 auto;
+      border-top: 1px solid var(--rule);
+      padding: 26px 28px 52px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .pf-footer-copy { font-size: 0.76rem; color: var(--mid); }
+    .pf-footer-links { display: flex; gap: 22px; list-style: none; }
+    .pf-footer-links a {
+      font-size: 0.76rem; color: var(--mid);
+      text-decoration: none; transition: color 0.15s;
+    }
+    .pf-footer-links a:hover { color: var(--accent); }
+
+    @media (max-width: 540px) {
+      .pf-nav, .cs-header, .video-hero, .cs-body { padding-left: 20px; padding-right: 20px; }
+      .pf-nav { padding-top: 28px; }
+      .pf-links { gap: 18px; }
+      .frames-grid { grid-template-columns: 1fr; }
+      .pf-footer { flex-direction: column; gap: 14px; align-items: flex-start; padding-left: 20px; padding-right: 20px; }
+    }
+  </style>
 </head>
 <body>
 
-<nav class="pf-nav">
-  <a class="pf-wordmark" href="/">Ladan Johari</a>
-  <ul class="pf-links">
-    <li><a href="mailto:ladan.joharizadeh@gmail.com">Contact</a></li>
-    <li><a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a></li>
-    <li><a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a></li>
-  </ul>
-</nav>
+  <nav class="pf-nav">
+    <a class="pf-wordmark" href="/">Ladan Johari</a>
+    <ul class="pf-links">
+      <li><a href="mailto:ladan.joharizadeh@gmail.com">Contact</a></li>
+      <li><a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+  </nav>
 
-<div class="cs-header">
-  <p class="cs-eyebrow">AI Interaction Pattern &middot; Prototype &middot; Semantic Navigation</p>
-  <h1 class="cs-title">PromptedFind</h1>
-  <p class="cs-descriptor">A prototype for prompt-based navigation inside media &mdash; ask for a moment in plain language, and jump straight to it.</p>
-  <div class="cs-meta">
-    <span>2025</span>
-    <span class="sep">/</span>
-    <span>HTML &middot; CSS &middot; JavaScript</span>
-    <span class="sep">/</span>
-    <a href="https://github.com/ladanjohari/PromptedFind" target="_blank" rel="noopener">GitHub &rarr;</a>
-  </div>
-</div>
-
-<div class="cs-video-wrap">
-  <video class="cs-video" src="/assets/video/PromptedFind_Claude.mp4" controls playsinline preload="metadata"></video>
-</div>
-
-<div class="cs-below">
-
-  <div class="cs-section-gap">
-    <p class="cs-lbl">The Gap</p>
-    <p class="cs-statement">&ldquo;What if &lsquo;Ask&rsquo; did more than answer questions &mdash; what if it became a navigation layer?&rdquo;</p>
-    <p class="cs-gap-body">In the prototype, a user can ask for a moment in a video using natural language, receive interpreted results as meaningful time ranges, and click those ranges to jump directly to the relevant part of the content.</p>
-    <p class="cs-gap-body">The design focus wasn&rsquo;t building a full AI system &mdash; it was making the interaction believable: a YouTube-like watch page, an Ask panel that feels native to the surface, and AI-style summaries instead of raw transcript snippets.</p>
-  </div>
-
-  <div class="cs-section-decisions">
-    <p class="cs-lbl">Three Decisions</p>
-    <p class="cs-decisions-intro">The prototype is built around three choices that turn a question-answering pattern into a navigation primitive.</p>
-    <div class="cs-decisions-grid">
-      <div class="cs-decision-col">
-        <p class="cs-dec-num">01</p>
-        <p class="cs-dec-title">Ranges, not points</p>
-        <p class="cs-dec-principle">&ldquo;Understanding has duration.&rdquo;</p>
-        <p class="cs-dec-body">A semantic timeline maps ideas to time ranges rather than single timestamps, mirroring how a moment in a video actually unfolds.</p>
-        <p class="cs-dec-rejected"><strong>Rejected:</strong> Single-timestamp jump links are precise but lose the surrounding context that makes a moment legible.</p>
-      </div>
-      <div class="cs-decision-col">
-        <p class="cs-dec-num">02</p>
-        <p class="cs-dec-title">Summaries, not transcripts</p>
-        <p class="cs-dec-principle">&ldquo;Read the idea, not the captions.&rdquo;</p>
-        <p class="cs-dec-body">Results are shown as AI-style summaries instead of raw transcript snippets &mdash; closer to how a person would describe what happens.</p>
-        <p class="cs-dec-rejected"><strong>Rejected:</strong> Raw transcript excerpts are accurate but read like search results, not answers.</p>
-      </div>
-      <div class="cs-decision-col">
-        <p class="cs-dec-num">03</p>
-        <p class="cs-dec-title">Native to the watch page</p>
-        <p class="cs-dec-principle">&ldquo;The Ask panel belongs here.&rdquo;</p>
-        <p class="cs-dec-body">Built into a YouTube-like watch page so the Ask panel and semantic timeline feel like part of the player, not a bolted-on chat widget.</p>
-        <p class="cs-dec-rejected"><strong>Rejected:</strong> A separate chat overlay would decouple the answer from the content it describes.</p>
-      </div>
+  <div class="cs-header">
+    <p class="cs-eyebrow">AI Interaction Pattern &middot; Prototype &middot; Semantic Navigation</p>
+    <h1 class="cs-title">PromptedFind</h1>
+    <p class="cs-descriptor">
+      Ask a question about a video. Jump to the exact moment that answers it.
+      A new navigation pattern for long-form content — search that returns a location, not a list.
+    </p>
+    <div class="cs-meta">
+      <span>2025</span>
+      <span class="sep">/</span>
+      <span>AI Interaction &middot; Prototype</span>
+      <span class="sep">/</span>
+      <a href="https://github.com/ladanjohari/PromptedFind" target="_blank" rel="noopener">GitHub &rarr;</a>
     </div>
   </div>
 
-  <p class="cs-signal-text">The broader idea: this pattern isn&rsquo;t limited to video. <strong>The same navigation model can extend to podcasts, PDFs, lectures, and document viewers</strong> by swapping the host adapter while keeping the interaction intact &mdash; understanding as a first-class interface primitive.</p>
+  <div class="video-hero">
+    <div class="video-wrap">
+      <video controls autoplay muted loop playsinline>
+        <source src="../assets/video/PromptedFind_Claude.mp4" type="video/mp4" />
+        Your browser does not support video.
+      </video>
+    </div>
+    <p class="video-caption">PromptedFind &mdash; semantic navigation prototype. Type a question, jump to the moment.</p>
+  </div>
 
-</div>
+  <div class="cs-body">
 
-<footer class="pf-footer">
-  <span class="pf-footer-copy">&copy; 2026 Ladan Johari</span>
-  <ul class="pf-footer-links">
-    <li><a href="mailto:ladan.joharizadeh@gmail.com">ladan.joharizadeh@gmail.com</a></li>
-    <li><a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a></li>
-    <li><a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a></li>
-  </ul>
-</footer>
+    <div class="cs-section">
+      <p class="cs-label">The Gap</p>
+      <p class="cs-pullquote">&ldquo;You&rsquo;re watching a 74-minute lecture. You have one question. Finding the answer means scrubbing.&rdquo;</p>
+      <p class="cs-body-text">
+        Long-form video has no spatial address. A document has paragraphs, headings, a table of contents — you can navigate it by structure.
+        Video only has time. If you want a specific moment, you scrub. You guess. You watch the wrong five minutes.
+        <br><br>
+        <strong>PromptedFind makes the timeline navigable by meaning.</strong> You ask what you want to find.
+        The interface segments the video semantically, highlights relevant moments, and jumps you there.
+        The query returns a location — not a transcript, not a summary, a timestamp you can trust.
+      </p>
+    </div>
+
+    <div class="cs-section">
+      <p class="cs-label">Three Decisions</p>
+      <p class="cs-body-text" style="margin-bottom: 0;">
+        Each decision was a choice about what kind of interface this is — tool, search engine, or navigation system.
+        It's the third one.
+      </p>
+      <div class="frames-grid">
+        <div class="frame-col">
+          <p class="frame-num">01</p>
+          <p class="frame-title">The answer is a timestamp, not text</p>
+          <p class="frame-principle">&ldquo;Search as navigation.&rdquo;</p>
+          <p class="frame-body">
+            The query moves you inside the video. The interface doesn't summarize or transcribe —
+            it relocates you to the moment where the answer lives.
+          </p>
+          <p class="frame-rejected"><strong>Rejected:</strong> Returning a text answer pulls you out of the video entirely. The experience should keep you inside the content, not above it.</p>
+        </div>
+        <div class="frame-col">
+          <p class="frame-num">02</p>
+          <p class="frame-title">Segments, not a search results list</p>
+          <p class="frame-principle">&ldquo;The timeline is the interface.&rdquo;</p>
+          <p class="frame-body">
+            The video timeline is divided into labeled semantic segments. Relevant ones are highlighted.
+            You see the shape of the answer before you click it.
+          </p>
+          <p class="frame-rejected"><strong>Rejected:</strong> A list of timestamps with text previews ignores the visual nature of video. The timeline carries spatial context that a list destroys.</p>
+        </div>
+        <div class="frame-col">
+          <p class="frame-num">03</p>
+          <p class="frame-title">The query stays visible while you watch</p>
+          <p class="frame-principle">&ldquo;Context persists.&rdquo;</p>
+          <p class="frame-body">
+            The question panel stays open alongside the video. You can ask follow-ups without losing
+            your place. The interface is a co-pilot, not a one-shot lookup.
+          </p>
+          <p class="frame-rejected"><strong>Rejected:</strong> Closing the panel after answering treats the query as disposable. Keeping it open acknowledges that understanding a lecture is iterative.</p>
+        </div>
+      </div>
+
+      <div class="pattern-note">
+        <p>
+          <strong>Why this pattern matters beyond video.</strong>
+          The same logic applies to any long-form content without navigable structure —
+          podcasts, recorded meetings, legal documents, research papers.
+          PromptedFind is a prototype of a pattern: <strong>ask a question, get a location.</strong>
+          The medium changes. The interaction stays the same.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="pf-footer">
+    <span class="pf-footer-copy">&copy; 2026 Ladan Johari</span>
+    <ul class="pf-footer-links">
+      <li><a href="mailto:ladan.joharizadeh@gmail.com">ladan.joharizadeh@gmail.com</a></li>
+      <li><a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+  </footer>
 
 </body>
 </html>

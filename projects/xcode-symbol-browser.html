@@ -1,176 +1,364 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Xcode Symbol Browser &mdash; Ladan Johari</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xcode Symbol Browser &mdash; Ladan Johari</title>
+  <meta name="description" content="Xcode Symbol Browser — a column-based interface for navigating large codebases by meaning, not by file location. Design case study by Ladan Johari." />
+  <meta name="robots" content="index, follow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-body {
-  font-family: 'Geist', sans-serif;
-  background: #F7F6F3;
-  color: #111111;
-  min-height: 100vh;
-}
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── Portfolio NavBar ── */
-.pf-nav{
-  max-width:700px;margin:0 auto;
-  padding:40px 28px 0;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.pf-wordmark{font-size:0.875rem;font-weight:600;color:#111111;text-decoration:none;letter-spacing:-0.02em;font-family:'Geist',sans-serif}
-.pf-wordmark:hover{color:#0066FF}
-.pf-links{display:flex;gap:28px;list-style:none}
-.pf-links a{font-size:0.8rem;font-weight:500;color:#6B6B6B;text-decoration:none;font-family:'Geist',sans-serif;transition:color .15s}
-.pf-links a:hover{color:#0066FF}
+    :root {
+      --bg: #F7F6F3; --ink: #111111; --mid: #6B6B6B;
+      --rule: #D4D3CF; --hover-row: #F0EFEC;
+      --accent: #0066FF; --accent-dim: #D6E4FF;
+    }
 
-/* ── Portfolio FooterBar ── */
-.pf-footer{
-  max-width:700px;margin:0 auto;
-  border-top:1px solid #D4D3CF;
-  padding:26px 28px 52px;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.pf-footer-copy{font-size:0.76rem;color:#6B6B6B;font-family:'Geist',sans-serif}
-.pf-footer-links{display:flex;gap:22px;list-style:none}
-.pf-footer-links a{font-size:0.76rem;color:#6B6B6B;text-decoration:none;font-family:'Geist',sans-serif;transition:color .15s}
-.pf-footer-links a:hover{color:#0066FF}
+    html { background: var(--bg); }
+    body {
+      font-family: 'Geist', system-ui, -apple-system, sans-serif;
+      background: var(--bg); color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
 
-/* ── Case Study Header ── */
-.cs-header{
-  max-width:700px;margin:0 auto;
-  padding:48px 28px 0;
-}
-.cs-eyebrow{font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#6B6B6B;margin-bottom:16px;font-family:'Geist',sans-serif}
-.cs-title{font-size:32px;font-weight:500;letter-spacing:-0.03em;line-height:1.15;color:#111111;margin-bottom:12px;font-family:'Geist',sans-serif}
-.cs-descriptor{font-size:17px;color:#6B6B6B;font-weight:400;line-height:1.5;margin-bottom:20px;max-width:540px;font-family:'Geist',sans-serif}
-.cs-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:#6B6B6B;font-family:'Geist',sans-serif;margin-bottom:32px}
-.cs-meta .sep{color:#D4D3CF}
-.cs-meta a{color:#0066FF;text-decoration:none;font-weight:500}
-.cs-meta a:hover{text-decoration:underline}
+    /* ── Nav ── */
+    .pf-nav {
+      max-width: 700px; margin: 0 auto;
+      padding: 40px 28px 0;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .pf-wordmark {
+      font-size: 0.875rem; font-weight: 600; letter-spacing: -0.02em;
+      color: var(--ink); text-decoration: none;
+    }
+    .pf-links { display: flex; gap: 28px; list-style: none; }
+    .pf-links a {
+      font-size: 0.8rem; font-weight: 500; color: var(--mid);
+      text-decoration: none; transition: color 0.15s;
+    }
+    .pf-links a:hover { color: var(--accent); }
 
-/* ── Video ── */
-.cs-video-wrap{
-  max-width:700px;margin:0 auto;padding:0 28px 64px;
-}
-.cs-video-frame{
-  position:relative;width:100%;padding-top:56.25%;
-  border-radius:10px;border:1px solid #D4D3CF;overflow:hidden;
-  background:#111111;
-  box-shadow:0 12px 40px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
-}
-.cs-video-frame iframe{
-  position:absolute;top:0;left:0;width:100%;height:100%;border:0;display:block;
-}
+    /* ── Header ── */
+    .cs-header {
+      max-width: 700px; margin: 0 auto;
+      padding: 48px 28px 0;
+    }
+    .cs-eyebrow {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--mid); margin-bottom: 16px;
+    }
+    .cs-title {
+      font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700;
+      letter-spacing: -0.04em; line-height: 1.08;
+      color: var(--ink); margin-bottom: 14px;
+    }
+    .cs-descriptor {
+      font-size: 1rem; color: var(--mid); line-height: 1.65;
+      margin-bottom: 20px; max-width: 520px;
+    }
+    .cs-meta {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 0.78rem; color: var(--mid);
+      padding-bottom: 40px; border-bottom: 1px solid var(--rule);
+      flex-wrap: wrap;
+    }
+    .cs-meta .sep { color: var(--rule); }
+    .cs-meta a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    .cs-meta a:hover { text-decoration: underline; }
 
-/* ── Case study sections below the video ── */
-.cs-below{max-width:700px;margin:0 auto;padding:0 28px 80px}
-.cs-section-gap{margin-bottom:64px}
-.cs-section-decisions{margin-bottom:64px}
+    /* ── Hero image ── */
+    .cs-hero-img {
+      max-width: 700px; margin: 0 auto;
+      padding: 40px 28px 0;
+    }
+    .cs-hero-img img {
+      width: 100%; border-radius: 10px;
+      border: 1px solid var(--rule); display: block;
+    }
 
-.cs-lbl{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#6B6B6B;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #D4D3CF;font-family:'Geist',sans-serif}
-.cs-statement{font-size:15px;color:#6B6B6B;font-style:italic;line-height:1.6;margin-bottom:24px;padding-left:16px;border-left:2px solid #D4D3CF;font-family:'Geist',sans-serif}
-.cs-gap-body{font-size:18px;font-weight:400;line-height:1.6;color:#111111;letter-spacing:-0.01em;font-family:'Geist',sans-serif;margin-bottom:16px}
-.cs-gap-body:last-child{margin-bottom:0}
+    /* ── YouTube embed ── */
+    .cs-video {
+      max-width: 700px; margin: 0 auto;
+      padding: 32px 28px 0;
+    }
+    .cs-video-wrap {
+      width: 100%; aspect-ratio: 16/9;
+      border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--rule); background: #0a0a0a;
+    }
+    .cs-video-wrap iframe {
+      width: 100%; height: 100%; border: none; display: block;
+    }
+    .cs-video-caption {
+      margin-top: 10px; font-size: 0.75rem;
+      color: var(--mid); text-align: center;
+    }
 
-.cs-decisions-intro{font-size:15px;color:#6B6B6B;line-height:1.65;margin-bottom:28px;font-family:'Geist',sans-serif}
-.cs-decisions-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#D4D3CF;border:1px solid #D4D3CF;border-radius:8px;overflow:hidden;margin-bottom:0}
-.cs-decision-col{background:#F7F6F3;padding:20px 18px 22px}
-.cs-dec-num{font-size:11px;font-weight:500;letter-spacing:.08em;color:#6B6B6B;margin-bottom:6px;font-family:'Geist',sans-serif}
-.cs-dec-title{font-size:14px;font-weight:500;color:#111111;margin-bottom:6px;letter-spacing:-0.01em;line-height:1.35;font-family:'Geist',sans-serif}
-.cs-dec-principle{font-size:12px;font-style:italic;color:#0066FF;margin-bottom:10px;font-family:'Geist',sans-serif}
-.cs-dec-body{font-size:13px;color:#6B6B6B;line-height:1.6;margin-bottom:10px;font-family:'Geist',sans-serif}
-.cs-dec-rejected{font-size:12px;color:#999999;line-height:1.5;padding-left:10px;border-left:1.5px solid #D4D3CF;font-family:'Geist',sans-serif}
-.cs-dec-rejected strong{font-weight:500;color:#6B6B6B}
+    /* ── Body ── */
+    .cs-body {
+      max-width: 700px; margin: 0 auto;
+      padding: 0 28px 80px;
+    }
+    .cs-section { margin-top: 56px; }
 
-.cs-signal-text{font-size:18px;font-weight:400;line-height:1.6;color:#111111;letter-spacing:-0.01em;font-family:'Geist',sans-serif}
-.cs-signal-text strong{font-weight:500}
+    .cs-label {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--mid);
+      padding-bottom: 14px; border-bottom: 1px solid var(--rule);
+      margin-bottom: 24px;
+    }
 
-@media(max-width:600px){.cs-decisions-grid{grid-template-columns:1fr}}
-</style>
+    .cs-pullquote {
+      font-size: 1rem; line-height: 1.7; color: var(--mid);
+      font-style: italic; padding-left: 18px;
+      border-left: 2px solid var(--rule); margin-bottom: 20px;
+    }
+
+    .cs-body-text {
+      font-size: 0.925rem; line-height: 1.8;
+      color: var(--mid); max-width: 560px;
+    }
+    .cs-body-text strong { color: var(--ink); font-weight: 600; }
+
+    /* ── Context cards ── */
+    .context-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--rule);
+      border: 1px solid var(--rule); border-radius: 8px;
+      overflow: hidden; margin-top: 24px;
+    }
+    .context-card {
+      background: var(--bg); padding: 18px 16px 20px;
+    }
+    .context-title {
+      font-size: 0.82rem; font-weight: 600; letter-spacing: -0.01em;
+      color: var(--ink); margin-bottom: 7px; line-height: 1.3;
+    }
+    .context-body {
+      font-size: 0.78rem; color: var(--mid); line-height: 1.6;
+    }
+
+    /* ── Three decisions ── */
+    .decisions-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--rule);
+      border: 1px solid var(--rule); border-radius: 8px;
+      overflow: hidden; margin-top: 24px;
+    }
+    .decision-col {
+      background: var(--bg); padding: 20px 18px 22px;
+    }
+    .dec-num {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em;
+      color: var(--mid); margin-bottom: 6px; text-transform: uppercase;
+    }
+    .dec-title {
+      font-size: 0.875rem; font-weight: 600; letter-spacing: -0.01em;
+      color: var(--ink); margin-bottom: 6px; line-height: 1.35;
+    }
+    .dec-principle {
+      font-size: 0.75rem; font-style: italic;
+      color: var(--accent); margin-bottom: 10px;
+    }
+    .dec-body {
+      font-size: 0.8rem; color: var(--mid);
+      line-height: 1.65; margin-bottom: 10px;
+    }
+    .dec-rejected {
+      font-size: 0.75rem; color: #999;
+      line-height: 1.55; padding-left: 10px;
+      border-left: 1.5px solid var(--rule);
+    }
+    .dec-rejected strong { font-weight: 500; color: var(--mid); }
+
+    /* ── Test quote ── */
+    .test-quote {
+      margin-top: 28px;
+      border: 1px solid var(--rule);
+      border-radius: 8px; padding: 22px 24px;
+      background: var(--hover-row);
+    }
+    .test-quote-text {
+      font-size: 1.05rem; font-weight: 500; letter-spacing: -0.01em;
+      color: var(--ink); line-height: 1.5; margin-bottom: 8px;
+    }
+    .test-quote-attr {
+      font-size: 0.75rem; color: var(--mid);
+    }
+
+    /* ── Footer ── */
+    .pf-footer {
+      max-width: 700px; margin: 0 auto;
+      border-top: 1px solid var(--rule);
+      padding: 26px 28px 52px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .pf-footer-copy { font-size: 0.76rem; color: var(--mid); }
+    .pf-footer-links { display: flex; gap: 22px; list-style: none; }
+    .pf-footer-links a {
+      font-size: 0.76rem; color: var(--mid);
+      text-decoration: none; transition: color 0.15s;
+    }
+    .pf-footer-links a:hover { color: var(--accent); }
+
+    @media (max-width: 540px) {
+      .pf-nav, .cs-header, .cs-hero-img, .cs-video, .cs-body {
+        padding-left: 20px; padding-right: 20px;
+      }
+      .pf-nav { padding-top: 28px; }
+      .pf-links { gap: 18px; }
+      .context-grid, .decisions-grid { grid-template-columns: 1fr; }
+      .pf-footer {
+        flex-direction: column; gap: 14px;
+        align-items: flex-start;
+        padding-left: 20px; padding-right: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<nav class="pf-nav">
-  <a class="pf-wordmark" href="/">Ladan Johari</a>
-  <ul class="pf-links">
-    <li><a href="mailto:ladan.joharizadeh@gmail.com">Contact</a></li>
-    <li><a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a></li>
-    <li><a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a></li>
-  </ul>
-</nav>
+  <nav class="pf-nav">
+    <a class="pf-wordmark" href="/">Ladan Johari</a>
+    <ul class="pf-links">
+      <li><a href="mailto:ladan.joharizadeh@gmail.com">Contact</a></li>
+      <li><a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+  </nav>
 
-<div class="cs-header">
-  <p class="cs-eyebrow">Developer Tools &middot; Information Architecture &middot; macOS</p>
-  <h1 class="cs-title">Xcode Symbol Browser</h1>
-  <p class="cs-descriptor">A structure-first way to navigate large codebases &mdash; finding classes, methods, and definitions by browsing symbols instead of files.</p>
-  <div class="cs-meta">
-    <span>2024</span>
-    <span class="sep">/</span>
-    <span>macOS &middot; Developer Tools</span>
-  </div>
-</div>
-
-<div class="cs-video-wrap">
-  <div class="cs-video-frame">
-    <iframe src="https://www.youtube.com/embed/b9VX6qipe84" title="Xcode Symbol Browser demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-  </div>
-</div>
-
-<div class="cs-below">
-
-  <div class="cs-section-gap">
-    <p class="cs-lbl">The Gap</p>
-    <p class="cs-statement">&ldquo;Developers spend more time finding code than reading it. File-based navigation hides the structure that actually matters &mdash; symbols.&rdquo;</p>
-    <p class="cs-gap-body">Xcode Symbol Browser is a developer tool concept focused on finding classes, methods, and definitions with less friction by organizing code around symbols instead of only files.</p>
-    <p class="cs-gap-body">The concept centers on discoverability, symbol grouping, and quick previews &mdash; so developers can inspect structure without repeatedly switching files.</p>
-  </div>
-
-  <div class="cs-section-decisions">
-    <p class="cs-lbl">Three Decisions</p>
-    <p class="cs-decisions-intro">The browser is shaped by three choices &mdash; each one prioritizing how code is structured over where it happens to live.</p>
-    <div class="cs-decisions-grid">
-      <div class="cs-decision-col">
-        <p class="cs-dec-num">01</p>
-        <p class="cs-dec-title">Group by symbol, not by file</p>
-        <p class="cs-dec-principle">&ldquo;Structure over location.&rdquo;</p>
-        <p class="cs-dec-body">Classes, methods, and definitions are grouped by what they are and how they relate &mdash; not by which file happens to contain them.</p>
-        <p class="cs-dec-rejected"><strong>Rejected:</strong> A flat file tree mirrors the filesystem, but in large codebases the structure that matters is buried across dozens of files.</p>
-      </div>
-      <div class="cs-decision-col">
-        <p class="cs-dec-num">02</p>
-        <p class="cs-dec-title">Inline previews, not file switching</p>
-        <p class="cs-dec-principle">&ldquo;See it before you jump to it.&rdquo;</p>
-        <p class="cs-dec-body">Selecting a symbol shows its definition in place, so developers can inspect structure without losing their position in the browser.</p>
-        <p class="cs-dec-rejected"><strong>Rejected:</strong> Jumping straight to the file on every click works, but each jump costs orientation &mdash; you re-find your place every time.</p>
-      </div>
-      <div class="cs-decision-col">
-        <p class="cs-dec-num">03</p>
-        <p class="cs-dec-title">Filtering built for scale</p>
-        <p class="cs-dec-principle">&ldquo;Narrow fast, scan less.&rdquo;</p>
-        <p class="cs-dec-body">Type-ahead filtering narrows thousands of symbols to the handful that matter, scoped by kind &mdash; class, method, property &mdash; as well as name.</p>
-        <p class="cs-dec-rejected"><strong>Rejected:</strong> A simple name-only search works for small projects but turns noisy fast in codebases with thousands of symbols.</p>
-      </div>
+  <div class="cs-header">
+    <p class="cs-eyebrow">Developer Tools &middot; Information Architecture &middot; macOS</p>
+    <h1 class="cs-title">Xcode Symbol Browser</h1>
+    <p class="cs-descriptor">
+      A column-based interface for navigating large Xcode codebases by meaning, not by file location.
+      Spatial structure for how developers actually think.
+    </p>
+    <div class="cs-meta">
+      <span>2024</span>
+      <span class="sep">/</span>
+      <span>Figma &middot; SwiftUI &middot; macOS</span>
+      <span class="sep">/</span>
+      <a href="https://www.ladanjohari.com/xcode-symbol-browser" target="_blank" rel="noopener">Original case study &rarr;</a>
     </div>
   </div>
 
-  <p class="cs-signal-text">The broader idea: navigating by structure rather than location isn&rsquo;t specific to Xcode. <strong>The same symbol-first model could extend to any large codebase, IDE, or documentation browser</strong> where developers spend more time searching than reading.</p>
+  <!-- Hero image — swap src for a real screenshot when available -->
+  <div class="cs-hero-img">
+    <img
+      src="/assets/thumbs/xcode-symbol-browser.jpg"
+      alt="Xcode Symbol Browser interface — column-based navigation"
+    />
+  </div>
 
-</div>
+  <!-- YouTube embed — replace VIDEO_ID with the actual ID from your YouTube URL -->
+  <div class="cs-video">
+    <div class="cs-video-wrap">
+      <iframe
+        src="https://www.youtube.com/embed/b9VX6qipe84?autoplay=0&rel=0&modestbranding=1"
+        title="Xcode Symbol Browser prototype walkthrough"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <p class="cs-video-caption">Prototype walkthrough &mdash; column navigation, symbol filtering, contextual previews</p>
+  </div>
 
-<footer class="pf-footer">
-  <span class="pf-footer-copy">&copy; 2026 Ladan Johari</span>
-  <ul class="pf-footer-links">
-    <li><a href="mailto:ladan.joharizadeh@gmail.com">ladan.joharizadeh@gmail.com</a></li>
-    <li><a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a></li>
-    <li><a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a></li>
-  </ul>
-</footer>
+  <div class="cs-body">
+
+    <div class="cs-section">
+      <p class="cs-label">The Gap</p>
+      <p class="cs-pullquote">&ldquo;The challenge wasn&rsquo;t understanding the logic &mdash; it was locating it.&rdquo;</p>
+      <p class="cs-body-text">
+        Xcode organizes code by file. But developers think in symbols &mdash;
+        functions, classes, protocols. When you join a new codebase,
+        the file tree tells you where things live, not what they do or how they connect.
+        <br><br>
+        <strong>The Xcode Symbol Browser reorganizes that surface.</strong>
+        Instead of a file hierarchy, you get a column-based view — inspired by Finder's Miller columns —
+        where symbols are grouped by type and browseable spatially.
+        You navigate by meaning. The architecture reveals itself as you explore.
+      </p>
+
+      <div class="context-grid">
+        <div class="context-card">
+          <p class="context-title">Massive codebases</p>
+          <p class="context-body">Repositories with thousands of files and symbols give no navigable overview of what exists.</p>
+        </div>
+        <div class="context-card">
+          <p class="context-title">Unfamiliar territory</p>
+          <p class="context-body">Onboarding to a new project requires building a mental model with no spatial aid.</p>
+        </div>
+        <div class="context-card">
+          <p class="context-title">Flat tooling</p>
+          <p class="context-body">File trees and Quick Open offer access, not understanding. Linear tools for non-linear thinking.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-section">
+      <p class="cs-label">Three Decisions</p>
+      <p class="cs-body-text" style="margin-bottom: 0;">
+        The interface is built on three structural choices, each one a
+        deliberate departure from how Xcode currently works.
+      </p>
+      <div class="decisions-grid">
+        <div class="decision-col">
+          <p class="dec-num">01</p>
+          <p class="dec-title">Miller columns, not a file tree</p>
+          <p class="dec-principle">&ldquo;Spatial structure for spatial thinking.&rdquo;</p>
+          <p class="dec-body">
+            Column-based navigation lets you move through symbol relationships
+            without losing context. Each column is a level of specificity.
+            You see where you came from while exploring where you&rsquo;re going.
+          </p>
+          <p class="dec-rejected"><strong>Rejected:</strong> List views and expandable trees collapse into single-column experiences that hide structure as you go deeper.</p>
+        </div>
+        <div class="decision-col">
+          <p class="dec-num">02</p>
+          <p class="dec-title">Organize by symbol type, not file</p>
+          <p class="dec-principle">&ldquo;Code relationships over folder hierarchy.&rdquo;</p>
+          <p class="dec-body">
+            Classes, protocols, functions, and enums are surfaced as first-class
+            categories. Smart filters let you narrow by type and scope instantly,
+            matching how developers search mentally.
+          </p>
+          <p class="dec-rejected"><strong>Rejected:</strong> File-based grouping reflects how code is stored, not how developers think when debugging or onboarding.</p>
+        </div>
+        <div class="decision-col">
+          <p class="dec-num">03</p>
+          <p class="dec-title">Hover previews, not file switches</p>
+          <p class="dec-principle">&ldquo;Context without interruption.&rdquo;</p>
+          <p class="dec-body">
+            Symbol definitions preview on hover. You can verify what something is
+            before committing to opening it. Reduces the cycle of opening,
+            reading, and closing files during exploration.
+          </p>
+          <p class="dec-rejected"><strong>Rejected:</strong> Opening a file to check a definition breaks flow entirely — you lose your place in the hierarchy.</p>
+        </div>
+      </div>
+
+      <div class="test-quote">
+        <p class="test-quote-text">&ldquo;It&rsquo;s like Finder, but for code. It shows you structure, not just files.&rdquo;</p>
+        <p class="test-quote-attr">User testing feedback &mdash; software engineer, Xcode user</p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="pf-footer">
+    <span class="pf-footer-copy">&copy; 2026 Ladan Johari</span>
+    <ul class="pf-footer-links">
+      <li><a href="mailto:ladan.joharizadeh@gmail.com">ladan.joharizadeh@gmail.com</a></li>
+      <li><a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+  </footer>
 
 </body>
 </html>
