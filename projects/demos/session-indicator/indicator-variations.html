@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session Indicator &mdash; Variations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#080808;color:#e8e8e8;font-family:'Inter',sans-serif;font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;padding:0 0 80px}
+.header{padding:56px 32px 48px;text-align:center;border-bottom:.5px solid rgba(255,255,255,.07);margin-bottom:48px}
+.header-eyebrow{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#333;margin-bottom:14px;font-family:'JetBrains Mono',monospace}
+.header-title{font-size:30px;font-weight:600;color:#e8e8e8;letter-spacing:-.022em;margin-bottom:10px}
+.header-sub{font-size:14px;color:#666;max-width:560px;margin:0 auto;line-height:1.7}
+.container{max-width:1120px;margin:0 auto;padding:0 32px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.card{background:#111;border:.5px solid rgba(255,255,255,.07);border-radius:12px;padding:18px 16px 16px;display:flex;flex-direction:column;gap:0;transition:border-color .15s}
+.card:hover{border-color:rgba(255,255,255,.13)}
+.card.rec{border:.5px solid rgba(74,176,255,.35);background:#0d1520}
+.card-badge{font-size:10px;font-weight:500;color:#4ab0ff;background:rgba(74,176,255,.1);border:.5px solid rgba(74,176,255,.25);border-radius:20px;padding:2px 9px;display:inline-block;width:fit-content;margin-bottom:10px}
+.card-name{font-size:15px;font-weight:600;color:#e8e8e8;letter-spacing:-.01em;margin-bottom:6px}
+.card-desc{font-size:12px;color:#666;line-height:1.65;min-height:42px;margin-bottom:10px}
+.demo{background:#0a0a0a;border:.5px solid rgba(255,255,255,.05);border-radius:8px;height:30px;display:flex;align-items:center;justify-content:flex-end;padding:0 10px;margin-bottom:12px}
+.leg-hdr{font-size:9px;font-weight:500;color:rgba(255,255,255,.2);letter-spacing:.08em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;margin-bottom:6px}
+.legend{display:flex;gap:4px;margin-bottom:12px}
+.leg{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;background:rgba(255,255,255,.025);border:.5px solid rgba(255,255,255,.05);border-radius:6px;padding:7px 2px 6px}
+.leg-viz{height:20px;display:flex;align-items:center;justify-content:center}
+.leg-lbl{font-size:8.5px;color:rgba(255,255,255,.28);font-family:'JetBrains Mono',monospace;letter-spacing:.02em;text-align:center}
+.divr{height:.5px;background:rgba(255,255,255,.07);margin:8px 0}
+.prow{display:flex;flex-direction:column;gap:4px}
+.pr,.co{font-size:11px;line-height:1.5;display:flex;gap:5px}
+.pr{color:#34C759}.co{color:#666}
+.footer{text-align:center;margin-top:64px;padding-top:24px;border-top:.5px solid rgba(255,255,255,.07);font-size:11px;color:#333;font-family:'JetBrains Mono',monospace;letter-spacing:.04em}
+
+/* Shared dot */
+.d{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.ddim{background:rgba(255,255,255,.16)}
+.dsh{background:#fff;animation:sh 1.6s ease-in-out infinite}
+.dsh2{background:#fff;animation:sh 1.6s ease-in-out .55s infinite}
+.dsh3{background:#fff;animation:sh 1.6s ease-in-out 1.1s infinite}
+.damb{background:#E8952A}.dred{background:#FF3B30}.dgrn{background:#34C759}
+@keyframes sh{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.28);opacity:.12}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.18}}
+
+/* Pill containers */
+.pill{background:#1e1e1e;border:.5px solid #404040;border-radius:10px;height:16px;display:inline-flex;align-items:center;padding:0 6px;gap:4px}
+.hpill{background:#1e1e1e;border:.5px solid #404040;border-radius:10px;height:18px;display:inline-flex;align-items:center;padding:0 7px;gap:5px}
+.gpill{background:#111;border:.5px solid #333;border-radius:10px;height:20px;display:inline-flex;align-items:center;padding:0 7px;gap:4px}
+.flpill{background:#1e1e1e;border:.5px solid #404040;border-radius:10px;height:18px;display:inline-flex;align-items:flex-end;padding:0 7px 1px;gap:3px}
+.wvpill{background:#1e1e1e;border:.5px solid #404040;border-radius:10px;height:18px;display:inline-flex;align-items:flex-end;padding:0 7px 2px;gap:2px}
+.am-pill{background:#111;border:.5px solid #333;border-radius:10px;height:22px;display:inline-flex;align-items:flex-end;padding:3px 7px 3px;gap:3px}
+.orb-pill{background:#1e1e1e;border:.5px solid #404040;border-radius:10px;height:16px;display:inline-flex;align-items:center;padding:0 7px;gap:5px}
+.cl-pill{background:rgba(38,24,20,.95);border:.5px solid rgba(180,100,70,.45);border-radius:10px;height:16px;display:inline-flex;align-items:center;padding:0 7px;gap:5px}
+
+/* Pixel Art demo */
+.pa{display:inline-flex;align-items:center;flex-shrink:0}
+.paf{animation:pxf .5s steps(2) infinite}
+.paf2{animation:pxf .7s steps(2) .2s infinite}
+.pai{opacity:.9}
+.pab{animation:pxb 1.1s steps(2) infinite}
+@keyframes pxf{0%{opacity:1}50%{opacity:.72}}
+@keyframes pxb{0%{opacity:1}55%{opacity:.2}}
+
+/* Pixel Flame */
+.fl{border-radius:40% 40% 0 0;flex-shrink:0;width:6px}
+.fl1{background:#ff9a3c;animation:fl1a .6s ease-in-out infinite}
+.fl2{background:#ff6b35;animation:fl2a .85s ease-in-out .2s infinite}
+.fl3{background:#ffcc00;animation:fl3a .7s ease-in-out .4s infinite}
+.fl4{background:#E8952A;height:5px;animation:flw 2s ease-in-out infinite}
+.fl5{background:#34C759;height:8px;border-radius:50%}
+@keyframes fl1a{0%,100%{height:9px}50%{height:13px}}
+@keyframes fl2a{0%,100%{height:7px}50%{height:12px}}
+@keyframes fl3a{0%,100%{height:11px}50%{height:6px}}
+@keyframes flw{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* Waveform */
+.wb{width:4px;border-radius:1.5px 1.5px 0 0;flex-shrink:0}
+.wb1{background:#fff;animation:wq1 1.1s ease-in-out infinite}
+.wb2{background:#fff;animation:wq2 .8s ease-in-out .2s infinite}
+.wb3{background:#fff;animation:wq3 1.3s ease-in-out .1s infinite}
+.wb4{background:#E8952A;height:5px}.wb5{background:#34C759;height:10px}
+@keyframes wq1{0%,100%{height:7px}50%{height:13px}}
+@keyframes wq2{0%,100%{height:11px}50%{height:5px}}
+@keyframes wq3{0%,100%{height:9px}50%{height:12px}}
+
+/* Agent Meter */
+.am-col{display:flex;flex-direction:column;align-items:center;gap:1px;width:5px}
+.sg{width:5px;height:2.8px;border-radius:.5px;flex-shrink:0;opacity:.08}
+.sg.s1{background:#34C759}.sg.s2{background:#6de08a}.sg.s3{background:#f5e020}.sg.s4{background:#E8952A}.sg.s5{background:#ff6020}
+.sg.anim.s1{animation:sgon 2s ease-in-out 0s infinite}
+.sg.anim.s2{animation:sgon 2s ease-in-out .28s infinite}
+.sg.anim.s3{animation:sgon 2s ease-in-out .55s infinite}
+.sg.anim.s4{animation:sgon 2s ease-in-out .82s infinite}
+.sg.anim.s5{animation:sgon 2s ease-in-out 1.1s infinite}
+@keyframes sgon{0%{opacity:.08}18%{opacity:1}80%{opacity:1}100%{opacity:.08}}
+.am-wait .sg.s1{opacity:.9;background:#E8952A}
+.am-err .sg.s1{opacity:1;background:#FF3B30;animation:blink 1s step-end infinite}
+.am-done .sg{opacity:.7;background:#34C759}
+/* shifted stagger columns */
+.col-b .sg.anim.s1{animation-delay:.3s}.col-b .sg.anim.s2{animation-delay:.58s}.col-b .sg.anim.s3{animation-delay:.85s}.col-b .sg.anim.s4{animation-delay:1.12s}.col-b .sg.anim.s5{animation-delay:1.4s}
+.col-c .sg.anim.s1{animation-delay:.5s}.col-c .sg.anim.s2{animation-delay:.78s}.col-c .sg.anim.s3{animation-delay:1.05s}.col-c .sg.anim.s4{animation-delay:1.32s}.col-c .sg.anim.s5{animation-delay:1.6s}
+
+/* Orbital */
+.orb{width:11px;height:11px;border-radius:50%;border:1.5px solid transparent;flex-shrink:0}
+.orb.sp1{border-top-color:#fff;animation:ospin .7s linear infinite}
+.orb.sp2{border-top-color:#fff;animation:ospin 1.3s linear infinite}
+.orb.wa{border-top-color:#E8952A;transform:rotate(60deg)}
+.orb.dn{border-color:#34C759}
+.orb.idl{border-color:rgba(255,255,255,.18)}
+.orb.err{border-top-color:#FF3B30}
+@keyframes ospin{to{transform:rotate(360deg)}}
+
+/* Claude Native */
+.cd{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.cd1{background:#ff9a6c;animation:cdg 1.8s ease-in-out infinite}
+.cd2{background:#ff7a4c;animation:cdg 1.3s ease-in-out .6s infinite}
+.cd3{background:#c47a3a}.cd4{background:#a8d48a}
+@keyframes cdg{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.5)}}
+
+/* Legend mini visuals */
+.leg-fl-idle{width:5px;height:2px;background:rgba(255,255,255,.12);border-radius:1px}
+.leg-fl-act{width:5px;background:#ff9a3c;border-radius:40% 40% 0 0;animation:fl2a .85s ease-in-out infinite}
+.leg-fl-wait{width:5px;height:5px;background:#E8952A;border-radius:40% 40% 0 0}
+.leg-fl-err{width:5px;height:3px;background:#FF3B30;border-radius:40% 40% 0 0;animation:blink 1s step-end infinite}
+.leg-fl-done{width:6px;height:6px;border-radius:50%;background:#34C759}
+.leg-wb-idle{width:4px;height:2px;background:rgba(255,255,255,.12);border-radius:1px 1px 0 0}
+.leg-wb-act{width:4px;background:#fff;border-radius:1.5px 1.5px 0 0;animation:wq2 .8s ease-in-out infinite}
+.leg-wb-wait{width:4px;height:5px;background:#E8952A;border-radius:1.5px 1.5px 0 0}
+.leg-wb-err{width:4px;height:3px;background:#FF3B30;border-radius:1.5px 1.5px 0 0;animation:blink 1s step-end infinite}
+.leg-wb-done{width:4px;height:10px;background:#34C759;border-radius:1.5px 1.5px 0 0}
+.leg-am-col{display:flex;flex-direction:column;align-items:center;gap:1px;width:5px}
+.sg-s{width:5px;height:2.5px;border-radius:.5px;opacity:.08}
+.sg-s.on{opacity:1}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <p class="header-eyebrow">Session Indicator &mdash; Design Exploration</p>
+  <h1 class="header-title">Indicator Variations</h1>
+  <p class="header-sub">Eight visual languages for the same underlying data. Each card shows the variation in context and a legend of all five states.</p>
+</div>
+
+<div class="container">
+<div class="grid">
+
+<!-- ── PULSE ── -->
+<div class="card rec">
+  <span class="card-badge">recommended</span>
+  <p class="card-name">Pulse</p>
+  <p class="card-desc">Shimmer for active, amber for waiting. Motion and color each carry one independent signal.</p>
+  <div class="demo">
+    <div class="pill">
+      <div class="d dsh"></div><div class="d dsh2"></div><div class="d damb"></div><div class="d dred"></div><div class="d dgrn"></div>
+    </div>
+  </div>
+  <p class="leg-hdr">states</p>
+  <div class="legend">
+    <div class="leg"><div class="leg-viz"><div class="d ddim"></div></div><span class="leg-lbl">idle</span></div>
+    <div class="leg"><div class="leg-viz"><div class="d dsh"></div></div><span class="leg-lbl">active</span></div>
+    <div class="leg"><div class="leg-viz"><div class="d damb"></div></div><span class="leg-lbl">waiting</span></div>
+    <div class="leg"><div class="leg-viz"><div class="d dred"></div></div><span class="leg-lbl">error</span></div>
+    <div class="leg"><div class="leg-viz"><div class="d dgrn"></div></div><span class="leg-lbl">done</span></div>
+  </div>
+  <div class="divr"></div>
+  <div class="prow">
+    <div class="pr"><span>+</span><span>Apple HIG native, fits system UI</span></div>
+    <div class="pr"><span>+</span><span>Motion and color are independent channels</span></div>
+    <div class="co"><span>&ndash;</span><span>Color language needs one-time learning</span></div>
+  </div>
+</div>
+
+<!-- ── PIXEL HEART ── -->
+<div class="card">
+  <p class="card-name">Pixel Heart</p>
+  <p class="card-desc">Same state logic as Pulse, but dots are replaced with pixel art hearts.</p>
+  <div class="demo"><div class="hpill" id="hpill-demo"></div></div>
+  <p class="leg-hdr">states</p>
+  <div class="legend" id="hpill-legend"></div>
+  <div class="divr"></div>
+  <div class="prow">
+    <div class="pr"><span>+</span><span>Charming and completely unexpected</span></div>
+    <div class="pr"><span>+</span><span>Identical state logic &mdash; no relearning</span></div>
+    <div class="co"><span>&ndash;</span><span>Playful tone, not for Apple OS proposal</span></div>
+  </div>
+</div>
+
+<!-- ── PIXEL ART ── -->
+<div class="card">
+  <p class="card-name">Pixel Art</p>
+  <p class="card-desc">Each state is a distinct pixel icon. Fire, ice, bolt, star, skull. No legend required.</p>
+  <div class="demo"><div class="gpill" id="gpill-demo"></div></div>
+  <p class="leg-hdr">states</p>
+  <div class="legend" id="gpill-legend"></div>
+  <div class="divr"></div>
+  <div class="prow">
+    <div class="pr"><span>+</span><span>Icons are self-describing, no legend</span></div>
+    <div class="pr"><span>+</span><span>Gaming and developer culture native</span></div>
+    <div class="co"><span>&ndash;</span><span>Wider pill, too expressive for all-day use</span></div>
+  </div>
+</div>
+
+<!-- ── PIXEL FLAME ── -->
+<div class="card">
+  <p class="card-name">Pixel Flame</p>
+  <p class="card-desc">Each session is a flame. Flame height maps directly to workload.</p>
+  <div class="demo">
+    <div class="flpill">
+      <div class="fl fl1"></div><div class="fl fl2"></div><div class="fl fl3"></div><div class="fl fl4"></div><div class="fl fl5"></div>
+    </div>
+  </div>
+  <p class="leg-hdr">states</p>
+  <div class="legend">
+    <div class="leg"><div class="leg-viz"><div class="leg-fl-idle"></div></div><span class="leg-lbl">idle</span></div>
+    <div class="leg"><div class="leg-viz"><div class="leg-fl-act" style="height:9px"></div></div><span class="leg-lbl">active</span></div>
+    <div class="leg"><div class="leg-viz"><div class="leg-fl-wait"></div></div><span class="leg-lbl">waiting</span></div>
+    <div class="leg"><div class="leg-viz"><div class="leg-fl-err"></div></div><span class="leg-lbl">error</span></div>
+    <div class="leg"><div class="leg-viz"><div class="leg-fl-done"></div></div><span class="leg-lbl">done</span></div>
+  </div>
+  <div class="divr"></div>
+  <div class="prow">
+    <div class="pr"><span>+</span><span>Nothing in any menu bar looks like this</span></div>
+    <div class="pr"><span>+</span><span>Flame height intuitively maps to activity</span></div>
+    <div class="co"><span>&ndash;</span><span>Too playful for Apple OS proposal</span></div>
+  </div>
+</div>
+
+<!-- ── WAVEFORM ── -->
+<div class="card">
+  <p class="card-name">Waveform</p>
+  <p class="card-desc">Bars bounce with activity. A still bar means waiting or done.</p>
+  <div class="demo">
+    <div class="wvpill">
+      <div class="wb wb1"></div><div class="wb wb2"></div><div class="wb wb3"></div><div class="wb wb4"></div><div class="wb wb5"></div>
+    </div>
+  </div>
+  <p class="leg-hdr">states</p>
+  <div class="legend">
+    <div class="leg"><div class="leg-viz" style="align-items:flex-end;padding-bottom:2px"><div class="leg-wb-idle"></div></div><span class="leg-lbl">idle</span></div>
+    <div class="leg"><div class="leg-viz" style="align-items:flex-end;padding-bottom:2px"><div class="leg-wb-act" style="height:8px"></div></div><span class="leg-lbl">active</span></div>
+    <div class="leg"><div class="leg-viz" style="align-items:flex-end;padding-bottom:2px"><div class="leg-wb-wait"></div></div><span class="leg-lbl">waiting</span></div>
+    <div class="leg"><div class="leg-viz" style="align-items:flex-end;padding-bottom:2px"><div class="leg-wb-err"></div></div><span class="leg-lbl">error</span></div>
+    <div class="leg"><div class="leg-viz" style="align-items:flex-end;padding-bottom:2px"><div class="leg-wb-done"></div></div><span class="leg-lbl">done</span></div>
+  </div>
+  <div class="divr"></div>
+  <div class="prow">
+    <div class="pr"><span>+</span><span>Audio and CPU meter familiarity</span></div>
+    <div class="pr"><span>+</span><span>Activity rate readable without learning</span></div>
+    <div class="co"><span>&ndash;</span><span>Bars hard to read at peripheral distance</span></div>
+  </div>
+</div>
+
+<!-- ── AGENT METER ── -->
+<div class="card">
+  <p class="card-name">Agent Meter</p>
+  <p class="card-desc">Segmented LED bars load bottom to top. Green at base, orange at peak.</p>
+  <div class="demo">
+    <div class="am-pill">
+      <div class="am-col"><div class="sg s5 anim"></div><div class="sg s4 anim"></div><div class="sg s3 anim"></div><div class="sg s2 anim"></div><div class="sg s1 anim"></div></div>
+      <div class="am-col col-b"><div class="sg s5 anim"></div><div class="sg s4 anim"></div><div class="sg s3 anim"></div><div class="sg s2 anim"></div><div class="sg s1 anim"></div></div>
+      <div class="am-col col-c"><div class="sg s5 anim"></div><div class="sg s4 anim"></div><div class="sg s3 anim"></div><div class="sg s2 anim"></div><div class="sg s1 anim"></div></div>
+      <div class="am-col am-wait"><div class="sg s5"></div><div class="sg s4"></div><div class="sg s3"></div><div class="sg s2"></div><div class="sg s1"></div></div>
+      <div class="am-col am-done"><div class="sg s5"></div><div class="sg s4"></div><div class="sg s3"></div><div class="sg s2"></div><div class="sg s1"></div></div>
+    </div>
+  </div>
+  <p class="leg-hdr">states</p>
+  <div class="legend">
+    <div class="leg">
+      <div class="leg-viz">
+        <div class="leg-am-col"><div class="sg-s" style="background:#ff6020"></div><div class="sg-s" style="background:#E8952A"></div><div class="sg-s" style="background:#f5e020"></div><div class="sg-s" style="background:#6de08a"></div><div class="sg-s" style="background:#34C759"></div></div>
+      </div><span class="leg-lbl">idle</span>
+    </div>
+    <div class="leg">
+      <div class="leg-viz">
+        <div class="leg-am-col"><div class="sg-s on" style="background:#ff6020;animation:sgon 2s ease-in-out 1.1s infinite"></div><div class="sg-s on" style="background:#E8952A;animation:sgon 2s ease-in-out .82s infinite"></div><div class="sg-s on" style="background:#f5e020;animation:sgon 2s ease-in-out .55s infinite"></div><div class="sg-s on" style="background:#6de08a;animation:sgon 2s ease-in-out .28s infinite"></div><div class="sg-s on" style="background:#34C759;animation:sgon 2s ease-in-out 0s infinite"></div></div>
+      </div><span class="leg-lbl">active</span>
+    </div>
+    <div class="leg">
+      <div class="leg-viz">
+        <div class="leg-am-col"><div class="sg-s" style="background:#ff6020"></div><div class="sg-s" style="background:#E8952A"></div><div class="sg-s" style="background:#f5e020"></div><div class="sg-s" style="background:#6de08a"></div><div class="sg-s on" style="background:#E8952A"></div></div>
+      </div><span class="leg-lbl">waiting</span>
+    </div>
+    <div class="leg">
+      <div class="leg-viz">
+        <div class="leg-am-col"><div class="sg-s" style="background:#ff6020"></div><div class="sg-s" style="background:#E8952A"></div><div class="sg-s" style="background:#f5e020"></div><div class="sg-s" style="background:#6de08a"></div><div class="sg-s on" style="background:#FF3B30;animation:blink 1s step-end infinite"></div></div>
+      </div><span class="leg-lbl">error</span>
+    </div>
+    <div class="leg">
+      <div class="leg-viz">
+        <div class="leg-am-col"><div class="sg-s on" style="background:#34C759"></div><div class="sg-s on" style="background:#34C759"></div><div class="sg-s on" style="background:#34C759"></div><div class="sg-s on" style="background:#34C759"></div><div class="sg-s on" style="background:#34C759"></div></div>
+      </div><span class="leg-lbl">done</span>
+    </div>
+  </div>
+  <div class="divr"></div>
+  <div class="prow">
+    <div class="pr"><span>+</span><span>Segment fill shows task progress clearly</span></div>
+    <div class="pr"><span>+</span><span>Classic LED VU meter, hardware familiar</span></div>
+    <div class="co"><span>&ndash;</span><span>Taller than standard menu bar items</span></div>
+  </div>
+</div>
+
+<!-- ── ORBITAL ── -->
+<div class="card">
+  <p class="card-name">Orbital</p>
+  <p class="card-desc">Spinning arc per session. Spin speed directly encodes activity rate.</p>
+  <div class="demo">
+    <div class="orb-pill">
+      <div class="orb sp1"></div><div class="orb sp2"></div><div class="orb wa"></div><div class="orb dn"></div>
+    </div>
+  </div>
+  <p class="leg-hdr">states</p>
+  <div class="legend">
+    <div class="leg"><div class="leg-viz"><div class="orb idl" style="width:10px;height:10px"></div></div><span class="leg-lbl">idle</span></div>
+    <div class="leg"><div class="leg-viz"><div class="orb sp1" style="width:10px;height:10px"></div></div><span class="leg-lbl">active</span></div>
+    <div class="leg"><div class="leg-viz"><div class="orb wa" style="width:10px;height:10px"></div></div><span class="leg-lbl">waiting</span></div>
+    <div class="leg"><div class="leg-viz"><div class="orb err" style="width:10px;height:10px"></div></div><span class="leg-lbl">error</span></div>
+    <div class="leg"><div class="leg-viz"><div class="orb dn" style="width:10px;height:10px"></div></div><span class="leg-lbl">done</span></div>
+  </div>
+  <div class="divr"></div>
+  <div class="prow">
+    <div class="pr"><span>+</span><span>Spin speed maps directly to activity rate</span></div>
+    <div class="pr"><span>+</span><span>Full circle completing = done is natural</span></div>
+    <div class="co"><span>&ndash;</span><span>Spinning motion distracting over a full day</span></div>
+  </div>
+</div>
+
+<!-- ── CLAUDE NATIVE ── -->
+<div class="card">
+  <p class="card-name">Claude Native</p>
+  <p class="card-desc">Warm coral palette. Feels like a first-party Anthropic product.</p>
+  <div class="demo">
+    <div class="cl-pill">
+      <div class="cd cd1"></div><div class="cd cd2"></div><div class="cd cd3"></div><div class="cd cd4"></div>
+    </div>
+  </div>
+  <p class="leg-hdr">states</p>
+  <div class="legend">
+    <div class="leg"><div class="leg-viz"><div class="cd" style="background:rgba(200,120,80,.2)"></div></div><span class="leg-lbl">idle</span></div>
+    <div class="leg"><div class="leg-viz"><div class="cd cd1"></div></div><span class="leg-lbl">active</span></div>
+    <div class="leg"><div class="leg-viz"><div class="cd" style="background:#c47a3a"></div></div><span class="leg-lbl">waiting</span></div>
+    <div class="leg"><div class="leg-viz"><div class="cd" style="background:#FF3B30"></div></div><span class="leg-lbl">error</span></div>
+    <div class="leg"><div class="leg-viz"><div class="cd" style="background:#a8d48a"></div></div><span class="leg-lbl">done</span></div>
+  </div>
+  <div class="divr"></div>
+  <div class="prow">
+    <div class="pr"><span>+</span><span>Right choice if Anthropic ships this natively</span></div>
+    <div class="pr"><span>+</span><span>Coral palette matches Claude brand identity</span></div>
+    <div class="co"><span>&ndash;</span><span>Clashes with macOS neutral system palette</span></div>
+  </div>
+</div>
+
+</div><!-- end grid -->
+<div class="footer">Session Indicator &middot; Variation Study &middot; Working Document &middot; Not for distribution</div>
+</div>
+
+<script>
+var HEART=[[1,0],[3,0],[0,1],[1,1],[2,1],[3,1],[4,1],[0,2],[1,2],[2,2],[3,2],[4,2],[1,3],[2,3],[3,3],[2,4]];
+var FIRE=[[1,0],[2,0],[1,1],[2,1],[3,1],[0,2],[1,2],[2,2],[3,2],[4,2],[0,3],[1,3],[2,3],[3,3],[4,3],[1,4],[2,4],[3,4]];
+var ICE=[[2,0],[0,1],[2,1],[4,1],[0,2],[1,2],[2,2],[3,2],[4,2],[0,3],[2,3],[4,3],[2,4]];
+var BOLT=[[2,0],[3,0],[1,1],[2,1],[1,2],[2,2],[3,2],[2,3],[3,3],[1,4],[2,4]];
+var STAR=[[2,0],[1,1],[2,1],[3,1],[0,2],[1,2],[2,2],[3,2],[4,2],[1,3],[2,3],[3,3],[2,4]];
+var SKULL=[[1,0],[2,0],[3,0],[0,1],[4,1],[0,2],[2,2],[4,2],[0,3],[1,3],[2,3],[3,3],[4,3],[1,4],[3,4]];
+
+function px(pixels,color,sz){
+  sz=sz||1.1;
+  var rows=pixels.reduce(function(m,p){return Math.max(m,p[1]);},0)+1;
+  var r=pixels.map(function(p){return'<rect x="'+(p[0]*sz)+'" y="'+(p[1]*sz)+'" width="'+sz+'" height="'+sz+'" fill="'+color+'"/>';}).join('');
+  return '<svg viewBox="0 0 '+(5*sz)+' '+(rows*sz)+'" width="'+(5*sz)+'" height="'+(rows*sz)+'" style="shape-rendering:crispEdges;display:block">'+r+'</svg>';
+}
+
+// Pixel Heart demo
+var hd=document.getElementById('hpill-demo');
+if(hd){
+  hd.innerHTML=[
+    ['#fff','sh 1.6s ease-in-out 0s infinite'],
+    ['#fff','sh 1.6s ease-in-out .55s infinite'],
+    ['#fff','sh 1.6s ease-in-out 1.1s infinite'],
+    ['#E8952A',null],['#FF3B30',null],['#34C759',null]
+  ].map(function(s){
+    var st=s[1]?'style="animation:'+s[1]+';display:inline-block"':'style="display:inline-block"';
+    return '<span '+st+'>'+px(HEART,s[0],1.1)+'</span>';
+  }).join('');
+}
+
+// Pixel Heart legend
+var hl=document.getElementById('hpill-legend');
+if(hl){
+  var hStates=[
+    {color:'rgba(255,255,255,.16)',anim:null,label:'idle'},
+    {color:'#fff',anim:'sh 1.6s ease-in-out infinite',label:'active'},
+    {color:'#E8952A',anim:null,label:'waiting'},
+    {color:'#FF3B30',anim:null,label:'error'},
+    {color:'#34C759',anim:null,label:'done'}
+  ];
+  hl.innerHTML=hStates.map(function(s){
+    var st=s.anim?'style="animation:'+s.anim+';display:inline-block"':'style="display:inline-block"';
+    return '<div class="leg"><div class="leg-viz"><span '+st+'>'+px(HEART,s.color,1.0)+'</span></div><span class="leg-lbl">'+s.label+'</span></div>';
+  }).join('');
+}
+
+// Pixel Art demo
+var gd=document.getElementById('gpill-demo');
+if(gd){
+  gd.innerHTML=[
+    '<span class="pa paf">'+px(FIRE,'#ff8030')+'</span>',
+    '<span class="pa paf2">'+px(FIRE,'#ffaa20')+'</span>',
+    '<span class="pa pai">'+px(ICE,'#5bc8f5')+'</span>',
+    '<span class="pa pab">'+px(BOLT,'#f5e020')+'</span>',
+    '<span class="pa">'+px(STAR,'#34C759')+'</span>'
+  ].join('');
+}
+
+// Pixel Art legend
+var gl=document.getElementById('gpill-legend');
+if(gl){
+  var gStates=[
+    {icon:SKULL,color:'rgba(255,255,255,.2)',anim:null,label:'idle'},
+    {icon:FIRE,color:'#ff8030',anim:'pxf .5s steps(2) infinite',label:'active'},
+    {icon:ICE,color:'#5bc8f5',anim:null,label:'waiting'},
+    {icon:BOLT,color:'#f5e020',anim:'pxb 1.1s steps(2) infinite',label:'error'},
+    {icon:STAR,color:'#34C759',anim:null,label:'done'}
+  ];
+  gl.innerHTML=gStates.map(function(s){
+    var st=s.anim?'style="animation:'+s.anim+';display:inline-block"':'style="display:inline-block"';
+    return '<div class="leg"><div class="leg-viz"><span '+st+'>'+px(s.icon,s.color,1.0)+'</span></div><span class="leg-lbl">'+s.label+'</span></div>';
+  }).join('');
+}
+</script>
+</body>
+</html>
