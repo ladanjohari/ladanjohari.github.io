@@ -3,22 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Session Indicator &mdash; Ladan Johari</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Session Indicator</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 
 :root{
-  --ok-bg:rgba(52,199,89,0.08);--ok-fg:#1a8c3a;--ok-bd:rgba(52,199,89,0.25);
-  --gap-bg:rgba(255,59,48,0.06);--gap-fg:#c0261c;--gap-bd:rgba(255,59,48,0.25);
-  --info-bg:rgba(0,102,255,0.04);--info-fg:#6B6B6B;--info-bd:rgba(0,102,255,0.15);
-  --color-text-primary:#111111;
-  --color-text-secondary:#6B6B6B;
-  --color-text-success:#1a8c3a;
-  --color-border-tertiary:#D4D3CF;
-  --color-background-secondary:rgba(0,0,0,0.03);
+  --ok-bg:rgba(52,199,89,0.08);--ok-fg:#34C759;--ok-bd:rgba(52,199,89,0.25);
+  --gap-bg:rgba(255,59,48,0.08);--gap-fg:#FF3B30;--gap-bd:rgba(255,59,48,0.25);
+  --info-bg:rgba(74,176,255,0.05);--info-fg:rgba(255,255,255,0.48);--info-bd:rgba(74,176,255,0.18);
+  --color-text-primary:rgba(255,255,255,0.82);
+  --color-text-secondary:rgba(255,255,255,0.28);
+  --color-text-success:#34C759;
+  --color-border-tertiary:rgba(255,255,255,0.06);
+  --color-background-secondary:rgba(255,255,255,0.04);
   --border-radius-md:8px;
 }
 body.lm{
@@ -33,16 +30,16 @@ body.lm{
 }
 
 body{
-  font-family:'Geist',-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',sans-serif;
-  background:#F7F6F3;
-  color:#111111;
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',sans-serif;
+  background:#0a0a0a;
+  color:#fff;
   -webkit-font-smoothing:antialiased;
 }
 
 .page{
-  max-width:700px;
+  max-width:780px;
   margin:0 auto;
-  padding:40px 24px 80px;
+  padding:72px 24px 80px;
 }
 
 /* ─── HERO ─── */
@@ -226,7 +223,7 @@ body.lm .screen .mb-right > .mb-item{
 
 .caption{
   margin-top:18px;
-  font-size:12px;color:#6B6B6B;
+  font-size:12px;color:rgba(255,255,255,0.25);
   text-align:center;letter-spacing:.01em;
 }
 
@@ -237,7 +234,7 @@ body.lm .screen .mb-right > .mb-item{
 }
 .problem p{
   font-size:18px;line-height:1.65;
-  color:#6B6B6B;
+  color:rgba(255,255,255,0.4);
   font-weight:400;
   max-width:580px;margin:0 auto;
 }
@@ -249,7 +246,7 @@ body.lm .screen .mb-right > .mb-item{
 }
 .legend-title{
   font-size:11px;font-weight:500;
-  color:#6B6B6B;
+  color:rgba(255,255,255,0.28);
   letter-spacing:.08em;text-transform:uppercase;
   margin-bottom:36px;
 }
@@ -261,8 +258,8 @@ body.lm .screen .mb-right > .mb-item{
   width:116px;
 }
 .legend-pill{
-  background:#1e1e1e;
-  border:.5px solid rgba(0,0,0,0.12);
+  background:rgba(30,30,30,0.95);
+  border:.5px solid rgba(255,255,255,0.09);
   border-radius:10px;height:28px;
   display:flex;align-items:center;justify-content:center;
   padding:0 13px;gap:8px;
@@ -274,14 +271,14 @@ body.lm .screen .mb-right > .mb-item{
 .legend-dot.waiting{background:#E8952A}
 .legend-dot.error{background:#FF3B30}
 .legend-dot.done{background:#34C759}
-.legend-name{font-size:11px;font-weight:500;color:#444444}
-.legend-desc{font-size:10px;color:#6B6B6B;text-align:center;line-height:1.5}
+.legend-name{font-size:11px;font-weight:500;color:rgba(255,255,255,0.5)}
+.legend-desc{font-size:10px;color:rgba(255,255,255,0.22);text-align:center;line-height:1.5}
 
 /* ─── SECTION 4: DESIGN PRINCIPLES ─── */
 .principles{padding:0 0 72px}
 .principles-title{
   font-size:11px;font-weight:500;
-  color:#6B6B6B;
+  color:rgba(255,255,255,0.28);
   letter-spacing:.08em;text-transform:uppercase;
   text-align:center;margin-bottom:32px;
 }
@@ -290,18 +287,18 @@ body.lm .screen .mb-right > .mb-item{
 }
 .principle{
   padding:20px 18px;
-  background:rgba(0,0,0,0.03);
+  background:rgba(255,255,255,0.025);
   border-radius:12px;
-  border:.5px solid #D4D3CF;
+  border:.5px solid rgba(255,255,255,0.055);
 }
 .principle-title{
   font-size:12px;font-weight:500;
-  color:#111111;
+  color:rgba(255,255,255,0.65);
   margin-bottom:9px;line-height:1.4;
 }
 .principle-body{
   font-size:11px;
-  color:#6B6B6B;
+  color:rgba(255,255,255,0.28);
   line-height:1.65;
 }
 
@@ -309,20 +306,20 @@ body.lm .screen .mb-right > .mb-item{
 .priorart{padding:0 0 72px}
 .priorart-title{
   font-size:11px;font-weight:500;
-  color:#6B6B6B;
+  color:rgba(255,255,255,0.28);
   letter-spacing:.08em;text-transform:uppercase;
   text-align:center;margin-bottom:8px;
 }
-.priorart-sub{font-size:12px;color:#6B6B6B;text-align:center;margin-bottom:32px}
+.priorart-sub{font-size:12px;color:rgba(255,255,255,0.28);text-align:center;margin-bottom:32px}
 .pa-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:16px}
 .pa-card{
-  background:rgba(0,0,0,0.025);
-  border:.5px solid #D4D3CF;
+  background:rgba(255,255,255,0.025);
+  border:.5px solid rgba(255,255,255,0.06);
   border-radius:12px;padding:18px;
 }
-.pa-name{font-size:13px;font-weight:500;color:#111111;margin-bottom:3px}
-.pa-type{font-size:10px;color:#6B6B6B;margin-bottom:10px;letter-spacing:.01em}
-.pa-desc{font-size:11px;color:#6B6B6B;line-height:1.65;margin-bottom:12px}
+.pa-name{font-size:13px;font-weight:500;color:rgba(255,255,255,0.75);margin-bottom:3px}
+.pa-type{font-size:10px;color:rgba(255,255,255,0.25);margin-bottom:10px;letter-spacing:.01em}
+.pa-desc{font-size:11px;color:rgba(255,255,255,0.38);line-height:1.65;margin-bottom:12px}
 .pa-tags{display:flex;flex-wrap:wrap;gap:5px}
 .pa-tag{
   font-size:10px;padding:2px 7px;
@@ -334,21 +331,30 @@ body.lm .screen .mb-right > .mb-item{
 .pa-gaps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px}
 .pa-gap-col{
   padding:16px 18px;
-  background:rgba(0,0,0,0.02);
-  border:.5px solid #D4D3CF;
+  background:rgba(255,255,255,0.02);
+  border:.5px solid rgba(255,255,255,0.05);
   border-radius:12px;
 }
-.pa-gap-title{font-size:11px;font-weight:500;color:#444444;margin-bottom:7px}
-.pa-gap-body{font-size:11px;color:#6B6B6B;line-height:1.65}
+.pa-gap-title{font-size:11px;font-weight:500;color:rgba(255,255,255,0.5);margin-bottom:7px}
+.pa-gap-body{font-size:11px;color:rgba(255,255,255,0.25);line-height:1.65}
 .pa-callout{
   border:.5px solid var(--info-bd);
   background:var(--info-bg);
   border-radius:12px;padding:18px 22px;
 }
-.pa-callout p{font-size:13px;color:#6B6B6B;line-height:1.7}
-.pa-callout strong{font-weight:500;color:#111111}
+.pa-callout p{font-size:13px;color:var(--info-fg);line-height:1.7}
+.pa-callout strong{font-weight:500;color:rgba(255,255,255,0.68)}
 
-/* body.lm section overrides removed — page uses portfolio light bg always */
+body.lm .priorart-title{color:rgba(0,0,0,0.3)}
+body.lm .priorart-sub{color:rgba(0,0,0,0.3)}
+body.lm .pa-card{background:rgba(0,0,0,0.025);border:.5px solid rgba(0,0,0,0.07)}
+body.lm .pa-name{color:rgba(0,0,0,0.75)}
+body.lm .pa-type{color:rgba(0,0,0,0.28)}
+body.lm .pa-desc{color:rgba(0,0,0,0.4)}
+body.lm .pa-gap-col{background:rgba(0,0,0,0.02);border:.5px solid rgba(0,0,0,0.06)}
+body.lm .pa-gap-title{color:rgba(0,0,0,0.5)}
+body.lm .pa-gap-body{color:rgba(0,0,0,0.28)}
+body.lm .pa-callout strong{color:rgba(0,0,0,0.68)}
 
 /* ─── MATRIX TABLE ─── */
 .pa-matrix{margin-bottom:20px}
@@ -389,22 +395,22 @@ body.lm .screen .mb-right > .mb-item{
 .pa-matrix-table tr.highlight td:last-child{border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;padding-right:10px}
 .pa-matrix-table tr.highlight .check{font-size:22px;color:#34C759}
 .pa-matrix-table .tool-name{cursor:default}
-.pa-matrix-table tbody tr:not(.highlight):hover td{background:rgba(0,0,0,0.02)}
+.pa-matrix-table tbody tr:not(.highlight):hover td{background:rgba(255,255,255,0.02)}
 
-/* ─── FOOTER (one-pager internal) ─── */
+/* ─── FOOTER ─── */
 .footer{
   padding-top:40px;
-  border-top:.5px solid #D4D3CF;
+  border-top:.5px solid rgba(255,255,255,0.05);
   text-align:center;
 }
 .footer p{
   font-size:10px;
-  color:#6B6B6B;
+  color:rgba(255,255,255,0.18);
   letter-spacing:.04em;
 }
 
 /* ─── LIGHT MODE ─── */
-body.lm{color:#000}
+body.lm{background:#c8c8c8;color:#000}
 body.lm .screen{box-shadow:0 30px 70px rgba(0,0,0,0.3),0 0 0 .5px rgba(0,0,0,0.15)}
 body.lm .wallpaper{background-image:url('helios-light.jpg');background-size:cover;background-position:center}
 body.lm .wallpaper::after{background:transparent}
@@ -685,69 +691,9 @@ body.lm .avw-rec strong{color:rgba(0,0,0,0.55)}
 @keyframes pxflk{0%{opacity:1}50%{opacity:.72}}
 @keyframes pxblk{0%{opacity:1}55%{opacity:.2}}
 @keyframes varLabelIn{from{opacity:0}to{opacity:1}}
-/* ── Portfolio NavBar ── */
-.pf-nav{
-  max-width:700px;margin:0 auto;
-  padding:40px 28px 0;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.pf-wordmark{font-size:0.875rem;font-weight:600;color:#111111;text-decoration:none;letter-spacing:-0.02em;font-family:'Geist',sans-serif}
-.pf-links{display:flex;gap:28px;list-style:none}
-.pf-links a{font-size:0.8rem;font-weight:500;color:#6B6B6B;text-decoration:none;font-family:'Geist',sans-serif;transition:color .15s}
-.pf-links a:hover{color:#0066FF}
-/* ── Portfolio FooterBar ── */
-.pf-footer{
-  max-width:700px;margin:0 auto;
-  border-top:1px solid #D4D3CF;
-  padding:26px 28px 52px;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.pf-footer-copy{font-size:0.76rem;color:#6B6B6B;font-family:'Geist',sans-serif}
-.pf-footer-links{display:flex;gap:22px;list-style:none}
-.pf-footer-links a{font-size:0.76rem;color:#6B6B6B;text-decoration:none;font-family:'Geist',sans-serif;transition:color .15s}
-.pf-footer-links a:hover{color:#0066FF}
-/* ── Case Study Header ── */
-.cs-header{
-  max-width:700px;margin:0 auto;
-  padding:48px 28px 0;
-}
-.cs-eyebrow{font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#6B6B6B;margin-bottom:16px;font-family:'Geist',sans-serif}
-.cs-title{font-size:32px;font-weight:500;letter-spacing:-0.03em;line-height:1.15;color:#111111;margin-bottom:12px;font-family:'Geist',sans-serif}
-.cs-descriptor{font-size:17px;color:#6B6B6B;font-weight:400;line-height:1.5;margin-bottom:20px;max-width:540px;font-family:'Geist',sans-serif}
-.cs-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:#6B6B6B;font-family:'Geist',sans-serif}
-.cs-meta .sep{color:#D4D3CF}
-.cs-meta a{color:#0066FF;text-decoration:none;font-weight:500}
-.cs-meta a:hover{text-decoration:underline}
-.demo-embed{max-width:700px;margin:0 auto;padding:32px 28px 0}
-.demo-embed iframe{width:100%;aspect-ratio:16/10;border-radius:10px;border:1px solid #D4D3CF;display:block}
-.demo-caption{margin-top:12px;font-size:12px;color:#6B6B6B;text-align:center;letter-spacing:.01em;font-family:'Geist',sans-serif}
 </style>
 </head>
 <body>
-<nav class="pf-nav">
-  <a class="pf-wordmark" href="/">Ladan Johari</a>
-  <ul class="pf-links">
-    <li><a href="mailto:ladan.joharizadeh@gmail.com">Contact</a></li>
-    <li><a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a></li>
-    <li><a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a></li>
-  </ul>
-</nav>
-<div class="cs-header">
-  <p class="cs-eyebrow">AI Agent UI &middot; Interaction System &middot; Design Engineering</p>
-  <h1 class="cs-title">Session Indicator</h1>
-  <p class="cs-descriptor">A menu bar component that restores awareness when multiple AI agents run in parallel &mdash; without interrupting focus.</p>
-  <div class="cs-meta">
-    <span>2025</span>
-    <span class="sep">/</span>
-    <span>SwiftUI &middot; macOS</span>
-    <span class="sep">/</span>
-    <a href="https://github.com/ladanjohari/session-indicator" target="_blank" rel="noopener">GitHub →</a>
-  </div>
-</div>
-<div class="demo-embed">
-  <iframe src="demos/session-indicator/index.html" loading="lazy" title="Session Indicator interactive prototype"></iframe>
-  <p class="demo-caption">Live prototype &mdash; press P to open the state controls.</p>
-</div>
 <div id="root"></div>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -1647,6 +1593,10 @@ function Desktop({state, dispatch, onAction, varLabel}) {
 function OnePageContent() {
   return (
     <>
+      <section className="problem">
+        <p>When multiple AI agents run in parallel, developers lose awareness. The Session Indicator restores it &mdash; without interrupting focus.</p>
+      </section>
+
       <section className="legend">
         <p className="legend-title">Five states. No learning curve.</p>
         <div className="legend-row">
@@ -1667,6 +1617,121 @@ function OnePageContent() {
           ))}
         </div>
       </section>
+
+      <section className="principles">
+        <p className="principles-title">How it was designed</p>
+        <div className="principles-grid">
+          <div className="principle">
+            <p className="principle-title">Borrowed, not invented</p>
+            <p className="principle-body">Same visual grammar as Ethernet LEDs and the macOS camera indicator. Zero new concepts to learn.</p>
+          </div>
+          <div className="principle">
+            <p className="principle-title">Motion = state. Color = exception.</p>
+            <p className="principle-body">White dots handle 90% of cases. Color only fires for error and completion.</p>
+          </div>
+          <div className="principle">
+            <p className="principle-title">Hardware and software share one language.</p>
+            <p className="principle-body">The same dot pill lives in the SD card slot when the lid is closed.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="avw">
+        <p className="avw-title">Eight indicator variations &mdash; try them live with keys 1&ndash;8</p>
+        <p className="avw-subtitle">Each dot above is live. Press 1&ndash;8 on your keyboard to switch the prototype.</p>
+        <div className="avw-grid">
+
+          <div className="avw-card">
+            <div className="avw-card-header">
+              <div className="avw-card-header-text">
+                <p className="avw-var">Minimal</p>
+                <p className="avw-subvar">no motion, white only</p>
+              </div>
+            </div>
+            <div className="avw-bar">
+              <div className="avw-pill">
+                <div className="avw-d aa"></div>
+                <div className="avw-d aw"></div>
+              </div>
+            </div>
+            <div className="avw-labels">
+              <div className="avw-dl"><div className="avw-d aa"></div><span className="avw-dlabel">Active &mdash; solid white</span></div>
+              <div className="avw-dl"><div className="avw-d aw"></div><span className="avw-dlabel">Waiting &mdash; dim white, no motion</span></div>
+            </div>
+            <div className="avw-divider"></div>
+            <div className="avw-pc">
+              <div className="avw-pci"><span className="avw-pro">+</span><span className="avw-pct">Zero distraction. Works with Reduce Motion on.</span></div>
+              <div className="avw-pci"><span className="avw-pro">+</span><span className="avw-pct">No color language at all &mdash; purely ambient.</span></div>
+              <div className="avw-pci"><span className="avw-con">&ndash;</span><span className="avw-pct">Active looks identical to idle at a glance.</span></div>
+              <div className="avw-pci"><span className="avw-con">&ndash;</span><span className="avw-pct">No color means waiting has no urgency signal.</span></div>
+            </div>
+          </div>
+
+          <div className="avw-card">
+            <div className="avw-card-header">
+              <div className="avw-card-header-text">
+                <p className="avw-var">Pulse</p>
+                <p className="avw-subvar">pulse speed as the only signal</p>
+              </div>
+            </div>
+            <div className="avw-bar">
+              <div className="avw-pill">
+                <div className="avw-d ba"></div>
+                <div className="avw-d bw"></div>
+              </div>
+            </div>
+            <div className="avw-labels">
+              <div className="avw-dl"><div className="avw-d ba"></div><span className="avw-dlabel">Active &mdash; fast pulse</span></div>
+              <div className="avw-dl"><div className="avw-d bw"></div><span className="avw-dlabel">Waiting &mdash; slow pulse</span></div>
+            </div>
+            <div className="avw-divider"></div>
+            <div className="avw-pc">
+              <div className="avw-pci"><span className="avw-pro">+</span><span className="avw-pct">Speed communicates urgency intuitively.</span></div>
+              <div className="avw-pci"><span className="avw-pro">+</span><span className="avw-pct">Feels alive and responsive.</span></div>
+              <div className="avw-pci"><span className="avw-con">&ndash;</span><span className="avw-pct">Two speeds can be subtle &mdash; easy to miss at a glance.</span></div>
+              <div className="avw-pci"><span className="avw-con">&ndash;</span><span className="avw-pct">Fast pulse can be distracting in peripheral vision all day.</span></div>
+            </div>
+            <p className="avw-note">Speed is the only signal &mdash; no color difference</p>
+          </div>
+
+          <div className="avw-card rec">
+            <div className="avw-card-header">
+              <div className="avw-card-header-text">
+                <p className="avw-var">Semantic</p>
+                <p className="avw-subvar">motion + color each carry one meaning</p>
+              </div>
+              <span className="avw-badge">Recommended</span>
+            </div>
+            <div className="avw-bar">
+              <div className="avw-pill">
+                <div className="avw-d ca"></div>
+                <div className="avw-d cw"></div>
+              </div>
+            </div>
+            <div className="avw-labels">
+              <div className="avw-dl"><div className="avw-d ca"></div><span className="avw-dlabel">Active &mdash; shimmer</span></div>
+              <div className="avw-dl"><div className="avw-d cw"></div><span className="avw-dlabel">Waiting &mdash; amber, static</span></div>
+            </div>
+            <div className="avw-divider"></div>
+            <div className="avw-pc">
+              <div className="avw-pci"><span className="avw-pro">+</span><span className="avw-pct">Color carries meaning: amber = held up, white = running. Two distinct signals.</span></div>
+              <div className="avw-pci"><span className="avw-pro">+</span><span className="avw-pct">Shimmer is subtle enough for all-day peripheral use.</span></div>
+              <div className="avw-pci"><span className="avw-con">&ndash;</span><span className="avw-pct">Requires learning the color language once.</span></div>
+              <div className="avw-pci"><span className="avw-con">&ndash;</span><span className="avw-pct">Motion and color are two simultaneous signals.</span></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div className="avw-rec">
+          <p><strong>Our recommendation: Semantic (Pulse, key 1).</strong> The core insight is that these variations change the color language, not just motion. Semantic is recommended because color carries meaning &mdash; amber for blocked, white for running. Keeping motion and color as separate channels means each signal stays clean and readable at a glance.</p>
+          <p style={{marginTop:'10px',fontSize:'11px',color:'rgba(255,255,255,0.22)',lineHeight:'1.6'}}>Six additional variations &mdash; Pixel Heart (2), Pixel Art (3), Pixel Flame (4), Waveform (5), Agent Meter (6), Orbital (7), and Claude Native (8) &mdash; are available in the prototype via keys 2&ndash;8.</p>
+        </div>
+      </section>
+
+      <footer className="footer">
+        <p>Session Indicator &middot; Design Spec v0.1 &middot; Working Document &middot; Not for distribution</p>
+      </footer>
     </>
   );
 }
@@ -1871,78 +1936,5 @@ function App() {
 ══════════════════════════════════════════════ */
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 </script>
-
-<style>
-/* ── Case study sections below the prototype ── */
-.cs-below{max-width:700px;margin:0 auto;padding:0 28px 80px}
-.cs-section-gap{margin-bottom:64px}
-.cs-section-decisions{margin-bottom:64px}
-.cs-section-signal{margin-bottom:64px}
-
-.cs-lbl{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#6B6B6B;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #D4D3CF;font-family:'Geist',sans-serif}
-.cs-statement{font-size:15px;color:#6B6B6B;font-style:italic;line-height:1.6;margin-bottom:24px;padding-left:16px;border-left:2px solid #D4D3CF;font-family:'Geist',sans-serif}
-.cs-gap-body{font-size:18px;font-weight:400;line-height:1.6;color:#111111;letter-spacing:-0.01em;font-family:'Geist',sans-serif}
-
-.cs-decisions-intro{font-size:15px;color:#6B6B6B;line-height:1.65;margin-bottom:28px;font-family:'Geist',sans-serif}
-.cs-decisions-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#D4D3CF;border:1px solid #D4D3CF;border-radius:8px;overflow:hidden;margin-bottom:0}
-.cs-decision-col{background:#F7F6F3;padding:20px 18px 22px}
-.cs-dec-num{font-size:11px;font-weight:500;letter-spacing:.08em;color:#6B6B6B;margin-bottom:6px;font-family:'Geist',sans-serif}
-.cs-dec-title{font-size:14px;font-weight:500;color:#111111;margin-bottom:6px;letter-spacing:-0.01em;line-height:1.35;font-family:'Geist',sans-serif}
-.cs-dec-principle{font-size:12px;font-style:italic;color:#0066FF;margin-bottom:10px;font-family:'Geist',sans-serif}
-.cs-dec-body{font-size:13px;color:#6B6B6B;line-height:1.6;margin-bottom:10px;font-family:'Geist',sans-serif}
-.cs-dec-rejected{font-size:12px;color:#999999;line-height:1.5;padding-left:10px;border-left:1.5px solid #D4D3CF;font-family:'Geist',sans-serif}
-.cs-dec-rejected strong{font-weight:500;color:#6B6B6B}
-
-.cs-signal-text{font-size:18px;font-weight:400;line-height:1.6;color:#111111;letter-spacing:-0.01em;font-family:'Geist',sans-serif}
-.cs-signal-text strong{font-weight:500}
-
-@media(max-width:600px){.cs-decisions-grid{grid-template-columns:1fr}}
-</style>
-
-<div class="cs-below">
-
-  <div class="cs-section-gap">
-    <p class="cs-lbl">The Gap</p>
-    <p class="cs-statement">&ldquo;When multiple AI agents run in parallel, developers lose awareness. The Session Indicator restores it &mdash; without interrupting focus.&rdquo;</p>
-    <p class="cs-gap-body">There was no peripheral signal that told you which sessions were thinking, which were stuck, and which were done &mdash; without making you stop and look. Every existing tool either required active attention or added visual noise you had to consciously ignore.</p>
-  </div>
-
-  <div class="cs-section-decisions">
-    <p class="cs-lbl">Three Decisions</p>
-    <p class="cs-decisions-intro">The design is defined by three choices &mdash; each one a rejection of a more obvious alternative. Eight visual languages were explored before arriving at Pulse.</p>
-    <div class="cs-decisions-grid">
-      <div class="cs-decision-col">
-        <p class="cs-dec-num">01</p>
-        <p class="cs-dec-title">Borrow the grammar of hardware indicators</p>
-        <p class="cs-dec-principle">&ldquo;Borrowed not invented.&rdquo;</p>
-        <p class="cs-dec-body">Ethernet LEDs, the macOS camera indicator, SD card status lights. Developers already read this vocabulary fluently. No legend required.</p>
-        <p class="cs-dec-rejected"><strong>Rejected:</strong> Custom icon sets or text badges would require learning. Familiar patterns reduce the cognitive load to zero.</p>
-      </div>
-      <div class="cs-decision-col">
-        <p class="cs-dec-num">02</p>
-        <p class="cs-dec-title">Motion carries state. Color carries exception.</p>
-        <p class="cs-dec-principle">&ldquo;Motion = state. Color = exception.&rdquo;</p>
-        <p class="cs-dec-body">White shimmer handles 90% of the signal surface. Color only appears for states that need attention &mdash; amber, red, green.</p>
-        <p class="cs-dec-rejected"><strong>Rejected:</strong> Using distinct colors for all five states makes the idle bar visually busy. The eye starts treating color as decoration, not signal.</p>
-      </div>
-      <div class="cs-decision-col">
-        <p class="cs-dec-num">03</p>
-        <p class="cs-dec-title">Native menu bar, not a floating overlay</p>
-        <p class="cs-dec-principle">&ldquo;Hardware and software share one language.&rdquo;</p>
-        <p class="cs-dec-body">Built in SwiftUI, placed where hardware status lives &mdash; alongside Wi-Fi and battery. The placement is load-bearing, not cosmetic.</p>
-        <p class="cs-dec-rejected"><strong>Rejected:</strong> A floating HUD would have been easier to implement but breaks the peripheral reading model entirely.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<footer class="pf-footer">
-  <span class="pf-footer-copy">&copy; 2026 Ladan Johari</span>
-  <ul class="pf-footer-links">
-    <li><a href="mailto:ladan.joharizadeh@gmail.com">ladan.joharizadeh@gmail.com</a></li>
-    <li><a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a></li>
-    <li><a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a></li>
-  </ul>
-</footer>
 </body>
 </html>
