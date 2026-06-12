@@ -230,6 +230,13 @@ body.lm .screen .mb-right > .mb-item{
   text-align:center;letter-spacing:.01em;
 }
 
+.proto-link{
+  display:block;margin-top:8px;
+  font-size:12px;font-weight:500;color:#0066FF;
+  text-align:center;text-decoration:none;letter-spacing:.01em;
+}
+.proto-link:hover{text-decoration:underline}
+
 /* ─── SECTION 2: PROBLEM ─── */
 .problem{
   padding:56px 0 64px;
@@ -718,9 +725,6 @@ body.lm .avw-rec strong{color:rgba(0,0,0,0.55)}
 .cs-meta .sep{color:#D4D3CF}
 .cs-meta a{color:#0066FF;text-decoration:none;font-weight:500}
 .cs-meta a:hover{text-decoration:underline}
-.demo-embed{max-width:700px;margin:0 auto;padding:32px 28px 0}
-.demo-embed iframe{width:100%;aspect-ratio:16/10;border-radius:10px;border:1px solid #D4D3CF;display:block}
-.demo-caption{margin-top:12px;font-size:12px;color:#6B6B6B;text-align:center;letter-spacing:.01em;font-family:'Geist',sans-serif}
 </style>
 </head>
 <body>
@@ -743,10 +747,6 @@ body.lm .avw-rec strong{color:rgba(0,0,0,0.55)}
     <span class="sep">/</span>
     <a href="https://github.com/ladanjohari/session-indicator" target="_blank" rel="noopener">GitHub →</a>
   </div>
-</div>
-<div class="demo-embed">
-  <iframe src="demos/session-indicator/index.html" loading="lazy" title="Session Indicator interactive prototype"></iframe>
-  <p class="demo-caption">Live prototype &mdash; press P to open the state controls.</p>
 </div>
 <div id="root"></div>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -1860,6 +1860,7 @@ function App() {
           varLabel={varLabel}
         />
         <p className="caption">Session Indicator &mdash; a native macOS menu bar component for AI agent supervision</p>
+        <a className="proto-link" href="demos/session-indicator/index.html" target="_blank" rel="noopener">Open the full prototype &rarr;</a>
       </div>
       <OnePageContent />
     </div>
