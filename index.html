@@ -50,25 +50,27 @@
 
     .work-list { list-style: none; margin-bottom: 80px; }
     .work-item { border-bottom: 1px solid var(--rule); }
-    .work-link { display: flex; align-items: center; gap: 16px; padding: 16px 10px; text-decoration: none; color: var(--ink); border-radius: 6px; transition: background 0.12s; margin: 0 -10px; }
+    .work-link { display: grid; grid-template-columns: 1.2fr 1fr; gap: 28px; align-items: center; padding: 28px 10px; text-decoration: none; color: var(--ink); border-radius: 6px; transition: background 0.12s; margin: 0 -10px; }
     .work-link:hover { background: var(--hover-row); }
-    .work-thumb-small { width: 60px; height: 42px; border-radius: 5px; flex-shrink: 0; overflow: hidden; border: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; }
-    .work-thumb-small img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .thumb-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-    .thumb-placeholder span { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
-    .work-info { flex: 1; min-width: 0; }
-    .work-title { font-size: 0.95rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 5px; }
-    .work-tags { font-size: 0.67rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--mid); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .work-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+    .work-text { display: flex; flex-direction: column; min-width: 0; }
+    .work-title { font-size: 0.95rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 8px; }
+    .work-tags { font-size: 0.67rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--mid); }
+    .work-tags .tag:not(:last-child)::after { content: " \00b7 "; color: var(--mid); }
+    .work-foot { display: flex; align-items: center; gap: 14px; margin-top: 16px; }
     .work-year { font-size: 0.75rem; color: var(--mid); font-variant-numeric: tabular-nums; }
     .work-arrow { font-size: 0.85rem; color: var(--rule); transition: color 0.12s, transform 0.14s; }
     .work-link:hover .work-arrow { color: var(--accent); transform: translateX(4px); }
 
-    .hover-preview { position: fixed; width: 260px; height: 174px; border-radius: 10px; overflow: hidden; pointer-events: none; z-index: 200; opacity: 0; transform: translateY(10px) scale(0.96); transition: opacity 0.2s ease, transform 0.2s ease; box-shadow: 0 12px 40px rgba(0,0,0,.14),0 2px 8px rgba(0,0,0,.08); border: 1px solid rgba(255,255,255,.12); }
-    .hover-preview.show { opacity: 1; transform: translateY(0) scale(1); }
-    .hover-preview-inner { width: 100%; height: 100%; position: relative; display: flex; align-items: center; justify-content: center; }
-    .hover-preview-inner img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; display: block; }
-    .preview-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; position: relative; z-index: 1; }
+    .work-media { aspect-ratio: 16/10; border-radius: 10px; overflow: hidden; border: 1px solid var(--rule); background: #1a1a1c; display: flex; align-items: center; justify-content: center; }
+    .work-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .si-pill { display: flex; align-items: center; gap: 10px; background: #0d0d0e; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 9px 14px; }
+    .si-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .si-dot.si-active { background: #ffffff; animation: shimmer 1.6s ease-in-out infinite; }
+    .si-dot.si-waiting { background: #E8952A; }
+    .si-dot.si-idle { background: rgba(255,255,255,0.16); }
+    .si-dot.si-done { background: #34C759; }
+    @keyframes shimmer { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.35); opacity: 0.15; } }
 
     .stack-section { margin-bottom: 80px; }
     .stack-group { margin-top: 20px; display: flex; align-items: baseline; gap: 10px; }
@@ -108,32 +110,36 @@
     .footer-links a { font-size: 0.76rem; color: var(--mid); text-decoration: none; transition: color 0.12s; }
     .footer-links a:hover { color: var(--accent); }
 
+    @media (max-width: 700px) {
+      .work-link { grid-template-columns: 1fr; gap: 16px; }
+      .work-media { order: -1; }
+    }
     @media (max-width: 540px) {
       .shell { padding: 0 20px; }
       nav { padding-top: 28px; }
       .hero { padding: 56px 0 48px; }
       .hero-name { font-size: 2rem; }
-      .hover-preview, .cursor-dot { display: none; }
+      .cursor-dot { display: none; }
       footer { flex-direction: column; gap: 14px; align-items: flex-start; }
       .nav-links { gap: 18px; }
       .wf-tool { display: none; }
       .stack-group { flex-direction: column; gap: 6px; }
       .stack-cat-label { min-width: auto; }
     }
+    @media (max-width: 480px) {
+      .work-tags .tag:nth-of-type(n+3) { display: none; }
+      .work-tags .tag:nth-of-type(2)::after { content: ""; }
+    }
     @media (prefers-reduced-motion: reduce) {
       .available-dot { animation: none; }
-      .hover-preview, .work-arrow, .wf-pip { transition: none; }
+      .work-arrow, .wf-pip { transition: none; }
+      .si-dot.si-active { animation: none; }
     }
   </style>
 </head>
 <body>
 
 <div class="cursor-dot" id="cursorDot"></div>
-<div class="hover-preview" id="hoverPreview">
-  <div class="hover-preview-inner" id="hoverInner">
-    <span class="preview-label" id="previewLabel"></span>
-  </div>
-</div>
 
 <div class="shell">
 
@@ -161,81 +167,78 @@
     <ul class="work-list">
 
       <li class="work-item">
-        <a class="work-link" href="/projects/session-indicator.html"
-           data-preview-bg="#111111" data-preview-color="#555"
-           data-preview-label="Session Indicator" data-img="/assets/previews/session-indicator.jpg">
-          <div class="work-thumb-small">
-            <div class="thumb-placeholder" style="background:#111111;">
-              <span style="color:#444;">SI</span>
-            </div>
-          </div>
-          <div class="work-info">
+        <a class="work-link" href="/projects/session-indicator.html">
+          <div class="work-text">
             <div class="work-title">Session Indicator</div>
-            <div class="work-tags">AI Agent UI &middot; Interaction System &middot; Design Engineering</div>
+            <div class="work-tags">
+              <span class="tag">AI Agent UI</span><span class="tag">Interaction System</span><span class="tag">Design Engineering</span>
+            </div>
+            <div class="work-foot">
+              <span class="work-year">2025</span>
+              <span class="work-arrow">&rarr;</span>
+            </div>
           </div>
-          <div class="work-right">
-            <span class="work-year">2025</span>
-            <span class="work-arrow">&rarr;</span>
+          <div class="work-media">
+            <div class="si-pill">
+              <span class="si-dot si-active"></span>
+              <span class="si-dot si-waiting"></span>
+              <span class="si-dot si-idle"></span>
+              <span class="si-dot si-done"></span>
+            </div>
           </div>
         </a>
       </li>
 
       <li class="work-item">
-        <a class="work-link" href="/projects/promptedfind.html"
-           data-preview-bg="#0a1828" data-preview-color="#2a8855"
-           data-preview-label="PromptedFind" data-img="/assets/previews/promptedfind.jpg">
-          <div class="work-thumb-small">
-            <div class="thumb-placeholder" style="background:#0a1828;">
-              <span style="color:#2a5540;">PF</span>
-            </div>
-          </div>
-          <div class="work-info">
+        <a class="work-link" href="/projects/promptedfind.html">
+          <div class="work-text">
             <div class="work-title">PromptedFind</div>
-            <div class="work-tags">AI Interaction Pattern &middot; Prototype &middot; Semantic Navigation</div>
+            <div class="work-tags">
+              <span class="tag">AI Interaction Pattern</span><span class="tag">Prototype</span><span class="tag">Semantic Navigation</span>
+            </div>
+            <div class="work-foot">
+              <span class="work-year">2025</span>
+              <span class="work-arrow">&rarr;</span>
+            </div>
           </div>
-          <div class="work-right">
-            <span class="work-year">2025</span>
-            <span class="work-arrow">&rarr;</span>
+          <div class="work-media">
+            <img src="/assets/video/promptedfind-poster.jpg" alt="PromptedFind" />
           </div>
         </a>
       </li>
 
       <li class="work-item">
-        <a class="work-link" href="/projects/xcode-symbol-browser.html"
-           data-preview-bg="#1C1C1E" data-preview-color="#666"
-           data-preview-label="Xcode Symbol Browser" data-img="/assets/previews/xcode-symbol-browser.jpg">
-          <div class="work-thumb-small">
-            <div class="thumb-placeholder" style="background:#1C1C1E;">
-              <span style="color:#555;">XS</span>
-            </div>
-          </div>
-          <div class="work-info">
+        <a class="work-link" href="/projects/xcode-symbol-browser.html">
+          <div class="work-text">
             <div class="work-title">Xcode Symbol Browser</div>
-            <div class="work-tags">Developer Tools &middot; Information Architecture &middot; macOS</div>
+            <div class="work-tags">
+              <span class="tag">Developer Tools</span><span class="tag">Information Architecture</span><span class="tag">macOS</span>
+            </div>
+            <div class="work-foot">
+              <span class="work-year">2024</span>
+              <span class="work-arrow">&rarr;</span>
+            </div>
           </div>
-          <div class="work-right">
-            <span class="work-year">2024</span>
-            <span class="work-arrow">&rarr;</span>
+          <div class="work-media">
+            <img src="/assets/previews/xcode-symbol-browser.jpg" alt="Xcode Symbol Browser" />
           </div>
         </a>
       </li>
 
       <li class="work-item">
-        <a class="work-link" href="/projects/trails.html"
-           data-preview-bg="#EDE9E0" data-preview-color="#999080"
-           data-preview-label="Trails" data-img="/assets/previews/trails.jpg">
-          <div class="work-thumb-small">
-            <div class="thumb-placeholder" style="background:#EDE9E0; border:1px solid #D4D0C8;">
-              <span style="color:#C0BAB0;">TR</span>
+        <a class="work-link" href="/projects/trails.html">
+          <div class="work-text">
+            <div class="work-title">Trails</div>
+            <div class="work-tags">
+              <span class="tag">Knowledge Navigation</span><span class="tag">Graph Interface</span><span class="tag">Research Tools</span>
+            </div>
+            <div class="work-foot">
+              <span class="work-year">2023</span>
+              <span class="work-arrow">&rarr;</span>
             </div>
           </div>
-          <div class="work-info">
-            <div class="work-title">Trails</div>
-            <div class="work-tags">Knowledge Navigation &middot; Graph Interface &middot; Research Tools</div>
-          </div>
-          <div class="work-right">
-            <span class="work-year">2023</span>
-            <span class="work-arrow">&rarr;</span>
+          <div class="work-media">
+            <img src="/assets/previews/trails.jpg" alt="Trails" />
           </div>
         </a>
       </li>
@@ -346,28 +349,6 @@
   document.addEventListener('mousemove',e=>{curX=e.clientX;curY=e.clientY;dot.style.opacity='1';});
   (function tick(){dotX+=(curX-dotX)*.18;dotY+=(curY-dotY)*.18;dot.style.left=dotX+'px';dot.style.top=dotY+'px';requestAnimationFrame(tick);})();
   document.addEventListener('mouseleave',()=>{dot.style.opacity='0';});
-
-  const preview=document.getElementById('hoverPreview'),inner=document.getElementById('hoverInner'),lbl=document.getElementById('previewLabel');
-  let mx=0,my=0,pActive=false;
-  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(pActive)pos();});
-  function pos(){
-    const pw=260,ph=174,pad=20,vw=window.innerWidth,vh=window.innerHeight;
-    let x=mx+28,y=my-ph/2;
-    if(x+pw>vw-pad)x=mx-pw-28;
-    if(y<pad)y=pad;
-    if(y+ph>vh-pad)y=vh-ph-pad;
-    preview.style.left=x+'px';preview.style.top=y+'px';
-  }
-  document.querySelectorAll('.work-link').forEach(link=>{
-    const bg=link.dataset.previewBg||'#1A1A18',color=link.dataset.previewColor||'#555',label=link.dataset.previewLabel||'',img=link.dataset.img||'';
-    link.addEventListener('mouseenter',()=>{
-      pActive=true;
-      if(img){inner.innerHTML=`<img src="${img}" alt="${label}" />`;}
-      else{inner.innerHTML=`<span class="preview-label" style="color:${color}">${label}</span>`;inner.style.background=bg;}
-      pos();preview.classList.add('show');
-    });
-    link.addEventListener('mouseleave',()=>{pActive=false;preview.classList.remove('show');});
-  });
 
   const wfData=[
     {text:"Strategy, direction, and decisions happen in conversation. The chat is the brief, the spec, and the creative review — all in one.",tag:"Claude"},
