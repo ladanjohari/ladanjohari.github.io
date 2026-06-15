@@ -61,8 +61,20 @@
     .work-arrow { font-size: 0.85rem; color: var(--rule); transition: color 0.12s, transform 0.14s; }
     .work-link:hover .work-arrow { color: var(--accent); transform: translateX(4px); }
 
-    .work-media { aspect-ratio: 16/10; border-radius: 10px; overflow: hidden; border: 1px solid var(--rule); background: #1a1a1c; display: flex; align-items: center; justify-content: center; }
+    .work-media { position: relative; aspect-ratio: 16/10; border-radius: 10px; overflow: hidden; border: 1px solid var(--rule); background: #1a1a1c; display: flex; align-items: center; justify-content: center; }
     .work-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .work-media-still { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+    .work-media-loop { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.03); transition: opacity 0.2s ease, transform 0.2s ease; pointer-events: none; }
+
+    /* Desktop: reveal the loop on hover */
+    @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+      .work-link:hover .work-media-loop { opacity: 1; transform: scale(1); }
+    }
+    /* Touch: loop autoplays inline in place of the still */
+    @media (hover: none) and (prefers-reduced-motion: no-preference) {
+      .work-media-still { display: none; }
+      .work-media-loop { position: static; opacity: 1; transform: none; transition: none; }
+    }
 
     .si-pill { display: flex; align-items: center; gap: 16px; background: #0d0d0e; border: 1px solid rgba(255,255,255,0.08); border-radius: 32px; padding: 14px 22px; }
     .si-dot { width: 13px; height: 13px; border-radius: 50%; flex-shrink: 0; }
@@ -97,12 +109,19 @@
     .wf-pip { height: 2px; flex: 1; border-radius: 1px; background: var(--rule); transition: background 0.2s; }
     .wf-pip.active { background: var(--accent); }
 
-    .about-strip { padding: 56px 0 80px; border-top: 1px solid var(--rule); }
+    .about-strip { padding: 56px 0 80px; border-top: 1px solid var(--rule); display: flex; align-items: center; gap: 28px; }
     .about-text { font-size: 0.925rem; line-height: 1.85; color: var(--mid); max-width: 500px; }
     .about-text strong { color: var(--ink); font-weight: 600; }
     .about-text em { font-style: italic; }
     .about-text a { color: var(--mid); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--rule); transition: color 0.12s, text-decoration-color 0.12s; }
     .about-text a:hover { color: var(--accent); text-decoration-color: var(--accent-dim); }
+
+    .album-link { position: relative; flex-shrink: 0; width: 160px; height: 120px; border-radius: 10px; overflow: hidden; border: 1px solid var(--rule); display: block; }
+    .album-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.2s ease; }
+    .album-img.active { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) {
+      .album-img { transition: none; }
+    }
 
     footer { border-top: 1px solid var(--rule); padding: 26px 0 52px; display: flex; justify-content: space-between; align-items: center; }
     .footer-left { font-size: 0.76rem; color: var(--mid); }
@@ -113,6 +132,8 @@
     @media (max-width: 700px) {
       .work-link { grid-template-columns: 1fr; gap: 16px; }
       .work-media { order: -1; }
+      .about-strip { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .album-link { width: 100%; height: auto; aspect-ratio: 4/3; }
     }
     @media (max-width: 540px) {
       .shell { padding: 0 20px; }
@@ -176,12 +197,18 @@
             </div>
           </div>
           <div class="work-media">
-            <div class="si-pill">
-              <span class="si-dot si-active"></span>
-              <span class="si-dot si-waiting"></span>
-              <span class="si-dot si-idle"></span>
-              <span class="si-dot si-done"></span>
+            <div class="work-media-still">
+              <div class="si-pill">
+                <span class="si-dot si-active"></span>
+                <span class="si-dot si-waiting"></span>
+                <span class="si-dot si-idle"></span>
+                <span class="si-dot si-done"></span>
+              </div>
             </div>
+            <!-- Swap point: replace src with the real Session Indicator loop in /assets/cards/ -->
+            <video class="work-media-loop" muted loop playsinline preload="metadata">
+              <source src="/assets/cards/session-indicator.mp4" type="video/mp4">
+            </video>
           </div>
         </a>
       </li>
@@ -198,7 +225,13 @@
             </div>
           </div>
           <div class="work-media">
-            <img src="/assets/previews/promptedfind-frame.jpg" alt="PromptedFind" />
+            <div class="work-media-still">
+              <img src="/assets/previews/promptedfind-frame.jpg" alt="PromptedFind" loading="lazy" />
+            </div>
+            <!-- Swap point: replace src with the real PromptedFind loop in /assets/cards/ -->
+            <video class="work-media-loop" muted loop playsinline preload="metadata">
+              <source src="/assets/cards/promptedfind.mp4" type="video/mp4">
+            </video>
           </div>
         </a>
       </li>
@@ -215,7 +248,13 @@
             </div>
           </div>
           <div class="work-media">
-            <img src="/assets/previews/xcode-symbol-browser-screen.jpg" alt="Xcode Symbol Browser" />
+            <div class="work-media-still">
+              <img src="/assets/previews/xcode-symbol-browser-screen.jpg" alt="Xcode Symbol Browser" loading="lazy" />
+            </div>
+            <!-- Swap point: replace src with the real Xcode Symbol Browser loop in /assets/cards/ -->
+            <video class="work-media-loop" muted loop playsinline preload="metadata">
+              <source src="/assets/cards/xcode.mp4" type="video/mp4">
+            </video>
           </div>
         </a>
       </li>
@@ -232,7 +271,13 @@
             </div>
           </div>
           <div class="work-media">
-            <img src="/assets/previews/trails-screen.jpg" alt="Trails" />
+            <div class="work-media-still">
+              <img src="/assets/previews/trails-screen.jpg" alt="Trails" loading="lazy" />
+            </div>
+            <!-- Swap point: replace src with the real Trails loop in /assets/cards/ -->
+            <video class="work-media-loop" muted loop playsinline preload="metadata">
+              <source src="/assets/cards/trails.mp4" type="video/mp4">
+            </video>
           </div>
         </a>
       </li>
@@ -289,7 +334,13 @@
       <strong><a href="/art.html">Before all this, I made physical things &rarr;</a></strong><br><br>
       Architecture, sculpture, light installations. The same instinct, in bronze, ceramic, space, and now code.
     </p>
-    <!-- TODO Phase 2: rotating album of physical work, links to /art.html -->
+    <!-- Rotating album: swap point is /assets/album/physical-1.jpg .. physical-4.jpg -->
+    <a class="album-link" href="/art.html" id="albumLink" aria-label="More physical work">
+      <img class="album-img active" src="/assets/album/physical-1.jpg" alt="" loading="lazy">
+      <img class="album-img" src="/assets/album/physical-2.jpg" alt="" loading="lazy">
+      <img class="album-img" src="/assets/album/physical-3.jpg" alt="" loading="lazy">
+      <img class="album-img" src="/assets/album/physical-4.jpg" alt="" loading="lazy">
+    </a>
   </section>
 
   <footer>
@@ -329,6 +380,35 @@
   wfSteps.forEach(s=>s.addEventListener('click',()=>{clearInterval(wfTimer);wfGo(parseInt(s.dataset.step));}));
   wfGo(0);
   wfTimer=setInterval(()=>wfGo((wfCur+1)%wfData.length),2800);
+
+  // Work card media: hover-to-play on desktop, autoplay inline on touch
+  const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+  const hoverCapable=window.matchMedia('(hover: hover) and (pointer: fine)');
+  if(!reduceMotion.matches){
+    document.querySelectorAll('.work-link').forEach(link=>{
+      const loop=link.querySelector('.work-media-loop');
+      if(!loop) return;
+      if(hoverCapable.matches){
+        link.addEventListener('mouseenter',()=>loop.play());
+        link.addEventListener('mouseleave',()=>{loop.pause();loop.currentTime=0;});
+      } else {
+        loop.play();
+      }
+    });
+  }
+
+  // Rotating album of physical work
+  if(!reduceMotion.matches){
+    const albumImgs=document.querySelectorAll('.album-img');
+    if(albumImgs.length>1){
+      let albumCur=0;
+      setInterval(()=>{
+        albumImgs[albumCur].classList.remove('active');
+        albumCur=(albumCur+1)%albumImgs.length;
+        albumImgs[albumCur].classList.add('active');
+      },3000);
+    }
+  }
 </script>
 </body>
 </html>
