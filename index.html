@@ -146,23 +146,21 @@
   <nav>
     <a href="/" class="nav-name">Ladan Johari</a>
     <ul class="nav-links">
-      <li><a href="mailto:ladan.joharizadeh@gmail.com">Contact</a></li>
-      <li><a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a></li>
-      <li><a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="/resume.pdf" target="_blank" rel="noopener">R&eacute;sum&eacute;</a></li>
     </ul>
   </nav>
 
   <header class="hero">
-    <div class="available"><span class="available-dot"></span>Available for new roles</div>
-    <p class="hero-eyebrow">Design Engineer &mdash; Bay Area, CA</p>
-    <h1 class="hero-name">I build interfaces<br>that <em>think.</em></h1>
+    <p class="hero-eyebrow">Design &times; engineering for AI tools &middot; Bay Area, CA</p>
+    <h1 class="hero-name">I make environments.<br>Some of them are software.</h1>
     <p class="hero-desc">
-      <strong>Design &times; engineering</strong> for AI tools, developer surfaces, and interaction systems.
-      I work where craft, code, and systems thinking converge.
+      Buildings, installations, systems, interfaces. I build environments
+      that are easy to move through.
     </p>
   </header>
 
-  <section aria-label="Selected work" style="margin-bottom:0;">
+  <section id="work" aria-label="Selected work" style="margin-bottom:0;">
     <p class="section-label">Selected Work</p>
     <ul class="work-list">
 
@@ -174,7 +172,6 @@
               <span class="tag">AI Agent UI</span><span class="tag">Interaction System</span><span class="tag">Design Engineering</span>
             </div>
             <div class="work-foot">
-              <span class="work-year">2025</span>
               <span class="work-arrow">&rarr;</span>
             </div>
           </div>
@@ -197,7 +194,6 @@
               <span class="tag">AI Interaction Pattern</span><span class="tag">Prototype</span><span class="tag">Semantic Navigation</span>
             </div>
             <div class="work-foot">
-              <span class="work-year">2025</span>
               <span class="work-arrow">&rarr;</span>
             </div>
           </div>
@@ -215,7 +211,6 @@
               <span class="tag">Developer Tools</span><span class="tag">Information Architecture</span><span class="tag">macOS</span>
             </div>
             <div class="work-foot">
-              <span class="work-year">2024</span>
               <span class="work-arrow">&rarr;</span>
             </div>
           </div>
@@ -233,7 +228,6 @@
               <span class="tag">Knowledge Navigation</span><span class="tag">Graph Interface</span><span class="tag">Research Tools</span>
             </div>
             <div class="work-foot">
-              <span class="work-year">2023</span>
               <span class="work-arrow">&rarr;</span>
             </div>
           </div>
@@ -246,90 +240,60 @@
     </ul>
   </section>
 
-  <section class="stack-section" aria-label="Stack and workflow">
-    <p class="section-label">Stack</p>
-    <div class="stack-group">
-      <span class="stack-cat-label">Thinking</span>
-      <div class="stack-tags">
-        <span class="stack-tag">Claude</span>
-        <span class="stack-tag">Cursor</span>
-        <span class="stack-tag">Notion</span>
+  <section class="workflow-section" aria-label="How I work" style="margin-top:0; margin-bottom:80px;">
+    <p class="section-label">How I work</p>
+    <p class="about-text" style="margin-top:16px; max-width:560px;">I direct the work like a studio of one &mdash; set the brief, weigh the trade-offs, reject what&rsquo;s wrong, review every result in pixels before it ships. AI tools sit inside that loop as instruments; the taste is mine.</p>
+    <div class="wf-track" id="wfTrack">
+      <div class="wf-step active" data-step="0">
+        <div class="wf-dot"></div>
+        <span class="wf-name">Direct</span>
+        <span class="wf-tool">the brief</span>
+      </div>
+      <div class="wf-step" data-step="1">
+        <div class="wf-dot"></div>
+        <span class="wf-name">Decide</span>
+        <span class="wf-tool">trade-offs</span>
+      </div>
+      <div class="wf-step" data-step="2">
+        <div class="wf-dot"></div>
+        <span class="wf-name">Prototype</span>
+        <span class="wf-tool">Claude Code</span>
+      </div>
+      <div class="wf-step" data-step="3">
+        <div class="wf-dot"></div>
+        <span class="wf-name">Review</span>
+        <span class="wf-tool">in pixels</span>
+      </div>
+      <div class="wf-step" data-step="4">
+        <div class="wf-dot"></div>
+        <span class="wf-name">Ship</span>
+        <span class="wf-tool">&amp; iterate</span>
       </div>
     </div>
-    <div class="stack-group">
-      <span class="stack-cat-label">Building</span>
-      <div class="stack-tags">
-        <span class="stack-tag">Claude Code</span>
-        <span class="stack-tag">SwiftUI</span>
-        <span class="stack-tag">HTML &amp; CSS</span>
-        <span class="stack-tag">JavaScript</span>
-        <span class="stack-tag">Node.js</span>
-        <span class="stack-tag">PostgreSQL</span>
-      </div>
+    <div class="wf-detail">
+      <p class="wf-detail-text" id="wfDetailText">I set the problem, the constraints, and the bar. Every project starts as a written brief.</p>
+      <span class="wf-detail-tag" id="wfDetailTag">the brief</span>
     </div>
-    <div class="stack-group" style="margin-bottom:0;">
-      <span class="stack-cat-label">Craft</span>
-      <div class="stack-tags">
-        <span class="stack-tag">Interaction Design</span>
-        <span class="stack-tag">Design Systems</span>
-        <span class="stack-tag">Product Storytelling</span>
-        <span class="stack-tag">Video</span>
-      </div>
-    </div>
-
-    <div class="workflow-section" aria-label="How this was built">
-      <p class="section-label" style="margin-top:40px;">How this was built</p>
-      <div class="wf-track" id="wfTrack">
-        <div class="wf-step active" data-step="0">
-          <div class="wf-dot"></div>
-          <span class="wf-name">Think</span>
-          <span class="wf-tool">Claude</span>
-        </div>
-        <div class="wf-step" data-step="1">
-          <div class="wf-dot"></div>
-          <span class="wf-name">Prototype</span>
-          <span class="wf-tool">Claude + Code</span>
-        </div>
-        <div class="wf-step" data-step="2">
-          <div class="wf-dot"></div>
-          <span class="wf-name">Build</span>
-          <span class="wf-tool">Claude Code CLI</span>
-        </div>
-        <div class="wf-step" data-step="3">
-          <div class="wf-dot"></div>
-          <span class="wf-name">Ship</span>
-          <span class="wf-tool">GitHub Pages</span>
-        </div>
-        <div class="wf-step" data-step="4">
-          <div class="wf-dot"></div>
-          <span class="wf-name">Iterate</span>
-          <span class="wf-tool">Loop</span>
-        </div>
-      </div>
-      <div class="wf-detail">
-        <p class="wf-detail-text" id="wfDetailText">Strategy, direction, and decisions happen in conversation. The chat is the brief, the spec, and the creative review — all in one.</p>
-        <span class="wf-detail-tag" id="wfDetailTag">Claude</span>
-      </div>
-      <div class="wf-pips" id="wfPips">
-        <span class="wf-pip active"></span>
-        <span class="wf-pip"></span>
-        <span class="wf-pip"></span>
-        <span class="wf-pip"></span>
-        <span class="wf-pip"></span>
-      </div>
+    <div class="wf-pips" id="wfPips">
+      <span class="wf-pip active"></span>
+      <span class="wf-pip"></span>
+      <span class="wf-pip"></span>
+      <span class="wf-pip"></span>
+      <span class="wf-pip"></span>
     </div>
   </section>
 
   <section class="about-strip" aria-label="About">
     <p class="about-text">
-      I started as an architect. Then a sculptor. An MFA in Design at UC Davis &mdash;
-      spatial work, light, exhibition environments. The same question followed me through
-      every material: <em>how does a space make you feel something without explaining itself?</em><br><br>
-      The materials changed. Stone. Bronze. Light. Code. AI.
-      The instinct didn&rsquo;t &mdash; make what surrounds people easier to read,
-      easier to move through, easier to trust. The tools evolve. I evolve with them.<br><br>
-      <a href="/art.html">Before all this, I made physical things &rarr;</a>
+      <strong><a href="/art.html">Before all this, I made physical things &rarr;</a></strong><br><br>
+      Architecture, sculpture, light installations. The same instinct, in bronze, ceramic, space, and now code.
     </p>
+    <!-- TODO Phase 2: rotating album of physical work, links to /art.html -->
+  </section>
+
+  <section class="stack-section" aria-label="Stack">
+    <p class="section-label">Stack</p>
+    <p class="footer-left" style="margin-top:20px;">SwiftUI &middot; JavaScript &middot; Node.js &middot; HTML/CSS &middot; Figma &middot; design systems &middot; interaction design</p>
   </section>
 
   <footer>
@@ -351,11 +315,11 @@
   document.addEventListener('mouseleave',()=>{dot.style.opacity='0';});
 
   const wfData=[
-    {text:"Strategy, direction, and decisions happen in conversation. The chat is the brief, the spec, and the creative review — all in one.",tag:"Claude"},
-    {text:"Interfaces are prototyped directly in HTML/CSS/JS — no mockup stage. The artifact is the prototype. Conversation drives every iteration.",tag:"Claude + Code"},
-    {text:"Claude Code CLI implements specs from the terminal. Design decisions stay in chat. Engineering execution stays in CLI. Clean separation.",tag:"Claude Code CLI"},
-    {text:"Auto-deploys on every push to main. The live URL is the source of truth — not a Figma file, not a prototype. The real thing.",tag:"GitHub Pages"},
-    {text:"Each cycle takes minutes. Live review → spec → implement → live. This portfolio was built entirely this way.",tag:"AI-native loop"}
+    {text:"I set the problem, the constraints, and the bar. Every project starts as a written brief.",tag:"the brief"},
+    {text:"I weigh options against each other and reject the ones that are wrong. The decisions are mine to make.",tag:"trade-offs"},
+    {text:"I spec the work precisely and Claude Code builds it — fast enough that I can judge real pixels instead of imagining them.",tag:"Claude Code"},
+    {text:"Nothing ships from a description. I review every result on screen, at every breakpoint, and send it back until it's right.",tag:"in pixels"},
+    {text:"It goes live, I look again, and the loop repeats. The work is never done in one pass.",tag:"& iterate"}
   ];
   let wfCur=0,wfTimer;
   const wfSteps=document.querySelectorAll('.wf-step'),wfPips=document.querySelectorAll('.wf-pip'),wfText=document.getElementById('wfDetailText'),wfTag=document.getElementById('wfDetailTag');
