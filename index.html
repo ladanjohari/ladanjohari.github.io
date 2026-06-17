@@ -40,18 +40,26 @@
     .available { display: inline-flex; align-items: center; gap: 8px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #2d7a3a; margin-bottom: 28px; }
     .available-dot { width: 7px; height: 7px; border-radius: 50%; background: #2d7a3a; animation: breathe 2.4s ease-in-out infinite; flex-shrink: 0; }
     @keyframes breathe { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.35;transform:scale(.65)} }
-    .hero-eyebrow { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); margin-bottom: 18px; }
+    .hero-eyebrow { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #0066CC; margin-bottom: 18px; }
     .hero-name { font-size: clamp(2.4rem,5.5vw,3.2rem); font-weight: 700; letter-spacing: -0.045em; line-height: 1.06; color: var(--ink); margin-bottom: 24px; }
     .hero-name em { font-style: normal; color: var(--accent); }
     .hero-desc { font-size: 0.975rem; line-height: 1.7; color: var(--mid); max-width: 460px; }
     .hero-desc strong { color: var(--ink); font-weight: 600; }
-    .eyebrow-accent {
-      color: #0066CC;
-      animation: eyebrow-shimmer 3s ease-in-out infinite;
+    .eyebrow-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #0066CC;
+      margin-right: 8px;
+      vertical-align: middle;
+      position: relative;
+      top: -1px;
+      animation: dot-shimmer 3s ease-in-out infinite;
     }
-    @keyframes eyebrow-shimmer {
+    @keyframes dot-shimmer {
       0%, 100% { opacity: 1; }
-      50% { opacity: 0.45; }
+      50% { opacity: 0.25; }
     }
 
     .section-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
@@ -182,7 +190,7 @@
   </nav>
 
   <header class="hero">
-    <p class="hero-eyebrow"><span class="eyebrow-accent">Design &times; engineering</span> for AI tools &middot; <span style="white-space: nowrap;">Bay Area, CA</span></p>
+    <p class="hero-eyebrow"><span class="eyebrow-dot"></span>Design &times; engineering for AI tools &middot; <span style="white-space: nowrap;">Bay Area, CA</span></p>
     <h1 class="hero-name">I make environments,<br>some of them are software.</h1>
     <p class="hero-desc">
       Spaces, installations, systems, interfaces: I build environments that are easy to move through.
