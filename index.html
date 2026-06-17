@@ -45,6 +45,14 @@
     .hero-name em { font-style: normal; color: var(--accent); }
     .hero-desc { font-size: 0.975rem; line-height: 1.7; color: var(--mid); max-width: 460px; }
     .hero-desc strong { color: var(--ink); font-weight: 600; }
+    .eyebrow-accent {
+      color: #0066CC;
+      animation: eyebrow-shimmer 3s ease-in-out infinite;
+    }
+    @keyframes eyebrow-shimmer {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.45; }
+    }
 
     .section-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
 
@@ -148,6 +156,7 @@
       .stack-cat-label { min-width: auto; }
     }
     @media (max-width: 480px) {
+      .hero-name { font-size: 28px; }
       .work-tags .tag:nth-of-type(n+3) { display: none; }
       .work-tags .tag:nth-of-type(2)::after { content: ""; }
     }
@@ -173,11 +182,10 @@
   </nav>
 
   <header class="hero">
-    <p class="hero-eyebrow">Design &times; engineering for AI tools &middot; Bay Area, CA</p>
+    <p class="hero-eyebrow"><span class="eyebrow-accent">Design &times; engineering</span> for AI tools &middot; <span style="white-space: nowrap;">Bay Area, CA</span></p>
     <h1 class="hero-name">I make environments,<br>some of them are software.</h1>
     <p class="hero-desc">
-      Spaces, installations, interaction systems, or developer tools, I build environments
-      that are easy to move through.
+      Spaces, installations, systems, interfaces: I build environments that are easy to move through.
     </p>
   </header>
 
