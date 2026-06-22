@@ -173,7 +173,7 @@
     }
     .pattern-note strong { color: var(--ink); font-weight: 600; }
 
-    /* ── Interaction stepper ── */
+    /* ── Interaction stepper with spotlight ── */
     .stepper {
       margin-top: 28px;
       border: 1px solid var(--rule); border-radius: 10px;
@@ -188,9 +188,16 @@
       position: absolute; inset: 0;
       width: 100%; height: 100%;
       object-fit: cover;
-      opacity: 0; transition: opacity 0.4s ease;
+      opacity: 0; transition: opacity 0.5s ease;
     }
     .stepper-frame img.is-active { opacity: 1; }
+    .stepper-spotlight {
+      position: absolute; inset: 0;
+      pointer-events: none; z-index: 2;
+    }
+    .stepper-spotlight rect {
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
     .stepper-nav {
       display: flex; border-top: 1px solid var(--rule);
       background: var(--bg);
@@ -415,9 +422,20 @@
       </p>
       <div class="stepper" id="stepper">
         <div class="stepper-frame">
-          <img src="../assets/img/pf/step-01.jpg" alt="Ask panel open with suggested questions" class="is-active" data-step="0" />
-          <img src="../assets/img/pf/step-02.jpg" alt="Timeline segments highlighted after query" data-step="1" />
-          <img src="../assets/img/pf/step-03.jpg" alt="Segment clicked, video jumps to moment" data-step="2" />
+          <img src="../assets/img/pf/step-01.jpg" alt="Ask panel open with timeline segments" class="is-active" data-step="0" />
+          <img src="../assets/img/pf/step-02.jpg" alt="Timeline segments highlighted" data-step="1" />
+          <img src="../assets/img/pf/step-03.jpg" alt="Segment clicked with AI summary" data-step="2" />
+          <svg class="stepper-spotlight" viewBox="0 0 1280 614" preserveAspectRatio="none">
+            <defs>
+              <mask id="spot-mask">
+                <rect width="1280" height="614" fill="white" />
+                <rect id="spot-window" x="830" y="60" width="420" height="520" rx="16" fill="black" />
+              </mask>
+            </defs>
+            <rect width="1280" height="614" fill="rgba(0,0,0,0.55)" mask="url(#spot-mask)" />
+            <rect id="spot-border" x="830" y="60" width="420" height="520" rx="16"
+              fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
+          </svg>
         </div>
         <div class="stepper-nav">
           <button class="stepper-tab is-active" data-step="0">
@@ -511,23 +529,69 @@
       if (!stepper) return;
       const imgs = stepper.querySelectorAll('.stepper-frame img');
       const tabs = stepper.querySelectorAll('.stepper-tab');
+      const spotWindow = document.getElementById('spot-window');
+      const spotBorder = document.getElementById('spot-border');
       let current = 0;
       let timer = null;
+
+      const spots = [
+        { x: 830, y: 60, w: 420, h: 520, rx: 16 },
+        { x: 10, y: 370, w: 830, h: 140, rx: 12 },
+        { x: 830, y: 60, w: 420, h: 300, rx: 16 }
+      ];
+
+      let anim = null;
+      let cur = { ...spots[0] };
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      function setSpot(s) {
+        [spotWindow, spotBorder].forEach(el => {
+          el.setAttribute('x', s.x);
+          el.setAttribute('y', s.y);
+          el.setAttribute('width', s.w);
+          el.setAttribute('height', s.h);
+          el.setAttribute('rx', s.rx);
+        });
+      }
+
+      function animateTo(target) {
+        if (anim) cancelAnimationFrame(anim);
+        const from = { ...cur };
+        const start = performance.now();
+        const dur = 500;
+        function tick(now) {
+          const t = Math.min((now - start) / dur, 1);
+          const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+          cur = {
+            x: lerp(from.x, target.x, ease),
+            y: lerp(from.y, target.y, ease),
+            w: lerp(from.w, target.w, ease),
+            h: lerp(from.h, target.h, ease),
+            rx: lerp(from.rx, target.rx, ease)
+          };
+          setSpot(cur);
+          if (t < 1) anim = requestAnimationFrame(tick);
+        }
+        anim = requestAnimationFrame(tick);
+      }
 
       function goTo(i) {
         current = i;
         imgs.forEach((img, idx) => img.classList.toggle('is-active', idx === i));
         tabs.forEach((tab, idx) => tab.classList.toggle('is-active', idx === i));
+        animateTo(spots[i]);
       }
 
       function advance() { goTo((current + 1) % imgs.length); }
-      function startTimer() { timer = setInterval(advance, 3500); }
+      function startTimer() { timer = setInterval(advance, 4000); }
       function resetTimer() { clearInterval(timer); startTimer(); }
 
       tabs.forEach((tab, idx) => {
         tab.addEventListener('click', () => { goTo(idx); resetTimer(); });
       });
 
+      setSpot(spots[0]);
       startTimer();
     })();
   </script>
