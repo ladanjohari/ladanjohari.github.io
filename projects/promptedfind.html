@@ -3,9 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PromptedFind &mdash; Ladan Johari</title>
-  <meta name="description" content="PromptedFind — semantic video navigation. Ask a question, jump to the moment. A new interaction pattern for long-form video." />
+  <title>Prompted Find · Ladan Johari</title>
+  <meta name="description" content="Prompted Find: semantic video navigation. Ask a question, jump to the moment. A new interaction pattern for long-form video." />
   <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Prompted Find · Ladan Johari" />
+  <meta property="og:description" content="Semantic video navigation. Ask a question, jump to the exact moment. A new interaction pattern for long-form content." />
+  <meta property="og:url" content="https://ladanjohari.com/projects/promptedfind.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://ladanjohari.com/assets/og-promptedfind.jpg" />
+  <link rel="canonical" href="https://ladanjohari.com/projects/promptedfind.html" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -16,7 +22,7 @@
     :root {
       --bg: #F7F6F3; --ink: #111111; --mid: #6B6B6B;
       --rule: #D4D3CF; --hover-row: #F0EFEC;
-      --accent: #0066FF; --accent-dim: #D6E4FF;
+      --accent: #0066CC; --accent-dim: #D4E2F7;
     }
 
     html { background: var(--bg); }
@@ -58,7 +64,7 @@
       color: var(--ink); margin-bottom: 14px;
     }
     .cs-descriptor {
-      font-size: 1rem; color: var(--mid); font-weight: 400;
+      font-size: 14px; color: var(--mid); font-weight: 400;
       line-height: 1.65; margin-bottom: 20px; max-width: 520px;
     }
     .cs-meta {
@@ -110,13 +116,13 @@
     }
 
     .cs-pullquote {
-      font-size: 1rem; line-height: 1.7; color: var(--mid);
+      font-size: 14px; line-height: 1.7; color: var(--mid);
       font-style: italic; padding-left: 18px;
       border-left: 2px solid var(--rule); margin-bottom: 20px;
     }
 
     .cs-body-text {
-      font-size: 0.925rem; line-height: 1.8;
+      font-size: 13px; line-height: 1.75;
       color: var(--mid); max-width: 560px;
     }
     .cs-body-text strong { color: var(--ink); font-weight: 600; }
@@ -132,25 +138,25 @@
       background: var(--bg); padding: 20px 18px 22px;
     }
     .frame-num {
-      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
       color: var(--mid); margin-bottom: 6px;
       text-transform: uppercase;
     }
     .frame-title {
-      font-size: 0.875rem; font-weight: 600; letter-spacing: -0.01em;
-      color: var(--ink); margin-bottom: 6px; line-height: 1.35;
+      font-size: 12px; font-weight: 600; letter-spacing: -0.01em;
+      color: var(--ink); margin-bottom: 6px; line-height: 1.4;
     }
     .frame-principle {
-      font-size: 0.75rem; font-style: italic;
+      font-size: 11px; font-style: italic;
       color: var(--accent); margin-bottom: 10px;
     }
     .frame-body {
-      font-size: 0.8rem; color: var(--mid);
+      font-size: 12px; color: var(--mid);
       line-height: 1.65; margin-bottom: 10px;
     }
     .frame-rejected {
-      font-size: 0.75rem; color: #999;
-      line-height: 1.55; padding-left: 10px;
+      font-size: 11px; color: #999;
+      line-height: 1.6; padding-left: 10px;
       border-left: 1.5px solid var(--rule);
     }
     .frame-rejected strong { font-weight: 500; color: var(--mid); }
@@ -159,13 +165,132 @@
     .pattern-note {
       margin-top: 28px;
       border: 1px solid var(--accent-dim);
-      background: rgba(0, 102, 255, 0.03);
+      background: rgba(0, 102, 204, 0.03);
       border-radius: 8px; padding: 18px 22px;
     }
     .pattern-note p {
-      font-size: 0.875rem; color: var(--mid); line-height: 1.75;
+      font-size: 13px; color: var(--mid); line-height: 1.75;
     }
     .pattern-note strong { color: var(--ink); font-weight: 600; }
+
+    /* ── Interaction stepper ── */
+    .stepper {
+      margin-top: 28px;
+      border: 1px solid var(--rule); border-radius: 10px;
+      overflow: hidden; background: #0a0a0a;
+    }
+    .stepper-frame {
+      position: relative; width: 100%;
+      aspect-ratio: 16/8;
+      overflow: hidden;
+    }
+    .stepper-frame img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0; transition: opacity 0.4s ease;
+    }
+    .stepper-frame img.is-active { opacity: 1; }
+    .stepper-nav {
+      display: flex; border-top: 1px solid var(--rule);
+      background: var(--bg);
+    }
+    .stepper-tab {
+      flex: 1; padding: 14px 12px;
+      border: none; background: none;
+      cursor: pointer; text-align: left;
+      border-right: 1px solid var(--rule);
+      transition: background 0.15s;
+      position: relative;
+    }
+    .stepper-tab:last-child { border-right: none; }
+    .stepper-tab:hover { background: var(--hover-row); }
+    .stepper-tab.is-active { background: var(--hover-row); }
+    .stepper-tab.is-active::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; right: 0; height: 2px;
+      background: var(--accent);
+    }
+    .stepper-tab-num {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+      color: var(--accent); display: block; margin-bottom: 4px;
+    }
+    .stepper-tab-title {
+      font-size: 11px; font-weight: 600; color: var(--ink);
+      display: block; line-height: 1.35;
+    }
+    .stepper-tab-desc {
+      font-size: 10px; color: var(--mid); display: block;
+      line-height: 1.5; margin-top: 3px;
+    }
+    .stepper-pips {
+      display: flex; gap: 4px; padding: 8px 12px;
+      background: var(--bg); border-top: 1px solid var(--rule);
+    }
+    .stepper-pip {
+      height: 2px; flex: 1; border-radius: 1px;
+      background: var(--rule); transition: background 0.2s;
+    }
+    .stepper-pip.is-active { background: var(--accent); }
+
+    /* ── Architecture pipeline ── */
+    .pipeline {
+      margin-top: 28px;
+      display: flex; flex-direction: column; gap: 0;
+      border: 1px solid var(--rule); border-radius: 8px;
+      overflow: hidden;
+    }
+    .pipeline-stage {
+      display: flex; align-items: stretch;
+      border-bottom: 1px solid var(--rule);
+    }
+    .pipeline-stage:last-child { border-bottom: none; }
+    .pipeline-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent);
+      min-width: 90px; padding: 14px 16px;
+      display: flex; align-items: center;
+      border-right: 1px solid var(--rule);
+      background: rgba(0, 102, 204, 0.02);
+    }
+    .pipeline-value {
+      flex: 1; padding: 14px 18px;
+      font-size: 13px; color: var(--ink); line-height: 1.55;
+    }
+    .pipeline-value span { color: var(--mid); }
+    .pipeline-arrow {
+      display: flex; justify-content: center;
+      padding: 0; border-bottom: 1px solid var(--rule);
+      color: var(--rule); font-size: 11px; line-height: 1;
+    }
+    .pipeline-arrow:last-of-type { display: none; }
+
+    /* ── Reflection list ── */
+    .reflection-list {
+      margin-top: 20px;
+      list-style: none;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .reflection-list li {
+      font-size: 13px; color: var(--mid); line-height: 1.7;
+      padding-left: 14px;
+      border-left: 2px solid var(--rule);
+    }
+    .reflection-list li strong { color: var(--ink); font-weight: 600; }
+
+    /* ── Closing CTA ── */
+    .cs-closing {
+      max-width: 700px; margin: 0 auto;
+      padding: 0 28px 56px;
+      text-align: center;
+    }
+    .cs-closing-line {
+      font-size: 14px; color: var(--mid); line-height: 1.7;
+    }
+    .cs-closing-line a {
+      color: var(--accent); text-decoration: none; font-weight: 500;
+    }
+    .cs-closing-line a:hover { text-decoration: underline; }
 
     /* ── Footer ── */
     .pf-footer {
@@ -188,6 +313,12 @@
       .pf-links { gap: 18px; }
       .frames-grid { grid-template-columns: 1fr; }
       .pf-footer { flex-direction: column; gap: 14px; align-items: flex-start; padding-left: 20px; padding-right: 20px; }
+      .stepper-nav { flex-direction: column; }
+      .stepper-tab { border-right: none; border-bottom: 1px solid var(--rule); }
+      .stepper-tab:last-child { border-bottom: none; }
+      .stepper-tab.is-active::after { bottom: auto; top: 0; height: 2px; }
+      .pipeline-stage { flex-direction: column; }
+      .pipeline-label { border-right: none; border-bottom: 1px solid var(--rule); min-width: unset; padding: 10px 16px; }
     }
   </style>
 </head>
@@ -196,18 +327,17 @@
   <nav class="pf-nav">
     <a class="pf-wordmark" href="/">Ladan Johari</a>
     <ul class="pf-links">
-      <li><a href="mailto:ladan.joharizadeh@gmail.com">Contact</a></li>
-      <li><a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a></li>
-      <li><a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="/#work">Work</a></li>
+      <li><a href="/resume.pdf" target="_blank" rel="noopener">R&eacute;sum&eacute;</a></li>
     </ul>
   </nav>
 
   <div class="cs-header">
     <p class="cs-eyebrow">AI Interaction Pattern &middot; Prototype &middot; Semantic Navigation</p>
-    <h1 class="cs-title">PromptedFind</h1>
+    <h1 class="cs-title">Prompted Find</h1>
     <p class="cs-descriptor">
       Ask a question about a video. Jump to the exact moment that answers it.
-      A new navigation pattern for long-form content — search that returns a location, not a list.
+      A new navigation pattern for long-form content. Search that returns a location, not a list.
     </p>
     <div class="cs-meta">
       <span>2025</span>
@@ -225,75 +355,169 @@
         Your browser does not support video.
       </video>
     </div>
-    <p class="video-caption">PromptedFind &mdash; semantic navigation prototype. Type a question, jump to the moment.</p>
+    <p class="video-caption">Prompted Find · semantic navigation prototype. Type a question, jump to the moment.</p>
   </div>
 
   <div class="cs-body">
 
     <div class="cs-section">
       <p class="cs-label">The Gap</p>
-      <p class="cs-pullquote">&ldquo;You&rsquo;re watching a 74-minute lecture. You have one question. Finding the answer means scrubbing.&rdquo;</p>
+      <p class="cs-pullquote">&ldquo;Video is visual content, but finding a moment in it means reading transcripts and scrubbing timelines. The thing that makes video easy to watch is exactly what makes it hard to navigate.&rdquo;</p>
       <p class="cs-body-text">
-        Long-form video has no spatial address. A document has paragraphs, headings, a table of contents — you can navigate it by structure.
-        Video only has time. If you want a specific moment, you scrub. You guess. You watch the wrong five minutes.
+        Long-form video has no spatial address. A document has paragraphs, headings, a table of contents. You can navigate it by structure.
+        Video only has time.
         <br><br>
-        <strong>PromptedFind makes the timeline navigable by meaning.</strong> You ask what you want to find.
+        <strong>Prompted Find makes the timeline navigable by meaning.</strong> You ask what you want to find.
         The interface segments the video semantically, highlights relevant moments, and jumps you there.
-        The query returns a location — not a transcript, not a summary, a timestamp you can trust.
+        The query returns a location, not a transcript, not a summary. A timestamp you can trust.
       </p>
     </div>
 
     <div class="cs-section">
-      <p class="cs-label">Three Decisions</p>
+      <p class="cs-label">Decisions</p>
       <p class="cs-body-text" style="margin-bottom: 0;">
-        Each decision was a choice about what kind of interface this is — tool, search engine, or navigation system.
-        It's the third one.
+        Each decision was a choice about what kind of interface this is: tool, search engine, or navigation system.
       </p>
       <div class="frames-grid">
         <div class="frame-col">
           <p class="frame-num">01</p>
-          <p class="frame-title">The answer is a timestamp, not text</p>
+          <p class="frame-title">The answer is a timestamp, not&nbsp;text</p>
           <p class="frame-principle">&ldquo;Search as navigation.&rdquo;</p>
           <p class="frame-body">
-            The query moves you inside the video. The interface doesn't summarize or transcribe —
-            it relocates you to the moment where the answer lives.
+            The query moves you inside the video. The interface doesn't summarize or transcribe.
+            It relocates you to the moment where the answer lives.
           </p>
-          <p class="frame-rejected"><strong>Rejected:</strong> Returning a text answer pulls you out of the video entirely. The experience should keep you inside the content, not above it.</p>
         </div>
         <div class="frame-col">
           <p class="frame-num">02</p>
-          <p class="frame-title">Segments, not a search results list</p>
+          <p class="frame-title">Segments, not a search results&nbsp;list</p>
           <p class="frame-principle">&ldquo;The timeline is the interface.&rdquo;</p>
           <p class="frame-body">
             The video timeline is divided into labeled semantic segments. Relevant ones are highlighted.
             You see the shape of the answer before you click it.
           </p>
-          <p class="frame-rejected"><strong>Rejected:</strong> A list of timestamps with text previews ignores the visual nature of video. The timeline carries spatial context that a list destroys.</p>
         </div>
         <div class="frame-col">
           <p class="frame-num">03</p>
-          <p class="frame-title">The query stays visible while you watch</p>
+          <p class="frame-title">The query stays visible while you&nbsp;watch</p>
           <p class="frame-principle">&ldquo;Context persists.&rdquo;</p>
           <p class="frame-body">
             The question panel stays open alongside the video. You can ask follow-ups without losing
             your place. The interface is a co-pilot, not a one-shot lookup.
           </p>
-          <p class="frame-rejected"><strong>Rejected:</strong> Closing the panel after answering treats the query as disposable. Keeping it open acknowledges that understanding a lecture is iterative.</p>
         </div>
       </div>
 
       <div class="pattern-note">
         <p>
           <strong>Why this pattern matters beyond video.</strong>
-          The same logic applies to any long-form content without navigable structure —
+          The same logic applies to any long-form content without navigable structure:
           podcasts, recorded meetings, legal documents, research papers.
-          PromptedFind is a prototype of a pattern: <strong>ask a question, get a location.</strong>
+          Prompted Find is a prototype of a pattern: <strong>ask a question, get a location.</strong>
           The medium changes. The interaction stays the same.
         </p>
       </div>
     </div>
 
+    <div class="cs-section">
+      <p class="cs-label">The Interaction</p>
+      <p class="cs-body-text" style="margin-bottom: 0;">
+        The prototype lives inside a YouTube watch page. The interaction has four steps, and none of them take the user out of the video.
+      </p>
+      <div class="stepper" id="stepper">
+        <div class="stepper-frame">
+          <img src="../assets/img/pf/step-01.jpg" alt="Ask panel open with suggested questions" class="is-active" data-step="0" />
+          <img src="../assets/img/pf/step-02.jpg" alt="Timeline segments highlighted after query" data-step="1" />
+          <img src="../assets/img/pf/step-03.jpg" alt="Segment clicked, video jumps to moment" data-step="2" />
+          <img src="../assets/img/pf/step-04.jpg" alt="Browsing another segment on the timeline" data-step="3" />
+        </div>
+        <div class="stepper-nav">
+          <button class="stepper-tab is-active" data-step="0">
+            <span class="stepper-tab-num">01</span>
+            <span class="stepper-tab-title">Open the Ask panel</span>
+            <span class="stepper-tab-desc">Side panel opens. Video keeps playing.</span>
+          </button>
+          <button class="stepper-tab" data-step="1">
+            <span class="stepper-tab-num">02</span>
+            <span class="stepper-tab-title">Segments appear on the&nbsp;timeline</span>
+            <span class="stepper-tab-desc">Semantic ranges light up below the video.</span>
+          </button>
+          <button class="stepper-tab" data-step="2">
+            <span class="stepper-tab-num">03</span>
+            <span class="stepper-tab-title">Click a segment, land in the&nbsp;moment</span>
+            <span class="stepper-tab-desc">Video jumps. AI summary shows context.</span>
+          </button>
+          <button class="stepper-tab" data-step="3">
+            <span class="stepper-tab-num">04</span>
+            <span class="stepper-tab-title">Browse and ask follow-ups</span>
+            <span class="stepper-tab-desc">Panel stays open. Explore more segments.</span>
+          </button>
+        </div>
+        <div class="stepper-pips">
+          <div class="stepper-pip is-active" data-step="0"></div>
+          <div class="stepper-pip" data-step="1"></div>
+          <div class="stepper-pip" data-step="2"></div>
+          <div class="stepper-pip" data-step="3"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-section">
+      <p class="cs-label">How It Works</p>
+      <p class="cs-body-text">
+        The prototype simulates an AI-powered pipeline. The video content is pre-segmented into semantic ranges,
+        each with a title and summary. When a query comes in, the system expands it through concept aliasing,
+        scores segments by keyword relevance, and returns ranked results that map directly to the timeline UI.
+      </p>
+      <div class="pipeline">
+        <div class="pipeline-stage">
+          <span class="pipeline-label">Content</span>
+          <span class="pipeline-value">74-min NASA lecture, pre-segmented into 9 semantic ranges <span>(title + summary + time bounds)</span></span>
+        </div>
+        <div class="pipeline-stage">
+          <span class="pipeline-label">Query</span>
+          <span class="pipeline-value">Natural language input, expanded via concept aliasing <span>(e.g. "landing" also matches "descent", "retropropulsion")</span></span>
+        </div>
+        <div class="pipeline-stage">
+          <span class="pipeline-label">Scoring</span>
+          <span class="pipeline-value">Keyword match against segment text, phrase matches weighted 2x, results sorted by relevance then time</span>
+        </div>
+        <div class="pipeline-stage">
+          <span class="pipeline-label">Output</span>
+          <span class="pipeline-value">Ranked segment list with start/end timestamps, rendered as interactive timeline blocks</span>
+        </div>
+        <div class="pipeline-stage">
+          <span class="pipeline-label">Stack</span>
+          <span class="pipeline-value">Vanilla JavaScript, HTML/CSS, no frameworks <span>(~1,400 lines across 3 files)</span></span>
+        </div>
+      </div>
+      <div class="pattern-note" style="margin-top: 24px;">
+        <p>
+          <strong>Design decision: simulate, don't ship.</strong>
+          This is a design-engineer prototype, not a production system. The goal was to prove that the interaction pattern works
+          before investing in a real LLM pipeline. The data is hand-crafted to feel like model output, so the UX can be evaluated
+          on its own terms.
+        </p>
+      </div>
+    </div>
+
+    <div class="cs-section">
+      <p class="cs-label">What I'd Change</p>
+      <ul class="reflection-list">
+        <li><strong>Confidence indicators.</strong> Not all matches are equally strong. The timeline should visually encode match confidence so the user can prioritize where to jump.</li>
+        <li><strong>Multi-video support.</strong> The current prototype works with a single video. The real value is cross-video search: "find the part about heat shields" across an entire lecture series.</li>
+        <li><strong>Real embeddings, not keyword matching.</strong> The prototype uses concept aliasing and keyword scoring. A production version would use semantic embeddings to handle queries the alias table doesn't cover.</li>
+      </ul>
+    </div>
+
   </div>
+
+  <!-- <div class="cs-closing">
+    <p class="cs-closing-line">
+      Interested in the interaction pattern or how I built it?
+      <a href="mailto:ladan.joharizadeh@gmail.com">I'd love to talk about it.</a>
+    </p>
+  </div> -->
 
   <footer class="pf-footer">
     <span class="pf-footer-copy">&copy; 2026 Ladan Johari</span>
@@ -304,5 +528,33 @@
     </ul>
   </footer>
 
+  <script>
+    (() => {
+      const stepper = document.getElementById('stepper');
+      if (!stepper) return;
+      const imgs = stepper.querySelectorAll('.stepper-frame img');
+      const tabs = stepper.querySelectorAll('.stepper-tab');
+      const pips = stepper.querySelectorAll('.stepper-pip');
+      let current = 0;
+      let timer = null;
+
+      function goTo(i) {
+        current = i;
+        imgs.forEach((img, idx) => img.classList.toggle('is-active', idx === i));
+        tabs.forEach((tab, idx) => tab.classList.toggle('is-active', idx === i));
+        pips.forEach((pip, idx) => pip.classList.toggle('is-active', idx <= i));
+      }
+
+      function advance() { goTo((current + 1) % imgs.length); }
+      function startTimer() { timer = setInterval(advance, 3500); }
+      function resetTimer() { clearInterval(timer); startTimer(); }
+
+      tabs.forEach((tab, idx) => {
+        tab.addEventListener('click', () => { goTo(idx); resetTimer(); });
+      });
+
+      startTimer();
+    })();
+  </script>
 </body>
 </html>
