@@ -205,11 +205,10 @@
     }
     .stepper-tab:last-child { border-right: none; }
     .stepper-tab:hover { background: var(--hover-row); }
-    .stepper-tab.is-active { background: var(--hover-row); }
-    .stepper-tab.is-active::after {
-      content: ''; position: absolute;
-      bottom: 0; left: 0; right: 0; height: 2px;
-      background: var(--accent);
+    .stepper-tab.is-active {
+      background: var(--hover-row);
+      box-shadow: inset 0 0 0 2px var(--accent);
+      border-radius: 10px;
     }
     .stepper-tab-num {
       font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
@@ -223,15 +222,6 @@
       font-size: 10px; color: var(--mid); display: block;
       line-height: 1.5; margin-top: 3px;
     }
-    .stepper-pips {
-      display: flex; gap: 4px; padding: 8px 12px;
-      background: var(--bg); border-top: 1px solid var(--rule);
-    }
-    .stepper-pip {
-      height: 2px; flex: 1; border-radius: 1px;
-      background: var(--rule); transition: background 0.2s;
-    }
-    .stepper-pip.is-active { background: var(--accent); }
 
     /* ── Architecture pipeline ── */
     .pipeline {
@@ -316,7 +306,6 @@
       .stepper-nav { flex-direction: column; }
       .stepper-tab { border-right: none; border-bottom: 1px solid var(--rule); }
       .stepper-tab:last-child { border-bottom: none; }
-      .stepper-tab.is-active::after { bottom: auto; top: 0; height: 2px; }
       .pipeline-stage { flex-direction: column; }
       .pipeline-label { border-right: none; border-bottom: 1px solid var(--rule); min-width: unset; padding: 10px 16px; }
     }
@@ -429,7 +418,6 @@
           <img src="../assets/img/pf/step-01.jpg" alt="Ask panel open with suggested questions" class="is-active" data-step="0" />
           <img src="../assets/img/pf/step-02.jpg" alt="Timeline segments highlighted after query" data-step="1" />
           <img src="../assets/img/pf/step-03.jpg" alt="Segment clicked, video jumps to moment" data-step="2" />
-          <img src="../assets/img/pf/step-04.jpg" alt="Browsing another segment on the timeline" data-step="3" />
         </div>
         <div class="stepper-nav">
           <button class="stepper-tab is-active" data-step="0">
@@ -444,25 +432,14 @@
           </button>
           <button class="stepper-tab" data-step="2">
             <span class="stepper-tab-num">03</span>
-            <span class="stepper-tab-title">Click a segment, land in the&nbsp;moment</span>
+            <span class="stepper-tab-title">Click and land in the&nbsp;moment</span>
             <span class="stepper-tab-desc">Video jumps. AI summary shows context.</span>
           </button>
-          <button class="stepper-tab" data-step="3">
-            <span class="stepper-tab-num">04</span>
-            <span class="stepper-tab-title">Browse and ask follow-ups</span>
-            <span class="stepper-tab-desc">Panel stays open. Explore more segments.</span>
-          </button>
-        </div>
-        <div class="stepper-pips">
-          <div class="stepper-pip is-active" data-step="0"></div>
-          <div class="stepper-pip" data-step="1"></div>
-          <div class="stepper-pip" data-step="2"></div>
-          <div class="stepper-pip" data-step="3"></div>
         </div>
       </div>
     </div>
 
-    <div class="cs-section">
+    <div class="cs-section" style="display:none;">
       <p class="cs-label">How It Works</p>
       <p class="cs-body-text">
         The prototype simulates an AI-powered pipeline. The video content is pre-segmented into semantic ranges,
@@ -534,7 +511,6 @@
       if (!stepper) return;
       const imgs = stepper.querySelectorAll('.stepper-frame img');
       const tabs = stepper.querySelectorAll('.stepper-tab');
-      const pips = stepper.querySelectorAll('.stepper-pip');
       let current = 0;
       let timer = null;
 
@@ -542,7 +518,6 @@
         current = i;
         imgs.forEach((img, idx) => img.classList.toggle('is-active', idx === i));
         tabs.forEach((tab, idx) => tab.classList.toggle('is-active', idx === i));
-        pips.forEach((pip, idx) => pip.classList.toggle('is-active', idx <= i));
       }
 
       function advance() { goTo((current + 1) % imgs.length); }
