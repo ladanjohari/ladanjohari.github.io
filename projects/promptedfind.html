@@ -173,40 +173,31 @@
     }
     .pattern-note strong { color: var(--ink); font-weight: 600; }
 
-    /* ── Interaction stepper with zoom spotlight ── */
+    /* ── Interaction stepper with spotlight ── */
     .stepper {
       margin-top: 28px;
       border: 1px solid var(--rule); border-radius: 10px;
       overflow: hidden; background: #0a0a0a;
     }
-    .stepper-viewport {
+    .stepper-frame {
       position: relative; width: 100%;
       aspect-ratio: 16/8;
       overflow: hidden;
     }
-    .stepper-bg {
-      position: absolute; inset: 0;
-    }
-    .stepper-bg img {
+    .stepper-frame img {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
       object-fit: cover;
       opacity: 0; transition: opacity 0.5s ease;
-      filter: brightness(0.25) blur(4px) saturate(0.5);
     }
-    .stepper-bg img.is-active { opacity: 1; }
-    .stepper-zoom {
-      position: absolute;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1.5px solid rgba(255,255,255,0.12);
+    .stepper-frame img.is-active { opacity: 1; }
+    .stepper-spotlight {
+      position: absolute; inset: 0;
+      pointer-events: none; z-index: 2;
+    }
+    .stepper-spotlight rect {
       transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .stepper-zoom img {
-      position: absolute;
-      opacity: 0; transition: opacity 0.5s ease;
-    }
-    .stepper-zoom img.is-active { opacity: 1; }
     .stepper-nav {
       display: flex; border-top: 1px solid var(--rule);
       background: var(--bg);
@@ -430,17 +421,21 @@
         The prototype lives inside a YouTube watch page. The interaction has four steps, and none of them take the user out of the video.
       </p>
       <div class="stepper" id="stepper">
-        <div class="stepper-viewport">
-          <div class="stepper-bg">
-            <img src="../assets/img/pf/step-01.jpg" class="is-active" data-step="0" />
-            <img src="../assets/img/pf/step-02.jpg" data-step="1" />
-            <img src="../assets/img/pf/step-03.jpg" data-step="2" />
-          </div>
-          <div class="stepper-zoom" id="stepper-zoom">
-            <img src="../assets/img/pf/step-01.jpg" class="is-active" data-step="0" />
-            <img src="../assets/img/pf/step-02.jpg" data-step="1" />
-            <img src="../assets/img/pf/step-03.jpg" data-step="2" />
-          </div>
+        <div class="stepper-frame">
+          <img src="../assets/img/pf/step-01.jpg" alt="Ask panel open with timeline segments" class="is-active" data-step="0" />
+          <img src="../assets/img/pf/step-02.jpg" alt="Timeline segments highlighted" data-step="1" />
+          <img src="../assets/img/pf/step-03.jpg" alt="Segment clicked with AI summary" data-step="2" />
+          <svg class="stepper-spotlight" viewBox="0 0 1280 614" preserveAspectRatio="none">
+            <defs>
+              <mask id="spot-mask">
+                <rect width="1280" height="614" fill="white" />
+                <rect id="spot-window" x="830" y="60" width="420" height="520" rx="16" fill="black" />
+              </mask>
+            </defs>
+            <rect width="1280" height="614" fill="rgba(0,0,0,0.55)" mask="url(#spot-mask)" />
+            <rect id="spot-border" x="830" y="60" width="420" height="520" rx="16"
+              fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
+          </svg>
         </div>
         <div class="stepper-nav">
           <button class="stepper-tab is-active" data-step="0">
@@ -532,40 +527,63 @@
     (() => {
       const stepper = document.getElementById('stepper');
       if (!stepper) return;
-      const bgImgs = stepper.querySelectorAll('.stepper-bg img');
-      const zoomImgs = stepper.querySelectorAll('.stepper-zoom img');
-      const zoomEl = document.getElementById('stepper-zoom');
+      const imgs = stepper.querySelectorAll('.stepper-frame img');
       const tabs = stepper.querySelectorAll('.stepper-tab');
-      const viewport = stepper.querySelector('.stepper-viewport');
+      const spotWindow = document.getElementById('spot-window');
+      const spotBorder = document.getElementById('spot-border');
       let current = 0;
       let timer = null;
 
       const spots = [
-        { left: '52%', top: '2%', width: '46%', height: '75%', imgX: '-113%', imgY: '-3%', imgW: '218%' },
-        { left: '2%',  top: '58%', width: '64%', height: '30%', imgX: '-3%',  imgY: '-193%', imgW: '156%' },
-        { left: '2%',  top: '50%', width: '96%', height: '48%', imgX: '-2%',  imgY: '-104%', imgW: '104%' }
+        { x: 830, y: 60, w: 420, h: 520, rx: 16 },
+        { x: 10, y: 370, w: 830, h: 140, rx: 12 },
+        { x: 830, y: 60, w: 420, h: 300, rx: 16 }
       ];
 
-      function applySpot(s) {
-        Object.assign(zoomEl.style, {
-          left: s.left, top: s.top, width: s.width, height: s.height
+      let anim = null;
+      let cur = { ...spots[0] };
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      function setSpot(s) {
+        [spotWindow, spotBorder].forEach(el => {
+          el.setAttribute('x', s.x);
+          el.setAttribute('y', s.y);
+          el.setAttribute('width', s.w);
+          el.setAttribute('height', s.h);
+          el.setAttribute('rx', s.rx);
         });
-        zoomImgs.forEach(img => {
-          Object.assign(img.style, {
-            left: s.imgX, top: s.imgY, width: s.imgW, height: 'auto'
-          });
-        });
+      }
+
+      function animateTo(target) {
+        if (anim) cancelAnimationFrame(anim);
+        const from = { ...cur };
+        const start = performance.now();
+        const dur = 500;
+        function tick(now) {
+          const t = Math.min((now - start) / dur, 1);
+          const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+          cur = {
+            x: lerp(from.x, target.x, ease),
+            y: lerp(from.y, target.y, ease),
+            w: lerp(from.w, target.w, ease),
+            h: lerp(from.h, target.h, ease),
+            rx: lerp(from.rx, target.rx, ease)
+          };
+          setSpot(cur);
+          if (t < 1) anim = requestAnimationFrame(tick);
+        }
+        anim = requestAnimationFrame(tick);
       }
 
       function goTo(i) {
         current = i;
-        bgImgs.forEach((img, idx) => img.classList.toggle('is-active', idx === i));
-        zoomImgs.forEach((img, idx) => img.classList.toggle('is-active', idx === i));
+        imgs.forEach((img, idx) => img.classList.toggle('is-active', idx === i));
         tabs.forEach((tab, idx) => tab.classList.toggle('is-active', idx === i));
-        applySpot(spots[i]);
+        animateTo(spots[i]);
       }
 
-      function advance() { goTo((current + 1) % spots.length); }
+      function advance() { goTo((current + 1) % imgs.length); }
       function startTimer() { timer = setInterval(advance, 4000); }
       function resetTimer() { clearInterval(timer); startTimer(); }
 
@@ -573,7 +591,7 @@
         tab.addEventListener('click', () => { goTo(idx); resetTimer(); });
       });
 
-      applySpot(spots[0]);
+      setSpot(spots[0]);
       startTimer();
     })();
   </script>
