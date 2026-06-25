@@ -33,8 +33,10 @@
     nav { display: flex; justify-content: space-between; align-items: center; padding: 40px 0 0; }
     .nav-name { font-size: 0.875rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
     .nav-links { display: flex; gap: 28px; list-style: none; }
-    .nav-links a { font-size: 0.8rem; font-weight: 500; color: var(--mid); text-decoration: none; transition: color 0.15s; }
-    .nav-links a:hover { color: var(--ink); }
+    .nav-links a { font-size: 0.8rem; font-weight: 500; color: var(--mid); text-decoration: none; transition: color 0.15s ease-out; }
+    @media (hover: hover) and (pointer: fine) {
+      .nav-links a:hover { color: var(--ink); }
+    }
 
     .hero { padding: 80px 0 72px; }
     .available { display: inline-flex; align-items: center; gap: 8px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #2d7a3a; margin-bottom: 28px; }
@@ -72,12 +74,16 @@
     .work-title-row { display: flex; align-items: center; justify-content: space-between; }
     .work-title { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
     .work-tags { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--mid); margin-top: 6px; white-space: nowrap; }
-    .work-arrow { font-size: 18px; color: var(--mid); flex-shrink: 0; transition: color 0.12s, transform 0.14s; }
+    .work-arrow { font-size: 18px; color: var(--mid); flex-shrink: 0; transition: color 0.12s ease-out, transform 0.14s cubic-bezier(0.23, 1, 0.32, 1); }
+    .work-row { transition: transform 0.16s ease-out; }
+    .work-row:active { transform: scale(0.99); }
     @media (min-width: 768px) {
       .work-row { display: flex; align-items: center; gap: 24px; }
       .work-thumb { width: 160px; height: 100px; aspect-ratio: auto; margin-bottom: 0; border-radius: 6px; flex-shrink: 0; }
-      .work-preview { display: block; position: absolute; width: 360px; height: 225px; border-radius: 8px; object-fit: cover; opacity: 0; transition: opacity 0.2s ease; pointer-events: none; z-index: 10; }
+      .work-preview { display: block; position: absolute; width: 360px; height: 225px; border-radius: 8px; object-fit: cover; opacity: 0; transition: opacity 0.18s ease-out; pointer-events: none; z-index: 10; }
       .work-info { flex: 1; min-width: 0; }
+    }
+    @media (hover: hover) and (pointer: fine) {
       .work-row:hover .work-arrow { color: var(--accent); transform: translateX(4px); }
     }
 
@@ -87,31 +93,38 @@
     .si-dot.si-waiting { background: #E8952A; }
     .si-dot.si-idle { background: rgba(255,255,255,0.16); }
     .si-dot.si-done { background: #34C759; }
-    @keyframes shimmer { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.35); opacity: 0.15; } }
+    @keyframes shimmer { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.5); opacity: 0.2; } }
 
     .stack-section { margin-bottom: 80px; }
     .stack-group { margin-top: 20px; display: flex; align-items: baseline; gap: 10px; }
     .stack-cat-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rule); white-space: nowrap; flex-shrink: 0; min-width: 62px; }
     .stack-tags { display: flex; flex-wrap: wrap; gap: 7px; }
-    .stack-tag { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.03em; color: var(--mid); border: 1px solid var(--rule); border-radius: 4px; padding: 5px 11px; transition: border-color 0.12s, color 0.12s; cursor: default; }
-    .stack-tag:hover { border-color: var(--accent); color: var(--accent); }
+    .stack-tag { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.03em; color: var(--mid); border: 1px solid var(--rule); border-radius: 4px; padding: 5px 11px; transition: border-color 0.12s ease-out, color 0.12s ease-out; cursor: default; }
+    @media (hover: hover) and (pointer: fine) {
+      .stack-tag:hover { border-color: var(--accent); color: var(--accent); }
+    }
 
     .workflow-section { margin-top: 40px; }
     .wf-track { display: flex; margin-top: 18px; border: 1px solid var(--rule); border-radius: 8px 8px 0 0; overflow: hidden; }
-    .wf-step { flex: 1; display: flex; flex-direction: column; gap: 4px; padding: 14px 14px 13px; border-right: 1px solid var(--rule); cursor: pointer; transition: background 0.12s; position: relative; min-width: 0; }
+    .wf-step { flex: 1; display: flex; flex-direction: column; gap: 4px; padding: 14px 14px 13px; border-right: 1px solid var(--rule); cursor: pointer; transition: background 0.12s ease-out, transform 0.16s ease-out; position: relative; min-width: 0; }
     .wf-step:last-child { border-right: none; }
-    .wf-step:hover { background: var(--hover-row); }
+    .wf-step:active { transform: scale(0.97); }
     .wf-step.active { background: var(--hover-row); }
     .wf-step.active::after { content:''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--accent); }
+    @media (hover: hover) and (pointer: fine) {
+      .wf-step:hover { background: var(--hover-row); }
+    }
     .wf-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rule); margin-bottom: 4px; flex-shrink: 0; transition: background 0.12s; }
     .wf-step.active .wf-dot { background: var(--accent); }
     .wf-name { font-size: 0.82rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .wf-tool { font-size: 0.63rem; font-weight: 500; color: var(--mid); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .wf-detail { border: 1px solid var(--rule); border-top: none; border-radius: 0 0 8px 8px; padding: 16px 18px; background: var(--bg); min-height: 76px; display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
-    .wf-detail-text { font-size: 0.83rem; line-height: 1.65; color: var(--mid); flex: 1; margin: 0; }
-    .wf-detail-tag { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.06em; padding: 4px 10px; border: 1px solid var(--accent); border-radius: 4px; color: var(--accent); white-space: nowrap; flex-shrink: 0; margin-top: 1px; }
+    .wf-detail-text { font-size: 0.83rem; line-height: 1.65; color: var(--mid); flex: 1; margin: 0; transition: opacity 0.15s ease-out; }
+    .wf-detail-text.fading { opacity: 0; }
+    .wf-detail-tag { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.06em; padding: 4px 10px; border: 1px solid var(--accent); border-radius: 4px; color: var(--accent); white-space: nowrap; flex-shrink: 0; margin-top: 1px; transition: opacity 0.15s ease-out; }
+    .wf-detail-tag.fading { opacity: 0; }
     .wf-pips { display: flex; gap: 5px; padding: 10px 0 0; }
-    .wf-pip { height: 2px; flex: 1; border-radius: 1px; background: var(--rule); transition: background 0.2s; }
+    .wf-pip { height: 2px; flex: 1; border-radius: 1px; background: var(--rule); transition: background 0.15s ease-out; }
     .wf-pip.active { background: var(--accent); }
 
     .about-strip { padding: 56px 0 80px; border-top: 1px solid var(--rule); display: flex; align-items: center; gap: 28px; }
@@ -122,7 +135,7 @@
     .about-text a:hover { color: var(--accent); text-decoration-color: var(--accent-dim); }
 
     .album-link { position: relative; flex-shrink: 0; width: 160px; height: 120px; border-radius: 10px; overflow: hidden; border: 1px solid var(--rule); display: block; }
-    .album-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.2s ease; }
+    .album-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.8s ease-out; }
     .album-img.active { opacity: 1; }
     @media (prefers-reduced-motion: reduce) {
       .album-img { transition: none; }
@@ -153,11 +166,19 @@
     @media (max-width: 480px) {
       .hero-name { font-size: 28px; }
     }
+    .reveal { opacity: 0; transform: translateY(8px); transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1), transform 0.5s cubic-bezier(0.23, 1, 0.32, 1); }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
     @media (prefers-reduced-motion: reduce) {
       .available-dot { animation: none; }
       .work-arrow, .wf-pip { transition: none; }
       .work-preview { transition: none; }
       .si-dot.si-active { animation: none; }
+      .cursor-dot { display: none !important; }
+      .eyebrow-dot { animation: none; }
+      .wf-detail-text, .wf-detail-tag { transition: none; }
+      .album-img { transition: none; }
+      .reveal { opacity: 1; transform: none; transition: none; }
     }
   </style>
 </head>
@@ -176,18 +197,18 @@
   </nav>
 
   <header class="hero">
-    <p class="hero-eyebrow"><span class="eyebrow-dot"></span>Design &times; engineering for AI tools</p>
-    <h1 class="hero-name">I make environments,<br>some of them are software.</h1>
-    <p class="hero-desc">
+    <p class="hero-eyebrow reveal"><span class="eyebrow-dot"></span>Design &times; engineering for AI tools</p>
+    <h1 class="hero-name reveal">I make environments,<br>some of them are software.</h1>
+    <p class="hero-desc reveal">
       Spaces, installations, systems, interfaces: I build environments that are easy to move through.
     </p>
   </header>
 
   <section id="work" aria-label="Selected work" style="margin-bottom:0;">
-    <p class="section-label">Selected Work</p>
+    <p class="section-label reveal">Selected Work</p>
     <ul class="work-list">
 
-      <li class="work-item">
+      <li class="work-item reveal">
         <a class="work-row" href="/projects/session-indicator.html">
           <img class="work-thumb" src="/assets/thumbs/session-indicator.gif" alt="Session Indicator">
           <video class="work-preview" src="/assets/previews/session-indicator-frame.mp4" autoplay loop muted playsinline></video>
@@ -201,7 +222,7 @@
         </a>
       </li>
 
-      <li class="work-item">
+      <li class="work-item reveal">
         <a class="work-row" href="/projects/promptedfind.html">
           <img class="work-thumb" src="/assets/thumbs/promptedfind.gif" alt="PromptedFind" loading="lazy">
           <video class="work-preview" src="/assets/previews/promptedfind-frame.mp4" autoplay loop muted playsinline></video>
@@ -217,7 +238,7 @@
 
       <!-- RESTORE: delete the comment wrapper below to bring this card back -->
       <!-- HIDDEN UNTIL READY — Xcode Symbol Browser
-      <li class="work-item">
+      <li class="work-item reveal">
         <a class="work-row" href="/projects/xcode-symbol-browser.html">
           <img class="work-thumb" src="/assets/previews/xcode-symbol-browser-screen.jpg" alt="Xcode Symbol Browser" loading="lazy">
           <img class="work-preview" src="/assets/previews/xcode-symbol-browser-screen.jpg" alt="" loading="lazy">
@@ -234,7 +255,7 @@
 
       <!-- RESTORE: delete the comment wrapper below to bring this card back -->
       <!-- HIDDEN UNTIL READY — Trails
-      <li class="work-item">
+      <li class="work-item reveal">
         <a class="work-row" href="/projects/trails.html">
           <img class="work-thumb" src="/assets/previews/trails-screen.jpg" alt="Trails" loading="lazy">
           <img class="work-preview" src="/assets/previews/trails-screen.jpg" alt="" loading="lazy">
@@ -252,11 +273,9 @@
     </ul>
   </section>
 
-  <!-- RESTORE: delete the comment wrapper below to bring this section back -->
-  <!-- HIDDEN UNTIL READY — How I work
   <section class="workflow-section" aria-label="How I work" style="margin-top:0; margin-bottom:80px;">
-    <p class="section-label">How I work</p>
-    <p class="about-text" style="margin-top:16px; max-width:560px;">I direct the work like a studio of one &mdash; set the brief, weigh the trade-offs, reject what&rsquo;s wrong, review every result in pixels before it ships. AI tools sit inside that loop as instruments; the taste is mine.</p>
+    <p class="section-label reveal">How I work</p>
+    <p class="about-text reveal" style="margin-top:16px; max-width:560px;">I direct the work like a studio of one &mdash; set the brief, weigh the trade-offs, reject what&rsquo;s wrong, review every result in pixels before it ships. AI tools sit inside that loop as instruments; the taste is mine.</p>
     <div class="wf-track" id="wfTrack">
       <div class="wf-step active" data-step="0">
         <div class="wf-dot"></div>
@@ -297,7 +316,6 @@
     </div>
     <p class="footer-left" style="margin-top:16px;">Built with &mdash; SwiftUI &middot; JavaScript &middot; Node.js &middot; HTML/CSS &middot; Figma &middot; design systems &middot; interaction design</p>
   </section>
-  -->
 
   <!-- RESTORE: delete the comment wrapper below to bring this section back -->
   <!-- HIDDEN UNTIL READY — Art section
@@ -318,10 +336,7 @@
   <footer>
     <span class="footer-left">&copy; 2026 Ladan Johari</span>
     <ul class="footer-links">
-      <!-- RESTORE: delete the comment wrapper below to bring this link back -->
-      <!-- HIDDEN UNTIL READY — email link
       <li><a href="mailto:ladan.joharizadeh@gmail.com">ladan.joharizadeh@gmail.com</a></li>
-      -->
       <li><a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a></li>
       <li><a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a></li>
     </ul>
@@ -331,10 +346,13 @@
 
 <script>
   const dot = document.getElementById('cursorDot');
+  const reduceMotionGlobal = window.matchMedia('(prefers-reduced-motion: reduce)');
   let dotX=0,dotY=0,curX=0,curY=0;
-  document.addEventListener('mousemove',e=>{curX=e.clientX;curY=e.clientY;dot.style.opacity='1';});
-  (function tick(){dotX+=(curX-dotX)*.18;dotY+=(curY-dotY)*.18;dot.style.left=dotX+'px';dot.style.top=dotY+'px';requestAnimationFrame(tick);})();
-  document.addEventListener('mouseleave',()=>{dot.style.opacity='0';});
+  if (!reduceMotionGlobal.matches) {
+    document.addEventListener('mousemove',e=>{curX=e.clientX;curY=e.clientY;dot.style.opacity='1';});
+    (function tick(){dotX+=(curX-dotX)*.12;dotY+=(curY-dotY)*.12;dot.style.left=dotX+'px';dot.style.top=dotY+'px';requestAnimationFrame(tick);})();
+    document.addEventListener('mouseleave',()=>{dot.style.opacity='0';});
+  }
 
   const wfData=[
     {text:"I set the problem, the constraints, and the bar. Every project starts as a written brief.",tag:"the brief"},
@@ -349,12 +367,20 @@
     wfCur=i;
     wfSteps.forEach((s,idx)=>s.classList.toggle('active',idx===i));
     wfPips.forEach((p,idx)=>p.classList.toggle('active',idx<=i));
-    wfText.textContent=wfData[i].text;
-    wfTag.textContent=wfData[i].tag;
+    if (wfText && wfTag) {
+      wfText.classList.add('fading');
+      wfTag.classList.add('fading');
+      setTimeout(()=>{
+        wfText.textContent=wfData[i].text;
+        wfTag.textContent=wfData[i].tag;
+        wfText.classList.remove('fading');
+        wfTag.classList.remove('fading');
+      }, 150);
+    }
   }
-  wfSteps.forEach(s=>s.addEventListener('click',()=>{clearInterval(wfTimer);wfGo(parseInt(s.dataset.step));}));
+  wfSteps.forEach(s=>s.addEventListener('click',()=>{clearInterval(wfTimer);wfGo(parseInt(s.dataset.step));wfTimer=setInterval(()=>wfGo((wfCur+1)%wfData.length),3200);}));
   wfGo(0);
-  wfTimer=setInterval(()=>wfGo((wfCur+1)%wfData.length),2800);
+  wfTimer=setInterval(()=>wfGo((wfCur+1)%wfData.length),3200);
 
   const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -372,23 +398,56 @@
   }
 </script>
 <script>
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const reveals = document.querySelectorAll('.reveal');
+    let delay = 0;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const d = parseFloat(el.dataset.delay || 0);
+          el.style.transitionDelay = d + 'ms';
+          el.classList.add('is-visible');
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '-40px' });
+    reveals.forEach((el, i) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        el.dataset.delay = i * 50;
+      }
+      observer.observe(el);
+    });
+  }
+
   if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     document.querySelectorAll('.work-row').forEach(row => {
       const preview = row.querySelector('.work-preview');
       if (!preview) return;
+      let targetX = 0, targetY = 0, currentX = 0, currentY = 0, rafId = null;
+      function lerpPreview() {
+        currentX += (targetX - currentX) * 0.14;
+        currentY += (targetY - currentY) * 0.14;
+        preview.style.left = currentX + 'px';
+        preview.style.top = currentY + 'px';
+        if (Math.abs(targetX - currentX) > 0.5 || Math.abs(targetY - currentY) > 0.5) {
+          rafId = requestAnimationFrame(lerpPreview);
+        } else { rafId = null; }
+      }
       row.addEventListener('mouseenter', () => {
         preview.style.opacity = '1';
       });
       row.addEventListener('mouseleave', () => {
         preview.style.opacity = '0';
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
       });
       row.addEventListener('mousemove', (e) => {
         const rect = row.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        preview.style.left = (x + 20) + 'px';
-        preview.style.top = (y - 80) + 'px';
+        targetX = e.clientX - rect.left + 20;
+        targetY = e.clientY - rect.top - 80;
         preview.style.transform = 'none';
+        if (!rafId) rafId = requestAnimationFrame(lerpPreview);
       });
     });
   }
