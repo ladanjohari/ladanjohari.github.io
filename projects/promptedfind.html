@@ -22,7 +22,7 @@
     :root {
       --bg: #F7F6F3; --ink: #111111; --mid: #6B6B6B;
       --rule: #D4D3CF; --hover-row: #F0EFEC;
-      --accent: #0066CC; --accent-dim: #D4E2F7;
+      --accent: #0066FF; --accent-dim: #D4E2F7;
     }
 
     html { background: var(--bg); }
@@ -45,9 +45,11 @@
     .pf-links { display: flex; gap: 28px; list-style: none; }
     .pf-links a {
       font-size: 0.8rem; font-weight: 500; color: var(--mid);
-      text-decoration: none; transition: color 0.15s;
+      text-decoration: none; transition: color 0.15s ease-out;
     }
-    .pf-links a:hover { color: var(--accent); }
+    @media (hover: hover) and (pointer: fine) {
+      .pf-links a:hover { color: var(--accent); }
+    }
 
     /* ── Case study header ── */
     .cs-header {
@@ -188,15 +190,12 @@
       position: absolute; inset: 0;
       width: 100%; height: 100%;
       object-fit: cover;
-      opacity: 0; transition: opacity 0.5s ease;
+      opacity: 0; transition: opacity 0.25s ease-out;
     }
     .stepper-frame img.is-active { opacity: 1; }
     .stepper-spotlight {
       position: absolute; inset: 0;
       pointer-events: none; z-index: 2;
-    }
-    .stepper-spotlight rect {
-      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .stepper-nav {
       display: flex; border-top: 1px solid var(--rule);
@@ -207,15 +206,17 @@
       border: none; background: none;
       cursor: pointer; text-align: left;
       border-right: 1px solid var(--rule);
-      transition: background 0.15s;
+      transition: background 0.15s ease-out, transform 0.16s ease-out;
       position: relative;
     }
     .stepper-tab:last-child { border-right: none; }
-    .stepper-tab:hover { background: var(--hover-row); }
+    .stepper-tab:active { transform: scale(0.97); }
     .stepper-tab.is-active {
       background: var(--hover-row);
       box-shadow: inset 0 0 0 2px var(--accent);
-      border-radius: 10px;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .stepper-tab:hover { background: var(--hover-row); }
     }
     .stepper-tab-num {
       font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
@@ -300,9 +301,20 @@
     .pf-footer-links { display: flex; gap: 22px; list-style: none; }
     .pf-footer-links a {
       font-size: 0.76rem; color: var(--mid);
-      text-decoration: none; transition: color 0.15s;
+      text-decoration: none; transition: color 0.15s ease-out;
     }
-    .pf-footer-links a:hover { color: var(--accent); }
+    @media (hover: hover) and (pointer: fine) {
+      .pf-footer-links a:hover { color: var(--accent); }
+    }
+
+    .reveal { opacity: 0; transform: translateY(8px); transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1), transform 0.5s cubic-bezier(0.23, 1, 0.32, 1); }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .stepper-frame img { transition: none; }
+      .stepper-tab { transition: none; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
 
     @media (max-width: 540px) {
       .pf-nav, .cs-header, .video-hero, .cs-body { padding-left: 20px; padding-right: 20px; }
@@ -329,9 +341,9 @@
   </nav>
 
   <div class="cs-header">
-    <p class="cs-eyebrow">AI Interaction Pattern &middot; Prototype &middot; Semantic Navigation</p>
-    <h1 class="cs-title">Prompted Find</h1>
-    <p class="cs-descriptor">
+    <p class="cs-eyebrow reveal">AI Interaction Pattern &middot; Prototype &middot; Semantic Navigation</p>
+    <h1 class="cs-title reveal">Prompted Find</h1>
+    <p class="cs-descriptor reveal">
       Ask a question about a video. Jump to the exact moment that answers it.
       A new navigation pattern for long-form content. Search that returns a location, not a list.
     </p>
@@ -345,7 +357,7 @@
   </div>
 
   <div class="video-hero">
-    <div class="video-wrap">
+    <div class="video-wrap reveal">
       <video controls autoplay muted loop playsinline poster="../assets/video/promptedfind-poster.jpg" preload="metadata">
         <source src="../assets/video/PromptedFind_web.mp4" type="video/mp4" />
         Your browser does not support video.
@@ -357,7 +369,7 @@
   <div class="cs-body">
 
     <div class="cs-section">
-      <p class="cs-label">The Gap</p>
+      <p class="cs-label reveal">The Gap</p>
       <p class="cs-pullquote">&ldquo;Video is visual content, but finding a moment in it means reading transcripts and scrubbing timelines. The thing that makes video easy to watch is exactly what makes it hard to navigate.&rdquo;</p>
       <p class="cs-body-text">
         Long-form video has no spatial address. A document has paragraphs, headings, a table of contents. You can navigate it by structure.
@@ -370,11 +382,11 @@
     </div>
 
     <div class="cs-section">
-      <p class="cs-label">Decisions</p>
+      <p class="cs-label reveal">Decisions</p>
       <p class="cs-body-text" style="margin-bottom: 0;">
         Each decision was a choice about what kind of interface this is: tool, search engine, or navigation system.
       </p>
-      <div class="frames-grid">
+      <div class="frames-grid reveal">
         <div class="frame-col">
           <p class="frame-num">01</p>
           <p class="frame-title">The answer is a timestamp, not&nbsp;text</p>
@@ -404,7 +416,7 @@
         </div>
       </div>
 
-      <div class="pattern-note">
+      <div class="pattern-note reveal">
         <p>
           <strong>Why this pattern matters beyond video.</strong>
           The same logic applies to any long-form content without navigable structure:
@@ -416,11 +428,11 @@
     </div>
 
     <div class="cs-section">
-      <p class="cs-label">The Interaction</p>
+      <p class="cs-label reveal">The Interaction</p>
       <p class="cs-body-text" style="margin-bottom: 0;">
-        The prototype lives inside a YouTube watch page. The interaction has four steps, and none of them take the user out of the video.
+        The prototype lives inside a YouTube watch page. The interaction has three steps, and none of them take the user out of the video.
       </p>
-      <div class="stepper" id="stepper">
+      <div class="stepper reveal" id="stepper">
         <div class="stepper-frame">
           <img src="../assets/img/pf/step-01.jpg" alt="Ask panel open with timeline segments" class="is-active" data-step="0" />
           <img src="../assets/img/pf/step-02.jpg" alt="Timeline segments highlighted" data-step="1" />
@@ -457,47 +469,8 @@
       </div>
     </div>
 
-    <div class="cs-section" style="display:none;">
-      <p class="cs-label">How It Works</p>
-      <p class="cs-body-text">
-        The prototype simulates an AI-powered pipeline. The video content is pre-segmented into semantic ranges,
-        each with a title and summary. When a query comes in, the system expands it through concept aliasing,
-        scores segments by keyword relevance, and returns ranked results that map directly to the timeline UI.
-      </p>
-      <div class="pipeline">
-        <div class="pipeline-stage">
-          <span class="pipeline-label">Content</span>
-          <span class="pipeline-value">74-min NASA lecture, pre-segmented into 9 semantic ranges <span>(title + summary + time bounds)</span></span>
-        </div>
-        <div class="pipeline-stage">
-          <span class="pipeline-label">Query</span>
-          <span class="pipeline-value">Natural language input, expanded via concept aliasing <span>(e.g. "landing" also matches "descent", "retropropulsion")</span></span>
-        </div>
-        <div class="pipeline-stage">
-          <span class="pipeline-label">Scoring</span>
-          <span class="pipeline-value">Keyword match against segment text, phrase matches weighted 2x, results sorted by relevance then time</span>
-        </div>
-        <div class="pipeline-stage">
-          <span class="pipeline-label">Output</span>
-          <span class="pipeline-value">Ranked segment list with start/end timestamps, rendered as interactive timeline blocks</span>
-        </div>
-        <div class="pipeline-stage">
-          <span class="pipeline-label">Stack</span>
-          <span class="pipeline-value">Vanilla JavaScript, HTML/CSS, no frameworks <span>(~1,400 lines across 3 files)</span></span>
-        </div>
-      </div>
-      <div class="pattern-note" style="margin-top: 24px;">
-        <p>
-          <strong>Design decision: simulate, don't ship.</strong>
-          This is a design-engineer prototype, not a production system. The goal was to prove that the interaction pattern works
-          before investing in a real LLM pipeline. The data is hand-crafted to feel like model output, so the UX can be evaluated
-          on its own terms.
-        </p>
-      </div>
-    </div>
-
     <div class="cs-section">
-      <p class="cs-label">What I'd Change</p>
+      <p class="cs-label reveal">What I'd Change</p>
       <ul class="reflection-list">
         <li><strong>Confidence indicators.</strong> Not all matches are equally strong. The timeline should visually encode match confidence so the user can prioritize where to jump.</li>
         <li><strong>Multi-video support.</strong> The current prototype works with a single video. The real value is cross-video search: "find the part about heat shields" across an entire lecture series.</li>
@@ -523,6 +496,29 @@
     </ul>
   </footer>
 
+  <script>
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const reveals = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const d = parseFloat(el.dataset.delay || 0);
+            el.style.transitionDelay = d + 'ms';
+            el.classList.add('is-visible');
+            observer.unobserve(el);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '-40px' });
+      reveals.forEach((el, i) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight) {
+          el.dataset.delay = i * 50;
+        }
+        observer.observe(el);
+      });
+    }
+  </script>
   <script>
     (() => {
       const stepper = document.getElementById('stepper');
@@ -557,12 +553,14 @@
 
       function animateTo(target) {
         if (anim) cancelAnimationFrame(anim);
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reducedMotion) { cur = { ...target }; setSpot(cur); return; }
         const from = { ...cur };
         const start = performance.now();
-        const dur = 500;
+        const dur = 400;
         function tick(now) {
           const t = Math.min((now - start) / dur, 1);
-          const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+          const ease = 1 - Math.pow(1 - t, 4);
           cur = {
             x: lerp(from.x, target.x, ease),
             y: lerp(from.y, target.y, ease),
@@ -584,7 +582,11 @@
       }
 
       function advance() { goTo((current + 1) % imgs.length); }
-      function startTimer() { timer = setInterval(advance, 4000); }
+      function startTimer() {
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          timer = setInterval(advance, 3500);
+        }
+      }
       function resetTimer() { clearInterval(timer); startTimer(); }
 
       tabs.forEach((tab, idx) => {

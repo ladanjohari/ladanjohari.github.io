@@ -38,9 +38,11 @@
     .pf-links { display: flex; gap: 28px; list-style: none; }
     .pf-links a {
       font-size: 0.8rem; font-weight: 500; color: var(--mid);
-      text-decoration: none; transition: color 0.15s;
+      text-decoration: none; transition: color 0.15s ease-out;
     }
-    .pf-links a:hover { color: var(--accent); }
+    @media (hover: hover) and (pointer: fine) {
+      .pf-links a:hover { color: var(--accent); }
+    }
 
     .cs-header {
       max-width: 700px; margin: 0 auto;
@@ -177,9 +179,11 @@
     .pf-footer-links { display: flex; gap: 22px; list-style: none; }
     .pf-footer-links a {
       font-size: 0.76rem; color: var(--mid);
-      text-decoration: none; transition: color 0.15s;
+      text-decoration: none; transition: color 0.15s ease-out;
     }
-    .pf-footer-links a:hover { color: var(--accent); }
+    @media (hover: hover) and (pointer: fine) {
+      .pf-footer-links a:hover { color: var(--accent); }
+    }
 
     @media (max-width: 540px) {
       .pf-nav, .cs-header, .cs-video, .cs-body {
@@ -201,9 +205,8 @@
   <nav class="pf-nav">
     <a class="pf-wordmark" href="/">Ladan Johari</a>
     <ul class="pf-links">
-      <li><a href="mailto:ladan.joharizadeh@gmail.com">Contact</a></li>
-      <li><a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a></li>
-      <li><a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="/#work">Work</a></li>
+      <li><a href="/resume.pdf" target="_blank" rel="noopener">R&eacute;sum&eacute;</a></li>
     </ul>
   </nav>
 
