@@ -107,15 +107,14 @@
     .wf-step.active .wf-dot { background: var(--accent); }
     .wf-name { font-size: 0.82rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .wf-tool { font-size: 0.63rem; font-weight: 500; color: var(--mid); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .wf-detail { border: 1px solid var(--rule); border-top: none; border-radius: 0 0 8px 8px; padding: 16px 18px; background: var(--bg); min-height: 76px; display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
-    .wf-detail-text { font-size: 0.83rem; line-height: 1.65; color: var(--mid); flex: 1; margin: 0; transition: opacity 0.15s ease-out; text-wrap: pretty; }
-    .wf-detail-text.fading { opacity: 0; }
-    .wf-detail-tag { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.06em; padding: 4px 10px; border: 1px solid var(--accent); border-radius: 4px; color: var(--accent); white-space: nowrap; flex-shrink: 0; margin-top: 1px; transition: opacity 0.15s ease-out; }
-    .wf-detail-tag.fading { opacity: 0; }
-    .wf-pips { display: flex; gap: 5px; padding: 10px 0 0; }
-    .wf-pip { height: 2px; flex: 1; border-radius: 1px; background: var(--rule); transition: background 0.15s ease-out; }
-    .wf-pip.active { background: var(--accent); }
-    .wf-tools-list { margin-top: 14px; font-size: 0.7rem; font-weight: 500; color: var(--rule); letter-spacing: 0.02em; }
+    .wf-detail { display: flex; border: 1px solid var(--rule); border-top: none; border-radius: 0 0 8px 8px; overflow: hidden; }
+    .wf-detail-col { flex: 1; padding: 14px 14px; border-right: 1px solid var(--rule); display: flex; flex-wrap: wrap; align-content: flex-start; gap: 4px; min-height: 60px; }
+    .wf-detail-col:last-child { border-right: none; }
+    .wf-tag { font-size: 0.58rem; font-weight: 500; letter-spacing: 0.02em; color: var(--mid); border: 1px solid var(--rule); border-radius: 3px; padding: 2px 6px; white-space: nowrap; width: fit-content; transition: color 0.15s, border-color 0.15s; }
+    .wf-detail-col.active .wf-tag { color: var(--accent); border-color: var(--accent-dim); }
+    .wf-pips { position: relative; padding: 10px 0 0; height: 13px; }
+    .wf-pips-track { position: absolute; top: 10px; left: 0; right: 0; height: 3px; border-radius: 2px; background: var(--rule); }
+    .wf-pips-fill { position: absolute; top: 10px; left: 0; height: 3px; border-radius: 2px; background: var(--accent); transition: width 0.25s cubic-bezier(0.23, 1, 0.32, 1); }
 
     .about-strip { padding: 56px 0 80px; border-top: 1px solid var(--rule); display: flex; align-items: center; gap: 28px; }
     .about-text { font-size: 0.925rem; line-height: 1.85; color: var(--mid); max-width: 500px; text-wrap: pretty; }
@@ -160,11 +159,12 @@
     .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
     @media (prefers-reduced-motion: reduce) {
-      .work-arrow, .wf-pip { transition: none; }
+      .work-arrow { transition: none; }
       .work-preview { transition: none; }
       .cursor-dot { display: none !important; }
       .eyebrow-dot { animation: none; }
-      .wf-detail-text, .wf-detail-tag { transition: none; }
+      .wf-pips-fill { transition: none; }
+      .wf-tag { transition: none; }
       .album-img { transition: none; }
       .reveal { opacity: 1; transform: none; transition: none; }
     }
@@ -257,9 +257,9 @@
     </ul>
   </section>
 
-  <section class="workflow-section" aria-label="How I work" style="margin-top:0; margin-bottom:80px;">
-    <p class="section-label reveal">How I Work</p>
-    <p class="about-text reveal" style="margin-top:16px; max-width:560px;">I direct the work like a studio of one &mdash; set the brief, weigh the trade-offs, reject what&rsquo;s wrong, review every result in pixels before it ships. AI tools sit inside that loop as instruments; the taste is mine.</p>
+  <section class="workflow-section" aria-label="Workflow" style="margin-top:0; margin-bottom:80px;">
+    <p class="section-label reveal">Workflow</p>
+    <p class="about-text reveal" style="margin-top:16px; max-width:560px;">I direct the work like a studio of one. First I set the brief, weigh the trade-offs, reject what&rsquo;s wrong, review every result in pixels before it ships.</p>
     <div class="wf-track" id="wfTrack">
       <div class="wf-step active" data-step="0">
         <div class="wf-dot"></div>
@@ -288,17 +288,33 @@
       </div>
     </div>
     <div class="wf-detail">
-      <p class="wf-detail-text" id="wfDetailText">I set the problem, the constraints, and the bar. Every project starts as a written brief.</p>
-      <span class="wf-detail-tag" id="wfDetailTag">the brief</span>
+      <div class="wf-detail-col active" data-col="0">
+        <span class="wf-tag">Figma</span>
+        <span class="wf-tag">Claude</span>
+      </div>
+      <div class="wf-detail-col" data-col="1">
+        <span class="wf-tag">HTML/CSS</span>
+        <span class="wf-tag">Claude</span>
+      </div>
+      <div class="wf-detail-col" data-col="2">
+        <span class="wf-tag">Claude Code</span>
+        <span class="wf-tag">SwiftUI</span>
+        <span class="wf-tag">React</span>
+        <span class="wf-tag">Figma</span>
+      </div>
+      <div class="wf-detail-col" data-col="3">
+        <span class="wf-tag">Browser</span>
+        <span class="wf-tag">Playwright</span>
+      </div>
+      <div class="wf-detail-col" data-col="4">
+        <span class="wf-tag">Git</span>
+        <span class="wf-tag">GitHub Pages</span>
+      </div>
     </div>
     <div class="wf-pips" id="wfPips">
-      <span class="wf-pip active"></span>
-      <span class="wf-pip"></span>
-      <span class="wf-pip"></span>
-      <span class="wf-pip"></span>
-      <span class="wf-pip"></span>
+      <div class="wf-pips-track"></div>
+      <div class="wf-pips-fill" id="wfFill" style="width: 20%;"></div>
     </div>
-    <p class="wf-tools-list">SwiftUI &middot; JavaScript &middot; Node.js &middot; HTML/CSS &middot; Figma &middot; design systems &middot; interaction design</p>
   </section>
 
   <!-- RESTORE: delete the comment wrapper below to bring this section back -->
@@ -342,29 +358,13 @@
     document.addEventListener('mouseleave',()=>{dot.classList.remove('on-interactive');});
   }
 
-  const wfData=[
-    {text:"I set the problem, the constraints, and the bar. Every project starts as a written brief.",tag:"the brief"},
-    {text:"I weigh options against each other and reject the ones that are wrong. The decisions are mine to make.",tag:"trade-offs"},
-    {text:"I spec the work precisely and Claude Code builds it — fast enough that I can judge real pixels instead of imagining them.",tag:"Claude Code"},
-    {text:"Nothing ships from a description. I review every result on screen, at every breakpoint, and send it back until it's right.",tag:"in pixels"},
-    {text:"It goes live, I look again, and the loop repeats. The work is never done in one pass.",tag:"& iterate"}
-  ];
   let wfCur=0;
-  const wfSteps=document.querySelectorAll('.wf-step'),wfPips=document.querySelectorAll('.wf-pip'),wfText=document.getElementById('wfDetailText'),wfTag=document.getElementById('wfDetailTag');
+  const wfSteps=document.querySelectorAll('.wf-step'),wfFill=document.getElementById('wfFill'),wfCols=document.querySelectorAll('.wf-detail-col');
   function wfGo(i){
     wfCur=i;
     wfSteps.forEach((s,idx)=>s.classList.toggle('active',idx===i));
-    wfPips.forEach((p,idx)=>p.classList.toggle('active',idx<=i));
-    if (wfText && wfTag) {
-      wfText.classList.add('fading');
-      wfTag.classList.add('fading');
-      setTimeout(()=>{
-        wfText.textContent=wfData[i].text;
-        wfTag.textContent=wfData[i].tag;
-        wfText.classList.remove('fading');
-        wfTag.classList.remove('fading');
-      }, 150);
-    }
+    wfFill.style.width=((i+1)/5*100)+'%';
+    wfCols.forEach((c,idx)=>c.classList.toggle('active',idx===i));
   }
   wfSteps.forEach(s=>s.addEventListener('click',()=>{wfGo(parseInt(s.dataset.step));}));
   wfGo(0);
