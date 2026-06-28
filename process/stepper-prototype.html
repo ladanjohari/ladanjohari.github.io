@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Workflow Stepper Prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #F7F6F3; --ink: #111111; --mid: #6B6B6B;
+      --rule: #D4D3CF; --hover-row: #F0EFEC;
+      --accent: #0066FF; --accent-dim: #D6E4FF;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1A1A1A; --ink: #E8E8E8; --mid: #9A9A9A;
+        --rule: #333333; --hover-row: #242424;
+        --accent: #4D94FF; --accent-dim: #1A3A66;
+      }
+    }
+    html { background: var(--bg); }
+    body { font-family: 'Geist', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .shell { max-width: 700px; width: 100%; padding: 0 28px; }
+
+    .section-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
+    .about-text { font-size: 0.925rem; line-height: 1.85; color: var(--mid); max-width: 560px; text-wrap: pretty; margin-top: 16px; }
+
+    .wf-track { display: flex; margin-top: 18px; border: 1px solid var(--rule); border-radius: 8px 8px 0 0; overflow: hidden; }
+    .wf-step { flex: 1; display: flex; flex-direction: column; gap: 4px; padding: 14px 14px 13px; border-right: 1px solid var(--rule); cursor: pointer; transition: background 0.12s ease-out, transform 0.16s ease-out; position: relative; min-width: 0; }
+    .wf-step:last-child { border-right: none; }
+    .wf-step:active { transform: scale(0.97); }
+    .wf-step.active { background: var(--hover-row); }
+    .wf-step.active::after { content:''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--accent); }
+    @media (hover: hover) and (pointer: fine) {
+      .wf-step:hover { background: var(--hover-row); }
+    }
+    .wf-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rule); margin-bottom: 4px; flex-shrink: 0; transition: background 0.12s; }
+    .wf-step.active .wf-dot { background: var(--accent); }
+    .wf-name { font-size: 0.82rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .wf-tool { font-size: 0.63rem; font-weight: 500; color: var(--mid); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .wf-detail { display: flex; border: 1px solid var(--rule); border-top: none; border-radius: 0 0 8px 8px; overflow: hidden; }
+    .wf-detail-col { flex: 1; padding: 14px 14px; border-right: 1px solid var(--rule); display: flex; flex-wrap: wrap; align-content: flex-start; gap: 4px; min-height: 60px; }
+    .wf-detail-col:last-child { border-right: none; }
+    .wf-tag { font-size: 0.58rem; font-weight: 500; letter-spacing: 0.02em; color: var(--mid); border: 1px solid var(--rule); border-radius: 3px; padding: 2px 6px; white-space: nowrap; width: fit-content; transition: color 0.15s, border-color 0.15s; }
+    .wf-detail-col.active .wf-tag { color: var(--accent); border-color: var(--accent-dim); }
+
+    .wf-pips { position: relative; padding: 10px 0 0; height: 13px; }
+    .wf-pips-track { position: absolute; top: 10px; left: 0; right: 0; height: 3px; border-radius: 2px; background: var(--rule); }
+    .wf-pips-fill { position: absolute; top: 10px; left: 0; height: 3px; border-radius: 2px; background: var(--accent); transition: width 0.25s cubic-bezier(0.23, 1, 0.32, 1); }
+
+    @media (max-width: 540px) {
+      .wf-step { padding: 12px 6px 11px; }
+      .wf-name { font-size: 0.72rem; }
+      .wf-tool { display: none; }
+      .wf-detail-col { padding: 10px 6px; }
+      .wf-tag { font-size: 0.5rem; padding: 1px 4px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="shell">
+  <p class="section-label">Workflow</p>
+  <p class="about-text">I direct the work like a studio of one. First I set the brief, weigh the trade-offs, reject what&rsquo;s wrong, review every result in pixels before it ships.</p>
+
+  <div class="wf-track" id="wfTrack">
+    <div class="wf-step active" data-step="0">
+      <div class="wf-dot"></div>
+      <span class="wf-name">Direct</span>
+      <span class="wf-tool">the brief</span>
+    </div>
+    <div class="wf-step" data-step="1">
+      <div class="wf-dot"></div>
+      <span class="wf-name">Decide</span>
+      <span class="wf-tool">trade-offs</span>
+    </div>
+    <div class="wf-step" data-step="2">
+      <div class="wf-dot"></div>
+      <span class="wf-name">Prototype</span>
+      <span class="wf-tool">Claude Code</span>
+    </div>
+    <div class="wf-step" data-step="3">
+      <div class="wf-dot"></div>
+      <span class="wf-name">Review</span>
+      <span class="wf-tool">in pixels</span>
+    </div>
+    <div class="wf-step" data-step="4">
+      <div class="wf-dot"></div>
+      <span class="wf-name">Ship</span>
+      <span class="wf-tool">&amp; iterate</span>
+    </div>
+  </div>
+
+  <div class="wf-detail" id="wfDetail">
+    <div class="wf-detail-col active" data-col="0">
+      <span class="wf-tag">Figma</span>
+      <span class="wf-tag">Claude</span>
+    </div>
+    <div class="wf-detail-col" data-col="1">
+      <span class="wf-tag">HTML/CSS</span>
+      <span class="wf-tag">Claude</span>
+    </div>
+    <div class="wf-detail-col" data-col="2">
+      <span class="wf-tag">Claude Code</span>
+      <span class="wf-tag">SwiftUI</span>
+      <span class="wf-tag">React</span>
+      <span class="wf-tag">Figma</span>
+    </div>
+    <div class="wf-detail-col" data-col="3">
+      <span class="wf-tag">Browser</span>
+      <span class="wf-tag">Playwright</span>
+    </div>
+    <div class="wf-detail-col" data-col="4">
+      <span class="wf-tag">Git</span>
+      <span class="wf-tag">GitHub Pages</span>
+    </div>
+  </div>
+
+  <div class="wf-pips" id="wfPips">
+    <div class="wf-pips-track"></div>
+    <div class="wf-pips-fill" id="wfFill" style="width: 20%;"></div>
+  </div>
+</div>
+
+<script>
+  let wfCur = 0;
+  const wfSteps = document.querySelectorAll('.wf-step');
+  const wfFill = document.getElementById('wfFill');
+  const wfCols = document.querySelectorAll('.wf-detail-col');
+
+  function wfGo(i) {
+    wfCur = i;
+    wfSteps.forEach((s, idx) => s.classList.toggle('active', idx === i));
+    wfFill.style.width = ((i + 1) / 5 * 100) + '%';
+    wfCols.forEach((c, idx) => c.classList.toggle('active', idx === i));
+  }
+
+  wfSteps.forEach(s => s.addEventListener('click', () => {
+    wfGo(parseInt(s.dataset.step));
+  }));
+
+  wfGo(0);
+</script>
+</body>
+</html>

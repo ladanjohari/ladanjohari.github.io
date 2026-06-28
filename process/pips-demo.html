@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Pip Variations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #F7F6F3; --ink: #111111; --mid: #6B6B6B;
+      --rule: #D4D3CF; --hover-row: #F0EFEC;
+      --accent: #0066FF; --accent-dim: #D6E4FF;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1A1A1A; --ink: #E8E8E8; --mid: #9A9A9A;
+        --rule: #333333; --hover-row: #242424;
+        --accent: #4D94FF; --accent-dim: #1A3A66;
+      }
+    }
+    html { background: var(--bg); }
+    body { font-family: 'Geist', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+    .shell { max-width: 700px; margin: 0 auto; padding: 40px 28px; }
+
+    .var-block { margin-bottom: 56px; }
+    .var-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); margin-bottom: 6px; }
+    .var-desc { font-size: 0.78rem; color: var(--mid); line-height: 1.5; margin-bottom: 16px; max-width: 500px; }
+
+    /* Shared stepper (compact, just for context) */
+    .wf-track { display: flex; border: 1px solid var(--rule); border-radius: 8px 8px 0 0; overflow: hidden; }
+    .wf-step { flex: 1; display: flex; flex-direction: column; gap: 4px; padding: 12px 12px 11px; border-right: 1px solid var(--rule); cursor: pointer; transition: background 0.12s ease-out; position: relative; min-width: 0; }
+    .wf-step:last-child { border-right: none; }
+    .wf-step.active { background: var(--hover-row); }
+    .wf-step.active::after { content:''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--accent); }
+    @media (hover: hover) and (pointer: fine) { .wf-step:hover { background: var(--hover-row); } }
+    .wf-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rule); margin-bottom: 2px; transition: background 0.12s; }
+    .wf-step.active .wf-dot { background: var(--accent); }
+    .wf-name { font-size: 0.78rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+    .wf-tool { font-size: 0.6rem; font-weight: 500; color: var(--mid); }
+
+    .wf-detail { display: flex; border: 1px solid var(--rule); border-top: none; border-radius: 0 0 8px 8px; overflow: hidden; }
+    .wf-detail-col { flex: 1; padding: 12px 12px; border-right: 1px solid var(--rule); display: flex; flex-wrap: wrap; align-content: flex-start; gap: 4px; min-height: 50px; }
+    .wf-detail-col:last-child { border-right: none; }
+    .wf-tag { font-size: 0.54rem; font-weight: 500; color: var(--mid); border: 1px solid var(--rule); border-radius: 3px; padding: 1px 5px; white-space: nowrap; transition: color 0.15s, border-color 0.15s; }
+    .wf-detail-col.active .wf-tag { color: var(--accent); border-color: var(--accent-dim); }
+
+    /* ---- VARIATION A: Current (2px, segmented) ---- */
+    .pips-a { display: flex; gap: 5px; padding: 10px 0 0; }
+    .pips-a .pip { height: 2px; flex: 1; border-radius: 1px; background: var(--rule); transition: background 0.15s ease-out; }
+    .pips-a .pip.active { background: var(--accent); }
+
+    /* ---- VARIATION B: Thicker (3px, segmented, rounded) ---- */
+    .pips-b { display: flex; gap: 5px; padding: 10px 0 0; }
+    .pips-b .pip { height: 3px; flex: 1; border-radius: 2px; background: var(--rule); transition: background 0.2s ease-out; }
+    .pips-b .pip.active { background: var(--accent); }
+
+    /* ---- VARIATION C: Single continuous bar with fill ---- */
+    .pips-c { padding: 10px 0 0; position: relative; height: 13px; }
+    .pips-c-track { position: absolute; top: 10px; left: 0; right: 0; height: 3px; border-radius: 2px; background: var(--rule); }
+    .pips-c-fill { position: absolute; top: 10px; left: 0; height: 3px; border-radius: 2px; background: var(--accent); transition: width 0.25s cubic-bezier(0.23, 1, 0.32, 1); }
+
+    /* ---- VARIATION D: Dots instead of bars ---- */
+    .pips-d { display: flex; gap: 0; padding: 12px 0 0; justify-content: space-between; }
+    .pips-d .pip { width: 6px; height: 6px; border-radius: 50%; background: var(--rule); transition: background 0.15s ease-out, transform 0.15s ease-out; flex: 1; max-width: 6px; }
+    .pips-d .pip.active { background: var(--accent); transform: scale(1.15); }
+    .pips-d-spacer { flex: 1; }
+
+    /* ---- VARIATION E: No pips (stepper accent bar is enough) ---- */
+  </style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- ============ A: CURRENT ============ -->
+  <div class="var-block" data-var="a">
+    <p class="var-label">A &middot; Current (2px segmented)</p>
+    <p class="var-desc">What you have now. Thin, subtle. Risk: easy to overlook, especially on light backgrounds. The progress signal competes with the step&rsquo;s own accent bar.</p>
+    <div class="wf-track">
+      <div class="wf-step active" data-step="0"><div class="wf-dot"></div><span class="wf-name">Direct</span><span class="wf-tool">the brief</span></div>
+      <div class="wf-step" data-step="1"><div class="wf-dot"></div><span class="wf-name">Decide</span><span class="wf-tool">trade-offs</span></div>
+      <div class="wf-step" data-step="2"><div class="wf-dot"></div><span class="wf-name">Prototype</span><span class="wf-tool">Claude Code</span></div>
+      <div class="wf-step" data-step="3"><div class="wf-dot"></div><span class="wf-name">Review</span><span class="wf-tool">in pixels</span></div>
+      <div class="wf-step" data-step="4"><div class="wf-dot"></div><span class="wf-name">Ship</span><span class="wf-tool">&amp; iterate</span></div>
+    </div>
+    <div class="wf-detail">
+      <div class="wf-detail-col active" data-col="0"><span class="wf-tag">Figma</span><span class="wf-tag">Claude</span></div>
+      <div class="wf-detail-col" data-col="1"><span class="wf-tag">HTML/CSS</span><span class="wf-tag">Claude</span></div>
+      <div class="wf-detail-col" data-col="2"><span class="wf-tag">Claude Code</span><span class="wf-tag">SwiftUI</span><span class="wf-tag">React</span><span class="wf-tag">Figma</span></div>
+      <div class="wf-detail-col" data-col="3"><span class="wf-tag">Browser</span><span class="wf-tag">Playwright</span></div>
+      <div class="wf-detail-col" data-col="4"><span class="wf-tag">Git</span><span class="wf-tag">GitHub Pages</span></div>
+    </div>
+    <div class="pips-a">
+      <span class="pip active"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span>
+    </div>
+  </div>
+
+  <!-- ============ B: THICKER ============ -->
+  <div class="var-block" data-var="b">
+    <p class="var-label">B &middot; Thicker (3px segmented)</p>
+    <p class="var-desc">Same pattern, more visual weight. Just enough to read as a progress bar without overpowering the stepper. Rounded caps give it a softer feel.</p>
+    <div class="wf-track">
+      <div class="wf-step active" data-step="0"><div class="wf-dot"></div><span class="wf-name">Direct</span><span class="wf-tool">the brief</span></div>
+      <div class="wf-step" data-step="1"><div class="wf-dot"></div><span class="wf-name">Decide</span><span class="wf-tool">trade-offs</span></div>
+      <div class="wf-step" data-step="2"><div class="wf-dot"></div><span class="wf-name">Prototype</span><span class="wf-tool">Claude Code</span></div>
+      <div class="wf-step" data-step="3"><div class="wf-dot"></div><span class="wf-name">Review</span><span class="wf-tool">in pixels</span></div>
+      <div class="wf-step" data-step="4"><div class="wf-dot"></div><span class="wf-name">Ship</span><span class="wf-tool">&amp; iterate</span></div>
+    </div>
+    <div class="wf-detail">
+      <div class="wf-detail-col active" data-col="0"><span class="wf-tag">Figma</span><span class="wf-tag">Claude</span></div>
+      <div class="wf-detail-col" data-col="1"><span class="wf-tag">HTML/CSS</span><span class="wf-tag">Claude</span></div>
+      <div class="wf-detail-col" data-col="2"><span class="wf-tag">Claude Code</span><span class="wf-tag">SwiftUI</span><span class="wf-tag">React</span><span class="wf-tag">Figma</span></div>
+      <div class="wf-detail-col" data-col="3"><span class="wf-tag">Browser</span><span class="wf-tag">Playwright</span></div>
+      <div class="wf-detail-col" data-col="4"><span class="wf-tag">Git</span><span class="wf-tag">GitHub Pages</span></div>
+    </div>
+    <div class="pips-b">
+      <span class="pip active"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span>
+    </div>
+  </div>
+
+  <!-- ============ C: CONTINUOUS BAR ============ -->
+  <div class="var-block" data-var="c">
+    <p class="var-label">C &middot; Continuous fill bar</p>
+    <p class="var-desc">One track, one fill. The animated width change gives a smooth &ldquo;flow&rdquo; feeling. Reads clearly as a progress indicator. The easing uses your stepper&rsquo;s same cubic-bezier.</p>
+    <div class="wf-track">
+      <div class="wf-step active" data-step="0"><div class="wf-dot"></div><span class="wf-name">Direct</span><span class="wf-tool">the brief</span></div>
+      <div class="wf-step" data-step="1"><div class="wf-dot"></div><span class="wf-name">Decide</span><span class="wf-tool">trade-offs</span></div>
+      <div class="wf-step" data-step="2"><div class="wf-dot"></div><span class="wf-name">Prototype</span><span class="wf-tool">Claude Code</span></div>
+      <div class="wf-step" data-step="3"><div class="wf-dot"></div><span class="wf-name">Review</span><span class="wf-tool">in pixels</span></div>
+      <div class="wf-step" data-step="4"><div class="wf-dot"></div><span class="wf-name">Ship</span><span class="wf-tool">&amp; iterate</span></div>
+    </div>
+    <div class="wf-detail">
+      <div class="wf-detail-col active" data-col="0"><span class="wf-tag">Figma</span><span class="wf-tag">Claude</span></div>
+      <div class="wf-detail-col" data-col="1"><span class="wf-tag">HTML/CSS</span><span class="wf-tag">Claude</span></div>
+      <div class="wf-detail-col" data-col="2"><span class="wf-tag">Claude Code</span><span class="wf-tag">SwiftUI</span><span class="wf-tag">React</span><span class="wf-tag">Figma</span></div>
+      <div class="wf-detail-col" data-col="3"><span class="wf-tag">Browser</span><span class="wf-tag">Playwright</span></div>
+      <div class="wf-detail-col" data-col="4"><span class="wf-tag">Git</span><span class="wf-tag">GitHub Pages</span></div>
+    </div>
+    <div class="pips-c">
+      <div class="pips-c-track"></div>
+      <div class="pips-c-fill" style="width: 20%;"></div>
+    </div>
+  </div>
+
+  <!-- ============ D: DOTS ============ -->
+  <div class="var-block" data-var="d">
+    <p class="var-label">D &middot; Dots</p>
+    <p class="var-desc">Echoes the step dots above. The active dot scales up slightly (1.15&times;) for a subtle &ldquo;current position&rdquo; signal. Minimal footprint, but less obvious as progress.</p>
+    <div class="wf-track">
+      <div class="wf-step active" data-step="0"><div class="wf-dot"></div><span class="wf-name">Direct</span><span class="wf-tool">the brief</span></div>
+      <div class="wf-step" data-step="1"><div class="wf-dot"></div><span class="wf-name">Decide</span><span class="wf-tool">trade-offs</span></div>
+      <div class="wf-step" data-step="2"><div class="wf-dot"></div><span class="wf-name">Prototype</span><span class="wf-tool">Claude Code</span></div>
+      <div class="wf-step" data-step="3"><div class="wf-dot"></div><span class="wf-name">Review</span><span class="wf-tool">in pixels</span></div>
+      <div class="wf-step" data-step="4"><div class="wf-dot"></div><span class="wf-name">Ship</span><span class="wf-tool">&amp; iterate</span></div>
+    </div>
+    <div class="wf-detail">
+      <div class="wf-detail-col active" data-col="0"><span class="wf-tag">Figma</span><span class="wf-tag">Claude</span></div>
+      <div class="wf-detail-col" data-col="1"><span class="wf-tag">HTML/CSS</span><span class="wf-tag">Claude</span></div>
+      <div class="wf-detail-col" data-col="2"><span class="wf-tag">Claude Code</span><span class="wf-tag">SwiftUI</span><span class="wf-tag">React</span><span class="wf-tag">Figma</span></div>
+      <div class="wf-detail-col" data-col="3"><span class="wf-tag">Browser</span><span class="wf-tag">Playwright</span></div>
+      <div class="wf-detail-col" data-col="4"><span class="wf-tag">Git</span><span class="wf-tag">GitHub Pages</span></div>
+    </div>
+    <div class="pips-d">
+      <span class="pip active"></span><span class="pips-d-spacer"></span>
+      <span class="pip"></span><span class="pips-d-spacer"></span>
+      <span class="pip"></span><span class="pips-d-spacer"></span>
+      <span class="pip"></span><span class="pips-d-spacer"></span>
+      <span class="pip"></span>
+    </div>
+  </div>
+
+  <!-- ============ E: NONE ============ -->
+  <div class="var-block" data-var="e">
+    <p class="var-label">E &middot; No pips</p>
+    <p class="var-desc">The active step already has a blue accent bar and a blue dot. Adding pips below is redundant state communication. Removing them cleans up the bottom edge and lets the stepper speak for itself.</p>
+    <div class="wf-track">
+      <div class="wf-step active" data-step="0"><div class="wf-dot"></div><span class="wf-name">Direct</span><span class="wf-tool">the brief</span></div>
+      <div class="wf-step" data-step="1"><div class="wf-dot"></div><span class="wf-name">Decide</span><span class="wf-tool">trade-offs</span></div>
+      <div class="wf-step" data-step="2"><div class="wf-dot"></div><span class="wf-name">Prototype</span><span class="wf-tool">Claude Code</span></div>
+      <div class="wf-step" data-step="3"><div class="wf-dot"></div><span class="wf-name">Review</span><span class="wf-tool">in pixels</span></div>
+      <div class="wf-step" data-step="4"><div class="wf-dot"></div><span class="wf-name">Ship</span><span class="wf-tool">&amp; iterate</span></div>
+    </div>
+    <div class="wf-detail">
+      <div class="wf-detail-col active" data-col="0"><span class="wf-tag">Figma</span><span class="wf-tag">Claude</span></div>
+      <div class="wf-detail-col" data-col="1"><span class="wf-tag">HTML/CSS</span><span class="wf-tag">Claude</span></div>
+      <div class="wf-detail-col" data-col="2"><span class="wf-tag">Claude Code</span><span class="wf-tag">SwiftUI</span><span class="wf-tag">React</span><span class="wf-tag">Figma</span></div>
+      <div class="wf-detail-col" data-col="3"><span class="wf-tag">Browser</span><span class="wf-tag">Playwright</span></div>
+      <div class="wf-detail-col" data-col="4"><span class="wf-tag">Git</span><span class="wf-tag">GitHub Pages</span></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.var-block').forEach(block => {
+    const variant = block.dataset.var;
+    const steps = block.querySelectorAll('.wf-step');
+    const cols = block.querySelectorAll('.wf-detail-col');
+
+    steps.forEach(s => s.addEventListener('click', () => {
+      const i = parseInt(s.dataset.step);
+      steps.forEach((st, idx) => st.classList.toggle('active', idx === i));
+      cols.forEach((c, idx) => c.classList.toggle('active', idx === i));
+
+      // Update pips per variant
+      if (variant === 'a' || variant === 'b') {
+        block.querySelectorAll('.pip').forEach((p, idx) => p.classList.toggle('active', idx <= i));
+      } else if (variant === 'c') {
+        const fill = block.querySelector('.pips-c-fill');
+        if (fill) fill.style.width = ((i + 1) / 5 * 100) + '%';
+      } else if (variant === 'd') {
+        block.querySelectorAll('.pip').forEach((p, idx) => p.classList.toggle('active', idx <= i));
+      }
+    }));
+  });
+</script>
+</body>
+</html>

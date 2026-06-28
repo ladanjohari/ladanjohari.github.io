@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Hero Variations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #F7F6F3; --ink: #111111; --mid: #6B6B6B;
+      --rule: #D4D3CF; --hover-row: #F0EFEC;
+      --accent: #0066FF; --accent-dim: #D6E4FF;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1A1A1A; --ink: #E8E8E8; --mid: #9A9A9A;
+        --rule: #333333; --hover-row: #242424;
+        --accent: #4D94FF; --accent-dim: #1A3A66;
+      }
+    }
+    html { background: var(--bg); }
+    body { font-family: 'Geist', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+    .demo-nav { position: fixed; top: 0; left: 0; right: 0; display: flex; justify-content: center; gap: 4px; padding: 16px; background: var(--bg); border-bottom: 1px solid var(--rule); z-index: 100; }
+    .demo-tab { font-size: 0.72rem; font-weight: 600; letter-spacing: -0.01em; padding: 8px 14px; border: 1px solid var(--rule); border-radius: 6px; background: none; cursor: pointer; color: var(--mid); transition: all 0.12s ease-out; }
+    .demo-tab.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+    .demo-tab:hover:not(.active) { background: var(--hover-row); }
+
+    .demo-section { display: none; padding: 80px 0 0; min-height: 100vh; }
+    .demo-section.active { display: block; }
+    .shell { max-width: 700px; margin: 0 auto; padding: 0 28px; }
+
+    .demo-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 40px 0 0; }
+    .nav-name { font-size: 0.875rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
+
+    .hero { padding: 80px 0 72px; }
+    .hero-eyebrow { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; }
+    .hero-desc { font-size: 0.975rem; line-height: 1.7; color: var(--mid); max-width: 460px; text-wrap: pretty; }
+    .eyebrow-dot {
+      display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+      background-color: var(--accent); margin-right: 8px; vertical-align: middle;
+      position: relative; top: -1px; animation: dot-shimmer 3s ease-in-out infinite;
+    }
+    @keyframes dot-shimmer { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+    .section-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
+
+    /* ---- A: CURRENT (baseline) ---- */
+
+    /* ---- B: STAGGERED LINE REVEAL ---- */
+    .hero-b .hero-line { opacity: 0; animation: fade-in 0.6s ease-out forwards; }
+    .hero-b .hero-line:nth-child(1) { animation-delay: 0.15s; }
+    .hero-b .hero-line:nth-child(2) { animation-delay: 0.35s; }
+    .hero-b .hero-eyebrow { opacity: 0; animation: fade-in 0.6s ease-out forwards; animation-delay: 0s; }
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* ---- C: WORD-BY-WORD FADE ---- */
+    .hero-c .hero-word { opacity: 0; display: inline-block; animation: word-in 0.35s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+    .hero-c .hero-eyebrow { opacity: 0; animation: line-in 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards; animation-delay: 0s; }
+    @keyframes word-in {
+      to { opacity: 1; }
+    }
+
+    /* ---- D: CURSOR-RESPONSIVE GRADIENT ---- */
+    .hero-d .hero-desc { position: relative; background: linear-gradient(90deg, var(--ink) 0%, var(--accent) 50%, var(--rule) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; background-size: 300% 100%; background-position: 100% 0; transition: background-position 0.3s ease-out; }
+    .hero-d .hero-eyebrow { opacity: 0; animation: line-in 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+
+    /* ---- REPLAY BUTTON ---- */
+    .replay-btn { font-size: 0.68rem; font-weight: 600; color: var(--accent); background: none; border: 1px solid var(--accent-dim); border-radius: 4px; padding: 5px 12px; cursor: pointer; margin-top: 24px; transition: background 0.12s; }
+    .replay-btn:hover { background: var(--accent-dim); }
+  </style>
+</head>
+<body>
+
+<nav class="demo-nav">
+  <button class="demo-tab active" data-target="va">A &middot; Current</button>
+  <button class="demo-tab" data-target="vb">B &middot; Line Stagger</button>
+  <button class="demo-tab" data-target="vc">C &middot; Word Fade</button>
+  <button class="demo-tab" data-target="vd">D &middot; Gradient Shift</button>
+</nav>
+
+<!-- ============ A: CURRENT ============ -->
+<section class="demo-section active" id="va">
+  <div class="shell">
+    <p class="demo-label">A &middot; Current &mdash; no animation, static text. Clean but doesn&rsquo;t demonstrate craft.</p>
+    <nav><a href="#" class="nav-name">Ladan Johari</a></nav>
+    <header class="hero">
+      <p class="hero-eyebrow"><span class="eyebrow-dot"></span>Design Engineer &times; Creative Technologist</p>
+      <p class="hero-desc">I make interfaces and interaction systems. I like to create software that&rsquo;s easy to read, fast to move through, and intentional with&nbsp;details.</p>
+    </header>
+    <p class="section-label">Selected Work</p>
+  </div>
+</section>
+
+<!-- ============ B: LINE STAGGER ============ -->
+<section class="demo-section" id="vb">
+  <div class="shell">
+    <p class="demo-label">B &middot; Lines stagger in with 100ms delay each. Same easing as the stepper. Proves timing discipline without being showy.</p>
+    <nav><a href="#" class="nav-name">Ladan Johari</a></nav>
+    <header class="hero hero-b" id="heroB">
+      <p class="hero-eyebrow"><span class="eyebrow-dot"></span>Design Engineer &times; Creative Technologist</p>
+      <p class="hero-desc">
+        <span class="hero-line">I make interfaces and interaction systems.</span><br>
+        <span class="hero-line">I like to create software that&rsquo;s easy to read, fast to move through, and intentional with&nbsp;details.</span>
+      </p>
+    </header>
+    <p class="section-label">Selected Work</p>
+    <button class="replay-btn" onclick="replayB()">Replay animation</button>
+  </div>
+</section>
+
+<!-- ============ C: WORD FADE ============ -->
+<section class="demo-section" id="vc">
+  <div class="shell">
+    <p class="demo-label">C &middot; Each word fades in with 30ms stagger. More expressive &mdash; reads like the text is being composed. Risk: can feel slow on repeat visits.</p>
+    <nav><a href="#" class="nav-name">Ladan Johari</a></nav>
+    <header class="hero hero-c" id="heroC">
+      <p class="hero-eyebrow"><span class="eyebrow-dot"></span>Design Engineer &times; Creative Technologist</p>
+      <p class="hero-desc" id="wordContainer"></p>
+    </header>
+    <p class="section-label">Selected Work</p>
+    <button class="replay-btn" onclick="replayC()">Replay animation</button>
+  </div>
+</section>
+
+<!-- ============ D: GRADIENT SHIFT ============ -->
+<section class="demo-section" id="vd">
+  <div class="shell">
+    <p class="demo-label">D &middot; Text uses a gradient that shifts with cursor position. The hero responds to you without moving. Subtle, interactive, no motion budget spent.</p>
+    <nav><a href="#" class="nav-name">Ladan Johari</a></nav>
+    <header class="hero hero-d">
+      <p class="hero-eyebrow"><span class="eyebrow-dot"></span>Design Engineer &times; Creative Technologist</p>
+      <p class="hero-desc" id="gradientDesc">I make interfaces and interaction systems. I like to create software that&rsquo;s easy to read, fast to move through, and intentional with&nbsp;details.</p>
+    </header>
+    <p class="section-label">Selected Work</p>
+    <p style="margin-top:24px; font-size:0.78rem; color:var(--mid);">Move your cursor across the text &mdash; the gradient follows.</p>
+  </div>
+</section>
+
+<script>
+  // Tab switching
+  const tabs = document.querySelectorAll('.demo-tab');
+  const sections = document.querySelectorAll('.demo-section');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      sections.forEach(s => s.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.target).classList.add('active');
+      if (tab.dataset.target === 'vc') initWordFade();
+    });
+  });
+
+  // B: Replay
+  function replayB() {
+    const hero = document.getElementById('heroB');
+    const els = hero.querySelectorAll('.hero-line, .hero-eyebrow');
+    els.forEach(el => { el.style.animation = 'none'; el.offsetHeight; el.style.animation = ''; });
+  }
+
+  // C: Word fade
+  const heroText = "I make interfaces and interaction systems. I like to create software that’s easy to read, fast to move through, and intentional with details.";
+  function initWordFade() {
+    const container = document.getElementById('wordContainer');
+    container.innerHTML = '';
+    heroText.split(' ').forEach((word, i) => {
+      const span = document.createElement('span');
+      span.className = 'hero-word';
+      span.textContent = word + ' ';
+      span.style.animationDelay = (0.15 + i * 0.03) + 's';
+      container.appendChild(span);
+    });
+  }
+  function replayC() {
+    initWordFade();
+    const eyebrow = document.querySelector('#heroC .hero-eyebrow');
+    eyebrow.style.animation = 'none'; eyebrow.offsetHeight; eyebrow.style.animation = '';
+  }
+  initWordFade();
+
+  // D: Gradient shift
+  const gradDesc = document.getElementById('gradientDesc');
+  document.addEventListener('mousemove', e => {
+    if (!document.getElementById('vd').classList.contains('active')) return;
+    const rect = gradDesc.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    gradDesc.style.backgroundPosition = (100 - x) + '% 0';
+  });
+</script>
+</body>
+</html>
