@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
   <title>Ladan Johari &mdash; Design Engineer</title>
   <meta name="description" content="Ladan Johari is a Design Engineer in the San Francisco Bay Area building AI interfaces, interaction systems, and developer tools. MFA Design, UC Davis." />
   <meta name="robots" content="index, follow" />
@@ -24,27 +25,38 @@
       --rule: #D4D3CF; --hover-row: #F0EFEC;
       --accent: #0066FF; --accent-dim: #D6E4FF;
     }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1A1A1A; --ink: #E8E8E8; --mid: #9A9A9A;
+        --rule: #333333; --hover-row: #242424;
+        --accent: #4D94FF; --accent-dim: #1A3A66;
+      }
+    }
     html { background: var(--bg); }
     body { font-family: 'Geist', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; min-height: 100vh; }
     .shell { max-width: 700px; margin: 0 auto; padding: 0 28px; }
 
-    .cursor-dot { position: fixed; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); opacity: 0; mix-blend-mode: multiply; }
+    .cursor-dot { position: fixed; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(0,102,255,0.10) 0%, transparent 70%); pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); opacity: 0; mix-blend-mode: multiply; transition: opacity 0.18s ease-out; }
+    .cursor-dot.on-interactive { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      .cursor-dot { mix-blend-mode: screen; background: radial-gradient(circle, rgba(77,148,255,0.15) 0%, transparent 70%); }
+    }
 
     nav { display: flex; justify-content: space-between; align-items: center; padding: 40px 0 0; }
     .nav-name { font-size: 0.875rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
 
     .hero { padding: 80px 0 72px; }
-    .hero-eyebrow { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #0066CC; margin-bottom: 18px; }
+    .hero-eyebrow { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; }
     .hero-name { font-size: clamp(2.4rem,5.5vw,3.2rem); font-weight: 700; letter-spacing: -0.045em; line-height: 1.06; color: var(--ink); margin-bottom: 24px; }
     .hero-name em { font-style: normal; color: var(--accent); }
-    .hero-desc { font-size: 0.975rem; line-height: 1.7; color: var(--mid); max-width: 460px; }
+    .hero-desc { font-size: 0.975rem; line-height: 1.7; color: var(--mid); max-width: 460px; text-wrap: pretty; }
     .hero-desc strong { color: var(--ink); font-weight: 600; }
     .eyebrow-dot {
       display: inline-block;
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background-color: #0066CC;
+      background-color: var(--accent);
       margin-right: 8px;
       vertical-align: middle;
       position: relative;
@@ -96,7 +108,7 @@
     .wf-name { font-size: 0.82rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .wf-tool { font-size: 0.63rem; font-weight: 500; color: var(--mid); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .wf-detail { border: 1px solid var(--rule); border-top: none; border-radius: 0 0 8px 8px; padding: 16px 18px; background: var(--bg); min-height: 76px; display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
-    .wf-detail-text { font-size: 0.83rem; line-height: 1.65; color: var(--mid); flex: 1; margin: 0; transition: opacity 0.15s ease-out; }
+    .wf-detail-text { font-size: 0.83rem; line-height: 1.65; color: var(--mid); flex: 1; margin: 0; transition: opacity 0.15s ease-out; text-wrap: pretty; }
     .wf-detail-text.fading { opacity: 0; }
     .wf-detail-tag { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.06em; padding: 4px 10px; border: 1px solid var(--accent); border-radius: 4px; color: var(--accent); white-space: nowrap; flex-shrink: 0; margin-top: 1px; transition: opacity 0.15s ease-out; }
     .wf-detail-tag.fading { opacity: 0; }
@@ -106,7 +118,7 @@
     .wf-tools-list { margin-top: 14px; font-size: 0.7rem; font-weight: 500; color: var(--rule); letter-spacing: 0.02em; }
 
     .about-strip { padding: 56px 0 80px; border-top: 1px solid var(--rule); display: flex; align-items: center; gap: 28px; }
-    .about-text { font-size: 0.925rem; line-height: 1.85; color: var(--mid); max-width: 500px; }
+    .about-text { font-size: 0.925rem; line-height: 1.85; color: var(--mid); max-width: 500px; text-wrap: pretty; }
     .about-text strong { color: var(--ink); font-weight: 600; }
     .about-text em { font-style: italic; }
     .about-text a { color: var(--mid); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--rule); transition: color 0.12s, text-decoration-color 0.12s; }
@@ -120,7 +132,7 @@
     }
 
     .elsewhere { padding: 0; margin-bottom: 12px; }
-    .elsewhere-text { font-size: 0.925rem; line-height: 1.7; color: var(--mid); }
+    .elsewhere-text { font-size: 0.925rem; line-height: 1.7; color: var(--mid); text-wrap: pretty; }
     .elsewhere-text a { color: var(--ink); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--rule); transition: color 0.12s, text-decoration-color 0.12s; }
     .elsewhere-text a:hover { color: var(--accent); text-decoration-color: var(--accent-dim); }
     footer { border-top: 1px solid var(--rule); padding: 26px 0 52px; }
@@ -172,7 +184,7 @@
     <p class="hero-eyebrow reveal"><span class="eyebrow-dot"></span>Design engineer &times; Creative technologist</p>
     <h1 class="hero-name reveal" style="display:none;"></h1>
     <p class="hero-desc reveal">
-      I make interfaces and interaction systems. I like to create software easy to read, fast to move through, and intentional with&nbsp;details.
+      I make interfaces and interaction systems. I like to create software that&rsquo;s easy to read, fast to move through, and intentional with&nbsp;details.
     </p>
   </header>
 
@@ -307,7 +319,7 @@
 
   <section class="elsewhere" aria-label="Elsewhere" style="margin-bottom:80px;">
     <p class="section-label reveal">Elsewhere</p>
-    <p class="elsewhere-text reveal" style="margin-top:20px;">See my codes on <a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a> and we can connect on <a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a>.</p>
+    <p class="elsewhere-text reveal" style="margin-top:20px;">Code on <a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a>, connect on <a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a>, get in touch via <a href="mailto:ladan.joharizadeh@googlemail.com">email</a>.</p>
   </section>
 
   <footer>
@@ -319,11 +331,15 @@
 <script>
   const dot = document.getElementById('cursorDot');
   const reduceMotionGlobal = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let dotX=0,dotY=0,curX=0,curY=0;
+  let dotX=0,dotY=0,curX=0,curY=0,onInteractive=false;
   if (!reduceMotionGlobal.matches) {
-    document.addEventListener('mousemove',e=>{curX=e.clientX;curY=e.clientY;dot.style.opacity='1';});
-    (function tick(){dotX+=(curX-dotX)*.12;dotY+=(curY-dotY)*.12;dot.style.left=dotX+'px';dot.style.top=dotY+'px';requestAnimationFrame(tick);})();
-    document.addEventListener('mouseleave',()=>{dot.style.opacity='0';});
+    document.addEventListener('mousemove',e=>{
+      curX=e.clientX;curY=e.clientY;
+      onInteractive=!!e.target.closest('a,button,.wf-step');
+      dot.classList.toggle('on-interactive',onInteractive);
+    });
+    (function tick(){dotX+=(curX-dotX)*.1;dotY+=(curY-dotY)*.1;dot.style.left=dotX+'px';dot.style.top=dotY+'px';requestAnimationFrame(tick);})();
+    document.addEventListener('mouseleave',()=>{dot.classList.remove('on-interactive');});
   }
 
   const wfData=[
@@ -333,7 +349,7 @@
     {text:"Nothing ships from a description. I review every result on screen, at every breakpoint, and send it back until it's right.",tag:"in pixels"},
     {text:"It goes live, I look again, and the loop repeats. The work is never done in one pass.",tag:"& iterate"}
   ];
-  let wfCur=0,wfTimer;
+  let wfCur=0;
   const wfSteps=document.querySelectorAll('.wf-step'),wfPips=document.querySelectorAll('.wf-pip'),wfText=document.getElementById('wfDetailText'),wfTag=document.getElementById('wfDetailTag');
   function wfGo(i){
     wfCur=i;
@@ -350,12 +366,8 @@
       }, 150);
     }
   }
-  wfSteps.forEach(s=>s.addEventListener('click',()=>{clearInterval(wfTimer);wfGo(parseInt(s.dataset.step));wfTimer=setInterval(()=>wfGo((wfCur+1)%wfData.length),3200);}));
-  const wfTrack=document.getElementById('wfTrack');
-  const wfDetailEl=document.querySelector('.wf-detail');
-  [wfTrack,wfDetailEl].forEach(el=>{if(el){el.addEventListener('mouseenter',()=>clearInterval(wfTimer));el.addEventListener('mouseleave',()=>{wfTimer=setInterval(()=>wfGo((wfCur+1)%wfData.length),3200);});}});
+  wfSteps.forEach(s=>s.addEventListener('click',()=>{wfGo(parseInt(s.dataset.step));}));
   wfGo(0);
-  wfTimer=setInterval(()=>wfGo((wfCur+1)%wfData.length),3200);
 
 </script>
 <script>
