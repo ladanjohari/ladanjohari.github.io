@@ -119,11 +119,11 @@
       .album-img { transition: none; }
     }
 
-    .elsewhere { border-top: 1px solid var(--rule); padding: 48px 0 0; margin-bottom: 12px; }
+    .elsewhere { padding: 0; margin-bottom: 12px; }
     .elsewhere-text { font-size: 0.925rem; line-height: 1.7; color: var(--mid); }
     .elsewhere-text a { color: var(--ink); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--rule); transition: color 0.12s, text-decoration-color 0.12s; }
     .elsewhere-text a:hover { color: var(--accent); text-decoration-color: var(--accent-dim); }
-    footer { padding: 20px 0 52px; }
+    footer { border-top: 1px solid var(--rule); padding: 26px 0 52px; }
     .footer-copy { font-size: 0.72rem; color: var(--rule); }
 
     @media (max-width: 700px) {
@@ -169,10 +169,10 @@
   </nav>
 
   <header class="hero">
-    <p class="hero-eyebrow reveal"><span class="eyebrow-dot"></span>Design &times; engineering for AI tools</p>
-    <h1 class="hero-name reveal">I make environments,<br>some of them are software.</h1>
+    <p class="hero-eyebrow reveal"><span class="eyebrow-dot"></span>Design engineer &times; Creative technologist</p>
+    <h1 class="hero-name reveal" style="display:none;"></h1>
     <p class="hero-desc reveal">
-      Spaces, installations, systems, interfaces: I build environments that are easy to move through.
+      I make interfaces and interaction systems. I like to create software easy to read, fast to move through, and intentional with details.
     </p>
   </header>
 
@@ -305,8 +305,9 @@
   </section>
   -->
 
-  <section class="elsewhere reveal" aria-label="Elsewhere">
-    <p class="elsewhere-text">See my codes on <a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a> and we can connect on <a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a>.</p>
+  <section class="elsewhere" aria-label="Elsewhere" style="margin-bottom:80px;">
+    <p class="section-label reveal">Elsewhere</p>
+    <p class="elsewhere-text reveal" style="margin-top:20px;">See my codes on <a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a> and we can connect on <a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a>.</p>
   </section>
 
   <footer>
