@@ -32,16 +32,8 @@
 
     nav { display: flex; justify-content: space-between; align-items: center; padding: 40px 0 0; }
     .nav-name { font-size: 0.875rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
-    .nav-links { display: flex; gap: 28px; list-style: none; }
-    .nav-links a { font-size: 0.8rem; font-weight: 500; color: var(--mid); text-decoration: none; transition: color 0.15s ease-out; }
-    @media (hover: hover) and (pointer: fine) {
-      .nav-links a:hover { color: var(--ink); }
-    }
 
     .hero { padding: 80px 0 72px; }
-    .available { display: inline-flex; align-items: center; gap: 8px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #2d7a3a; margin-bottom: 28px; }
-    .available-dot { width: 7px; height: 7px; border-radius: 50%; background: #2d7a3a; animation: breathe 2.4s ease-in-out infinite; flex-shrink: 0; }
-    @keyframes breathe { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.35;transform:scale(.65)} }
     .hero-eyebrow { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #0066CC; margin-bottom: 18px; }
     .hero-name { font-size: clamp(2.4rem,5.5vw,3.2rem); font-weight: 700; letter-spacing: -0.045em; line-height: 1.06; color: var(--ink); margin-bottom: 24px; }
     .hero-name em { font-style: normal; color: var(--accent); }
@@ -68,8 +60,9 @@
 
     .work-list { list-style: none; margin-bottom: 80px; }
     .work-item { border-bottom: 0.5px solid var(--rule); }
+    .work-item:last-child { border-bottom: none; }
     .work-row { display: block; text-decoration: none; color: var(--ink); padding: 20px 0; position: relative; }
-    .work-thumb { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; display: block; margin-bottom: 12px; }
+    .work-thumb { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; display: block; margin-bottom: 12px; border: 1px solid var(--rule); }
     .work-preview { display: none; }
     .work-title-row { display: flex; align-items: center; justify-content: space-between; }
     .work-title { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
@@ -87,22 +80,6 @@
       .work-row:hover .work-arrow { color: var(--accent); transform: translateX(4px); }
     }
 
-    .si-pill { display: flex; align-items: center; gap: 16px; background: #0d0d0e; border: 1px solid rgba(255,255,255,0.08); border-radius: 32px; padding: 14px 22px; }
-    .si-dot { width: 13px; height: 13px; border-radius: 50%; flex-shrink: 0; }
-    .si-dot.si-active { background: #ffffff; animation: shimmer 1.6s ease-in-out infinite; }
-    .si-dot.si-waiting { background: #E8952A; }
-    .si-dot.si-idle { background: rgba(255,255,255,0.16); }
-    .si-dot.si-done { background: #34C759; }
-    @keyframes shimmer { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.5); opacity: 0.2; } }
-
-    .stack-section { margin-bottom: 80px; }
-    .stack-group { margin-top: 20px; display: flex; align-items: baseline; gap: 10px; }
-    .stack-cat-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rule); white-space: nowrap; flex-shrink: 0; min-width: 62px; }
-    .stack-tags { display: flex; flex-wrap: wrap; gap: 7px; }
-    .stack-tag { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.03em; color: var(--mid); border: 1px solid var(--rule); border-radius: 4px; padding: 5px 11px; transition: border-color 0.12s ease-out, color 0.12s ease-out; cursor: default; }
-    @media (hover: hover) and (pointer: fine) {
-      .stack-tag:hover { border-color: var(--accent); color: var(--accent); }
-    }
 
     .workflow-section { margin-top: 40px; }
     .wf-track { display: flex; margin-top: 18px; border: 1px solid var(--rule); border-radius: 8px 8px 0 0; overflow: hidden; }
@@ -126,6 +103,7 @@
     .wf-pips { display: flex; gap: 5px; padding: 10px 0 0; }
     .wf-pip { height: 2px; flex: 1; border-radius: 1px; background: var(--rule); transition: background 0.15s ease-out; }
     .wf-pip.active { background: var(--accent); }
+    .wf-tools-list { margin-top: 14px; font-size: 0.7rem; font-weight: 500; color: var(--rule); letter-spacing: 0.02em; }
 
     .about-strip { padding: 56px 0 80px; border-top: 1px solid var(--rule); display: flex; align-items: center; gap: 28px; }
     .about-text { font-size: 0.925rem; line-height: 1.85; color: var(--mid); max-width: 500px; }
@@ -141,11 +119,12 @@
       .album-img { transition: none; }
     }
 
-    footer { border-top: 1px solid var(--rule); padding: 26px 0 52px; display: flex; justify-content: space-between; align-items: center; }
-    .footer-left { font-size: 0.76rem; color: var(--mid); }
-    .footer-links { display: flex; gap: 22px; list-style: none; }
-    .footer-links a { font-size: 0.76rem; color: var(--mid); text-decoration: none; transition: color 0.12s; }
-    .footer-links a:hover { color: var(--accent); }
+    .elsewhere { border-top: 1px solid var(--rule); padding: 48px 0 0; margin-bottom: 12px; }
+    .elsewhere-text { font-size: 0.925rem; line-height: 1.7; color: var(--mid); }
+    .elsewhere-text a { color: var(--ink); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--rule); transition: color 0.12s, text-decoration-color 0.12s; }
+    .elsewhere-text a:hover { color: var(--accent); text-decoration-color: var(--accent-dim); }
+    footer { padding: 20px 0 52px; }
+    .footer-copy { font-size: 0.72rem; color: var(--rule); }
 
     @media (max-width: 700px) {
       .about-strip { flex-direction: column; align-items: flex-start; gap: 20px; }
@@ -157,11 +136,10 @@
       .hero { padding: 56px 0 48px; }
       .hero-name { font-size: 2rem; }
       .cursor-dot { display: none; }
-      footer { flex-direction: column; gap: 14px; align-items: flex-start; }
       .nav-links { gap: 18px; }
       .wf-tool { display: none; }
-      .stack-group { flex-direction: column; gap: 6px; }
-      .stack-cat-label { min-width: auto; }
+      .wf-step { padding: 12px 6px 11px; }
+      .wf-name { font-size: 0.72rem; }
     }
     @media (max-width: 480px) {
       .hero-name { font-size: 28px; }
@@ -170,10 +148,8 @@
     .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
     @media (prefers-reduced-motion: reduce) {
-      .available-dot { animation: none; }
       .work-arrow, .wf-pip { transition: none; }
       .work-preview { transition: none; }
-      .si-dot.si-active { animation: none; }
       .cursor-dot { display: none !important; }
       .eyebrow-dot { animation: none; }
       .wf-detail-text, .wf-detail-tag { transition: none; }
@@ -190,10 +166,6 @@
 
   <nav>
     <a href="/" class="nav-name">Ladan Johari</a>
-    <ul class="nav-links">
-      <li><a href="#work">Work</a></li>
-      <li><a href="/resume.pdf" target="_blank" rel="noopener">R&eacute;sum&eacute;</a></li>
-    </ul>
   </nav>
 
   <header class="hero">
@@ -274,7 +246,7 @@
   </section>
 
   <section class="workflow-section" aria-label="How I work" style="margin-top:0; margin-bottom:80px;">
-    <p class="section-label reveal">How I work</p>
+    <p class="section-label reveal">How I Work</p>
     <p class="about-text reveal" style="margin-top:16px; max-width:560px;">I direct the work like a studio of one &mdash; set the brief, weigh the trade-offs, reject what&rsquo;s wrong, review every result in pixels before it ships. AI tools sit inside that loop as instruments; the taste is mine.</p>
     <div class="wf-track" id="wfTrack">
       <div class="wf-step active" data-step="0">
@@ -314,7 +286,7 @@
       <span class="wf-pip"></span>
       <span class="wf-pip"></span>
     </div>
-    <p class="footer-left" style="margin-top:16px;">Built with &mdash; SwiftUI &middot; JavaScript &middot; Node.js &middot; HTML/CSS &middot; Figma &middot; design systems &middot; interaction design</p>
+    <p class="wf-tools-list">SwiftUI &middot; JavaScript &middot; Node.js &middot; HTML/CSS &middot; Figma &middot; design systems &middot; interaction design</p>
   </section>
 
   <!-- RESTORE: delete the comment wrapper below to bring this section back -->
@@ -333,13 +305,12 @@
   </section>
   -->
 
+  <section class="elsewhere reveal" aria-label="Elsewhere">
+    <p class="elsewhere-text">See my codes on <a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a> and we can connect on <a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a>.</p>
+  </section>
+
   <footer>
-    <span class="footer-left">&copy; 2026 Ladan Johari</span>
-    <ul class="footer-links">
-      <li><a href="mailto:ladan.joharizadeh@gmail.com">ladan.joharizadeh@gmail.com</a></li>
-      <li><a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a></li>
-      <li><a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a></li>
-    </ul>
+    <span class="footer-copy">&copy; 2026 Ladan Johari</span>
   </footer>
 
 </div>
@@ -379,23 +350,12 @@
     }
   }
   wfSteps.forEach(s=>s.addEventListener('click',()=>{clearInterval(wfTimer);wfGo(parseInt(s.dataset.step));wfTimer=setInterval(()=>wfGo((wfCur+1)%wfData.length),3200);}));
+  const wfTrack=document.getElementById('wfTrack');
+  const wfDetailEl=document.querySelector('.wf-detail');
+  [wfTrack,wfDetailEl].forEach(el=>{if(el){el.addEventListener('mouseenter',()=>clearInterval(wfTimer));el.addEventListener('mouseleave',()=>{wfTimer=setInterval(()=>wfGo((wfCur+1)%wfData.length),3200);});}});
   wfGo(0);
   wfTimer=setInterval(()=>wfGo((wfCur+1)%wfData.length),3200);
 
-  const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
-
-  // Rotating album of physical work
-  if(!reduceMotion.matches){
-    const albumImgs=document.querySelectorAll('.album-img');
-    if(albumImgs.length>1){
-      let albumCur=0;
-      setInterval(()=>{
-        albumImgs[albumCur].classList.remove('active');
-        albumCur=(albumCur+1)%albumImgs.length;
-        albumImgs[albumCur].classList.add('active');
-      },3000);
-    }
-  }
 </script>
 <script>
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -444,8 +404,13 @@
       });
       row.addEventListener('mousemove', (e) => {
         const rect = row.getBoundingClientRect();
-        targetX = e.clientX - rect.left + 20;
-        targetY = e.clientY - rect.top - 80;
+        let px = e.clientX - rect.left + 20;
+        let py = e.clientY - rect.top - 80;
+        const maxX = rect.width - 360;
+        if (px > maxX) px = maxX;
+        if (px < 0) px = 0;
+        targetX = px;
+        targetY = py;
         preview.style.transform = 'none';
         if (!rafId) rafId = requestAnimationFrame(lerpPreview);
       });
