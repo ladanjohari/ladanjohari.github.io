@@ -50,6 +50,11 @@
     .hero-name { font-size: clamp(2.4rem,5.5vw,3.2rem); font-weight: 700; letter-spacing: -0.045em; line-height: 1.06; color: var(--ink); margin-bottom: 24px; }
     .hero-name em { font-style: normal; color: var(--accent); }
     .hero-desc { font-size: 0.975rem; line-height: 1.7; color: var(--mid); max-width: 460px; text-wrap: pretty; }
+    .hero-line { opacity: 0; animation: hero-fade 0.6s ease-out forwards; }
+    .hero-line:nth-child(1) { animation-delay: 0.15s; }
+    .hero-line:nth-child(2) { animation-delay: 0.35s; }
+    .hero-eyebrow-anim { opacity: 0; animation: hero-fade 0.6s ease-out forwards; animation-delay: 0s; }
+    @keyframes hero-fade { from { opacity: 0; } to { opacity: 1; } }
     .hero-desc strong { color: var(--ink); font-weight: 600; }
     .eyebrow-dot {
       display: inline-block;
@@ -165,6 +170,7 @@
       .work-preview { transition: none; }
       .cursor-dot { display: none !important; }
       .eyebrow-dot { animation: none; }
+      .hero-line, .hero-eyebrow-anim { opacity: 1; animation: none; }
       .wf-pips-fill { transition: none; }
       .wf-tag { transition: none; }
       .album-img { transition: none; }
@@ -183,10 +189,10 @@
   </nav>
 
   <header class="hero">
-    <p class="hero-eyebrow reveal"><span class="eyebrow-dot"></span>Design engineer &times; Creative technologist</p>
-    <h1 class="hero-name reveal" style="display:none;"></h1>
-    <p class="hero-desc reveal">
-      I make interfaces and interaction systems. I like to create software that&rsquo;s easy to read, fast to move through, and intentional with&nbsp;details.
+    <p class="hero-eyebrow hero-eyebrow-anim"><span class="eyebrow-dot"></span>Design engineer &times; Creative technologist</p>
+    <p class="hero-desc">
+      <span class="hero-line">I make interfaces and interaction systems.</span><br>
+      <span class="hero-line">I like to create software that&rsquo;s easy to read, fast to move through, and intentional with&nbsp;details.</span>
     </p>
   </header>
 
