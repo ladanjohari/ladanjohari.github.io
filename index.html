@@ -36,10 +36,10 @@
     body { font-family: 'Geist', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; min-height: 100vh; }
     .shell { max-width: 700px; margin: 0 auto; padding: 0 28px; }
 
-    .cursor-dot { position: fixed; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(0,102,255,0.10) 0%, transparent 70%); pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); opacity: 0; mix-blend-mode: multiply; transition: opacity 0.18s ease-out; }
+    .cursor-dot { position: fixed; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(0,102,255,0.20) 0%, transparent 70%); pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); opacity: 0; mix-blend-mode: multiply; transition: opacity 0.18s ease-out; }
     .cursor-dot.on-interactive { opacity: 1; }
     @media (prefers-color-scheme: dark) {
-      .cursor-dot { mix-blend-mode: screen; background: radial-gradient(circle, rgba(77,148,255,0.15) 0%, transparent 70%); }
+      .cursor-dot { mix-blend-mode: screen; background: radial-gradient(circle, rgba(77,148,255,0.25) 0%, transparent 70%); }
     }
 
     nav { display: flex; justify-content: space-between; align-items: center; padding: 40px 0 0; }
@@ -151,6 +151,8 @@
       .wf-tool { display: none; }
       .wf-step { padding: 12px 6px 11px; }
       .wf-name { font-size: 0.72rem; }
+      .wf-detail { display: none; }
+      .wf-track { border-radius: 8px; }
     }
     @media (max-width: 480px) {
       .hero-name { font-size: 28px; }
@@ -259,30 +261,30 @@
 
   <section class="workflow-section" aria-label="Workflow" style="margin-top:0; margin-bottom:80px;">
     <p class="section-label reveal">Workflow</p>
-    <p class="about-text reveal" style="margin-top:16px; max-width:560px;">I direct the work like a studio of one. First I set the brief, weigh the trade-offs, reject what&rsquo;s wrong, review every result in pixels before it ships.</p>
-    <div class="wf-track" id="wfTrack">
-      <div class="wf-step active" data-step="0">
-        <div class="wf-dot"></div>
+    <p class="about-text reveal" style="margin-top:16px; max-width:560px;">I direct the work like a studio of one. First I set the brief, weigh the <span style="white-space:nowrap">trade-offs,</span> reject what&rsquo;s wrong, review every result in pixels before it ships.</p>
+    <div class="wf-track" id="wfTrack" role="tablist" aria-label="Workflow steps">
+      <div class="wf-step active" data-step="0" role="tab" aria-selected="true" tabindex="0">
+        <div class="wf-dot" aria-hidden="true"></div>
         <span class="wf-name">Direct</span>
         <span class="wf-tool">the brief</span>
       </div>
-      <div class="wf-step" data-step="1">
-        <div class="wf-dot"></div>
+      <div class="wf-step" data-step="1" role="tab" aria-selected="false" tabindex="-1">
+        <div class="wf-dot" aria-hidden="true"></div>
         <span class="wf-name">Decide</span>
         <span class="wf-tool">trade-offs</span>
       </div>
-      <div class="wf-step" data-step="2">
-        <div class="wf-dot"></div>
+      <div class="wf-step" data-step="2" role="tab" aria-selected="false" tabindex="-1">
+        <div class="wf-dot" aria-hidden="true"></div>
         <span class="wf-name">Prototype</span>
         <span class="wf-tool">Claude Code</span>
       </div>
-      <div class="wf-step" data-step="3">
-        <div class="wf-dot"></div>
+      <div class="wf-step" data-step="3" role="tab" aria-selected="false" tabindex="-1">
+        <div class="wf-dot" aria-hidden="true"></div>
         <span class="wf-name">Review</span>
         <span class="wf-tool">in pixels</span>
       </div>
-      <div class="wf-step" data-step="4">
-        <div class="wf-dot"></div>
+      <div class="wf-step" data-step="4" role="tab" aria-selected="false" tabindex="-1">
+        <div class="wf-dot" aria-hidden="true"></div>
         <span class="wf-name">Ship</span>
         <span class="wf-tool">&amp; iterate</span>
       </div>
@@ -362,11 +364,21 @@
   const wfSteps=document.querySelectorAll('.wf-step'),wfFill=document.getElementById('wfFill'),wfCols=document.querySelectorAll('.wf-detail-col');
   function wfGo(i){
     wfCur=i;
-    wfSteps.forEach((s,idx)=>s.classList.toggle('active',idx===i));
+    wfSteps.forEach((s,idx)=>{
+      const active=idx===i;
+      s.classList.toggle('active',active);
+      s.setAttribute('aria-selected',active);
+      s.setAttribute('tabindex',active?'0':'-1');
+    });
     wfFill.style.width=((i+1)/5*100)+'%';
     wfCols.forEach((c,idx)=>c.classList.toggle('active',idx===i));
   }
   wfSteps.forEach(s=>s.addEventListener('click',()=>{wfGo(parseInt(s.dataset.step));}));
+  document.getElementById('wfTrack').addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'){e.preventDefault();wfGo(Math.min(wfCur+1,4));}
+    if(e.key==='ArrowLeft'){e.preventDefault();wfGo(Math.max(wfCur-1,0));}
+    wfSteps[wfCur].focus();
+  });
   wfGo(0);
 
 </script>
