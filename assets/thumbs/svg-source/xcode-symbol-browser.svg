@@ -1,0 +1,34 @@
+<svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg" width="320" height="200">
+  <rect width="160" height="100" fill="#1c1c1e"/>
+  <rect x="6" y="8" width="45" height="84" rx="4" fill="#252528"/>
+  <rect x="10" y="13" width="37" height="7" rx="2" fill="#333"/>
+  <rect x="10" y="23" width="37" height="7" rx="2" fill="#333"/>
+  <rect x="10" y="33" width="37" height="7" rx="2" fill="#0A84FF" opacity="0.15"/>
+  <rect x="12" y="34" width="3" height="5" rx="1" fill="#34C759"/>
+  <text x="17" y="38.5" fill="#ccc" font-family="Geist, monospace" font-size="4">GitRepo</text>
+  <rect x="10" y="43" width="37" height="7" rx="2" fill="#333"/>
+  <rect x="10" y="53" width="37" height="7" rx="2" fill="#333"/>
+  <rect x="10" y="63" width="37" height="7" rx="2" fill="#333"/>
+  <rect x="55" y="8" width="48" height="84" rx="4" fill="#252528"/>
+  <rect x="59" y="13" width="40" height="7" rx="2" fill="#333"/>
+  <rect x="61" y="14" width="3" height="5" rx="1" fill="#0A84FF"/><text x="66" y="18.5" fill="#aaa" font-family="Geist, monospace" font-size="3.5">Hash</text>
+  <rect x="59" y="23" width="40" height="7" rx="2" fill="#333"/>
+  <rect x="61" y="24" width="3" height="5" rx="1" fill="#0A84FF"/><text x="66" y="28.5" fill="#aaa" font-family="Geist, monospace" font-size="3.5">Commit</text>
+  <rect x="59" y="33" width="40" height="7" rx="2" fill="#333"/>
+  <rect x="61" y="34" width="3" height="5" rx="1" fill="#0A84FF"/><text x="66" y="38.5" fill="#aaa" font-family="Geist, monospace" font-size="3.5">Tree</text>
+  <rect x="59" y="43" width="40" height="7" rx="2" fill="#0A84FF" opacity="0.15"/>
+  <rect x="61" y="44" width="3" height="5" rx="1" fill="#FF9F0A"/><text x="66" y="48.5" fill="#ccc" font-family="Geist, monospace" font-size="3.5">EntryType</text>
+  <rect x="59" y="53" width="40" height="7" rx="2" fill="#333"/>
+  <rect x="61" y="54" width="3" height="5" rx="1" fill="#FF375F"/><text x="66" y="58.5" fill="#aaa" font-family="Geist, monospace" font-size="3.5">RepoError</text>
+  <rect x="107" y="8" width="47" height="84" rx="4" fill="#252528"/>
+  <rect x="111" y="13" width="39" height="7" rx="2" fill="#0A84FF" opacity="0.15"/>
+  <rect x="113" y="14" width="2.5" height="5" rx="0.8" fill="#BF5AF2"/><text x="117" y="18.5" fill="#ccc" font-family="Geist, monospace" font-size="3.5">case blob</text>
+  <rect x="111" y="23" width="39" height="7" rx="2" fill="#333"/>
+  <rect x="113" y="24" width="2.5" height="5" rx="0.8" fill="#BF5AF2"/><text x="117" y="28.5" fill="#aaa" font-family="Geist, monospace" font-size="3.5">case commit</text>
+  <rect x="111" y="33" width="39" height="7" rx="2" fill="#333"/>
+  <rect x="113" y="34" width="2.5" height="5" rx="0.8" fill="#BF5AF2"/><text x="117" y="38.5" fill="#aaa" font-family="Geist, monospace" font-size="3.5">case exec</text>
+  <rect x="111" y="43" width="39" height="7" rx="2" fill="#333"/>
+  <rect x="113" y="44" width="2.5" height="5" rx="0.8" fill="#BF5AF2"/><text x="117" y="48.5" fill="#aaa" font-family="Geist, monospace" font-size="3.5">case tree</text>
+  <line x1="47" y1="36.5" x2="55" y2="46.5" stroke="#0A84FF" stroke-width="0.8" opacity="0.5"/>
+  <line x1="99" y1="46.5" x2="107" y2="16.5" stroke="#0A84FF" stroke-width="0.8" opacity="0.5"/>
+</svg>

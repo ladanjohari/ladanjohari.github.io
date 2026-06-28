@@ -1,0 +1,13 @@
+<svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg" width="320" height="200">
+  <rect width="160" height="100" fill="#111"/>
+  <rect x="30" y="22" width="100" height="56" rx="12" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="0.5"/>
+  <circle cx="48" cy="38" r="3.5" fill="#fff" opacity="0.7"/>
+  <rect x="57" y="35.5" width="28" height="4.5" rx="2" fill="#2a2a2a"/>
+  <text x="90" y="40" fill="#444" font-family="Geist, sans-serif" font-size="5" font-weight="500">running</text>
+  <circle cx="48" cy="50" r="3.5" fill="#E8952A"/>
+  <rect x="57" y="47.5" width="35" height="4.5" rx="2" fill="#2a2a2a"/>
+  <text x="97" y="52" fill="#444" font-family="Geist, sans-serif" font-size="5" font-weight="500">waiting</text>
+  <circle cx="48" cy="62" r="3.5" fill="#34C759"/>
+  <rect x="57" y="59.5" width="22" height="4.5" rx="2" fill="#2a2a2a"/>
+  <text x="84" y="64" fill="#444" font-family="Geist, sans-serif" font-size="5" font-weight="500">done</text>
+</svg>
