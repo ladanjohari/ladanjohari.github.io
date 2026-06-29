@@ -93,10 +93,14 @@
       .work-row:hover .work-thumb { border-color: var(--accent-dim); }
     }
     .work-row:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent); border-radius: 8px; }
-    .work-row.coming-soon { opacity: 0.45; pointer-events: none; }
+    .work-row.coming-soon { pointer-events: none; }
     .work-row.coming-soon .work-arrow { display: none; }
+    .work-row.coming-soon .work-thumb { opacity: 0.45; }
+    .work-row.coming-soon .work-title { opacity: 0.45; }
+    .work-row.coming-soon .work-tags { opacity: 0.45; }
+    .work-row.coming-soon .work-soon-badge { opacity: 0.6; }
     .work-soon-badge { font-size: 0.58rem; font-weight: 500; letter-spacing: 0.04em; color: var(--mid); border: 1px solid var(--rule); border-radius: 3px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0; }
-    .work-demo { font-size: 0.6rem; font-weight: 500; color: var(--accent); text-decoration: none; margin-top: 4px; display: inline-block; pointer-events: auto; }
+    .work-demo { font-size: 0.6rem; font-weight: 600; color: var(--accent); text-decoration: none; margin-top: 4px; display: inline-block; pointer-events: auto; }
     .work-demo:hover { text-decoration: underline; text-underline-offset: 2px; }
     .wf-step:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--accent); }
 
