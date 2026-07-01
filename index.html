@@ -87,33 +87,17 @@
     .work-year { font-size: 0.82rem; font-weight: 500; color: var(--rule); flex-shrink: 0; }
     .work-arrow { font-size: 16px; color: var(--rule); flex-shrink: 0; transition: color 0.12s ease-out, transform 0.14s cubic-bezier(0.23, 1, 0.32, 1); }
 
-    /* Side preview panel — fixed, right of shell */
-    .work-preview-panel {
-      position: fixed;
-      right: 20px;
-      width: 260px;
-      height: 163px;
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid var(--rule);
-      background: #111;
-      pointer-events: none;
-      opacity: 0;
-      transform: translateY(8px) scale(0.97);
-      transition: opacity 0.22s ease-out, transform 0.22s cubic-bezier(0.23,1,0.32,1);
-      z-index: 100;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
-    }
-    .work-preview-panel.visible {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-    .work-preview-panel video {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-    }
-    /* Only show on viewports wide enough to have a right column */
-    @media (max-width: 1280px) {
-      .work-preview-panel { display: none; }
+    .work-preview { display: none; }
+    @media (min-width: 768px) {
+      .work-preview {
+        display: block; position: fixed; width: 320px; height: 200px;
+        border-radius: 10px; object-fit: cover;
+        opacity: 0; transition: opacity 0.18s ease-out;
+        pointer-events: none; z-index: 200;
+        border: 1px solid var(--rule);
+        background: #111;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08);
+      }
     }
     @media (hover: hover) and (pointer: fine) {
       .work-row:hover .work-arrow { color: var(--accent); transform: translateX(4px); }
@@ -190,7 +174,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       .work-arrow { transition: none; }
-      .work-preview-panel { display: none !important; }
+      .work-preview { display: none !important; }
       .cursor-dot { display: none !important; }
       .eyebrow-dot { animation: none; }
       .hero-line, .hero-eyebrow-anim { opacity: 1; animation: none; }
@@ -223,7 +207,8 @@
     <ul class="work-list">
 
       <li class="work-item reveal">
-        <a class="work-row" href="/projects/session-indicator.html" data-preview="si">
+        <a class="work-row" href="/projects/session-indicator.html">
+          <video class="work-preview" src="/assets/previews/session-indicator-frame.mp4" loop muted playsinline preload="none"></video>
           <div class="work-thumb"><svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg"><rect width="160" height="100" fill="#111"/><rect x="30" y="22" width="100" height="56" rx="12" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="0.5"/><circle cx="48" cy="38" r="3.5" fill="#fff" opacity="0.7"><animate attributeName="opacity" values="0.7;0.15;0.7" dur="1.6s" repeatCount="indefinite"/><animate attributeName="r" values="3.5;2.5;3.5" dur="1.6s" repeatCount="indefinite"/></circle><rect x="57" y="35.5" width="28" height="4.5" rx="2" fill="#2a2a2a"/><text x="90" y="40" fill="#444" font-family="Geist,sans-serif" font-size="5" font-weight="500">running</text><circle cx="48" cy="50" r="3.5" fill="#E8952A"/><rect x="57" y="47.5" width="35" height="4.5" rx="2" fill="#2a2a2a"/><text x="97" y="52" fill="#444" font-family="Geist,sans-serif" font-size="5" font-weight="500">waiting</text><circle cx="48" cy="62" r="3.5" fill="#34C759"/><rect x="57" y="59.5" width="22" height="4.5" rx="2" fill="#2a2a2a"/><text x="84" y="64" fill="#444" font-family="Geist,sans-serif" font-size="5" font-weight="500">done</text></svg></div>
           <div class="work-info">
             <span class="work-title">Session Indicator</span>
@@ -235,7 +220,8 @@
       </li>
 
       <li class="work-item reveal">
-        <a class="work-row" href="/projects/promptedfind.html" data-preview="pf">
+        <a class="work-row" href="/projects/promptedfind.html">
+          <video class="work-preview" src="/assets/previews/promptedfind-frame.mp4" loop muted playsinline preload="none"></video>
           <div class="work-thumb"><svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg"><rect width="160" height="100" fill="#0a1628"/><rect x="12" y="42" width="136" height="3" rx="1.5" fill="#1a2a44"/><rect x="12" y="42" width="18" height="3" rx="1.5" fill="#2563EB" opacity="0.7"/><rect x="45" y="42" width="25" height="3" rx="1.5" fill="#2563EB" opacity="0.7"/><rect x="85" y="42" width="20" height="3" rx="1.5" fill="#2563EB" opacity="0.7"/><rect x="118" y="42" width="24" height="3" rx="1.5" fill="#2563EB" opacity="0.7"/><rect class="pf-chip" data-idx="0" x="8" y="52" width="26" height="10" rx="3" fill="#2563EB" opacity="0.8"/><text x="21" y="59" text-anchor="middle" fill="#fff" font-family="Geist,sans-serif" font-size="4.5" font-weight="500">Why h...</text><rect class="pf-chip" data-idx="1" x="40" y="52" width="32" height="10" rx="3" fill="#2563EB" opacity="0.6"/><text x="56" y="59" text-anchor="middle" fill="#fff" font-family="Geist,sans-serif" font-size="4.5" font-weight="500">Mars at...</text><rect class="pf-chip" data-idx="2" x="80" y="52" width="30" height="10" rx="3" fill="#2563EB" opacity="0.6"/><text x="95" y="59" text-anchor="middle" fill="#fff" font-family="Geist,sans-serif" font-size="4.5" font-weight="500">Deploy...</text><rect class="pf-chip" data-idx="3" x="118" y="52" width="34" height="10" rx="3" fill="#2563EB" opacity="0.6"/><text x="135" y="59" text-anchor="middle" fill="#fff" font-family="Geist,sans-serif" font-size="4.5" font-weight="500">Precision</text><text x="12" y="38" fill="#335" font-family="Geist,sans-serif" font-size="4">0:00</text><text x="75" y="38" fill="#335" font-family="Geist,sans-serif" font-size="4">37:00</text><text x="130" y="38" fill="#335" font-family="Geist,sans-serif" font-size="4">1:14:31</text><rect x="15" y="12" width="90" height="4" rx="1.5" fill="#1a3a66" opacity="0.3"/><rect x="15" y="19" width="70" height="4" rx="1.5" fill="#1a3a66" opacity="0.3"/><rect x="15" y="26" width="100" height="4" rx="1.5" fill="#1a3a66" opacity="0.3"/><circle class="pf-head" cx="21" cy="43.5" r="4" fill="#2563EB"/><rect class="pf-highlight" x="13" y="10" width="96" height="8" rx="2" fill="#2563EB" opacity="0.08"/></svg></div>
           <div class="work-info">
             <span class="work-title">PromptedFind</span>
@@ -420,49 +406,30 @@
     });
   }
 
-  if (
-    window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
-    window.matchMedia('(min-width: 1280px)').matches
-  ) {
-    const panel = document.getElementById('previewPanel');
-    const video = document.getElementById('previewVideo');
-    const PANEL_H = 163;
-
-    const sources = {
-      si: '/assets/previews/session-indicator-frame.mp4',
-      pf: '/assets/previews/promptedfind-frame.mp4',
-    };
-
-    function placePanel(row) {
-      const rowRect = row.getBoundingClientRect();
-      const rowMid = rowRect.top + rowRect.height / 2;
-      const top = rowMid - PANEL_H / 2;
-      panel.style.top = Math.max(12, Math.min(top, window.innerHeight - PANEL_H - 12)) + 'px';
-    }
-
-    let activeRow = null;
-    document.querySelectorAll('.work-row[data-preview]').forEach(row => {
-      const key = row.dataset.preview;
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    document.querySelectorAll('.work-row').forEach(row => {
+      const preview = row.querySelector('.work-preview');
+      if (!preview) return;
       row.addEventListener('mouseenter', () => {
-        activeRow = row;
-        if (sources[key] && video.dataset.loaded !== key) {
-          video.src = sources[key];
-          video.dataset.loaded = key;
-        }
-        placePanel(row);
-        panel.classList.add('visible');
-        if (sources[key]) video.play().catch(() => {});
+        preview.style.opacity = '1';
+        if (preview.play) preview.play();
       });
       row.addEventListener('mouseleave', () => {
-        activeRow = null;
-        panel.classList.remove('visible');
-        video.pause();
+        preview.style.opacity = '0';
+        if (preview.pause) preview.pause();
+      });
+      row.addEventListener('mousemove', (e) => {
+        // Position relative to viewport (preview is fixed)
+        let px = e.clientX + 24;
+        let py = e.clientY - 100;
+        // Keep within viewport
+        if (px + 320 > window.innerWidth - 12) px = e.clientX - 320 - 24;
+        if (py < 12) py = 12;
+        if (py + 200 > window.innerHeight - 12) py = window.innerHeight - 200 - 12;
+        preview.style.left = px + 'px';
+        preview.style.top = py + 'px';
       });
     });
-
-    window.addEventListener('scroll', () => {
-      if (activeRow && panel.classList.contains('visible')) placePanel(activeRow);
-    }, { passive: true });
   }
 
   // PromptedFind: jumping playhead animation (respects reduced motion, pauses offscreen)
@@ -493,10 +460,6 @@
   }
 </script>
 
-<!-- Side preview panel — outside shell, fixed positioned -->
-<div class="work-preview-panel" id="previewPanel">
-  <video id="previewVideo" loop muted playsinline preload="none"></video>
-</div>
 
 </body>
 </html>
