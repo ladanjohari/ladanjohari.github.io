@@ -92,7 +92,7 @@
     .work-arrow { font-size: 16px; color: var(--rule); flex-shrink: 0; transition: color 0.12s ease-out, transform 0.14s cubic-bezier(0.23, 1, 0.32, 1); }
 
     .work-preview { display: none; }
-    @media (min-width: 768px) {
+    @media (min-width: 1400px) {
       .work-preview {
         display: block; position: fixed; width: 320px; height: 200px;
         border-radius: 10px; object-fit: cover;
@@ -409,28 +409,28 @@
     });
   }
 
-  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  if (window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 1400px)').matches) {
     const shell = document.querySelector('.shell');
     document.querySelectorAll('.work-row').forEach(row => {
       const preview = row.querySelector('.work-preview');
       if (!preview) return;
+      // Fix X: centered in the right white column
+      const shellRect = shell.getBoundingClientRect();
+      const fixedPx = (shellRect.right + window.innerWidth) / 2 - 160;
+      preview.style.left = fixedPx + 'px';
       row.addEventListener('mouseenter', () => {
-        const rect = row.getBoundingClientRect();
-        const shellRect = shell.getBoundingClientRect();
-        const rowCenterY = rect.top + rect.height / 2;
-        let px = shellRect.right + 24;
-        let py = rowCenterY - 100; // center 200px panel on row
-        if (px + 320 > window.innerWidth - 12) px = window.innerWidth - 320 - 12;
-        if (py < 12) py = 12;
-        if (py + 200 > window.innerHeight - 12) py = window.innerHeight - 200 - 12;
-        preview.style.left = px + 'px';
-        preview.style.top = py + 'px';
         preview.style.opacity = '1';
         if (preview.play) preview.play();
       });
       row.addEventListener('mouseleave', () => {
         preview.style.opacity = '0';
         if (preview.pause) preview.pause();
+      });
+      row.addEventListener('mousemove', e => {
+        let py = e.clientY - 100;
+        if (py < 12) py = 12;
+        if (py + 200 > window.innerHeight - 12) py = window.innerHeight - 200 - 12;
+        preview.style.top = py + 'px';
       });
     });
   }
