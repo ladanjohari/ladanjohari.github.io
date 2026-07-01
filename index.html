@@ -410,27 +410,27 @@
   }
 
   if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const shell = document.querySelector('.shell');
     document.querySelectorAll('.work-row').forEach(row => {
       const preview = row.querySelector('.work-preview');
       if (!preview) return;
       row.addEventListener('mouseenter', () => {
+        const rect = row.getBoundingClientRect();
+        const shellRect = shell.getBoundingClientRect();
+        const rowCenterY = rect.top + rect.height / 2;
+        let px = shellRect.right + 24;
+        let py = rowCenterY - 100; // center 200px panel on row
+        if (px + 320 > window.innerWidth - 12) px = window.innerWidth - 320 - 12;
+        if (py < 12) py = 12;
+        if (py + 200 > window.innerHeight - 12) py = window.innerHeight - 200 - 12;
+        preview.style.left = px + 'px';
+        preview.style.top = py + 'px';
         preview.style.opacity = '1';
         if (preview.play) preview.play();
       });
       row.addEventListener('mouseleave', () => {
         preview.style.opacity = '0';
         if (preview.pause) preview.pause();
-      });
-      row.addEventListener('mousemove', (e) => {
-        // Position relative to viewport (preview is fixed)
-        let px = e.clientX + 24;
-        let py = e.clientY - 100;
-        // Keep within viewport
-        if (px + 320 > window.innerWidth - 12) px = e.clientX - 320 - 24;
-        if (py < 12) py = 12;
-        if (py + 200 > window.innerHeight - 12) py = window.innerHeight - 200 - 12;
-        preview.style.left = px + 'px';
-        preview.style.top = py + 'px';
       });
     });
   }
