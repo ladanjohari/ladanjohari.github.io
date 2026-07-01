@@ -90,8 +90,9 @@
     /* Side preview panel — fixed, right of shell */
     .work-preview-panel {
       position: fixed;
-      width: 320px;
-      height: 200px;
+      right: 20px;
+      width: 260px;
+      height: 163px;
       border-radius: 10px;
       overflow: hidden;
       border: 1px solid var(--rule);
@@ -111,7 +112,7 @@
       width: 100%; height: 100%; object-fit: cover; display: block;
     }
     /* Only show on viewports wide enough to have a right column */
-    @media (max-width: 1080px) {
+    @media (max-width: 1280px) {
       .work-preview-panel { display: none; }
     }
     @media (hover: hover) and (pointer: fine) {
@@ -421,12 +422,11 @@
 
   if (
     window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
-    window.matchMedia('(min-width: 1080px)').matches
+    window.matchMedia('(min-width: 1280px)').matches
   ) {
     const panel = document.getElementById('previewPanel');
     const video = document.getElementById('previewVideo');
-    const PANEL_H = 200;
-    const GAP = 28;
+    const PANEL_H = 163;
 
     const sources = {
       si: '/assets/previews/session-indicator-frame.mp4',
@@ -434,11 +434,8 @@
     };
 
     function placePanel(row) {
-      const shell = document.querySelector('.shell');
-      const shellR = shell.getBoundingClientRect().right;
       const rowRect = row.getBoundingClientRect();
       const rowMid = rowRect.top + rowRect.height / 2;
-      panel.style.left = (shellR + GAP) + 'px';
       const top = rowMid - PANEL_H / 2;
       panel.style.top = Math.max(12, Math.min(top, window.innerHeight - PANEL_H - 12)) + 'px';
     }
