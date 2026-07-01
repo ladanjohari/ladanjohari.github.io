@@ -44,11 +44,7 @@
     body { font-family: 'Geist', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; min-height: 100vh; }
     .shell { max-width: 700px; margin: 0 auto; padding: 0 28px; }
 
-    .cursor-dot { position: fixed; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(0,102,255,0.20) 0%, transparent 70%); pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); opacity: 0; mix-blend-mode: multiply; transition: opacity 0.18s ease-out; }
-    .cursor-dot.on-interactive { opacity: 1; }
-    @media (prefers-color-scheme: dark) {
-      .cursor-dot { mix-blend-mode: screen; background: radial-gradient(circle, rgba(77,148,255,0.25) 0%, transparent 70%); }
-    }
+    .cursor-dot { position: fixed; width: 8px; height: 8px; border-radius: 50%; background: #0066FF; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); opacity: 0; transition: opacity 0.18s ease-out; }
 
     nav { display: flex; justify-content: space-between; align-items: center; padding: 40px 0 0; }
     .nav-name { font-size: 0.875rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
@@ -357,15 +353,14 @@
 <script>
   const dot = document.getElementById('cursorDot');
   const reduceMotionGlobal = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let dotX=0,dotY=0,curX=0,curY=0,onInteractive=false;
+  let dotX=0,dotY=0,curX=0,curY=0;
   if (!reduceMotionGlobal.matches) {
     document.addEventListener('mousemove',e=>{
       curX=e.clientX;curY=e.clientY;
-      onInteractive=!!e.target.closest('a,button,.wf-step');
-      dot.classList.toggle('on-interactive',onInteractive);
+      dot.style.opacity=e.target.closest('a,button,.wf-step') ? '1' : '0';
     });
-    (function tick(){dotX+=(curX-dotX)*.1;dotY+=(curY-dotY)*.1;dot.style.left=dotX+'px';dot.style.top=dotY+'px';requestAnimationFrame(tick);})();
-    document.addEventListener('mouseleave',()=>{dot.classList.remove('on-interactive');});
+    (function tick(){dotX+=(curX-dotX)*.15;dotY+=(curY-dotY)*.15;dot.style.left=dotX+'px';dot.style.top=dotY+'px';requestAnimationFrame(tick);})();
+    document.addEventListener('mouseleave',()=>{ dot.style.opacity='0'; });
   }
 
   let wfCur=0;
