@@ -44,8 +44,8 @@
     body { font-family: 'Geist', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; min-height: 100vh; }
     .shell { max-width: 700px; margin: 0 auto; padding: 0 28px; }
 
-    .cursor-dot { position: fixed; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(0,102,255,0.18) 0%, transparent 70%); pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); opacity: 0; mix-blend-mode: multiply; transition: opacity 0.3s ease-out; }
-    .cursor-dot.active { opacity: 1; }
+    .cursor-dot { position: fixed; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(0,102,255,0.20) 0%, transparent 70%); pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); opacity: 0; mix-blend-mode: multiply; transition: opacity 0.18s ease-out; }
+    .cursor-dot.on-interactive { opacity: 1; }
     @media (prefers-color-scheme: dark) {
       .cursor-dot { mix-blend-mode: screen; background: radial-gradient(circle, rgba(77,148,255,0.25) 0%, transparent 70%); }
     }
@@ -357,14 +357,15 @@
 <script>
   const dot = document.getElementById('cursorDot');
   const reduceMotionGlobal = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let dotX=0,dotY=0,curX=0,curY=0;
+  let dotX=0,dotY=0,curX=0,curY=0,onInteractive=false;
   if (!reduceMotionGlobal.matches) {
     document.addEventListener('mousemove',e=>{
       curX=e.clientX;curY=e.clientY;
-      dot.classList.add('active');
+      onInteractive=!!e.target.closest('a,button,.wf-step');
+      dot.classList.toggle('on-interactive',onInteractive);
     });
     (function tick(){dotX+=(curX-dotX)*.1;dotY+=(curY-dotY)*.1;dot.style.left=dotX+'px';dot.style.top=dotY+'px';requestAnimationFrame(tick);})();
-    document.addEventListener('mouseleave',()=>{dot.classList.remove('active');});
+    document.addEventListener('mouseleave',()=>{dot.classList.remove('on-interactive');});
   }
 
   let wfCur=0;
@@ -426,13 +427,11 @@
         if (preview.pause) preview.pause();
       });
       row.addEventListener('mousemove', (e) => {
-        const rowRect = row.getBoundingClientRect();
-        // Vertically centered on the row, not the cursor
-        let py = rowRect.top + rowRect.height / 2 - 100;
-        // Horizontally: right of cursor, flip left if near edge
+        // Position relative to viewport (preview is fixed)
         let px = e.clientX + 24;
+        let py = e.clientY - 100;
+        // Keep within viewport
         if (px + 320 > window.innerWidth - 12) px = e.clientX - 320 - 24;
-        // Clamp vertically within viewport
         if (py < 12) py = 12;
         if (py + 200 > window.innerHeight - 12) py = window.innerHeight - 200 - 12;
         preview.style.left = px + 'px';
