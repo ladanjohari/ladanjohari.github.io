@@ -92,9 +92,9 @@
     .work-arrow { font-size: 16px; color: var(--rule); flex-shrink: 0; transition: color 0.12s ease-out, transform 0.14s cubic-bezier(0.23, 1, 0.32, 1); }
 
     .work-preview { display: none; }
-    @media (min-width: 1400px) {
+    @media (min-width: 1200px) {
       .work-preview {
-        display: block; position: fixed; width: 320px; height: 200px;
+        display: block; position: fixed; width: 220px; height: 138px;
         border-radius: 10px; object-fit: cover;
         opacity: 0; transition: opacity 0.18s ease-out;
         pointer-events: none; z-index: 200;
@@ -409,14 +409,13 @@
     });
   }
 
-  if (window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 1400px)').matches) {
+  if (window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 1200px)').matches) {
     const shell = document.querySelector('.shell');
+    const shellRect = shell.getBoundingClientRect();
+    const fixedPx = (shellRect.right + window.innerWidth) / 2 - 110; // centered in right column, 110 = half of 220px
     document.querySelectorAll('.work-row').forEach(row => {
       const preview = row.querySelector('.work-preview');
       if (!preview) return;
-      // Fix X: centered in the right white column
-      const shellRect = shell.getBoundingClientRect();
-      const fixedPx = (shellRect.right + window.innerWidth) / 2 - 160;
       preview.style.left = fixedPx + 'px';
       row.addEventListener('mouseenter', () => {
         preview.style.opacity = '1';
@@ -427,9 +426,9 @@
         if (preview.pause) preview.pause();
       });
       row.addEventListener('mousemove', e => {
-        let py = e.clientY - 100;
+        let py = e.clientY - 69; // 69 = half of 138px
         if (py < 12) py = 12;
-        if (py + 200 > window.innerHeight - 12) py = window.innerHeight - 200 - 12;
+        if (py + 138 > window.innerHeight - 12) py = window.innerHeight - 138 - 12;
         preview.style.top = py + 'px';
       });
     });
