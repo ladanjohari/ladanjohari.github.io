@@ -411,13 +411,13 @@
 
   if (window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 1200px)').matches) {
     const shell = document.querySelector('.shell');
-    const shellRect = shell.getBoundingClientRect();
-    const fixedPx = (shellRect.right + window.innerWidth) / 2 - 110; // centered in right column, 110 = half of 220px
     document.querySelectorAll('.work-row').forEach(row => {
       const preview = row.querySelector('.work-preview');
       if (!preview) return;
-      preview.style.left = fixedPx + 'px';
       row.addEventListener('mouseenter', () => {
+        const shellRect = shell.getBoundingClientRect(); // read real position now, not at load
+        const fixedPx = (shellRect.right + window.innerWidth) / 2 - 110;
+        preview.style.left = fixedPx + 'px';
         preview.style.opacity = '1';
         if (preview.play) preview.play();
       });
