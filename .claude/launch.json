@@ -8,10 +8,22 @@
       "port": 8000
     },
     {
+      "name": "portfolio-review",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8010"],
+      "port": 8010
+    },
+    {
       "name": "promptedfind",
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8001", "--directory", "/Users/ladanjohari/projects/PromptedFind"],
       "port": 8001
+    },
+    {
+      "name": "session-indicator",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8002", "--directory", "/Users/ladanjohari/projects/session-indicator"],
+      "port": 8002
     }
   ]
 }

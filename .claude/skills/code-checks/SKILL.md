@@ -145,3 +145,27 @@ do not report test runs that cannot happen.
 **Check:** `npm test` (or locate the files the rule names) before treating
 any memory-file rule as fact. Same failure class as the missing-README
 discovery in `working-process` lesson 1.
+
+---
+
+## 9. When preview screenshots go stale, verify through the DOM instead
+
+The Launch preview tab can stop producing rendering frames mid-session:
+screenshots return the last-rendered frame (or blank), `requestAnimationFrame`
+never fires, and `IntersectionObserver` callbacks stall — while the DOM,
+timers, and `getComputedStyle` keep working normally.
+
+**The real example (July 6 2026):** promptedfind.html reveals read 0/17 and
+screenshots came back blank after every scroll. It looked like the page was
+broken; it was the harness. A fresh `IntersectionObserver` never fired its
+initial callback and 0 rAF frames ran in 3 seconds — that combination is the
+diagnostic. The page was fine in a rendering tab minutes earlier.
+
+**Recovery that worked:**
+- Verify structure and style numerically: section order via `querySelectorAll`,
+  `getComputedStyle(...).opacity`, `getBoundingClientRect()` geometry,
+  `document.body.scrollWidth > innerWidth` for mobile overflow.
+- Restarting the preview server gets a fresh tab that renders — for a while.
+- Permanent page fix that came out of it: every `.reveal`-style
+  IntersectionObserver gets a `setTimeout` safety net (~1.2s) that force-adds
+  the visible class, so throttled environments never show a blank page.
