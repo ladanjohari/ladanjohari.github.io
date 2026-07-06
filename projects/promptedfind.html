@@ -156,13 +156,6 @@
       font-size: 0.8rem; color: var(--mid);
       line-height: 1.65; margin-bottom: 10px;
     }
-    .frame-rejected {
-      font-size: 0.75rem; color: #999;
-      line-height: 1.55; padding-left: 10px;
-      border-left: 1.5px solid var(--rule);
-    }
-    .frame-rejected strong { font-weight: 500; color: var(--mid); }
-
     /* ── Pattern note ── */
     .pattern-note {
       margin-top: 28px;
@@ -183,7 +176,7 @@
     }
     .stepper-frame {
       position: relative; width: 100%;
-      aspect-ratio: 16/8;
+      aspect-ratio: 1280/614;
       overflow: hidden;
     }
     .stepper-frame img {
@@ -219,16 +212,16 @@
       .stepper-tab:hover { background: var(--hover-row); }
     }
     .stepper-tab-num {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
-      color: var(--accent); display: block; margin-bottom: 4px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+      color: var(--accent); display: block; margin-bottom: 5px;
     }
     .stepper-tab-title {
-      font-size: 11px; font-weight: 600; color: var(--ink);
-      display: block; line-height: 1.35;
+      font-size: 13px; font-weight: 600; color: var(--ink);
+      display: block; line-height: 1.35; letter-spacing: -0.01em;
     }
     .stepper-tab-desc {
-      font-size: 10px; color: var(--mid); display: block;
-      line-height: 1.5; margin-top: 3px;
+      font-size: 11.5px; color: var(--mid); display: block;
+      line-height: 1.5; margin-top: 4px;
     }
 
     /* ── Architecture pipeline ── */
@@ -256,12 +249,6 @@
       font-size: 13px; color: var(--ink); line-height: 1.55;
     }
     .pipeline-value span { color: var(--mid); }
-    .pipeline-arrow {
-      display: flex; justify-content: center;
-      padding: 0; border-bottom: 1px solid var(--rule);
-      color: var(--rule); font-size: 11px; line-height: 1;
-    }
-    .pipeline-arrow:last-of-type { display: none; }
 
     /* ── Reflection list ── */
     .reflection-list {
@@ -337,7 +324,7 @@
   </nav>
 
   <div class="cs-header">
-    <p class="cs-eyebrow reveal">AI Interaction Pattern &middot; Prototype &middot; Semantic Navigation</p>
+    <p class="cs-eyebrow reveal">Semantic Decomposition &middot; Applied to Video &middot; Coded Prototype</p>
     <h1 class="cs-title reveal">Prompted Find</h1>
     <p class="cs-descriptor reveal">
       Ask a question about a video. Jump to the exact moment that answers it.
@@ -363,6 +350,17 @@
   </div>
 
   <div class="cs-body">
+
+    <div class="cs-section">
+      <p class="cs-label reveal">The Method</p>
+      <p class="cs-body-text">
+        <strong>Semantic Decomposition:</strong> break long-form content into labeled, navigable semantic units,
+        so a question can return a location instead of a summary.
+        <br><br>
+        Prompted Find is this method applied to video. The same decomposition works on any surface that has
+        length but no structure &mdash; prose, podcasts, research trails. The medium changes; the interaction stays the same.
+      </p>
+    </div>
 
     <div class="cs-section">
       <p class="cs-label reveal">The Gap</p>
@@ -430,37 +428,94 @@
       </p>
       <div class="stepper reveal" id="stepper">
         <div class="stepper-frame">
-          <img src="../assets/img/pf/step-01.jpg" alt="Ask panel open with timeline segments" class="is-active" data-step="0" />
-          <img src="../assets/img/pf/step-02.jpg" alt="Timeline segments highlighted" data-step="1" />
-          <img src="../assets/img/pf/step-03.jpg" alt="Segment clicked with AI summary" data-step="2" />
+          <img src="../assets/img/pf/step-01.jpg" alt="Ask panel open beside the playing video; the timeline below shows labeled semantic segments" class="is-active" data-step="0" />
+          <img src="../assets/img/pf/step-02.jpg" alt="A timeline segment hovered with its label tooltip; the AI summary for the playing range shown in the panel" data-step="1" />
+          <img src="../assets/img/pf/step-03.jpg" alt="Video jumped to the chosen moment; the AI summary stays open beside it" data-step="2" />
           <svg class="stepper-spotlight" viewBox="0 0 1280 614" preserveAspectRatio="none">
             <defs>
               <mask id="spot-mask">
                 <rect width="1280" height="614" fill="white" />
-                <rect id="spot-window" x="830" y="60" width="420" height="520" rx="16" fill="black" />
+                <rect id="spot-window" x="828" y="48" width="285" height="270" rx="16" fill="black" />
               </mask>
             </defs>
-            <rect width="1280" height="614" fill="rgba(0,0,0,0.55)" mask="url(#spot-mask)" />
-            <rect id="spot-border" x="830" y="60" width="420" height="520" rx="16"
-              fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
+            <rect width="1280" height="614" fill="rgba(0,0,0,0.45)" mask="url(#spot-mask)" />
+            <rect id="spot-border" x="828" y="48" width="285" height="270" rx="16"
+              fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="1.5" />
           </svg>
         </div>
         <div class="stepper-nav">
           <button class="stepper-tab is-active" data-step="0">
             <span class="stepper-tab-num">01</span>
             <span class="stepper-tab-title">Open the Ask panel</span>
-            <span class="stepper-tab-desc">Side panel opens. Video keeps playing.</span>
+            <span class="stepper-tab-desc">The video keeps playing. The timeline decomposes into labeled semantic segments.</span>
           </button>
           <button class="stepper-tab" data-step="1">
             <span class="stepper-tab-num">02</span>
-            <span class="stepper-tab-title">Segments appear on the&nbsp;timeline</span>
-            <span class="stepper-tab-desc">Semantic ranges light up below the video.</span>
+            <span class="stepper-tab-title">Ask, or point at a&nbsp;segment</span>
+            <span class="stepper-tab-desc">Relevant ranges highlight. Hovering previews the idea each range holds.</span>
           </button>
           <button class="stepper-tab" data-step="2">
             <span class="stepper-tab-num">03</span>
-            <span class="stepper-tab-title">Click and land in the&nbsp;moment</span>
-            <span class="stepper-tab-desc">Video jumps. AI summary shows context.</span>
+            <span class="stepper-tab-title">Land in the&nbsp;moment</span>
+            <span class="stepper-tab-desc">The video seeks. The AI summary keeps the context beside it for follow-ups.</span>
           </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-section">
+      <p class="cs-label reveal">How It Works</p>
+      <p class="cs-body-text" style="margin-bottom: 0;">
+        A 74-minute NASA talk, decomposed into nine labeled segments. Four stages sit between the question and the moment.
+      </p>
+      <div class="pipeline reveal">
+        <div class="pipeline-stage">
+          <div class="pipeline-label">Ask</div>
+          <div class="pipeline-value">A natural-language question. <span>&ldquo;How do they slow down?&rdquo;</span></div>
+        </div>
+        <div class="pipeline-stage">
+          <div class="pipeline-label">Expand</div>
+          <div class="pipeline-value">Concept aliases broaden the query. <span>&ldquo;EDL&rdquo; also means entry, descent, landing.</span></div>
+        </div>
+        <div class="pipeline-stage">
+          <div class="pipeline-label">Score</div>
+          <div class="pipeline-value">Every segment&rsquo;s label and summary is scored against the expanded terms.</div>
+        </div>
+        <div class="pipeline-stage">
+          <div class="pipeline-label">Locate</div>
+          <div class="pipeline-value">Matching ranges highlight on the timeline. Clicking one seeks the video.</div>
+        </div>
+      </div>
+      <div class="pattern-note reveal">
+        <p>
+          <strong>What&rsquo;s real, what&rsquo;s simulated.</strong>
+          The interface, the timeline, and the navigation are fully working code. The understanding layer is
+          concept aliasing and keyword scoring, not a model &mdash; a production version would swap in semantic
+          embeddings. The interaction wouldn&rsquo;t change.
+        </p>
+      </div>
+    </div>
+
+    <div class="cs-section">
+      <p class="cs-label reveal">One Pattern, Three Surfaces</p>
+      <div class="frames-grid reveal">
+        <div class="frame-col">
+          <p class="frame-num">Video</p>
+          <p class="frame-title">Prompted Find</p>
+          <p class="frame-principle">&ldquo;Ask a question, get a moment.&rdquo;</p>
+          <p class="frame-body">This project. The timeline decomposes into labeled segments; a query lands you inside the video.</p>
+        </div>
+        <div class="frame-col">
+          <p class="frame-num">Prose</p>
+          <p class="frame-title">View-spec lanes <span style="font-weight:400;color:var(--mid);">&middot; in progress</span></p>
+          <p class="frame-principle">&ldquo;Every paragraph has an address.&rdquo;</p>
+          <p class="frame-body">The same decomposition over long-form writing: labeled semantic lanes you can filter and jump through.</p>
+        </div>
+        <div class="frame-col">
+          <p class="frame-num">Research</p>
+          <p class="frame-title">Trails <span style="font-weight:400;color:var(--mid);">&middot; in progress</span></p>
+          <p class="frame-principle">&ldquo;Navigate what you&rsquo;ve learned.&rdquo;</p>
+          <p class="frame-body">Applied to knowledge trails: decompose a research session into revisitable, linkable units.</p>
         </div>
       </div>
     </div>
@@ -476,12 +531,12 @@
 
   </div>
 
-  <!-- <div class="cs-closing">
+  <div class="cs-closing">
     <p class="cs-closing-line">
       Interested in the interaction pattern or how I built it?
       <a href="mailto:ladan.joharizadeh@gmail.com">I'd love to talk about it.</a>
     </p>
-  </div> -->
+  </div>
 
   <footer class="pf-footer">
     <span class="pf-footer-copy">&copy; 2026 Ladan Johari</span>
@@ -512,6 +567,13 @@
         }
         observer.observe(el);
       });
+      /* Safety net: if the observer is throttled, content must still appear */
+      setTimeout(() => {
+        document.querySelectorAll('.reveal:not(.is-visible)').forEach((el) => {
+          el.style.transitionDelay = '0ms';
+          el.classList.add('is-visible');
+        });
+      }, 1200);
     }
   </script>
   <script>
@@ -525,10 +587,11 @@
       let current = 0;
       let timer = null;
 
+      /* Image-native 1280x614 coordinates — frame shares the ratio so these map 1:1 */
       const spots = [
-        { x: 830, y: 60, w: 420, h: 520, rx: 16 },
-        { x: 10, y: 370, w: 830, h: 140, rx: 12 },
-        { x: 830, y: 60, w: 420, h: 300, rx: 16 }
+        { x: 828, y: 48,  w: 285, h: 270, rx: 16 },
+        { x: 165, y: 425, w: 680, h: 92,  rx: 10 },
+        { x: 838, y: 168, w: 268, h: 148, rx: 14 }
       ];
 
       let anim = null;
@@ -578,18 +641,22 @@
 
       function advance() { goTo((current + 1) % imgs.length); }
       function startTimer() {
+        stopTimer();
         if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
           timer = setInterval(advance, 3500);
         }
       }
-      function resetTimer() { clearInterval(timer); startTimer(); }
+      function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
 
       tabs.forEach((tab, idx) => {
-        tab.addEventListener('click', () => { goTo(idx); resetTimer(); });
+        tab.addEventListener('click', () => { goTo(idx); startTimer(); });
       });
 
+      new IntersectionObserver((entries) => {
+        entries.forEach(e => e.isIntersecting ? startTimer() : stopTimer());
+      }, { threshold: 0.3 }).observe(stepper);
+
       setSpot(spots[0]);
-      startTimer();
     })();
   </script>
 </body>
