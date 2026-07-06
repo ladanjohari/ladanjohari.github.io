@@ -108,3 +108,40 @@ appeared in the wrong place.
 **Check before shipping any hover interaction in this repo:** every
 `getBoundingClientRect` that feeds a pointer-driven element must run inside
 the event handler (`mouseenter`, `mousemove`), not at initialization.
+
+---
+
+## 7. Sibling repos carry their own locked rules — read them before crossing over
+
+Portfolio work regularly crosses into `~/projects/session-indicator` (this
+repo's `projects/session-indicator.html` redirects there). That repo's
+`CLAUDE.md` locks decisions that are not derivable from the code:
+
+- One self-contained `index.html`. No build process, no file splitting,
+  no bundler. React loads from CDN inline. "Open the file in a browser"
+  is the point.
+- No `localStorage` or `sessionStorage` — state starts fresh on load.
+- Z-index only through the `zCounter` in state, never in CSS.
+- Dragging only from title bars (`.term-chrome`, popover headers).
+
+**Check before editing any sibling repo:** `cat CLAUDE.md` first. Each rule
+there exists because a session once did the opposite and it was reverted.
+
+---
+
+## 8. Verify a CLAUDE.md rule is executable before repeating it
+
+A rule in a memory file can describe a setup that no longer exists — or
+never did. Before obeying or citing one, run the command it implies.
+
+**The real example:** `session-indicator/CLAUDE.md` says "Run existing
+Playwright tests first. Run tests again after change." Checked on
+July 6 2026: `package.json` has no test script ("Error: no test
+specified"), the repo contains no spec files, and zero commits mention
+tests. Playwright is installed for the video *recording* pipeline
+(`3b64a1a`), not tests. The rule is aspirational — flag it as unconfirmed,
+do not report test runs that cannot happen.
+
+**Check:** `npm test` (or locate the files the rule names) before treating
+any memory-file rule as fact. Same failure class as the missing-README
+discovery in `working-process` lesson 1.
