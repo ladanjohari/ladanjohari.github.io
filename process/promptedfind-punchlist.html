@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prompted Find &mdash; punch list (shipped state)</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#F7F6F3;--ink:#111;--mid:#6B6B6B;--rule:#D4D3CF;--hover-row:#F0EFEC;--accent:#0066FF;--accent-dim:#D6E4FF;--good:#1B7F3B;--warn:#B37A00;--bad:#B33A3A}
+  html{background:var(--bg)}
+  body{font-family:'Geist',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:120px}
+  .shell{max-width:760px;margin:0 auto;padding:0 28px}
+
+  .doc-head{padding-top:56px;border-bottom:1px solid var(--rule);padding-bottom:24px}
+  .doc-eyebrow{font-size:0.65rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-bottom:12px}
+  .doc-title{font-size:1.55rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:10px}
+  .doc-sub{font-size:0.85rem;line-height:1.7;color:var(--mid);max-width:640px}
+  .doc-sub b{color:var(--ink);font-weight:600}
+  .doc-sub a{color:var(--accent);text-decoration:none}
+
+  .band{margin-top:44px}
+  .band-head{display:flex;align-items:baseline;gap:12px;padding-bottom:10px;border-bottom:2px solid var(--ink)}
+  .band-tag{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#fff;padding:3px 9px;border-radius:4px}
+  .band-tag.done{background:var(--good)}
+  .band-tag.p0{background:var(--bad)}
+  .band-tag.p1{background:var(--warn)}
+  .band-tag.p2{background:var(--mid)}
+  .band-tag.park{background:#8a8a8a}
+  .band-title{font-size:0.82rem;font-weight:600;letter-spacing:0.02em}
+  .band-note{font-size:0.72rem;color:var(--mid);margin-left:auto}
+
+  ul.items{list-style:none;margin-top:4px}
+  ul.items li{display:flex;gap:12px;padding:13px 2px;border-bottom:0.5px solid var(--rule);font-size:0.82rem;line-height:1.6;color:var(--mid)}
+  ul.items li:last-child{border-bottom:none}
+  .mark{flex-shrink:0;width:18px;font-weight:700;text-align:center;font-size:0.9rem}
+  .mark.ok{color:var(--good)}
+  .mark.box{color:var(--rule)}
+  .it-body{flex:1;min-width:0}
+  .it-body b{color:var(--ink);font-weight:600}
+  .it-verify{display:block;margin-top:3px;font-size:0.72rem;color:#8a8a8a;font-style:italic}
+  .it-loc{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:0.7rem;color:var(--accent);background:var(--accent-dim);padding:1px 5px;border-radius:3px;font-style:normal}
+
+  .foot{margin-top:64px;padding-top:18px;border-top:1px solid var(--rule);font-size:0.68rem;color:var(--mid);line-height:1.7}
+  .foot b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="doc-head">
+    <p class="doc-eyebrow">Process &middot; Punch list &middot; 2026-07-06</p>
+    <h1 class="doc-title">Prompted Find &mdash; shipped, and what&rsquo;s left</h1>
+    <p class="doc-sub">
+      The page is <b>live and deployed</b> at
+      <a href="https://ladanjohari.com/projects/promptedfind.html">ladanjohari.com/projects/promptedfind.html</a>
+      (commit <b>62db249</b>). Prototype appearance is frozen to match the hero video &mdash; nothing below
+      touches how the demo looks. Each &ldquo;done&rdquo; item lists how it was actually verified, not just checked off.
+    </p>
+  </div>
+
+  <!-- DONE -->
+  <div class="band">
+    <div class="band-head">
+      <span class="band-tag done">Done</span>
+      <span class="band-title">Shipped &amp; verified this session</span>
+      <span class="band-note">9 items</span>
+    </div>
+    <ul class="items">
+      <li><span class="mark ok">&check;</span><div class="it-body"><b>Stepper repaired</b> &mdash; native 1280&times;614 frame (no crop), spotlights re-aimed to the Ask panel / segments row / summary card, captions rewritten to match each screenshot, tabs raised to 11.5&ndash;13px, auto-advance pauses off-screen.<span class="it-verify">Verified: screenshot showed spotlight on target; all 3 images confirmed loading at 1280&times;614 on the live DOM.</span></div></li>
+      <li><span class="mark ok">&check;</span><div class="it-body"><b>The Method section added</b> &mdash; names Semantic Decomposition, frames Prompted Find as it applied to video (Option B).<span class="it-verify">Verified: section text read back from page, opacity 1.</span></div></li>
+      <li><span class="mark ok">&check;</span><div class="it-body"><b>How It Works pipeline</b> &mdash; 4 stages (Ask &rarr; Expand &rarr; Score &rarr; Locate) using the <span class="it-loc">.pipeline</span> CSS that existed but was never placed; plus the &ldquo;what&rsquo;s real / what&rsquo;s simulated&rdquo; note.<span class="it-verify">Verified: 4 rows measured, 90px labels, opacity 1; live page returns 7 pipeline-stage matches.</span></div></li>
+      <li><span class="mark ok">&check;</span><div class="it-body"><b>One Pattern, Three Surfaces strip</b> &mdash; Video (this) / Prose / Research, siblings marked &ldquo;in progress.&rdquo;<span class="it-verify">Verified: second frames-grid present on page and in live HTML.</span></div></li>
+      <li><span class="mark ok">&check;</span><div class="it-body"><b>Closing CTA restored</b> (was commented out), <b>eyebrow updated</b>, <b>homepage tag</b> &rarr; &ldquo;Semantic Decomposition &middot; Applied to Video.&rdquo;<span class="it-verify">Verified: CTA text read from page; eyebrow seen in screenshot; homepage tag confirmed in index.html.</span></div></li>
+      <li><span class="mark ok">&check;</span><div class="it-body"><b>Dead CSS removed</b> &mdash; <span class="it-loc">.frame-rejected</span>, <span class="it-loc">.pipeline-arrow</span>.<span class="it-verify">Verified: zero occurrences in served HTML.</span></div></li>
+      <li><span class="mark ok">&check;</span><div class="it-body"><b>Reveal safety net</b> &mdash; if the scroll-reveal observer is throttled, content force-appears after 1.2s instead of staying blank.<span class="it-verify">Verified: 17/17 revealed on a tab where the observer had genuinely stalled.</span></div></li>
+      <li><span class="mark ok">&check;</span><div class="it-body"><b>Mobile</b> &mdash; no horizontal overflow at 375px; pipeline stacks, grids collapse to one column.<span class="it-verify">Verified numerically: scrollWidth == innerWidth == 375; flex-direction column.</span></div></li>
+      <li><span class="mark ok">&check;</span><div class="it-body"><b>Committed, pushed, deploy confirmed live.</b><span class="it-verify">Verified: curl of the production URL returns all three new section headings.</span></div></li>
+    </ul>
+  </div>
+
+  <!-- P0 -->
+  <div class="band">
+    <div class="band-head">
+      <span class="band-tag p0">P0</span>
+      <span class="band-title">Do before calling the page &ldquo;portfolio-ready&rdquo;</span>
+      <span class="band-note">the linked repo is public</span>
+    </div>
+    <ul class="items">
+      <li><span class="mark box">&#9744;</span><div class="it-body"><b>The GitHub link points at an unpolished public repo.</b> The page&rsquo;s &ldquo;GitHub &rarr;&rdquo; sends a recruiter to <span class="it-loc">ladanjohari/PromptedFind</span>, which currently carries a 725&nbsp;MB source video, a dead <span class="it-loc">app.js</span> (the page loads <span class="it-loc">app-list.js</span>), and <span class="it-loc">debug.html</span>. Our own rule: don&rsquo;t link to a repo that reads as unfinished. <b>Options:</b> (a) 20-min repo tidy &mdash; delete the big videos + dead files, add a real README; (b) point the link at a specific file instead of the root; (c) drop the GitHub link until the tour/deploy pass. Recommend (a).<span class="it-verify">Confirmed: repo returns HTTP 200 (public); 725&nbsp;MB + 569&nbsp;MB videos still tracked.</span></div></li>
+      <li><span class="mark box">&#9744;</span><div class="it-body"><b>Eyeball the live page top-to-bottom once.</b> The preview tool went stale mid-session, so the three new sections were verified by measurement, not by a clean screenshot. 60 seconds of human eyes on placement/spacing before it&rsquo;s signed off.<span class="it-verify">Not yet done &mdash; needs you, or a fresh preview tab.</span></div></li>
+    </ul>
+  </div>
+
+  <!-- P1 -->
+  <div class="band">
+    <div class="band-head">
+      <span class="band-tag p1">P1</span>
+      <span class="band-title">Worth a pass this week, low effort</span>
+    </div>
+    <ul class="items">
+      <li><span class="mark box">&#9744;</span><div class="it-body"><b>Confirm the OG share image is current.</b> <span class="it-loc">assets/og-promptedfind.jpg</span> exists (84&nbsp;KB) but predates the rename to &ldquo;Prompted Find&rdquo; and the Semantic Decomposition framing. If it still says &ldquo;PromptedFind&rdquo; or shows old copy, regenerate it &mdash; it&rsquo;s what appears when the link is pasted into Slack/LinkedIn.<span class="it-verify">Not checked visually yet.</span></div></li>
+      <li><span class="mark box">&#9744;</span><div class="it-body"><b>Hero video autoplays with sound off &amp; loops a 35s clip.</b> Confirm the loop point isn&rsquo;t jarring and the poster frame is representative. File is a lean 2.3&nbsp;MB, so no perf concern &mdash; purely a &ldquo;does the loop feel good&rdquo; check.</div></li>
+      <li><span class="mark box">&#9744;</span><div class="it-body"><b>&ldquo;What I&rsquo;d Change&rdquo; now partly overlaps &ldquo;How It Works.&rdquo;</b> The real-embeddings point is now also made in the new &ldquo;what&rsquo;s real / simulated&rdquo; note. Trim the duplication so the two sections don&rsquo;t repeat each other.</div></li>
+    </ul>
+  </div>
+
+  <!-- P2 -->
+  <div class="band">
+    <div class="band-head">
+      <span class="band-tag p2">P2</span>
+      <span class="band-title">Polish &mdash; nice, not blocking</span>
+    </div>
+    <ul class="items">
+      <li><span class="mark box">&#9744;</span><div class="it-body"><b>Dark mode.</b> This page has none &mdash; but <i>neither do the other three project pages</i> (session-indicator, trails, xcode-symbol-browser all zero). So this is a <b>portfolio-wide</b> decision, not a Prompted Find bug. Do it once, across all project pages, or not at all. Filed here so it isn&rsquo;t mistaken for a per-page gap.<span class="it-verify">Confirmed: 0/4 project pages define prefers-color-scheme.</span></div></li>
+      <li><span class="mark box">&#9744;</span><div class="it-body"><b>Nav is just a wordmark.</b> The &ldquo;Ladan Johari&rdquo; wordmark links home, which works, but an explicit &ldquo;&larr; Work&rdquo; affordance reads more clearly as a way back. Minor.</div></li>
+    </ul>
+  </div>
+
+  <!-- PARKED -->
+  <div class="band">
+    <div class="band-head">
+      <span class="band-tag park">Parked</span>
+      <span class="band-title">Deliberately not now &mdash; the tour / deploy phase</span>
+      <span class="band-note">appearance frozen</span>
+    </div>
+    <ul class="items">
+      <li><span class="mark box">&#9744;</span><div class="it-body"><b>Prototype behavior fixes</b> &mdash; query persists after submit, results as clickable moment cards, no auto-pause at segment end, tooltip delay 1000ms&rarr;150ms, one brand spelling (&ldquo;PromptedFind&rdquo;), remove dev-only &ldquo;Open video file&rdquo; link. All change the demo&rsquo;s appearance &rarr; would require re-recording the hero video. <b>Held until after the page ships.</b> Full detail in <span class="it-loc">promptedfind-prototype-options.html</span>.</div></li>
+      <li><span class="mark box">&#9744;</span><div class="it-body"><b>Live embed + guided tour (Interaction Option 2).</b> Needs repo slim (96&nbsp;MB web video is ready in the repo folder), driver.js tour built in the repo, Pages deploy + CNAME. Then swap the live block onto this page, keeping the stepper as fallback.</div></li>
+    </ul>
+  </div>
+
+  <p class="foot">
+    <b>Next single fork:</b> tidy the PromptedFind repo (P0) so the GitHub link is safe to show &mdash; or leave the repo and move straight to the rest of the portfolio, with the repo tidy queued for the tour phase.<br>
+    Working Document &middot; Not for distribution &middot; process/promptedfind-punchlist.html
+  </p>
+</div>
+</body>
+</html>
