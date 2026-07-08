@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hover prototypes v2 &middot; real-UI style</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#F7F6F3;--ink:#111;--mid:#6B6B6B;--rule:#D4D3CF;--accent:#0066FF;
+    --ease-out:cubic-bezier(0.23,1,0.32,1);
+    --ease-in-out:cubic-bezier(0.77,0,0.175,1);
+  }
+  html{background:var(--bg)}
+  body{font-family:'Geist',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:140px}
+  .shell{max-width:820px;margin:0 auto;padding:0 28px}
+  h1{font-size:1.5rem;letter-spacing:-0.02em;margin-top:56px}
+  .lede{font-size:0.88rem;line-height:1.65;color:var(--mid);max-width:640px;margin-top:10px}
+  .lede b{color:var(--ink);font-weight:600}
+  .proj{font-size:0.62rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#fff;background:var(--ink);display:inline-block;padding:4px 10px;border-radius:4px;margin:64px 0 6px}
+  .optname{font-size:1.02rem;font-weight:600;letter-spacing:-0.01em;margin:30px 0 2px}
+  .optname .tag{font-size:0.66rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-left:8px}
+  .optsub{font-size:0.82rem;line-height:1.6;color:var(--mid);max-width:640px;margin-bottom:14px}
+
+  .stage{width:392px;height:244px;border-radius:16px;overflow:hidden;border:1px solid var(--rule);background:#fff;margin-bottom:18px}
+  .stage svg{width:100%;height:100%;display:block}
+
+  .ctx-label{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);margin:2px 0 6px}
+  .work-row{display:flex;align-items:center;gap:22px;padding:16px 14px;border-radius:14px;max-width:720px;border-bottom:.5px solid var(--rule)}
+  .work-thumb{position:relative;width:196px;height:122px;border-radius:12px;overflow:hidden;flex-shrink:0;border:1px solid var(--rule);background:#fff}
+  .work-thumb svg{width:100%;height:100%;display:block}
+  .work-info{flex:1;min-width:0}
+  .work-title{font-size:1.05rem;font-weight:600;letter-spacing:-0.02em;display:block}
+  .work-desc{font-size:0.84rem;color:var(--mid);margin-top:5px;line-height:1.5}
+  .work-tags{font-size:0.72rem;color:var(--mid);margin-top:7px}
+  .work-meta{display:flex;flex-direction:column;align-items:flex-end;gap:6px;font-size:0.78rem;color:var(--mid);flex-shrink:0}
+  .work-status{color:var(--ink);font-weight:500}
+
+  svg text{font-family:'Geist',system-ui,sans-serif}
+  svg .mono{font-family:'SF Mono',Menlo,monospace}
+  .cursor{opacity:0}
+
+  /* =========================================================
+     PF A — Click a moment (cursor), 9s. Light UI from her real timeline.
+     ========================================================= */
+  .pfa .cursor{animation:pfa-cursor 9s var(--ease-in-out) infinite}
+  @keyframes pfa-cursor{
+    0%,8%{opacity:0;transform:translate(206px,30px)}
+    18%{opacity:1;transform:translate(66px,64px)}
+    24%{transform:translate(66px,64px)}
+    26%{transform:translate(66px,64px) scale(.85)}
+    28%{transform:translate(66px,64px) scale(1)}
+    62%{opacity:1;transform:translate(66px,64px)}
+    76%,100%{opacity:0;transform:translate(206px,96px)}
+  }
+  /* hovered chip lifts slightly; its segment saturates */
+  .pfa .chip2-card{animation:pfa-chipcard 9s var(--ease-out) infinite}
+  @keyframes pfa-chipcard{0%,17%{transform:translateY(0)}21%,64%{transform:translateY(-2px)}70%,100%{transform:translateY(0)}}
+  .pfa .seg2{animation:pfa-seg2 9s ease infinite}
+  @keyframes pfa-seg2{0%,19%{fill:#a8c4f4}23%,86%{fill:#2f6fed}92%,100%{fill:#a8c4f4}}
+  /* playhead jumps from x=20 to x=60 (segment 2 start) on click */
+  .pfa .playhead{animation:pfa-head 9s var(--ease-out) infinite}
+  @keyframes pfa-head{0%,26%{transform:translateX(0)}34%,88%{transform:translateX(41px)}96%,100%{transform:translateX(0)}}
+  /* red progress grows to the playhead */
+  .pfa .redbar{transform-box:fill-box;transform-origin:0 50%;animation:pfa-red 9s var(--ease-out) infinite}
+  @keyframes pfa-red{0%,26%{transform:scaleX(1)}34%,88%{transform:scaleX(3.05)}96%,100%{transform:scaleX(1)}}
+
+  /* =========================================================
+     PF B — Results arrive (ambient), 8s. Segments + chips pop in, playhead glides.
+     ========================================================= */
+  .pfb .seg{opacity:0;animation:pfb-seg 8s var(--ease-out) infinite}
+  .pfb .seg.p1{animation-delay:0s}.pfb .seg.p2{animation-delay:.35s}.pfb .seg.p3{animation-delay:.7s}.pfb .seg.p4{animation-delay:1.05s}.pfb .seg.p5{animation-delay:1.4s}
+  @keyframes pfb-seg{0%,8%{opacity:0;transform:translateY(-4px)}14%,84%{opacity:1;transform:translateY(0)}92%,100%{opacity:0;transform:translateY(-4px)}}
+  .pfb .chip{opacity:0;animation:pfb-chip 8s var(--ease-out) infinite}
+  .pfb .chip.p1{animation-delay:.12s}.pfb .chip.p2{animation-delay:.47s}.pfb .chip.p3{animation-delay:.82s}.pfb .chip.p4{animation-delay:1.17s}.pfb .chip.p5{animation-delay:1.52s}
+  @keyframes pfb-chip{0%,8%{opacity:0;transform:translateY(5px) scale(.96)}14%,84%{opacity:1;transform:translateY(0) scale(1)}92%,100%{opacity:0;transform:translateY(5px) scale(.96)}}
+  .pfb .playhead{animation:pfb-head 8s var(--ease-in-out) infinite}
+  @keyframes pfb-head{0%,32%{transform:translateX(0)}44%,86%{transform:translateX(41px)}96%,100%{transform:translateX(0)}}
+  .pfb .redbar{transform-box:fill-box;transform-origin:0 50%;animation:pfb-red 8s var(--ease-in-out) infinite}
+  @keyframes pfb-red{0%,32%{transform:scaleX(1)}44%,86%{transform:scaleX(3.05)}96%,100%{transform:scaleX(1)}}
+  .pfb .seg2on{animation:pfb-seg2on 8s ease infinite}
+  @keyframes pfb-seg2on{0%,40%{fill:#a8c4f4}48%,84%{fill:#2f6fed}92%,100%{fill:#a8c4f4}}
+
+  /* =========================================================
+     XC A — Column dive (cursor), 9s. Light Apple Miller columns.
+     ========================================================= */
+  .xca .cursor{animation:xca-cursor 9s var(--ease-in-out) infinite}
+  @keyframes xca-cursor{
+    0%,6%{opacity:0;transform:translate(206px,20px)}
+    14%{opacity:1;transform:translate(96px,42px)}
+    16%{transform:translate(96px,42px) scale(.85)}
+    18%{transform:translate(96px,42px) scale(1)}
+    36%{opacity:1;transform:translate(96px,42px)}
+    44%{opacity:1;transform:translate(158px,28px)}
+    46%{transform:translate(158px,28px) scale(.85)}
+    48%{transform:translate(158px,28px) scale(1)}
+    72%{opacity:1;transform:translate(158px,28px)}
+    84%,100%{opacity:0;transform:translate(206px,80px)}
+  }
+  /* HIG: click Tree -> its row goes accent blue; when focus moves to col3, Tree drops to gray */
+  .xca .tree-row{animation:xca-tree 9s ease infinite}
+  @keyframes xca-tree{0%,15%{fill:#eceef1}17%,45%{fill:#3478f6}47%,90%{fill:#dcdfe4}96%,100%{fill:#eceef1}}
+  .xca .tree-label{animation:xca-treelbl 9s ease infinite}
+  @keyframes xca-treelbl{0%,15%{fill:#3a3a3e}17%,45%{fill:#ffffff}47%,90%{fill:#3a3a3e}96%,100%{fill:#3a3a3e}}
+  .xca .col3-row{opacity:0;animation:xca-col3 9s var(--ease-out) infinite}
+  .xca .col3-row.r1{animation-delay:.08s}.xca .col3-row.r2{animation-delay:.16s}.xca .col3-row.r3{animation-delay:.24s}
+  @keyframes xca-col3{0%,17%{opacity:0;transform:translateX(-7px)}23%,90%{opacity:1;transform:translateX(0)}96%,100%{opacity:0;transform:translateX(-7px)}}
+  .xca .loc-row{animation:xca-loc 9s ease infinite}
+  @keyframes xca-loc{0%,45%{fill:#f2f3f5}47%,90%{fill:#3478f6}96%,100%{fill:#f2f3f5}}
+  .xca .loc-label{animation:xca-loclbl 9s ease infinite}
+  @keyframes xca-loclbl{0%,45%{fill:#3a3a3e}47%,90%{fill:#ffffff}96%,100%{fill:#3a3a3e}}
+  /* code pane: highlight band + token highlight appear after second click */
+  .xca .hl-band{animation:xca-band 9s var(--ease-out) infinite}
+  @keyframes xca-band{0%,47%{opacity:0}53%,90%{opacity:1}96%,100%{opacity:0}}
+  .xca .tok{animation:xca-tok 9s ease infinite}
+  @keyframes xca-tok{0%,47%{opacity:0}53%,90%{opacity:1}96%,100%{opacity:0}}
+
+  /* =========================================================
+     XC B — Walk the path (ambient), 8s. Selection cascades across 3 columns.
+     ========================================================= */
+  /* col1 SourceControl already gray. col2 walker: Hash -> Commit -> Tree */
+  .xcb .walk2{animation:xcb-walk2 8s var(--ease-out) infinite}
+  @keyframes xcb-walk2{
+    0%,16%{transform:translateY(0)}
+    22%,40%{transform:translateY(12px)}
+    46%,88%{transform:translateY(24px)}
+    94%,100%{transform:translateY(0)}
+  }
+  .xcb .c3a{animation:xcb-c3a 8s ease infinite}
+  @keyframes xcb-c3a{0%,18%{opacity:1}24%,96%{opacity:0}100%{opacity:1}}
+  .xcb .c3b{animation:xcb-c3b 8s ease infinite}
+  @keyframes xcb-c3b{0%,18%{opacity:0}24%,42%{opacity:1}48%,100%{opacity:0}}
+  .xcb .c3c{animation:xcb-c3c 8s ease infinite}
+  @keyframes xcb-c3c{0%,42%{opacity:0}48%,92%{opacity:1}98%,100%{opacity:0}}
+  .xcb .codeA2{animation:xcb-codeA 8s ease infinite}
+  @keyframes xcb-codeA{0%,18%{opacity:1}24%,96%{opacity:0}100%{opacity:1}}
+  .xcb .codeB2{animation:xcb-codeB 8s ease infinite}
+  @keyframes xcb-codeB{0%,18%{opacity:0}24%,42%{opacity:1}48%,100%{opacity:0}}
+  .xcb .codeC2{animation:xcb-codeC 8s ease infinite}
+  @keyframes xcb-codeC{0%,42%{opacity:0}48%,92%{opacity:1}98%,100%{opacity:0}}
+
+  /* =========================================================
+     TR A — Reading leaves a trail (ambient), 8s.
+     ========================================================= */
+  .tra .doc-scroll{animation:tra-doc 8s var(--ease-in-out) infinite}
+  @keyframes tra-doc{0%,10%{transform:translateY(0)}44%,62%{transform:translateY(-30px)}92%,100%{transform:translateY(0)}}
+  .tra .trail{stroke-dasharray:92;stroke-dashoffset:92;animation:tra-trail 8s var(--ease-in-out) infinite}
+  @keyframes tra-trail{0%,12%{stroke-dashoffset:92}46%,64%{stroke-dashoffset:0}94%,100%{stroke-dashoffset:92}}
+  .tra .n2{opacity:0;transform-origin:138px 62px;animation:tra-n2 8s var(--ease-out) infinite}
+  @keyframes tra-n2{0%,24%{opacity:0;transform:scale(.92)}30%,90%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.92)}}
+  .tra .n3{opacity:0;transform-origin:164px 96px;animation:tra-n3 8s var(--ease-out) infinite}
+  @keyframes tra-n3{0%,48%{opacity:0;transform:scale(.92)}54%,90%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.92)}}
+  .tra .lit3{animation:tra-lit3 8s ease infinite}
+  @keyframes tra-lit3{0%,48%{stroke:#d9d9de}56%,90%{stroke:#ff6b5c}96%,100%{stroke:#d9d9de}}
+
+  /* =========================================================
+     TR B — Jump back through the trail (cursor), 9s.
+     ========================================================= */
+  .trb .cursor{animation:trb-cursor 9s var(--ease-in-out) infinite}
+  @keyframes trb-cursor{
+    0%,10%{opacity:0;transform:translate(206px,30px)}
+    20%{opacity:1;transform:translate(128px,38px)}
+    24%{transform:translate(128px,38px)}
+    26%{transform:translate(128px,38px) scale(.85)}
+    28%{transform:translate(128px,38px) scale(1)}
+    60%{opacity:1;transform:translate(128px,38px)}
+    76%,100%{opacity:0;transform:translate(206px,90px)}
+  }
+  .trb .doc-scroll{animation:trb-doc 9s var(--ease-in-out) infinite}
+  @keyframes trb-doc{0%,26%{transform:translateY(-30px)}38%,88%{transform:translateY(0)}98%,100%{transform:translateY(-30px)}}
+  .trb .n1ring{animation:trb-n1 9s ease infinite}
+  @keyframes trb-n1{0%,26%{stroke:#d9d9de}32%,88%{stroke:#ff6b5c}96%,100%{stroke:#d9d9de}}
+  .trb .n3ring{animation:trb-n3 9s ease infinite}
+  @keyframes trb-n3{0%,26%{stroke:#ff6b5c}32%,88%{stroke:#d9d9de}96%,100%{stroke:#ff6b5c}}
+  .trb .pulse{animation:trb-pulse 9s var(--ease-out) infinite;transform-box:fill-box;transform-origin:center}
+  @keyframes trb-pulse{0%,26%{opacity:0;transform:scale(.6)}30%{opacity:.5;transform:scale(1)}40%,100%{opacity:0;transform:scale(1.6)}}
+
+  @media (prefers-reduced-motion:reduce){
+    svg *{animation-duration:0.01s !important;animation-iteration-count:1 !important}
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <h1>Hover prototypes, round 2 &mdash; your real UI</h1>
+  <p class="lede"><b>Built from your screenshots this time,</b> not invented dark mockups. Prompted Find uses your actual timeline anatomy (segments, labeled moment cards, black playhead, red progress). Xcode uses the real light three-column browser per the HIG: active selection in blue with white text, earlier columns dropping to gray, chevrons on containers. Trails follows your mockup video: reading on one side, the trail answering on the other. One simple interaction each, looping. Two directions per project; big frame is 2&times;, then the real 196&times;122 in the row.</p>
+
+  <!-- ================= PROMPTED FIND ================= -->
+  <span class="proj">Prompted Find</span>
+
+  <p class="optname">Option A &middot; Click a moment <span class="tag">cursor-driven</span></p>
+  <p class="optsub">Your timeline, zoomed. The cursor hovers the &ldquo;Mars at&hellip;&rdquo; card, its segment saturates to full blue, click, and the black playhead plus the red progress bar jump to that moment. One gesture, whole story.</p>
+  <div class="stage" data-proto="pfa"></div>
+
+  <template id="pfa">
+    <svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" class="pfa">
+      <rect width="196" height="122" fill="#ffffff"/>
+      <!-- ruler -->
+      <g font-size="5.6" fill="#86868b">
+        <text x="12" y="22">0:00</text>
+        <text x="70" y="22">14:54</text>
+        <text x="128" y="22">29:48</text>
+        <text x="184" y="22" text-anchor="end">74:31</text>
+      </g>
+      <line x1="12" y1="26" x2="184" y2="26" stroke="#e8e8ed" stroke-width=".6"/>
+      <!-- track -->
+      <rect x="12" y="38" width="172" height="10" rx="5" fill="#f0f0f4"/>
+      <!-- segments (capsules) -->
+      <rect x="14" y="38" width="24" height="10" rx="5" fill="#a8c4f4"/>
+      <rect class="seg2" x="61" y="38" width="26" height="10" rx="5" fill="#a8c4f4"/>
+      <rect x="118" y="38" width="24" height="10" rx="5" fill="#a8c4f4"/>
+      <rect x="156" y="38" width="26" height="10" rx="5" fill="#a8c4f4"/>
+      <!-- moment cards -->
+      <g font-size="6" >
+        <g><rect x="12" y="56" width="40" height="24" rx="6" fill="#f7f7f9" stroke="#e4e4e9" stroke-width=".6"/><text x="17" y="66" fill="#1d1d1f" font-weight="600">Why h&#8230;</text><text x="17" y="75" fill="#86868b" font-size="5.2">0:00-4:30</text></g>
+        <g class="chip2-card"><rect x="58" y="56" width="42" height="24" rx="6" fill="#ffffff" stroke="#c9c9cf" stroke-width=".8"/><text x="63" y="66" fill="#1d1d1f" font-weight="600">Mars at&#8230;</text><text x="63" y="75" fill="#86868b" font-size="5.2">7:30-12:20</text></g>
+        <g><rect x="114" y="56" width="44" height="24" rx="6" fill="#f7f7f9" stroke="#e4e4e9" stroke-width=".6"/><text x="119" y="66" fill="#1d1d1f" font-weight="600">Deployab&#8230;</text><text x="119" y="75" fill="#86868b" font-size="5.2">24:00-29:30</text></g>
+      </g>
+      <!-- playhead: vertical line + knob, starts left -->
+      <g class="playhead"><line x1="25" y1="30" x2="25" y2="94" stroke="#1d1d1f" stroke-width="1.4"/><circle cx="25" cy="30" r="3" fill="#1d1d1f"/></g>
+      <!-- red progress bar bottom -->
+      <rect x="12" y="102" width="172" height="6" rx="3" fill="#f0f0f4"/>
+      <rect class="redbar" x="12" y="102" width="16" height="6" rx="3" fill="#e0524d"/>
+      <g class="cursor"><path d="M0 0 L0 11.2 L2.6 8.8 L4.6 13 L6.4 12.2 L4.4 8 L7.8 7.8 Z" fill="#fff" stroke="#111" stroke-width=".9"/></g>
+    </svg>
+  </template>
+
+  <p class="ctx-label">In context</p>
+  <div class="work-row">
+    <div class="work-thumb" data-proto="pfa"></div>
+    <div class="work-info">
+      <span class="work-title">Prompted Find</span>
+      <div class="work-desc">Find the moment you need in a long video by meaning, not keywords.</div>
+      <div class="work-tags">Semantic Decomposition &middot; Applied to Video</div>
+    </div>
+    <div class="work-meta"><span>2025</span><span class="work-status">View project &rarr;</span></div>
+  </div>
+
+  <p class="optname">Option B &middot; Results arrive <span class="tag">ambient</span></p>
+  <p class="optsub">No cursor. The answer builds itself: segments and their labeled cards pop onto the timeline one by one, then the playhead and red progress glide to the best match. Feels like watching the search land.</p>
+  <div class="stage" data-proto="pfb"></div>
+
+  <template id="pfb">
+    <svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" class="pfb">
+      <rect width="196" height="122" fill="#ffffff"/>
+      <g font-size="5.6" fill="#86868b">
+        <text x="12" y="22">0:00</text>
+        <text x="70" y="22">14:54</text>
+        <text x="128" y="22">29:48</text>
+        <text x="184" y="22" text-anchor="end">74:31</text>
+      </g>
+      <line x1="12" y1="26" x2="184" y2="26" stroke="#e8e8ed" stroke-width=".6"/>
+      <rect x="12" y="38" width="172" height="10" rx="5" fill="#f0f0f4"/>
+      <rect class="seg p1" x="14" y="38" width="24" height="10" rx="5" fill="#a8c4f4"/>
+      <g class="seg p2"><rect class="seg2on" x="61" y="38" width="26" height="10" rx="5" fill="#a8c4f4"/></g>
+      <rect class="seg p3" x="118" y="38" width="24" height="10" rx="5" fill="#a8c4f4"/>
+      <rect class="seg p4" x="156" y="38" width="26" height="10" rx="5" fill="#a8c4f4"/>
+      <g font-size="6">
+        <g class="chip p1"><rect x="12" y="56" width="40" height="24" rx="6" fill="#f7f7f9" stroke="#e4e4e9" stroke-width=".6"/><text x="17" y="66" fill="#1d1d1f" font-weight="600">Why h&#8230;</text><text x="17" y="75" fill="#86868b" font-size="5.2">0:00-4:30</text></g>
+        <g class="chip p2"><rect x="58" y="56" width="42" height="24" rx="6" fill="#ffffff" stroke="#c9c9cf" stroke-width=".8"/><text x="63" y="66" fill="#1d1d1f" font-weight="600">Mars at&#8230;</text><text x="63" y="75" fill="#86868b" font-size="5.2">7:30-12:20</text></g>
+        <g class="chip p3"><rect x="114" y="56" width="44" height="24" rx="6" fill="#f7f7f9" stroke="#e4e4e9" stroke-width=".6"/><text x="119" y="66" fill="#1d1d1f" font-weight="600">Deployab&#8230;</text><text x="119" y="75" fill="#86868b" font-size="5.2">24:00-29:30</text></g>
+        <g class="chip p4"><rect x="152" y="56" width="32" height="24" rx="6" fill="#f7f7f9" stroke="#e4e4e9" stroke-width=".6"/><text x="157" y="66" fill="#1d1d1f" font-weight="600">Precis&#8230;</text><text x="157" y="75" fill="#86868b" font-size="5.2">50:30-56</text></g>
+      </g>
+      <g class="playhead"><line x1="25" y1="30" x2="25" y2="94" stroke="#1d1d1f" stroke-width="1.4"/><circle cx="25" cy="30" r="3" fill="#1d1d1f"/></g>
+      <rect x="12" y="102" width="172" height="6" rx="3" fill="#f0f0f4"/>
+      <rect class="redbar" x="12" y="102" width="16" height="6" rx="3" fill="#e0524d"/>
+    </svg>
+  </template>
+
+  <p class="ctx-label">In context</p>
+  <div class="work-row">
+    <div class="work-thumb" data-proto="pfb"></div>
+    <div class="work-info">
+      <span class="work-title">Prompted Find</span>
+      <div class="work-desc">Find the moment you need in a long video by meaning, not keywords.</div>
+      <div class="work-tags">Semantic Decomposition &middot; Applied to Video</div>
+    </div>
+    <div class="work-meta"><span>2025</span><span class="work-status">View project &rarr;</span></div>
+  </div>
+
+  <!-- ================= XCODE SYMBOL BROWSER ================= -->
+  <span class="proj">Xcode Symbol Browser</span>
+
+  <p class="optname">Option A &middot; Column dive <span class="tag">cursor-driven</span></p>
+  <p class="optsub">The real three-column anatomy, light Apple style. Cursor clicks <b>Tree</b> &mdash; its row goes selection-blue and the third column cascades in. Click <b>location</b> &mdash; per the HIG, Tree drops to gray as focus moves on, and the code pane highlights <span class="mono">public let location: Location</span>.</p>
+  <div class="stage" data-proto="xca"></div>
+
+  <template id="xca">
+    <svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" class="xca">
+      <rect width="196" height="122" fill="#ffffff"/>
+      <!-- three columns -->
+      <line x1="66" y1="0" x2="66" y2="74" stroke="#e4e4e9" stroke-width=".8"/>
+      <line x1="132" y1="0" x2="132" y2="74" stroke="#e4e4e9" stroke-width=".8"/>
+      <line x1="0" y1="74" x2="196" y2="74" stroke="#dcdce1" stroke-width=".8"/>
+      <!-- col 1 -->
+      <g font-size="6">
+        <rect x="3" y="6" width="60" height="11" rx="3" fill="#f2f3f5"/><rect x="6" y="8.5" width="6" height="6" rx="1.5" fill="#8e8e93"/><text x="16" y="14" fill="#3a3a3e">QueryEngine</text>
+        <rect x="3" y="19" width="60" height="11" rx="3" fill="#dcdfe4"/><rect x="6" y="21.5" width="6" height="6" rx="1.5" fill="#8e8e93"/><text x="16" y="27" fill="#1d1d1f" font-weight="600">SourceControl</text><path d="M58 22.5 l2.6 2 -2.6 2" stroke="#86868b" fill="none" stroke-width="1"/>
+        <rect x="3" y="32" width="60" height="11" rx="3" fill="#f2f3f5"/><rect x="6" y="34.5" width="6" height="6" rx="1.5" fill="#8e8e93"/><text x="16" y="40" fill="#3a3a3e">SPMBuildCore</text>
+        <rect x="3" y="45" width="60" height="11" rx="3" fill="#f2f3f5"/><rect x="6" y="47.5" width="6" height="6" rx="1.5" fill="#8e8e93"/><text x="16" y="53" fill="#3a3a3e">SPMBuild</text>
+        <rect x="3" y="58" width="60" height="11" rx="3" fill="#f2f3f5"/><rect x="6" y="60.5" width="6" height="6" rx="1.5" fill="#8e8e93"/><text x="16" y="66" fill="#3a3a3e">SMPSQLite3</text>
+      </g>
+      <!-- col 2 -->
+      <g font-size="6">
+        <rect x="69" y="6" width="60" height="11" rx="3" fill="#dcdfe4"/><circle cx="75" cy="11.5" r="3.2" fill="#7f6fe8"/><text x="73.1" y="13.6" fill="#fff" font-size="4.6" font-weight="700">C</text><text x="81" y="14" fill="#1d1d1f" font-weight="600">GitRepository</text><path d="M124 9.5 l2.6 2 -2.6 2" stroke="#86868b" fill="none" stroke-width="1"/>
+        <rect x="69" y="19" width="60" height="11" rx="3" fill="#f2f3f5"/><circle cx="75" cy="24.5" r="3.2" fill="#e86fb0"/><text x="73.2" y="26.6" fill="#fff" font-size="4.6" font-weight="700">S</text><text x="81" y="27" fill="#3a3a3e">Hash</text>
+        <rect x="69" y="32" width="60" height="11" rx="3" fill="#f2f3f5"/><circle cx="75" cy="37.5" r="3.2" fill="#e86fb0"/><text x="73.2" y="39.6" fill="#fff" font-size="4.6" font-weight="700">S</text><text x="81" y="40" fill="#3a3a3e">Commit</text>
+        <rect class="tree-row" x="69" y="45" width="60" height="11" rx="3" fill="#eceef1"/><circle cx="75" cy="50.5" r="3.2" fill="#e86fb0"/><text x="73.2" y="52.6" fill="#fff" font-size="4.6" font-weight="700">S</text><text class="tree-label" x="81" y="53" fill="#3a3a3e" font-weight="600">Tree</text><path d="M124 48.5 l2.6 2 -2.6 2" stroke="#86868b" fill="none" stroke-width="1"/>
+        <rect x="69" y="58" width="60" height="11" rx="3" fill="#f2f3f5"/><circle cx="75" cy="63.5" r="3.2" fill="#e86fb0"/><text x="73.2" y="65.6" fill="#fff" font-size="4.6" font-weight="700">S</text><text x="81" y="66" fill="#3a3a3e">Entry</text>
+      </g>
+      <!-- col 3 (cascades in) -->
+      <g font-size="6">
+        <g class="col3-row r1"><rect class="loc-row" x="135" y="6" width="58" height="11" rx="3" fill="#f2f3f5"/><circle cx="141" cy="11.5" r="3.2" fill="#5aa348"/><text x="139" y="13.6" fill="#fff" font-size="4.6" font-weight="700">P</text><text class="loc-label" x="147" y="14" fill="#3a3a3e" font-weight="600">location</text></g>
+        <g class="col3-row r2"><rect x="135" y="19" width="58" height="11" rx="3" fill="#f2f3f5"/><circle cx="141" cy="24.5" r="3.2" fill="#5aa348"/><text x="139" y="26.6" fill="#fff" font-size="4.6" font-weight="700">P</text><text x="147" y="27" fill="#3a3a3e">contents</text></g>
+        <g class="col3-row r3"><rect x="135" y="32" width="58" height="11" rx="3" fill="#f2f3f5"/><circle cx="141" cy="37.5" r="3.2" fill="#4d94ff"/><text x="139" y="39.6" fill="#fff" font-size="4.6" font-weight="700">E</text><text x="147" y="40" fill="#3a3a3e">EntryType</text></g>
+      </g>
+      <!-- code pane -->
+      <rect x="0" y="74" width="196" height="48" fill="#fbfbfd"/>
+      <g class="mono" font-size="5.4">
+        <text x="6" y="85" fill="#b0b0b6">389</text><text x="24" y="85" fill="#5f9e57">/// The object location.</text>
+        <rect class="hl-band" x="0" y="89" width="196" height="10" fill="#dbe7fb" opacity="0"/>
+        <rect class="tok" x="52" y="90" width="30" height="8" rx="2" fill="#a9c7f2" opacity="0"/>
+        <text x="6" y="96.5" fill="#b0b0b6">391</text><text x="24" y="96.5" fill="#ad3da4">public let</text><text x="54" y="96.5" fill="#1d1d1f">location</text><text x="82" y="96.5" fill="#1d1d1f">:</text><text x="88" y="96.5" fill="#3e8087">Location</text>
+        <text x="6" y="108" fill="#b0b0b6">393</text><text x="24" y="108" fill="#5f9e57">/// The list of contents.</text>
+        <text x="6" y="118" fill="#b0b0b6">394</text><text x="24" y="118" fill="#ad3da4">public let</text><text x="54" y="118" fill="#1d1d1f">contents: [Entry]</text>
+      </g>
+      <g class="cursor"><path d="M0 0 L0 11.2 L2.6 8.8 L4.6 13 L6.4 12.2 L4.4 8 L7.8 7.8 Z" fill="#fff" stroke="#111" stroke-width=".9"/></g>
+    </svg>
+  </template>
+
+  <p class="ctx-label">In context</p>
+  <div class="work-row">
+    <div class="work-thumb" data-proto="xca"></div>
+    <div class="work-info">
+      <span class="work-title">Xcode Symbol Browser</span>
+      <div class="work-desc">Read a codebase&rsquo;s structure at a glance instead of digging through files.</div>
+      <div class="work-tags">Developer Tools &middot; Information Architecture</div>
+    </div>
+    <div class="work-meta"><span>2024</span><span class="work-status">Watch demo &#8599;</span></div>
+  </div>
+
+  <p class="optname">Option B &middot; Walk the path <span class="tag">ambient</span></p>
+  <p class="optsub">The selection steps down the middle column on its own &mdash; Hash, Commit, Tree &mdash; and with each step the third column and the code pane re-answer. Shows the browsing rhythm of the tool without a cursor.</p>
+  <div class="stage" data-proto="xcb"></div>
+
+  <template id="xcb">
+    <svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" class="xcb">
+      <rect width="196" height="122" fill="#ffffff"/>
+      <line x1="66" y1="0" x2="66" y2="74" stroke="#e4e4e9" stroke-width=".8"/>
+      <line x1="132" y1="0" x2="132" y2="74" stroke="#e4e4e9" stroke-width=".8"/>
+      <line x1="0" y1="74" x2="196" y2="74" stroke="#dcdce1" stroke-width=".8"/>
+      <!-- col 1 -->
+      <g font-size="6">
+        <rect x="3" y="6" width="60" height="11" rx="3" fill="#f2f3f5"/><rect x="6" y="8.5" width="6" height="6" rx="1.5" fill="#8e8e93"/><text x="16" y="14" fill="#3a3a3e">QueryEngine</text>
+        <rect x="3" y="19" width="60" height="11" rx="3" fill="#dcdfe4"/><rect x="6" y="21.5" width="6" height="6" rx="1.5" fill="#8e8e93"/><text x="16" y="27" fill="#1d1d1f" font-weight="600">SourceControl</text><path d="M58 22.5 l2.6 2 -2.6 2" stroke="#86868b" fill="none" stroke-width="1"/>
+        <rect x="3" y="32" width="60" height="11" rx="3" fill="#f2f3f5"/><rect x="6" y="34.5" width="6" height="6" rx="1.5" fill="#8e8e93"/><text x="16" y="40" fill="#3a3a3e">SPMBuildCore</text>
+        <rect x="3" y="45" width="60" height="11" rx="3" fill="#f2f3f5"/><rect x="6" y="47.5" width="6" height="6" rx="1.5" fill="#8e8e93"/><text x="16" y="53" fill="#3a3a3e">SPMBuild</text>
+      </g>
+      <!-- col 2 with walker -->
+      <g font-size="6">
+        <rect class="walk2" x="69" y="19" width="60" height="11" rx="3" fill="#3478f6"/>
+        <circle cx="75" cy="24.5" r="3.2" fill="#e86fb0"/><text x="73.2" y="26.6" fill="#fff" font-size="4.6" font-weight="700">S</text><text x="81" y="27" fill="#3a3a3e">Hash</text>
+        <circle cx="75" cy="36.5" r="3.2" fill="#e86fb0"/><text x="73.2" y="38.6" fill="#fff" font-size="4.6" font-weight="700">S</text><text x="81" y="39" fill="#3a3a3e">Commit</text>
+        <circle cx="75" cy="48.5" r="3.2" fill="#e86fb0"/><text x="73.2" y="50.6" fill="#fff" font-size="4.6" font-weight="700">S</text><text x="81" y="51" fill="#3a3a3e">Tree</text>
+        <rect x="69" y="6" width="60" height="11" rx="3" fill="#dcdfe4"/><circle cx="75" cy="11.5" r="3.2" fill="#7f6fe8"/><text x="73.1" y="13.6" fill="#fff" font-size="4.6" font-weight="700">C</text><text x="81" y="14" fill="#1d1d1f" font-weight="600">GitRepository</text>
+      </g>
+      <!-- col 3 variants -->
+      <g font-size="6">
+        <g class="c3a">
+          <rect x="135" y="6" width="58" height="11" rx="3" fill="#f2f3f5"/><circle cx="141" cy="11.5" r="3.2" fill="#5aa348"/><text x="139" y="13.6" fill="#fff" font-size="4.6" font-weight="700">P</text><text x="147" y="14" fill="#3a3a3e">bytes</text>
+          <rect x="135" y="19" width="58" height="11" rx="3" fill="#f2f3f5"/><circle cx="141" cy="24.5" r="3.2" fill="#4d94ff"/><text x="139" y="26.6" fill="#fff" font-size="4.6" font-weight="700">M</text><text x="147" y="27" fill="#3a3a3e">description</text>
+        </g>
+        <g class="c3b">
+          <rect x="135" y="6" width="58" height="11" rx="3" fill="#f2f3f5"/><circle cx="141" cy="11.5" r="3.2" fill="#5aa348"/><text x="139" y="13.6" fill="#fff" font-size="4.6" font-weight="700">P</text><text x="147" y="14" fill="#3a3a3e">author</text>
+          <rect x="135" y="19" width="58" height="11" rx="3" fill="#f2f3f5"/><circle cx="141" cy="24.5" r="3.2" fill="#5aa348"/><text x="139" y="26.6" fill="#fff" font-size="4.6" font-weight="700">P</text><text x="147" y="27" fill="#3a3a3e">message</text>
+        </g>
+        <g class="c3c">
+          <rect x="135" y="6" width="58" height="11" rx="3" fill="#f2f3f5"/><circle cx="141" cy="11.5" r="3.2" fill="#5aa348"/><text x="139" y="13.6" fill="#fff" font-size="4.6" font-weight="700">P</text><text x="147" y="14" fill="#3a3a3e">location</text>
+          <rect x="135" y="19" width="58" height="11" rx="3" fill="#f2f3f5"/><circle cx="141" cy="24.5" r="3.2" fill="#5aa348"/><text x="139" y="26.6" fill="#fff" font-size="4.6" font-weight="700">P</text><text x="147" y="27" fill="#3a3a3e">contents</text>
+        </g>
+      </g>
+      <!-- code pane variants -->
+      <rect x="0" y="74" width="196" height="48" fill="#fbfbfd"/>
+      <g class="mono" font-size="5.4">
+        <g class="codeA2">
+          <text x="6" y="88" fill="#b0b0b6">120</text><text x="24" y="88" fill="#ad3da4">public struct</text><text x="66" y="88" fill="#3e8087">Hash</text><text x="84" y="88" fill="#1d1d1f">{</text>
+          <text x="6" y="100" fill="#b0b0b6">121</text><text x="24" y="100" fill="#ad3da4">let</text><text x="38" y="100" fill="#1d1d1f">bytes: [UInt8]</text>
+          <text x="6" y="112" fill="#b0b0b6">122</text><text x="24" y="112" fill="#1d1d1f">}</text>
+        </g>
+        <g class="codeB2">
+          <text x="6" y="88" fill="#b0b0b6">204</text><text x="24" y="88" fill="#ad3da4">public struct</text><text x="66" y="88" fill="#3e8087">Commit</text><text x="92" y="88" fill="#1d1d1f">{</text>
+          <text x="6" y="100" fill="#b0b0b6">205</text><text x="24" y="100" fill="#ad3da4">let</text><text x="38" y="100" fill="#1d1d1f">author: Signature</text>
+          <text x="6" y="112" fill="#b0b0b6">206</text><text x="24" y="112" fill="#ad3da4">let</text><text x="38" y="112" fill="#1d1d1f">message: String</text>
+        </g>
+        <g class="codeC2">
+          <text x="6" y="88" fill="#b0b0b6">346</text><text x="24" y="88" fill="#ad3da4">public struct</text><text x="66" y="88" fill="#3e8087">Tree</text><text x="84" y="88" fill="#1d1d1f">{</text>
+          <text x="6" y="100" fill="#b0b0b6">391</text><text x="24" y="100" fill="#ad3da4">public let</text><text x="54" y="100" fill="#1d1d1f">location: Location</text>
+          <text x="6" y="112" fill="#b0b0b6">394</text><text x="24" y="112" fill="#ad3da4">public let</text><text x="54" y="112" fill="#1d1d1f">contents: [Entry]</text>
+        </g>
+      </g>
+    </svg>
+  </template>
+
+  <p class="ctx-label">In context</p>
+  <div class="work-row">
+    <div class="work-thumb" data-proto="xcb"></div>
+    <div class="work-info">
+      <span class="work-title">Xcode Symbol Browser</span>
+      <div class="work-desc">Read a codebase&rsquo;s structure at a glance instead of digging through files.</div>
+      <div class="work-tags">Developer Tools &middot; Information Architecture</div>
+    </div>
+    <div class="work-meta"><span>2024</span><span class="work-status">Watch demo &#8599;</span></div>
+  </div>
+
+  <!-- ================= TRAILS ================= -->
+  <span class="proj">Trails</span>
+
+  <p class="optname">Option A &middot; Reading leaves a trail <span class="tag">ambient</span></p>
+  <p class="optsub">From your mockup: the page scrolls as you read, and on the right the trail draws itself &mdash; each section you reach becomes a node, connected in coral. The whole idea in one glance: reading produces a navigable map.</p>
+  <div class="stage" data-proto="tra"></div>
+
+  <template id="tra">
+    <svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" class="tra">
+      <rect width="196" height="122" fill="#ffffff"/>
+      <line x1="104" y1="0" x2="104" y2="122" stroke="#e8e8ed" stroke-width=".8"/>
+      <!-- document, scrolling -->
+      <g clip-path="url(#traclip)">
+        <g class="doc-scroll">
+          <rect x="12" y="12" width="60" height="4" rx="2" fill="#3a3a3e"/>
+          <rect x="12" y="22" width="80" height="2.6" rx="1.3" fill="#c9c9cf"/>
+          <rect x="12" y="28" width="74" height="2.6" rx="1.3" fill="#c9c9cf"/>
+          <rect x="12" y="34" width="80" height="2.6" rx="1.3" fill="#c9c9cf"/>
+          <rect x="12" y="40" width="56" height="2.6" rx="1.3" fill="#c9c9cf"/>
+          <rect x="12" y="52" width="48" height="3.6" rx="1.8" fill="#3a3a3e"/>
+          <rect x="12" y="61" width="80" height="2.6" rx="1.3" fill="#c9c9cf"/>
+          <rect x="12" y="67" width="70" height="2.6" rx="1.3" fill="#c9c9cf"/>
+          <rect x="12" y="73" width="78" height="2.6" rx="1.3" fill="#c9c9cf"/>
+          <rect x="12" y="85" width="54" height="3.6" rx="1.8" fill="#3a3a3e"/>
+          <rect x="12" y="94" width="80" height="2.6" rx="1.3" fill="#c9c9cf"/>
+          <rect x="12" y="100" width="64" height="2.6" rx="1.3" fill="#c9c9cf"/>
+          <rect x="12" y="106" width="76" height="2.6" rx="1.3" fill="#c9c9cf"/>
+          <rect x="12" y="112" width="58" height="2.6" rx="1.3" fill="#c9c9cf"/>
+        </g>
+      </g>
+      <clipPath id="traclip"><rect x="0" y="0" width="104" height="122"/></clipPath>
+      <!-- trail canvas -->
+      <g>
+        <!-- node 1, already there -->
+        <rect x="116" y="14" width="34" height="22" rx="5" fill="#fafafa" stroke="#ff6b5c" stroke-width="1.1"/>
+        <rect x="120" y="19" width="20" height="2.4" rx="1.2" fill="#8e8e93"/><rect x="120" y="24" width="24" height="2.4" rx="1.2" fill="#d9d9de"/>
+        <path class="trail" d="M133 36 C 130 48, 132 52, 138 56 C 148 62, 158 74, 164 84" stroke="#ff6b5c" stroke-width="1.5" fill="none"/>
+        <g class="n2"><rect x="122" y="52" width="32" height="21" rx="5" fill="#fafafa" stroke="#d9d9de" stroke-width=".8"/><rect x="126" y="57" width="18" height="2.4" rx="1.2" fill="#8e8e93"/><rect x="126" y="62" width="22" height="2.4" rx="1.2" fill="#d9d9de"/></g>
+        <g class="n3"><rect x="148" y="84" width="34" height="22" rx="5" fill="#fafafa"/><rect class="lit3" x="148" y="84" width="34" height="22" rx="5" fill="none" stroke="#d9d9de" stroke-width="1.1"/><rect x="152" y="89" width="20" height="2.4" rx="1.2" fill="#8e8e93"/><rect x="152" y="94" width="24" height="2.4" rx="1.2" fill="#d9d9de"/></g>
+      </g>
+    </svg>
+  </template>
+
+  <p class="ctx-label">In context</p>
+  <div class="work-row">
+    <div class="work-thumb" data-proto="tra"></div>
+    <div class="work-info">
+      <span class="work-title">Trails</span>
+      <div class="work-desc">See everything you&rsquo;ve read as a living graph you can navigate.</div>
+      <div class="work-tags">Knowledge Navigation &middot; Graph Interface</div>
+    </div>
+    <div class="work-meta"><span>2024</span><span class="work-status">Watch demo &#8599;</span></div>
+  </div>
+
+  <p class="optname">Option B &middot; Jump back through the trail <span class="tag">cursor-driven</span></p>
+  <p class="optsub">The reverse gesture, which is the actual payoff of Trails: the cursor clicks an earlier node, a coral pulse rings it, and the document scrolls back to that spot. Navigation through what you&rsquo;ve read.</p>
+  <div class="stage" data-proto="trb"></div>
+
+  <template id="trb">
+    <svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" class="trb">
+      <rect width="196" height="122" fill="#ffffff"/>
+      <line x1="104" y1="0" x2="104" y2="122" stroke="#e8e8ed" stroke-width=".8"/>
+      <g clip-path="url(#trbclip)">
+        <g class="doc-scroll">
+          <rect x="12" y="12" width="60" height="4" rx="2" fill="#3a3a3e"/>
+          <rect x="12" y="22" width="80" height="2.6" rx="1.3" fill="#c9c9cf"/>
+          <rect x="12" y="28" width="74" height="2.6" rx="1.3" fill="#c9c9cf"/>
+          <rect x="12" y="34" width="80" height="2.6" rx="1.3" fill="#c9c9cf"/>
+          <rect x="12" y="40" width="56" height="2.6" rx="1.3" fill="#c9c9cf"/>
+          <rect x="12" y="52" width="48" height="3.6" rx="1.8" fill="#3a3a3e"/>
+          <rect x="12" y="61" width="80" height="2.6" rx="1.3" fill="#c9c9cf"/>
+          <rect x="12" y="67" width="70" height="2.6" rx="1.3" fill="#c9c9cf"/>
+          <rect x="12" y="73" width="78" height="2.6" rx="1.3" fill="#c9c9cf"/>
+          <rect x="12" y="85" width="54" height="3.6" rx="1.8" fill="#3a3a3e"/>
+          <rect x="12" y="94" width="80" height="2.6" rx="1.3" fill="#c9c9cf"/>
+          <rect x="12" y="100" width="64" height="2.6" rx="1.3" fill="#c9c9cf"/>
+        </g>
+      </g>
+      <clipPath id="trbclip"><rect x="0" y="0" width="104" height="122"/></clipPath>
+      <!-- trail: three nodes, connected -->
+      <path d="M133 36 C 130 48, 132 52, 138 56 C 148 62, 158 74, 164 84" stroke="#ff6b5c" stroke-width="1.5" fill="none" opacity=".8"/>
+      <g><rect x="116" y="14" width="34" height="22" rx="5" fill="#fafafa"/><rect class="n1ring" x="116" y="14" width="34" height="22" rx="5" fill="none" stroke="#d9d9de" stroke-width="1.2"/><rect x="120" y="19" width="20" height="2.4" rx="1.2" fill="#8e8e93"/><rect x="120" y="24" width="24" height="2.4" rx="1.2" fill="#d9d9de"/></g>
+      <circle class="pulse" cx="133" cy="25" r="16" fill="none" stroke="#ff6b5c" stroke-width="1.4" opacity="0"/>
+      <g><rect x="122" y="52" width="32" height="21" rx="5" fill="#fafafa" stroke="#d9d9de" stroke-width=".8"/><rect x="126" y="57" width="18" height="2.4" rx="1.2" fill="#8e8e93"/><rect x="126" y="62" width="22" height="2.4" rx="1.2" fill="#d9d9de"/></g>
+      <g><rect x="148" y="84" width="34" height="22" rx="5" fill="#fafafa"/><rect class="n3ring" x="148" y="84" width="34" height="22" rx="5" fill="none" stroke="#ff6b5c" stroke-width="1.2"/><rect x="152" y="89" width="20" height="2.4" rx="1.2" fill="#8e8e93"/><rect x="152" y="94" width="24" height="2.4" rx="1.2" fill="#d9d9de"/></g>
+      <g class="cursor"><path d="M0 0 L0 11.2 L2.6 8.8 L4.6 13 L6.4 12.2 L4.4 8 L7.8 7.8 Z" fill="#fff" stroke="#111" stroke-width=".9"/></g>
+    </svg>
+  </template>
+
+  <p class="ctx-label">In context</p>
+  <div class="work-row">
+    <div class="work-thumb" data-proto="trb"></div>
+    <div class="work-info">
+      <span class="work-title">Trails</span>
+      <div class="work-desc">See everything you&rsquo;ve read as a living graph you can navigate.</div>
+      <div class="work-tags">Knowledge Navigation &middot; Graph Interface</div>
+    </div>
+    <div class="work-meta"><span>2024</span><span class="work-status">Watch demo &#8599;</span></div>
+  </div>
+
+</div>
+<script>
+  document.querySelectorAll('[data-proto]').forEach(function(host){
+    var tpl = document.getElementById(host.dataset.proto);
+    host.appendChild(tpl.content.cloneNode(true));
+  });
+</script>
+</body>
+</html>

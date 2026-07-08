@@ -14,6 +14,12 @@
       "port": 8010
     },
     {
+      "name": "portfolio-review-2",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8011"],
+      "port": 8011
+    },
+    {
       "name": "promptedfind",
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8001", "--directory", "/Users/ladanjohari/projects/PromptedFind"],
