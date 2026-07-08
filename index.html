@@ -44,7 +44,7 @@
     body { font-family: 'Geist', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; min-height: 100vh; }
     .shell { max-width: 700px; margin: 0 auto; padding: 0 28px; }
 
-    .cursor-dot { position: fixed; width: 8px; height: 8px; border-radius: 50%; background: #0066FF; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); opacity: 0; transition: opacity 0.18s ease-out; }
+    .cursor-dot { display: none; position: fixed; width: 8px; height: 8px; border-radius: 50%; background: #0066FF; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); opacity: 0; transition: opacity 0.18s ease-out; }
 
     nav { display: flex; justify-content: space-between; align-items: center; padding: 40px 0 0; }
     .nav-name { font-size: 0.875rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
@@ -98,7 +98,7 @@
     @media (hover: hover) and (pointer: fine) {
       .work-row:hover { background: var(--hover-row); }
       .work-row:hover .work-arrow { transform: translateX(3px); }
-      .work-row:hover .work-thumb { border-color: var(--accent-dim); }
+      .work-row:hover .work-thumb { border-color: var(--rule); }
       .work-row:hover .thumb-video { opacity: 1; }
     }
     .work-row:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent); }
@@ -328,7 +328,7 @@
     </ul>
   </section>
 
-  <section class="workflow-section" aria-label="Workflow" style="margin-top:0; margin-bottom:80px;">
+  <section class="workflow-section" aria-label="Workflow" hidden style="display:none; margin-top:0; margin-bottom:80px;">
     <p class="section-label reveal">Workflow</p>
     <p class="about-text reveal" style="margin-top:16px; max-width:560px;">I direct the work like a studio of one. First I set the brief, weigh the <span style="white-space:nowrap">trade-offs,</span> reject what&rsquo;s wrong, review every result in pixels before it ships.</p>
     <div class="wf-track" id="wfTrack" role="tablist" aria-label="Workflow steps">
