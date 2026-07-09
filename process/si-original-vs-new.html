@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SI hover &middot; original vs new</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#F7F6F3;--ink:#111;--mid:#6B6B6B;--rule:#D4D3CF;--accent:#0066FF}
+  html{background:var(--bg)}
+  body{font-family:'Geist',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding:48px 28px 140px}
+  .shell{max-width:900px;margin:0 auto}
+  h1{font-size:1.4rem;letter-spacing:-0.02em;margin-bottom:8px}
+  .note{font-size:0.85rem;color:var(--mid);max-width:660px;line-height:1.65}
+  .note b{color:var(--ink);font-weight:600}
+  .band{font-size:0.66rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#fff;background:var(--ink);display:inline-block;padding:4px 10px;border-radius:4px;margin:48px 0 4px}
+  .band.new{background:var(--accent)}
+  .row{display:flex;gap:20px;flex-wrap:wrap;margin-top:12px}
+  .cell{width:300px}
+  .cell video{width:100%;border-radius:12px;border:1px solid var(--rule);display:block;background:#111}
+  .cell .lbl{font-size:0.72rem;color:var(--mid);margin-top:7px;letter-spacing:0.03em}
+  .cell .lbl b{color:var(--ink);font-weight:600}
+  .verdict{font-size:0.82rem;line-height:1.65;color:var(--mid);max-width:660px;margin-top:12px}
+  .verdict b{color:var(--ink);font-weight:600}
+  ul{margin:10px 0 0 18px}
+  li{font-size:0.82rem;line-height:1.7;color:var(--mid);max-width:640px}
+  li b{color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+<div class="shell">
+  <h1>Session Indicator hover &mdash; original vs. the one I rebuilt</h1>
+  <p class="note">You were right: I redesigned this instead of iterating on it. Here is your <b>original</b> (restored, and now live on the site again) next to the <b>new</b> one I built. Tell me which direction to take forward and how to iterate.</p>
+
+  <span class="band">Your original &middot; restored + live</span>
+  <div class="row">
+    <div class="cell">
+      <video src="/assets/previews/session-indicator-frame.mp4" autoplay loop muted playsinline></video>
+      <div class="lbl"><b>Original</b> &middot; tight zoom into the real top-right menu bar</div>
+    </div>
+  </div>
+  <div class="verdict">What made it work: the <b>realistic macOS menu bar</b> (traffic-light pill + &ldquo;+2&rdquo;, wifi, battery, real date/time), a <b>tight corner zoom</b> that sells &ldquo;this lives in your menu bar,&rdquo; the popover with real session rows and the <b>&ldquo;click any session to bring to front&rdquo;</b> footer, all over the helios wallpaper. It only ever existed in one wallpaper (dark-ish), and it never flashed white, so it never had the dark-mode problem the others did.</div>
+
+  <span class="band new">New &middot; what I built (for reference)</span>
+  <div class="row">
+    <div class="cell">
+      <video src="/process/si-cohesion-options/NEW-si-light.mp4" autoplay loop muted playsinline></video>
+      <div class="lbl"><b>New</b> &middot; light, on helios-light</div>
+    </div>
+    <div class="cell">
+      <video src="/process/si-cohesion-options/NEW-si-dark.mp4" autoplay loop muted playsinline></video>
+      <div class="lbl"><b>New</b> &middot; dark, on helios-dark</div>
+    </div>
+  </div>
+  <div class="verdict">What it added: a <b>light + dark variant</b> that swaps with the site theme. What it lost vs. yours: the realistic menu bar (no wifi/battery/date), a looser zoom, and the &ldquo;bring to front&rdquo; footer.</div>
+
+  <span class="band">The choice</span>
+  <p class="verdict">Two ways forward &mdash; your call:</p>
+  <ul>
+    <li><b>Keep the original as-is.</b> It is the strongest of the four hovers. Downside: it only exists on the dark-ish wallpaper, so there is no true light-mode variant like the other three rows now have. In practice it reads fine in both modes because it is a real screenshot, not a white card.</li>
+    <li><b>Recreate the original faithfully with light + dark.</b> I rebuild the original&rsquo;s exact anatomy &mdash; realistic menu bar (wifi, battery, date/time), tight corner zoom, real session rows, &ldquo;bring to front&rdquo; footer &mdash; as a designed prototype, then render it on helios-light and helios-dark. Best of both: your original design, plus a proper theme swap. This is my recommendation.</li>
+  </ul>
+  <p class="verdict">The live demo at <b>projects/demos/session-indicator/index.html</b> already has the full menu bar in both light and dark, so recreating it faithfully is realistic. Point me at what to match and I will iterate.</p>
+</div>
+</body>
+</html>

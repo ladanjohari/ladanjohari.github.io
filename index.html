@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#F7F6F3" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#1A1A1A" media="(prefers-color-scheme: dark)" />
   <title>Ladan Johari &middot; Design Engineer</title>
   <meta name="description" content="Ladan Johari is a Design Engineer in the San Francisco Bay Area building AI interfaces, interaction systems, and developer tools. MFA Design, UC Davis." />
   <meta name="robots" content="index, follow" />
@@ -23,10 +25,18 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Person","name":"Ladan Johari","jobTitle":"Design Engineer","url":"https://ladanjohari.com","sameAs":["https://www.linkedin.com/in/ladan-johari/","https://github.com/ladanjohari"],"address":{"@type":"PostalAddress","addressRegion":"CA","addressCountry":"US"}}
   </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preload" href="/assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
   <style>
+    @font-face {
+      font-family: 'Geist'; font-style: normal; font-weight: 400 700; font-display: swap;
+      src: url('/assets/fonts/geist-latin.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: 'Geist'; font-style: normal; font-weight: 400 700; font-display: swap;
+      src: url('/assets/fonts/geist-latin-ext.woff2') format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg: #F7F6F3; --ink: #111111; --mid: #6B6B6B;
@@ -88,9 +98,9 @@
     .work-info { flex: 1; min-width: 0; }
     .work-title { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
     .work-desc { font-size: 0.85rem; color: var(--mid); margin-top: 5px; line-height: 1.5; text-wrap: pretty; }
-    .work-tags { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--mid); margin-top: 7px; line-height: 1.5; }
+    .work-tags { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--mid); margin-top: 7px; line-height: 1.5; }
     .work-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; flex-shrink: 0; min-width: 92px; }
-    .work-year { font-size: 0.82rem; font-weight: 500; color: var(--rule); }
+    .work-year { font-size: 0.82rem; font-weight: 500; color: var(--mid); }
     .work-status { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); white-space: nowrap; }
     .work-arrow { display: inline-block; transition: transform 0.16s cubic-bezier(0.23, 1, 0.32, 1); }
 
@@ -103,6 +113,9 @@
     }
     .work-row:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent); }
     .wf-step:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--accent); }
+    .nav-name:focus-visible, .elsewhere-text a:focus-visible, .hero-eyebrow a:focus-visible {
+      outline: none; border-radius: 3px; box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+    }
 
 
     .workflow-section { margin-top: 40px; }
@@ -135,7 +148,7 @@
     .elsewhere-text a { color: var(--ink); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--rule); transition: color 0.12s, text-decoration-color 0.12s; }
     .elsewhere-text a:hover { color: var(--accent); text-decoration-color: var(--accent-dim); }
     footer { border-top: 1px solid var(--rule); padding: 26px 0 52px; }
-    .footer-copy { font-size: 0.72rem; color: var(--rule); }
+    .footer-copy { font-size: 0.72rem; color: var(--mid); }
 
     @media (max-width: 540px) {
       .shell { padding: 0 20px; }
@@ -154,7 +167,7 @@
       .work-thumb { width: 100%; height: auto; aspect-ratio: 16 / 10; border-radius: 12px; }
       .work-title { font-size: 1.05rem; }
       .work-desc { font-size: 0.85rem; margin-top: 4px; }
-      .work-tags { font-size: 0.56rem; margin-top: 8px; }
+      .work-tags { font-size: 0.62rem; margin-top: 8px; }
       .work-meta { flex-direction: row; align-items: center; justify-content: space-between; min-width: 0; margin-top: 2px; }
       .work-year { font-size: 0.78rem; }
     }
@@ -195,7 +208,7 @@
   </header>
 
   <section id="work" aria-label="Selected work" style="margin-bottom:0;">
-    <p class="section-label reveal">Selected Work</p>
+    <h2 class="section-label reveal">Selected Work</h2>
     <ul class="work-list">
 
       <li class="work-item reveal">
@@ -216,9 +229,9 @@
         <circle cx="65" cy="64" r="2.8" fill="#E8952A"/><text x="72" y="66.6" fill="#e2e2e8" font-family="Geist,sans-serif" font-size="6.6" font-weight="500">run-tests</text><text x="170" y="66.6" fill="#E8952A" font-family="Geist,sans-serif" font-size="5.6" text-anchor="end">waiting &middot; 12m</text>
         <circle cx="65" cy="79" r="2.8" fill="#FF3B30"/><text x="72" y="81.6" fill="#e2e2e8" font-family="Geist,sans-serif" font-size="6.6" font-weight="500">deploy-agent</text><text x="170" y="81.6" fill="#FF3B30" font-family="Geist,sans-serif" font-size="5.6" text-anchor="end">error &middot; 2m</text>
         <circle cx="65" cy="94" r="2.8" fill="#34C759"/><text x="72" y="96.6" fill="#8a8a93" font-family="Geist,sans-serif" font-size="6.6" font-weight="500">lint-check</text><text x="170" y="96.6" fill="#6a6a72" font-family="Geist,sans-serif" font-size="5.6" text-anchor="end">done &middot; 1m</text>
-      </svg><video class="thumb-video" src="/assets/previews/session-indicator-frame.mp4" data-src-light="/assets/previews/session-indicator-frame.mp4" data-src-dark="/assets/previews/session-indicator-frame-dark.mp4" loop muted playsinline preload="metadata"></video></div>
+      </svg><video class="thumb-video" src="/assets/previews/session-indicator-frame.mp4" loop muted playsinline preload="metadata"></video></div>
           <div class="work-info">
-            <span class="work-title">Session Indicator</span>
+            <h3 class="work-title">Session Indicator</h3>
             <div class="work-desc">Track every running AI agent from the menu bar so you never lose your place.</div>
             <div class="work-tags">AI Agent UI &middot; Interaction System</div>
           </div>
@@ -252,7 +265,7 @@
         <rect x="142" y="84" width="38" height="16" rx="4.5" fill="#2e4d94"/><text x="161" y="94.6" fill="#fff" font-family="Geist,sans-serif" font-size="6.4" font-weight="600" text-anchor="middle">Precision</text>
       </svg><video class="thumb-video" src="/assets/previews/promptedfind-frame.mp4" data-src-light="/assets/previews/promptedfind-frame.mp4" data-src-dark="/assets/previews/promptedfind-frame-dark.mp4" loop muted playsinline preload="metadata"></video></div>
           <div class="work-info">
-            <span class="work-title">Prompted Find</span>
+            <h3 class="work-title">Prompted Find</h3>
             <div class="work-desc">Find the moment you need in a long video by meaning, not keywords.</div>
             <div class="work-tags">Semantic Decomposition &middot; Applied to Video</div>
           </div>
@@ -289,7 +302,7 @@
         </g>
       </svg><video class="thumb-video" src="/assets/previews/xcode-symbol-browser-frame.mp4" data-src-light="/assets/previews/xcode-symbol-browser-frame.mp4" data-src-dark="/assets/previews/xcode-symbol-browser-frame-dark.mp4" loop muted playsinline preload="metadata"></video></div>
           <div class="work-info">
-            <span class="work-title">Xcode Symbol Browser</span>
+            <h3 class="work-title">Xcode Symbol Browser</h3>
             <div class="work-desc">Read a codebase&rsquo;s structure at a glance instead of digging through files.</div>
             <div class="work-tags">Developer Tools &middot; Information Architecture</div>
           </div>
@@ -314,7 +327,7 @@
         <circle cx="48" cy="46" r="1.8" fill="#ff6b5c"/><circle cx="152" cy="44" r="1.8" fill="#ff6b5c"/><circle cx="132" cy="90" r="1.6" fill="#ff6b5c" opacity=".7"/>
       </svg><video class="thumb-video" src="/assets/previews/trails-frame.mp4" data-src-light="/assets/previews/trails-frame.mp4" data-src-dark="/assets/previews/trails-frame-dark.mp4" loop muted playsinline preload="metadata"></video></div>
           <div class="work-info">
-            <span class="work-title">Trails</span>
+            <h3 class="work-title">Trails</h3>
             <div class="work-desc">See everything you&rsquo;ve read as a living graph you can navigate.</div>
             <div class="work-tags">Knowledge Navigation &middot; Graph Interface</div>
           </div>
@@ -329,7 +342,7 @@
   </section>
 
   <section class="workflow-section" aria-label="Workflow" hidden style="display:none; margin-top:0; margin-bottom:80px;">
-    <p class="section-label reveal">Workflow</p>
+    <h2 class="section-label reveal">Workflow</h2>
     <p class="about-text reveal" style="margin-top:16px; max-width:560px;">I direct the work like a studio of one. First I set the brief, weigh the <span style="white-space:nowrap">trade-offs,</span> reject what&rsquo;s wrong, review every result in pixels before it ships.</p>
     <div class="wf-track" id="wfTrack" role="tablist" aria-label="Workflow steps">
       <div class="wf-step active" data-step="0" role="tab" aria-selected="true" tabindex="0">
@@ -405,7 +418,7 @@
   -->
 
   <section class="elsewhere" aria-label="Elsewhere" style="margin-bottom:80px;">
-    <p class="section-label reveal">Elsewhere</p>
+    <h2 class="section-label reveal">Elsewhere</h2>
     <p class="elsewhere-text reveal" style="margin-top:20px;">Code on <a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a>, connect on <a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a>, get in touch via <a href="mailto:l.joharizadeh@gmail.com">email</a>.</p>
   </section>
 
