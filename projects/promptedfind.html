@@ -153,10 +153,15 @@
     }
     .stepper-tab:last-child { border-right: none; }
     /* Match the stepper's outer 10px radius so the active outline isn't clipped in the corners */
-    .stepper-tab:first-child { border-bottom-left-radius: 9px; }
-    .stepper-tab:last-child { border-bottom-right-radius: 9px; }
+    .stepper-tab:first-child { border-top-left-radius: 9px; border-bottom-left-radius: 9px; }
+    .stepper-tab:last-child { border-top-right-radius: 9px; border-bottom-right-radius: 9px; }
     .stepper-tab:active { transform: scale(0.97); }
     .stepper-tab.is-active { background: var(--hover-row); box-shadow: inset 0 0 0 2px var(--accent); }
+    .stepper-tab:focus-visible {
+      outline: none;
+      box-shadow: inset 0 0 0 2px var(--accent);
+      background: var(--hover-row);
+    }
     @media (hover: hover) and (pointer: fine) {
       .stepper-tab:hover { background: var(--hover-row); }
     }
@@ -226,8 +231,8 @@
       .frames-grid { grid-template-columns: 1fr; }
       .stepper-nav { flex-direction: column; }
       .stepper-tab { border-right: none; border-bottom: 1px solid var(--rule); }
-      .stepper-tab:first-child { border-bottom-left-radius: 0; }
-      .stepper-tab:last-child { border-bottom: none; border-bottom-left-radius: 9px; border-bottom-right-radius: 9px; }
+      .stepper-tab:first-child { border-top-left-radius: 9px; border-top-right-radius: 9px; border-bottom-left-radius: 0; }
+      .stepper-tab:last-child { border-bottom: none; border-top-right-radius: 0; border-bottom-left-radius: 9px; border-bottom-right-radius: 9px; }
       .pf-footer { flex-direction: column; gap: 14px; align-items: flex-start; padding-left: 20px; padding-right: 20px; }
     }
   </style>
@@ -373,6 +378,7 @@
       <ul class="reflection-list">
         <li><strong>Confidence indicators.</strong> Not all matches are equally strong. The timeline should visually encode match confidence so the user can prioritize where to jump.</li>
         <li><strong>Multi-video support.</strong> The current prototype works with a single video. The real value is cross-video search: "find the part about heat shields" across an entire lecture series.</li>
+        <li><strong>Real embeddings.</strong> The interface is working code; the understanding layer is simulated, swappable for semantic embeddings without changing the interaction.</li>
       </ul>
     </div>
 
