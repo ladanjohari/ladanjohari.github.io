@@ -42,28 +42,16 @@
       font-size: 0.875rem; font-weight: 600; letter-spacing: -0.02em;
       color: var(--ink); text-decoration: none;
     }
-    .pf-links { display: flex; gap: 28px; list-style: none; }
-    .pf-links a {
-      font-size: 0.8rem; font-weight: 500; color: var(--mid);
-      text-decoration: none; transition: color 0.15s ease-out;
-    }
-    @media (hover: hover) and (pointer: fine) {
-      .pf-links a:hover { color: var(--accent); }
-    }
 
     /* ── Case study header ── */
-    .cs-header {
-      max-width: 700px; margin: 0 auto;
-      padding: 48px 28px 0;
-    }
+    .cs-header { max-width: 700px; margin: 0 auto; padding: 48px 28px 0; }
     .cs-eyebrow {
       font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em;
       text-transform: uppercase; color: var(--mid); margin-bottom: 16px;
     }
     .cs-title {
       font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700;
-      letter-spacing: -0.04em; line-height: 1.08;
-      color: var(--ink); margin-bottom: 14px;
+      letter-spacing: -0.04em; line-height: 1.08; margin-bottom: 14px;
     }
     .cs-descriptor {
       font-size: 1rem; color: var(--mid);
@@ -76,40 +64,27 @@
       flex-wrap: wrap;
     }
     .cs-meta .sep { color: var(--rule); }
-    .cs-meta a {
-      color: var(--accent); text-decoration: none; font-weight: 500;
+    .cs-meta a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    @media (hover: hover) and (pointer: fine) {
+      .cs-meta a:hover { text-decoration: underline; }
     }
-    .cs-meta a:hover { text-decoration: underline; }
 
     /* ── Video hero ── */
-    .video-hero {
-      max-width: 700px; margin: 0 auto;
-      padding: 40px 28px 0;
-    }
+    .video-hero { max-width: 700px; margin: 0 auto; padding: 40px 28px 0; }
     .video-wrap {
       width: 100%; aspect-ratio: 16/9;
       border-radius: 10px; overflow: hidden;
-      border: 1px solid var(--rule);
-      background: #0a0a0a;
-      position: relative;
+      border: 1px solid var(--rule); background: #0a0a0a;
     }
-    .video-wrap video {
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
-    }
+    .video-wrap video { width: 100%; height: 100%; object-fit: cover; display: block; }
     .video-caption {
       margin-top: 12px; font-size: 0.75rem;
       color: var(--mid); text-align: center; letter-spacing: 0.01em;
     }
 
     /* ── Case study body ── */
-    .cs-body {
-      max-width: 700px; margin: 0 auto;
-      padding: 0 28px 80px;
-    }
-
+    .cs-body { max-width: 700px; margin: 0 auto; padding: 0 28px 64px; }
     .cs-section { margin-top: 56px; }
-
     .cs-label {
       font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em;
       text-transform: uppercase; color: var(--mid);
@@ -117,12 +92,10 @@
       margin-bottom: 24px;
     }
 
-    .cs-pullquote {
-      font-size: 1rem; line-height: 1.7; color: var(--mid);
-      font-style: italic; padding-left: 18px;
-      border-left: 2px solid var(--rule); margin-bottom: 20px;
+    .lead-claim {
+      font-size: 1.05rem; font-weight: 600; letter-spacing: -0.015em;
+      color: var(--ink); line-height: 1.5; max-width: 560px; margin-bottom: 10px;
     }
-
     .cs-body-text {
       font-size: 0.925rem; line-height: 1.8;
       color: var(--mid); max-width: 560px;
@@ -136,83 +109,59 @@
       border: 1px solid var(--rule); border-radius: 8px;
       overflow: hidden; margin-top: 28px;
     }
-    .frame-col {
-      background: var(--bg); padding: 20px 18px 22px;
-    }
+    .frames-grid.flush { margin-top: 0; }
+    .frame-col { background: var(--bg); padding: 20px 18px 22px; }
     .frame-num {
       font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em;
-      color: var(--mid); margin-bottom: 6px;
-      text-transform: uppercase;
+      color: var(--mid); margin-bottom: 6px; text-transform: uppercase;
     }
     .frame-title {
       font-size: 0.875rem; font-weight: 600; letter-spacing: -0.01em;
-      color: var(--ink); margin-bottom: 6px; line-height: 1.35;
+      margin-bottom: 6px; line-height: 1.35;
     }
-    .frame-principle {
-      font-size: 0.75rem; font-style: italic;
-      color: var(--accent); margin-bottom: 10px;
-    }
-    .frame-body {
-      font-size: 0.8rem; color: var(--mid);
-      line-height: 1.65; margin-bottom: 10px;
-    }
-    /* ── Pattern note ── */
+    .frame-principle { font-size: 0.75rem; font-style: italic; color: var(--accent); margin-bottom: 10px; }
+    .frame-body { font-size: 0.8rem; color: var(--mid); line-height: 1.65; }
+
     .pattern-note {
       margin-top: 28px;
       border: 1px solid var(--accent-dim);
       background: rgba(0, 102, 204, 0.03);
       border-radius: 8px; padding: 18px 22px;
     }
-    .pattern-note p {
-      font-size: 13px; color: var(--mid); line-height: 1.75;
-    }
+    .pattern-note p { font-size: 13px; color: var(--mid); line-height: 1.75; }
     .pattern-note strong { color: var(--ink); font-weight: 600; }
 
-    /* ── Interaction stepper with spotlight ── */
+    /* ── Stepper ── */
     .stepper {
-      margin-top: 28px;
+      margin-top: 0;
       border: 1px solid var(--rule); border-radius: 10px;
       overflow: hidden; background: #0a0a0a;
     }
-    .stepper-frame {
-      position: relative; width: 100%;
-      aspect-ratio: 1280/614;
-      overflow: hidden;
-    }
+    .stepper-frame { position: relative; width: 100%; aspect-ratio: 1280/614; overflow: hidden; }
     .stepper-frame img {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      opacity: 0; transition: opacity 0.25s ease-out;
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; opacity: 0; transition: opacity 0.25s ease-out;
     }
     .stepper-frame img.is-active { opacity: 1; }
-    .stepper-spotlight {
-      position: absolute; inset: 0;
-      pointer-events: none; z-index: 2;
-    }
-    .stepper-nav {
-      display: flex; border-top: 1px solid var(--rule);
-      background: var(--bg);
-    }
+    .stepper-spotlight { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+    .stepper-nav { display: flex; border-top: 1px solid var(--rule); background: var(--bg); }
     .stepper-tab {
       flex: 1; padding: 14px 12px;
-      border: none; background: none;
-      cursor: pointer; text-align: left;
+      border: none; background: none; cursor: pointer; text-align: left;
       border-right: 1px solid var(--rule);
       transition: background 0.15s ease-out, transform 0.16s ease-out;
-      position: relative;
     }
     .stepper-tab:last-child { border-right: none; }
+    /* Match the stepper's outer 10px radius so the active outline isn't clipped in the corners */
+    .stepper-tab:first-child { border-bottom-left-radius: 9px; }
+    .stepper-tab:last-child { border-bottom-right-radius: 9px; }
     .stepper-tab:active { transform: scale(0.97); }
-    .stepper-tab.is-active {
-      background: var(--hover-row);
-      box-shadow: inset 0 0 0 2px var(--accent);
-    }
+    .stepper-tab.is-active { background: var(--hover-row); box-shadow: inset 0 0 0 2px var(--accent); }
     @media (hover: hover) and (pointer: fine) {
       .stepper-tab:hover { background: var(--hover-row); }
     }
     .stepper-tab-num {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
       color: var(--accent); display: block; margin-bottom: 5px;
     }
     .stepper-tab-title {
@@ -220,62 +169,34 @@
       display: block; line-height: 1.35; letter-spacing: -0.01em;
     }
     .stepper-tab-desc {
-      font-size: 11.5px; color: var(--mid); display: block;
+      font-size: 12px; color: var(--mid); display: block;
       line-height: 1.5; margin-top: 4px;
     }
 
-    /* ── Architecture pipeline ── */
-    .pipeline {
-      margin-top: 28px;
-      display: flex; flex-direction: column; gap: 0;
-      border: 1px solid var(--rule); border-radius: 8px;
-      overflow: hidden;
-    }
-    .pipeline-stage {
-      display: flex; align-items: stretch;
-      border-bottom: 1px solid var(--rule);
-    }
-    .pipeline-stage:last-child { border-bottom: none; }
-    .pipeline-label {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--accent);
-      min-width: 90px; padding: 14px 16px;
-      display: flex; align-items: center;
-      border-right: 1px solid var(--rule);
-      background: rgba(0, 102, 204, 0.02);
-    }
-    .pipeline-value {
-      flex: 1; padding: 14px 18px;
-      font-size: 13px; color: var(--ink); line-height: 1.55;
-    }
-    .pipeline-value span { color: var(--mid); }
-
     /* ── Reflection list ── */
-    .reflection-list {
-      margin-top: 20px;
-      list-style: none;
-      display: flex; flex-direction: column; gap: 14px;
-    }
+    .reflection-list { margin-top: 20px; list-style: none; display: flex; flex-direction: column; gap: 14px; }
     .reflection-list li {
       font-size: 13px; color: var(--mid); line-height: 1.7;
-      padding-left: 14px;
-      border-left: 2px solid var(--rule);
+      padding-left: 14px; border-left: 2px solid var(--rule);
     }
     .reflection-list li strong { color: var(--ink); font-weight: 600; }
 
-    /* ── Closing CTA ── */
-    .cs-closing {
+    /* ── Back to work ── */
+    .back-work {
       max-width: 700px; margin: 0 auto;
-      padding: 0 28px 56px;
-      text-align: center;
+      padding: 0 28px 64px;
     }
-    .cs-closing-line {
-      font-size: 14px; color: var(--mid); line-height: 1.7;
+    .back-work a {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.875rem; font-weight: 500;
+      color: var(--ink); text-decoration: none;
+      transition: color 0.15s ease-out;
     }
-    .cs-closing-line a {
-      color: var(--accent); text-decoration: none; font-weight: 500;
+    .back-work a .arrow { color: var(--accent); transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1); }
+    @media (hover: hover) and (pointer: fine) {
+      .back-work a:hover { color: var(--accent); }
+      .back-work a:hover .arrow { transform: translateX(-3px); }
     }
-    .cs-closing-line a:hover { text-decoration: underline; }
 
     /* ── Footer ── */
     .pf-footer {
@@ -294,26 +215,20 @@
       .pf-footer-links a:hover { color: var(--accent); }
     }
 
-    .reveal { opacity: 0; transform: translateY(8px); transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1), transform 0.5s cubic-bezier(0.23, 1, 0.32, 1); }
-    .reveal.is-visible { opacity: 1; transform: translateY(0); }
-
     @media (prefers-reduced-motion: reduce) {
-      .stepper-frame img { transition: none; }
-      .stepper-tab { transition: none; }
-      .reveal { opacity: 1; transform: none; transition: none; }
+      .stepper-frame img, .stepper-tab { transition: none; }
+      .back-work a .arrow { transition: none; }
     }
 
     @media (max-width: 540px) {
-      .pf-nav, .cs-header, .video-hero, .cs-body { padding-left: 20px; padding-right: 20px; }
+      .pf-nav, .cs-header, .video-hero, .cs-body, .back-work { padding-left: 20px; padding-right: 20px; }
       .pf-nav { padding-top: 28px; }
-      .pf-links { gap: 18px; }
       .frames-grid { grid-template-columns: 1fr; }
-      .pf-footer { flex-direction: column; gap: 14px; align-items: flex-start; padding-left: 20px; padding-right: 20px; }
       .stepper-nav { flex-direction: column; }
       .stepper-tab { border-right: none; border-bottom: 1px solid var(--rule); }
-      .stepper-tab:last-child { border-bottom: none; }
-      .pipeline-stage { flex-direction: column; }
-      .pipeline-label { border-right: none; border-bottom: 1px solid var(--rule); min-width: unset; padding: 10px 16px; }
+      .stepper-tab:first-child { border-bottom-left-radius: 0; }
+      .stepper-tab:last-child { border-bottom: none; border-bottom-left-radius: 9px; border-bottom-right-radius: 9px; }
+      .pf-footer { flex-direction: column; gap: 14px; align-items: flex-start; padding-left: 20px; padding-right: 20px; }
     }
   </style>
 </head>
@@ -324,9 +239,9 @@
   </nav>
 
   <div class="cs-header">
-    <p class="cs-eyebrow reveal">Semantic Decomposition &middot; Applied to Video &middot; Coded Prototype</p>
-    <h1 class="cs-title reveal">Prompted Find</h1>
-    <p class="cs-descriptor reveal">
+    <p class="cs-eyebrow">Semantic Decomposition &middot; Applied to Video &middot; Coded Prototype</p>
+    <h1 class="cs-title">Prompted Find</h1>
+    <p class="cs-descriptor">
       Ask a question about a video. Jump to the exact moment that answers it.
       A new navigation pattern for long-form content. Search that returns a location, not a list.
     </p>
@@ -340,7 +255,7 @@
   </div>
 
   <div class="video-hero">
-    <div class="video-wrap reveal">
+    <div class="video-wrap">
       <video controls autoplay muted loop playsinline poster="../assets/video/promptedfind-poster.jpg" preload="metadata">
         <source src="../assets/video/PromptedFind_web.mp4" type="video/mp4" />
         Your browser does not support video.
@@ -352,22 +267,11 @@
   <div class="cs-body">
 
     <div class="cs-section">
-      <p class="cs-label reveal">The Method</p>
+      <p class="cs-label">The Gap</p>
+      <p class="lead-claim">The thing that makes video easy to watch is exactly what makes it hard to navigate.</p>
       <p class="cs-body-text">
-        <strong>Semantic Decomposition:</strong> break long-form content into labeled, navigable semantic units,
-        so a question can return a location instead of a summary.
-        <br><br>
-        Prompted Find is this method applied to video. The same decomposition works on any surface that has
-        length but no structure: prose, podcasts, research trails. The medium changes; the interaction stays the same.
-      </p>
-    </div>
-
-    <div class="cs-section">
-      <p class="cs-label reveal">The Gap</p>
-      <p class="cs-pullquote">&ldquo;Video is visual content, but finding a moment in it means reading transcripts and scrubbing timelines. The thing that makes video easy to watch is exactly what makes it hard to navigate.&rdquo;</p>
-      <p class="cs-body-text">
-        Long-form video has no spatial address. A document has paragraphs, headings, a table of contents. You can navigate it by structure.
-        Video only has time.
+        Long-form video has no spatial address. A document has paragraphs, headings, a table of contents.
+        You can navigate it by structure. Video only has time.
         <br><br>
         <strong>Prompted Find makes the timeline navigable by meaning.</strong> You ask what you want to find.
         The interface segments the video semantically, highlights relevant moments, and jumps you there.
@@ -376,41 +280,16 @@
     </div>
 
     <div class="cs-section">
-      <p class="cs-label reveal">Decisions</p>
-      <p class="cs-body-text" style="margin-bottom: 0;">
-        Each decision was a choice about what kind of interface this is: tool, search engine, or navigation system.
+      <p class="cs-label">The Method</p>
+      <p class="cs-body-text">
+        <strong>Semantic Decomposition:</strong> break long-form content into labeled, navigable semantic units,
+        so a question can return a location instead of a summary.
+        <br><br>
+        Prompted Find is this method applied to video. The same decomposition works on any surface that has
+        length but no structure: prose, podcasts, research trails. The medium changes; the interaction stays the same.
       </p>
-      <div class="frames-grid reveal">
-        <div class="frame-col">
-          <p class="frame-num">01</p>
-          <p class="frame-title">The answer is a timestamp, not&nbsp;text</p>
-          <p class="frame-principle">&ldquo;Search as navigation.&rdquo;</p>
-          <p class="frame-body">
-            The query moves you inside the video. The interface doesn't summarize or transcribe.
-            It relocates you to the moment where the answer lives.
-          </p>
-        </div>
-        <div class="frame-col">
-          <p class="frame-num">02</p>
-          <p class="frame-title">Segments, not a search results&nbsp;list</p>
-          <p class="frame-principle">&ldquo;The timeline is the interface.&rdquo;</p>
-          <p class="frame-body">
-            The video timeline is divided into labeled semantic segments. Relevant ones are highlighted.
-            You see the shape of the answer before you click it.
-          </p>
-        </div>
-        <div class="frame-col">
-          <p class="frame-num">03</p>
-          <p class="frame-title">The query stays visible while you&nbsp;watch</p>
-          <p class="frame-principle">&ldquo;Context persists.&rdquo;</p>
-          <p class="frame-body">
-            The question panel stays open alongside the video. You can ask follow-ups without losing
-            your place. The interface is a co-pilot, not a one-shot lookup.
-          </p>
-        </div>
-      </div>
 
-      <div class="pattern-note reveal">
+      <div class="pattern-note">
         <p>
           <strong>Why this pattern matters beyond video.</strong>
           The same logic applies to any long-form content without navigable structure:
@@ -422,11 +301,38 @@
     </div>
 
     <div class="cs-section">
-      <p class="cs-label reveal">The Interaction</p>
-      <p class="cs-body-text" style="margin-bottom: 0;">
-        The prototype lives inside a YouTube watch page. The interaction has three steps, and none of them take the user out of the video.
-      </p>
-      <div class="stepper reveal" id="stepper">
+      <p class="cs-label">Decisions</p>
+      <div class="frames-grid flush">
+        <div class="frame-col">
+          <p class="frame-num">01</p>
+          <p class="frame-title">Timestamps instead of&nbsp;text</p>
+          <p class="frame-principle">&ldquo;Search as navigation.&rdquo;</p>
+          <p class="frame-body">
+            The query moves you inside the video, to the moment where the answer lives.
+          </p>
+        </div>
+        <div class="frame-col">
+          <p class="frame-num">02</p>
+          <p class="frame-title">Segments instead of search&nbsp;results</p>
+          <p class="frame-principle">&ldquo;The timeline is the interface.&rdquo;</p>
+          <p class="frame-body">
+            Labeled segments on the timeline show the shape of the answer before you click.
+          </p>
+        </div>
+        <div class="frame-col">
+          <p class="frame-num">03</p>
+          <p class="frame-title">Follow-ups instead of starting&nbsp;over</p>
+          <p class="frame-principle">&ldquo;Context persists.&rdquo;</p>
+          <p class="frame-body">
+            The question panel stays open beside the video, so you never lose your place.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-section">
+      <p class="cs-label">The Interaction</p>
+      <div class="stepper" id="stepper">
         <div class="stepper-frame">
           <img src="../assets/img/pf/step-01.jpg" alt="Ask panel open beside the playing video; the timeline below shows labeled semantic segments" class="is-active" data-step="0" />
           <img src="../assets/img/pf/step-02.jpg" alt="A timeline segment hovered with its label tooltip; the AI summary for the playing range shown in the panel" data-step="1" />
@@ -464,78 +370,20 @@
     </div>
 
     <div class="cs-section">
-      <p class="cs-label reveal">How It Works</p>
-      <p class="cs-body-text" style="margin-bottom: 0;">
-        A 74-minute NASA talk, decomposed into nine labeled segments. Four stages sit between the question and the moment.
-      </p>
-      <div class="pipeline reveal">
-        <div class="pipeline-stage">
-          <div class="pipeline-label">Ask</div>
-          <div class="pipeline-value">A natural-language question. <span>&ldquo;How do they slow down?&rdquo;</span></div>
-        </div>
-        <div class="pipeline-stage">
-          <div class="pipeline-label">Expand</div>
-          <div class="pipeline-value">Concept aliases broaden the query. <span>&ldquo;EDL&rdquo; also means entry, descent, landing.</span></div>
-        </div>
-        <div class="pipeline-stage">
-          <div class="pipeline-label">Score</div>
-          <div class="pipeline-value">Every segment&rsquo;s label and summary is scored against the expanded terms.</div>
-        </div>
-        <div class="pipeline-stage">
-          <div class="pipeline-label">Locate</div>
-          <div class="pipeline-value">Matching ranges highlight on the timeline. Clicking one seeks the video.</div>
-        </div>
-      </div>
-      <div class="pattern-note reveal">
-        <p>
-          <strong>What&rsquo;s real, what&rsquo;s simulated.</strong>
-          The interface, the timeline, and the navigation are fully working code. The understanding layer is
-          concept aliasing and keyword scoring, not a model. A production version would swap in semantic
-          embeddings. The interaction wouldn&rsquo;t change.
-        </p>
-      </div>
-    </div>
-
-    <div class="cs-section">
-      <p class="cs-label reveal">One Pattern, Three Surfaces</p>
-      <div class="frames-grid reveal">
-        <div class="frame-col">
-          <p class="frame-num">Video</p>
-          <p class="frame-title">Prompted Find</p>
-          <p class="frame-principle">&ldquo;Ask a question, get a moment.&rdquo;</p>
-          <p class="frame-body">This project. The timeline decomposes into labeled segments; a query lands you inside the video.</p>
-        </div>
-        <div class="frame-col">
-          <p class="frame-num">Prose</p>
-          <p class="frame-title">View-spec lanes <span style="font-weight:400;color:var(--mid);">&middot; in progress</span></p>
-          <p class="frame-principle">&ldquo;Every paragraph has an address.&rdquo;</p>
-          <p class="frame-body">The same decomposition over long-form writing: labeled semantic lanes you can filter and jump through.</p>
-        </div>
-        <div class="frame-col">
-          <p class="frame-num">Research</p>
-          <p class="frame-title">Trails <span style="font-weight:400;color:var(--mid);">&middot; in progress</span></p>
-          <p class="frame-principle">&ldquo;Navigate what you&rsquo;ve learned.&rdquo;</p>
-          <p class="frame-body">Applied to knowledge trails: decompose a research session into revisitable, linkable units.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="cs-section">
-      <p class="cs-label reveal">What I'd Change</p>
+      <p class="cs-label">What I'd Change</p>
       <ul class="reflection-list">
         <li><strong>Confidence indicators.</strong> Not all matches are equally strong. The timeline should visually encode match confidence so the user can prioritize where to jump.</li>
         <li><strong>Multi-video support.</strong> The current prototype works with a single video. The real value is cross-video search: "find the part about heat shields" across an entire lecture series.</li>
-        <li><strong>Real embeddings, not keyword matching.</strong> The prototype uses concept aliasing and keyword scoring. A production version would use semantic embeddings to handle queries the alias table doesn't cover.</li>
       </ul>
     </div>
 
   </div>
 
-  <div class="cs-closing">
-    <p class="cs-closing-line">
-      Interested in the interaction pattern or how I built it?
-      <a href="mailto:ladan.joharizadeh@gmail.com">I'd love to talk about it.</a>
-    </p>
+  <div class="back-work">
+    <a href="../index.html#work">
+      <span class="arrow">&larr;</span>
+      <span>Works</span>
+    </a>
   </div>
 
   <footer class="pf-footer">
@@ -547,36 +395,6 @@
   </footer>
 
   <script>
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      const reveals = document.querySelectorAll('.reveal');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const el = entry.target;
-            const d = parseFloat(el.dataset.delay || 0);
-            el.style.transitionDelay = d + 'ms';
-            el.classList.add('is-visible');
-            observer.unobserve(el);
-          }
-        });
-      }, { threshold: 0.1, rootMargin: '-40px' });
-      reveals.forEach((el, i) => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight) {
-          el.dataset.delay = i * 50;
-        }
-        observer.observe(el);
-      });
-      /* Safety net: if the observer is throttled, content must still appear */
-      setTimeout(() => {
-        document.querySelectorAll('.reveal:not(.is-visible)').forEach((el) => {
-          el.style.transitionDelay = '0ms';
-          el.classList.add('is-visible');
-        });
-      }, 1200);
-    }
-  </script>
-  <script>
     (() => {
       const stepper = document.getElementById('stepper');
       if (!stepper) return;
@@ -586,8 +404,8 @@
       const spotBorder = document.getElementById('spot-border');
       let current = 0;
       let timer = null;
+      let hovered = false;
 
-      /* Image-native 1280x614 coordinates — frame shares the ratio so these map 1:1 */
       const spots = [
         { x: 828, y: 48,  w: 285, h: 270, rx: 16 },
         { x: 165, y: 425, w: 680, h: 92,  rx: 10 },
@@ -611,8 +429,9 @@
 
       function animateTo(target) {
         if (anim) cancelAnimationFrame(anim);
-        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (reducedMotion) { cur = { ...target }; setSpot(cur); return; }
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          cur = { ...target }; setSpot(cur); return;
+        }
         const from = { ...cur };
         const start = performance.now();
         const dur = 400;
@@ -642,11 +461,18 @@
       function advance() { goTo((current + 1) % imgs.length); }
       function startTimer() {
         stopTimer();
+        if (hovered) return;
         if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
           timer = setInterval(advance, 3500);
         }
       }
       function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
+
+      /* Pause while the reader is studying the stepper */
+      stepper.addEventListener('mouseenter', () => { hovered = true; stopTimer(); });
+      stepper.addEventListener('mouseleave', () => { hovered = false; startTimer(); });
+      stepper.addEventListener('focusin', () => { hovered = true; stopTimer(); });
+      stepper.addEventListener('focusout', () => { hovered = false; startTimer(); });
 
       tabs.forEach((tab, idx) => {
         tab.addEventListener('click', () => { goTo(idx); startTimer(); });
