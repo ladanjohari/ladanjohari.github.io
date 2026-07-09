@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SI hover &middot; wallpaper build, light + dark</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--ease-out:cubic-bezier(0.23,1,0.32,1);--ease-in-out:cubic-bezier(0.77,0,0.175,1)}
+  html{background:#F7F6F3}
+  body{font-family:'Geist',system-ui,sans-serif;background:#F7F6F3;color:#111;-webkit-font-smoothing:antialiased;padding:48px 28px 140px}
+  .shell{max-width:820px;margin:0 auto}
+  h1{font-size:1.4rem;letter-spacing:-0.02em;margin-bottom:6px}
+  p{font-size:0.85rem;color:#6B6B6B;max-width:620px;line-height:1.6}
+  .cap{font-size:0.7rem;color:#6B6B6B;letter-spacing:0.06em;text-transform:uppercase;font-weight:600;margin-top:34px}
+  .stage{width:392px;height:244px;border-radius:16px;overflow:hidden;border:1px solid #D4D3CF;margin-top:10px}
+  .stage svg{width:100%;height:100%;display:block}
+  svg text{font-family:'Geist',system-ui,sans-serif}
+  .cursor{opacity:0}
+
+  /* Shared 9s choreography: cursor in -> click pill -> popover springs from
+     it -> sessions cascade -> hold -> close -> out. Two palettes. */
+  .si .cursor{animation:si-cursor 9s var(--ease-in-out) infinite}
+  @keyframes si-cursor{
+    0%,6%{opacity:0;transform:translate(206px,60px)}
+    14%{opacity:1;transform:translate(146px,10px)}
+    17.5%{transform:translate(146px,10px)}
+    18%{transform:translate(146px,10px) scale(.85)}
+    19%{transform:translate(146px,10px) scale(1)}
+    64%{opacity:1;transform:translate(146px,10px)}
+    78%,100%{opacity:0;transform:translate(206px,80px)}
+  }
+  .si .pop{opacity:0;transform-box:fill-box;transform-origin:80% 0%;animation:si-pop 9s var(--ease-out) infinite}
+  @keyframes si-pop{
+    0%,18.5%{opacity:0;transform:scale(.95) translateY(-3px)}
+    23%,66%{opacity:1;transform:scale(1) translateY(0)}
+    71%,100%{opacity:0;transform:scale(.95) translateY(-3px)}
+  }
+  .si .srow{opacity:0;animation:si-row 9s var(--ease-out) infinite}
+  .si .srow.k1{animation-delay:.08s}.si .srow.k2{animation-delay:.16s}.si .srow.k3{animation-delay:.24s}.si .srow.k4{animation-delay:.32s}
+  @keyframes si-row{
+    0%,21%{opacity:0;transform:translateY(4px)}
+    26%,64%{opacity:1;transform:translateY(0)}
+    69%,100%{opacity:0;transform:translateY(4px)}
+  }
+  .si-light .pill{animation:si-pill-l 9s ease infinite}
+  @keyframes si-pill-l{0%,17.5%{fill:#f4f4f6}18.5%,68%{fill:#dfdfe4}72%,100%{fill:#f4f4f6}}
+  .si-dark .pill{animation:si-pill-d 9s ease infinite}
+  @keyframes si-pill-d{0%,17.5%{fill:#2d2d33}18.5%,68%{fill:#3d3d45}72%,100%{fill:#2d2d33}}
+  @media (prefers-reduced-motion:reduce){svg *{animation-duration:0.01s !important;animation-iteration-count:1 !important}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <h1>SI hover, rebuilt on the wallpaper</h1>
+  <p>The original recipe (menu-bar crop over the helios wallpaper, cursor clicks the pill, sessions popover springs out) rebuilt as a designed prototype, in a light and a dark variant that swap with the site theme like the other three rows.</p>
+
+  <p class="cap">Light &middot; helios-light</p>
+  <div class="stage" data-proto="si-light"></div>
+  <template id="si-light">
+    <svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" class="si si-light">
+      <image href="/projects/helios-light.jpg" x="-30" y="0" width="256" height="142" preserveAspectRatio="xMidYMin slice"/>
+      <!-- menu bar (translucent light) -->
+      <rect width="196" height="17" fill="#f5f5f7" fill-opacity=".8"/>
+      <line x1="0" y1="17" x2="196" y2="17" stroke="#00000022" stroke-width=".5"/>
+      <rect x="10" y="6.5" width="10" height="4.5" rx="2.25" fill="#1d1d1f" opacity=".55"/>
+      <rect x="26" y="6.5" width="16" height="4.5" rx="2.25" fill="#1d1d1f" opacity=".32"/>
+      <rect x="48" y="6.5" width="13" height="4.5" rx="2.25" fill="#1d1d1f" opacity=".32"/>
+      <rect class="pill" x="118" y="3.5" width="52" height="10" rx="5" fill="#f4f4f6" stroke="#00000026" stroke-width=".5"/>
+      <circle cx="127" cy="8.5" r="2" fill="#007AFF"/>
+      <circle cx="134.5" cy="8.5" r="2" fill="#FF9F0A"/>
+      <circle cx="142" cy="8.5" r="2" fill="#FF3B30"/>
+      <circle cx="149.5" cy="8.5" r="2" fill="#34C759"/>
+      <text x="158" y="11" fill="#3c3c43" font-size="5.4" font-weight="600">+2</text>
+      <text x="188" y="11.4" fill="#3c3c43" font-size="5.6" text-anchor="end">9:41</text>
+      <!-- popover -->
+      <g class="pop">
+        <path d="M141 19 l4 -5 l4 5 Z" fill="#f7f7f9"/>
+        <rect x="52" y="19" width="132" height="92" rx="10" fill="#f7f7f9" fill-opacity=".97" stroke="#00000021" stroke-width=".6"/>
+        <text x="62" y="34" fill="#86868b" font-size="6" font-weight="600" letter-spacing=".5">SESSIONS</text>
+        <text x="174" y="34" fill="#b0b0b6" font-size="5.4" text-anchor="end">4 active</text>
+        <g font-size="6.6">
+          <g class="srow k1"><circle cx="66" cy="48" r="2.8" fill="#007AFF"/><text x="74" y="50.6" fill="#1d1d1f" font-weight="500">build-assets</text><text x="174" y="50.6" fill="#86868b" font-size="5.6" text-anchor="end">running &middot; 1m</text></g>
+          <g class="srow k2"><circle cx="66" cy="64" r="2.8" fill="#FF9F0A"/><text x="74" y="66.6" fill="#1d1d1f" font-weight="500">run-tests</text><text x="174" y="66.6" fill="#c77e12" font-size="5.6" text-anchor="end">waiting &middot; 12m</text></g>
+          <g class="srow k3"><circle cx="66" cy="80" r="2.8" fill="#FF3B30"/><text x="74" y="82.6" fill="#1d1d1f" font-weight="500">deploy-agent</text><text x="174" y="82.6" fill="#d2352b" font-size="5.6" text-anchor="end">error &middot; 2m</text></g>
+          <g class="srow k4"><circle cx="66" cy="96" r="2.8" fill="#34C759"/><text x="74" y="98.6" fill="#86868b" font-weight="500">lint-check</text><text x="174" y="98.6" fill="#86868b" font-size="5.6" text-anchor="end">done &middot; 1m</text></g>
+        </g>
+      </g>
+      <g class="cursor"><path d="M0 0 L0 11.2 L2.6 8.8 L4.6 13 L6.4 12.2 L4.4 8 L7.8 7.8 Z" fill="#fff" stroke="#111" stroke-width=".9"/></g>
+    </svg>
+  </template>
+
+  <p class="cap">Dark &middot; helios-dark</p>
+  <div class="stage" data-proto="si-dark"></div>
+  <template id="si-dark">
+    <svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" class="si si-dark">
+      <image href="/projects/helios-dark.jpg" x="-30" y="0" width="256" height="142" preserveAspectRatio="xMidYMin slice"/>
+      <!-- menu bar (translucent dark) -->
+      <rect width="196" height="17" fill="#1d1d23" fill-opacity=".78"/>
+      <line x1="0" y1="17" x2="196" y2="17" stroke="#ffffff1f" stroke-width=".5"/>
+      <rect x="10" y="6.5" width="10" height="4.5" rx="2.25" fill="#ffffff" opacity=".6"/>
+      <rect x="26" y="6.5" width="16" height="4.5" rx="2.25" fill="#ffffff" opacity=".32"/>
+      <rect x="48" y="6.5" width="13" height="4.5" rx="2.25" fill="#ffffff" opacity=".32"/>
+      <rect class="pill" x="118" y="3.5" width="52" height="10" rx="5" fill="#2d2d33" stroke="#ffffff2e" stroke-width=".5"/>
+      <circle cx="127" cy="8.5" r="2" fill="#409CFF"/>
+      <circle cx="134.5" cy="8.5" r="2" fill="#FFB340"/>
+      <circle cx="142" cy="8.5" r="2" fill="#FF6961"/>
+      <circle cx="149.5" cy="8.5" r="2" fill="#30DB5B"/>
+      <text x="158" y="11" fill="#d4d4dc" font-size="5.4" font-weight="600">+2</text>
+      <text x="188" y="11.4" fill="#d4d4dc" font-size="5.6" text-anchor="end">9:41</text>
+      <!-- popover -->
+      <g class="pop">
+        <path d="M141 19 l4 -5 l4 5 Z" fill="#1d1d23"/>
+        <rect x="52" y="19" width="132" height="92" rx="10" fill="#1d1d23" fill-opacity=".97" stroke="#ffffff24" stroke-width=".6"/>
+        <text x="62" y="34" fill="#8a8a93" font-size="6" font-weight="600" letter-spacing=".5">SESSIONS</text>
+        <text x="174" y="34" fill="#55555e" font-size="5.4" text-anchor="end">4 active</text>
+        <g font-size="6.6">
+          <g class="srow k1"><circle cx="66" cy="48" r="2.8" fill="#409CFF"/><text x="74" y="50.6" fill="#e2e2e8" font-weight="500">build-assets</text><text x="174" y="50.6" fill="#8a8a93" font-size="5.6" text-anchor="end">running &middot; 1m</text></g>
+          <g class="srow k2"><circle cx="66" cy="64" r="2.8" fill="#FFB340"/><text x="74" y="66.6" fill="#e2e2e8" font-weight="500">run-tests</text><text x="174" y="66.6" fill="#FFB340" font-size="5.6" text-anchor="end">waiting &middot; 12m</text></g>
+          <g class="srow k3"><circle cx="66" cy="80" r="2.8" fill="#FF6961"/><text x="74" y="82.6" fill="#e2e2e8" font-weight="500">deploy-agent</text><text x="174" y="82.6" fill="#FF6961" font-size="5.6" text-anchor="end">error &middot; 2m</text></g>
+          <g class="srow k4"><circle cx="66" cy="96" r="2.8" fill="#30DB5B"/><text x="74" y="98.6" fill="#8a8a93" font-weight="500">lint-check</text><text x="174" y="98.6" fill="#8a8a93" font-size="5.6" text-anchor="end">done &middot; 1m</text></g>
+        </g>
+      </g>
+      <g class="cursor"><path d="M0 0 L0 11.2 L2.6 8.8 L4.6 13 L6.4 12.2 L4.4 8 L7.8 7.8 Z" fill="#fff" stroke="#111" stroke-width=".9"/></g>
+    </svg>
+  </template>
+</div>
+<script>
+  document.querySelectorAll('[data-proto]').forEach(function(host){
+    var tpl = document.getElementById(host.dataset.proto);
+    host.appendChild(tpl.content.cloneNode(true));
+  });
+</script>
+</body>
+</html>

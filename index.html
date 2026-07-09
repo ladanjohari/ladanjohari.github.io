@@ -216,7 +216,7 @@
         <circle cx="65" cy="64" r="2.8" fill="#E8952A"/><text x="72" y="66.6" fill="#e2e2e8" font-family="Geist,sans-serif" font-size="6.6" font-weight="500">run-tests</text><text x="170" y="66.6" fill="#E8952A" font-family="Geist,sans-serif" font-size="5.6" text-anchor="end">waiting &middot; 12m</text>
         <circle cx="65" cy="79" r="2.8" fill="#FF3B30"/><text x="72" y="81.6" fill="#e2e2e8" font-family="Geist,sans-serif" font-size="6.6" font-weight="500">deploy-agent</text><text x="170" y="81.6" fill="#FF3B30" font-family="Geist,sans-serif" font-size="5.6" text-anchor="end">error &middot; 2m</text>
         <circle cx="65" cy="94" r="2.8" fill="#34C759"/><text x="72" y="96.6" fill="#8a8a93" font-family="Geist,sans-serif" font-size="6.6" font-weight="500">lint-check</text><text x="170" y="96.6" fill="#6a6a72" font-family="Geist,sans-serif" font-size="5.6" text-anchor="end">done &middot; 1m</text>
-      </svg><video class="thumb-video" src="/assets/previews/session-indicator-frame.mp4" loop muted playsinline preload="metadata"></video></div>
+      </svg><video class="thumb-video" src="/assets/previews/session-indicator-frame.mp4" data-src-light="/assets/previews/session-indicator-frame.mp4" data-src-dark="/assets/previews/session-indicator-frame-dark.mp4" loop muted playsinline preload="metadata"></video></div>
           <div class="work-info">
             <span class="work-title">Session Indicator</span>
             <div class="work-desc">Track every running AI agent from the menu bar so you never lose your place.</div>
@@ -499,17 +499,28 @@
       row.addEventListener('mouseleave', () => { if (preview.pause) { preview.pause(); preview.currentTime = 0; } });
     });
   }
-  // Touch devices never hover: play the preview while its row is mostly
-  // on screen, pause it offscreen. Skipped under reduced motion / Save-Data.
+  // Touch devices never hover: a row plays its preview only while it sits
+  // in the middle band of the screen, and only after a short dwell, so
+  // scrolling past shows thumbnails and pausing on a row starts the clip.
+  // Skipped under reduced motion / Save-Data.
   if (!canHover && !reduceMotionPreviews && !(navigator.connection && navigator.connection.saveData)) {
+    const dwellTimers = new WeakMap();
     const previewObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         const v = entry.target.querySelector('.thumb-video');
         if (!v) return;
-        if (entry.intersectionRatio >= 0.6) { v.style.opacity = '1'; if (v.play) v.play(); }
-        else { if (v.pause) v.pause(); v.style.opacity = '0'; }
+        if (entry.isIntersecting) {
+          dwellTimers.set(entry.target, setTimeout(() => {
+            v.style.opacity = '1';
+            if (v.play) v.play();
+          }, 600));
+        } else {
+          clearTimeout(dwellTimers.get(entry.target));
+          if (v.pause) v.pause();
+          v.style.opacity = '0';
+        }
       });
-    }, { threshold: [0, 0.6] });
+    }, { rootMargin: '-35% 0px -35% 0px', threshold: 0 });
     document.querySelectorAll('.work-row').forEach(row => previewObserver.observe(row));
   }
 
