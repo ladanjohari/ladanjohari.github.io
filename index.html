@@ -142,6 +142,8 @@
     .wf-pips-fill { position: absolute; top: 10px; left: 0; height: 3px; border-radius: 2px; background: var(--accent); transition: width 0.25s cubic-bezier(0.23, 1, 0.32, 1); }
 
     .about-text { font-size: 0.925rem; line-height: 1.85; color: var(--mid); max-width: 500px; text-wrap: pretty; }
+    .about-text b { color: var(--ink); font-weight: 600; }
+    .about-tease { font-size: 0.875rem; line-height: 1.8; color: var(--mid); max-width: 500px; text-wrap: pretty; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--rule); }
 
     .elsewhere { padding: 0; margin-bottom: 12px; }
     .elsewhere-text { font-size: 0.925rem; line-height: 1.7; color: var(--mid); text-wrap: pretty; }
@@ -416,6 +418,14 @@
     </a>
   </section>
   -->
+
+  <section aria-label="About" style="margin-bottom:80px;">
+    <h2 class="section-label reveal">About</h2>
+    <p class="about-text reveal" style="margin-top:20px;">I&rsquo;m a creative technologist with an <b>MFA in Design from UC Davis</b> and a master&rsquo;s in Architecture. Now, as a design engineer, I build high-fidelity prototypes and interactions for the web and in <b>SwiftUI</b>. With AI tools in the loop, I direct the work like a studio of one: getting prototypes ready for early testing, collecting feedback, and moving quickly without losing quality.</p>
+    <!-- UNHIDE when the art page is ready: remove `hidden` + display:none, and wrap in a link to /art.html -->
+    <p class="about-tease reveal" hidden style="display:none;">Before software I made physical things. I&rsquo;ve worked as a multimedia artist since 2018. The same instinct, now in code.</p>
+    <!-- RESUME LINK goes here when the PDF is ready -->
+  </section>
 
   <section class="elsewhere" aria-label="Elsewhere" style="margin-bottom:80px;">
     <h2 class="section-label reveal">Elsewhere</h2>
