@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { width: 360px; height: 225px; overflow: hidden; background: #161616; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif; -webkit-font-smoothing: antialiased; }
+
+.scene { width: 360px; height: 225px; position: relative; overflow: hidden; }
+.scene::before {
+  content: ''; position: absolute; inset: 0 auto 0 0;
+  width: 50px;
+  background: linear-gradient(to right, rgba(10,10,10,0.85) 0%, transparent 100%);
+  z-index: 30; pointer-events: none;
+}
+.wallpaper {
+  position: absolute; inset: 0;
+  background: url('helios-dark.jpg') center center / cover no-repeat;
+}
+
+.menubar {
+  position: relative; z-index: 10;
+  height: 24px;
+  background: rgba(22,22,22,0.88);
+  border-bottom: 0.5px solid rgba(255,255,255,0.06);
+  display: flex; align-items: center; justify-content: flex-end;
+  padding: 0 10px; gap: 1px; flex-shrink: 0;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+}
+.mb-item { font-size: 12px; color: rgba(255,255,255,0.75); padding: 0 5px; height: 24px; display: flex; align-items: center; white-space: nowrap; }
+.mb-datetime { font-size: 12px; color: rgba(255,255,255,0.82); letter-spacing: 0.01em; }
+
+.si-wrap { padding: 0 6px; height: 24px; display: flex; align-items: center; cursor: pointer; border-radius: 5px; position: relative; }
+.si-pill {
+  background: rgba(48,48,48,0.95);
+  border: 0.5px solid rgba(155,155,155,0.38);
+  border-radius: 10px; height: 16px;
+  display: flex; align-items: center;
+  padding: 0 6px; gap: 5px;
+}
+.dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.dot.active  { background: #fff; animation: shimmer 1.6s ease-in-out infinite; }
+.dot.waiting { background: #E8952A; }
+.dot.error   { background: #FF3B30; }
+.dot.done    { background: #34C759; }
+.plus-badge  { font-size: 10px; color: rgba(255,255,255,0.45); font-weight: 500; padding-left: 1px; }
+
+@keyframes shimmer {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50%     { transform: scale(0.35); opacity: 0.15; }
+}
+
+.popover {
+  position: absolute; z-index: 50;
+  right: 8px; top: 28px;
+  width: 276px;
+  background: rgba(36,36,36,0.97);
+  border: 0.5px solid rgba(255,255,255,0.10);
+  border-radius: 13px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.55);
+  opacity: 0;
+  transform: translateY(-5px) scale(0.97);
+  transform-origin: top right;
+  animation: popAnim 9s ease infinite;
+}
+@keyframes popAnim {
+  0%,33%   { opacity: 0; transform: translateY(-5px) scale(0.97); }
+  37%,78%  { opacity: 1; transform: translateY(0) scale(1); }
+  86%,100% { opacity: 0; transform: translateY(-4px) scale(0.98); }
+}
+
+.pop-header { padding: 11px 13px 9px; border-bottom: 0.5px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; }
+.pop-title  { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.82); }
+.pop-badge  { font-size: 10px; color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.08); padding: 1px 7px; border-radius: 20px; }
+.s-row { display: flex; align-items: center; gap: 9px; padding: 7px 13px; }
+.s-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.s-dot.active  { background: #fff; animation: shimmer 1.6s ease-in-out infinite; }
+.s-dot.waiting { background: #E8952A; }
+.s-dot.done    { background: #34C759; }
+.s-name   { flex: 1; font-size: 12px; color: rgba(255,255,255,0.75); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.s-status { font-size: 11px; color: rgba(255,255,255,0.3); white-space: nowrap; }
+.pop-footer { padding: 7px 13px; border-top: 0.5px solid rgba(255,255,255,0.06); font-size: 10px; color: rgba(255,255,255,0.22); text-align: center; }
+
+.cursor {
+  position: absolute; z-index: 100;
+  pointer-events: none;
+  animation: cursorMove 9s ease infinite;
+}
+@keyframes cursorMove {
+  0%,20%   { right: -20px; top: 6px; opacity: 0; transform: scale(1); }
+  22%      { right: -20px; top: 6px; opacity: 1; transform: scale(1); }
+  33%      { right: 225px; top: 6px; opacity: 1; transform: scale(1); }
+  35%      { right: 225px; top: 6px; opacity: 1; transform: scale(0.82); }
+  37%      { right: 225px; top: 6px; opacity: 1; transform: scale(1); }
+  68%      { right: 225px; top: 6px; opacity: 1; transform: scale(1); }
+  78%      { right: -20px; top: 6px; opacity: 0; transform: scale(1); }
+  100%     { right: -20px; top: 6px; opacity: 0; transform: scale(1); }
+}
+</style>
+</head>
+<body>
+<div class="scene">
+  <div class="wallpaper"></div>
+  <div style="position:relative;z-index:5;display:flex;flex-direction:column;height:100%;">
+    <div class="menubar">
+      <div class="si-wrap">
+        <div class="si-pill">
+          <div class="dot error"></div>
+          <div class="dot waiting"></div>
+          <div class="dot active"></div>
+          <div class="dot done"></div>
+          <span class="plus-badge">+2</span>
+        </div>
+      </div>
+      <div class="mb-item" style="padding:0 4px;">
+        <svg width="15" height="12" viewBox="0 0 15 12" fill="none">
+          <path d="M7.5 2.8C9.7 2.8 11.7 3.7 13.1 5.2L14.2 4.1C12.5 2.3 10.1 1.2 7.5 1.2C4.9 1.2 2.5 2.3 0.8 4.1L1.9 5.2C3.3 3.7 5.3 2.8 7.5 2.8Z" fill="rgba(255,255,255,0.75)"/>
+          <path d="M7.5 5.2C9.1 5.2 10.5 5.9 11.5 7L12.6 5.9C11.3 4.5 9.5 3.6 7.5 3.6C5.5 3.6 3.7 4.5 2.4 5.9L3.5 7C4.5 5.9 5.9 5.2 7.5 5.2Z" fill="rgba(255,255,255,0.75)"/>
+          <path d="M7.5 7.6C8.5 7.6 9.3 8 9.9 8.7L11 7.6C10.1 6.6 8.9 6 7.5 6C6.1 6 4.9 6.6 4 7.6L5.1 8.7C5.7 8 6.5 7.6 7.5 7.6Z" fill="rgba(255,255,255,0.75)"/>
+          <circle cx="7.5" cy="10.5" r="1.2" fill="rgba(255,255,255,0.75)"/>
+        </svg>
+      </div>
+      <div class="mb-item" style="padding:0 4px;">
+        <svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+          <rect x="0.5" y="1.5" width="18" height="9" rx="2" stroke="rgba(255,255,255,0.45)" stroke-width="1"/>
+          <rect x="2" y="3" width="12" height="6" rx="1" fill="rgba(255,255,255,0.55)"/>
+          <path d="M19.5 4.5V7.5C20.3 7.2 20.8 6.4 20.8 6C20.8 5.6 20.3 4.8 19.5 4.5Z" fill="rgba(255,255,255,0.35)"/>
+        </svg>
+      </div>
+      <div class="mb-item mb-datetime">Thu May 28&nbsp;&nbsp;1:47 PM</div>
+    </div>
+  </div>
+  <div class="popover">
+    <div class="pop-header">
+      <span class="pop-title">Sessions</span>
+      <span class="pop-badge">4 active</span>
+    </div>
+    <div class="s-row"><div class="s-dot" style="background:#FF3B30"></div><span class="s-name">claude-main</span><span class="s-status">error &middot; 2m ago</span></div>
+    <div class="s-row"><div class="s-dot waiting"></div><span class="s-name">deploy-agent</span><span class="s-status">waiting &middot; 12m</span></div>
+    <div class="s-row"><div class="s-dot active"></div><span class="s-name">test-runner</span><span class="s-status">running &middot; 4m</span></div>
+    <div class="s-row"><div class="s-dot done"></div><span class="s-name">file-watcher</span><span class="s-status">done &middot; 1m ago</span></div>
+    <div class="pop-footer">click any session to bring to front</div>
+  </div>
+  <div class="cursor">
+    <svg width="16" height="20" viewBox="0 0 16 20" fill="none">
+      <path d="M1 1L1 15.5L4.5 12L7 18L8.8 17.2L6.3 11L10.5 11L1 1Z" fill="rgba(255,255,255,0.9)" stroke="rgba(0,0,0,0.4)" stroke-width="1" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</div>
+</body>
+</html>
