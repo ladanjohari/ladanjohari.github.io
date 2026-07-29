@@ -1,1 +1,12 @@
 .DS_Store
+Ladan-Johari-Resume-Application.pdf
+Ladan Johari's Resume-2.pdf
+
+# Tailored resumes stay local - only the general Design Engineer PDF is public
+assets/resume/*.html
+assets/resume/*.md
+assets/resume/Ladan-Johari-Resume-*.pdf
+
+# Build + capture artifacts
+node_modules/
+assets/screen recordings/
