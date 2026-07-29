@@ -1,0 +1,30 @@
+#!/bin/sh
+# Blocks pushing private/unreleased work to this PUBLIC repo.
+# Add patterns below as new private work appears.
+# To push anyway (you are sure it is meant to be public): SKIP_PRIVACY_CHECK=1 git push
+
+[ -n "$SKIP_PRIVACY_CHECK" ] && exit 0
+
+PATTERNS='grayarea|gray-area|clear-glass|substrate|yc-application|Resume-Google|Resume-UXDesigner|resume-anthropic\.pdf'
+
+remote_sha=$(git rev-parse origin/main 2>/dev/null)
+if [ -z "$remote_sha" ]; then
+  range=HEAD
+else
+  range="$remote_sha..HEAD"
+fi
+
+hits=$(git diff --name-only "$range" 2>/dev/null | grep -Ei "$PATTERNS")
+
+if [ -n "$hits" ]; then
+  echo ""
+  echo "PUSH BLOCKED - this is a PUBLIC repo and these files look private:"
+  echo "$hits" | sed 's/^/   /'
+  echo ""
+  echo "Move them out of this repo, or if they really are meant to be public:"
+  echo "   SKIP_PRIVACY_CHECK=1 git push"
+  echo ""
+  exit 1
+fi
+
+exit 0

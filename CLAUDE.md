@@ -9,6 +9,20 @@ Designer, not an engineer. She directs like a creative director. Never present t
 - One question maximum per response, only if the answer would change what I do next
 - No em dashes in copy she'll read as her own voice (they read as AI)
 
+## THIS REPO IS PUBLIC - publishing rules
+Everything committed here is world-readable, including git history, and history
+survives deleting the file. Before pushing:
+- **Never push work Ladan has not said is public.** Applications, proposals,
+  unreleased projects, tailored resumes, private skills: these live in their own
+  repo, not here. Ask before pushing anything you did not personally add to a
+  public-facing page.
+- **Never push on your own initiative.** Committing locally is fine. Pushing is
+  publishing, so it needs her go-ahead.
+- A `pre-push` hook blocks known-private filename patterns (`.githooks/pre-push`,
+  copy it to `.git/hooks/` on a fresh clone). Add new patterns as private work appears.
+- Private material currently lives in: `~/projects/gray-area` (private GitHub repo
+  `ladanjohari/gray-area`), `~/.claude/skills/clear-glass`.
+
 ## The site
 - Live at ladanjohari.com
 - Repo: git@github.com:ladanjohari/ladanjohari.github.io.git
