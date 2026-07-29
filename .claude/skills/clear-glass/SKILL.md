@@ -5,7 +5,7 @@ description: Recipe for the Clear Glass visual identity (locked for the Gray Are
 
 # Clear Glass — material + motion recipe
 
-Extracted from the Gray Area exhibition identity work (process/grayarea-clear-glass-v4.html and -v5.html are the verified references; open them in a browser to see everything below live). The look originates from Apple's WWDC25 design-resources pages: glass as a REAL OBJECT lying on top of the interface, read through its bright edges and the color underneath it — never a blur-style painted on pixels.
+Extracted from the Gray Area exhibition identity work (~/projects/gray-area/grayarea-clear-glass-v4.html and -v5.html are the verified references; open them in a browser to see everything below live). The look originates from Apple's WWDC25 design-resources pages: glass as a REAL OBJECT lying on top of the interface, read through its bright edges and the color underneath it — never a blur-style painted on pixels.
 
 ## The concept that makes it ours
 
@@ -96,7 +96,7 @@ background:repeating-linear-gradient(90deg, rgba(80,90,110,0.05) 0 1px, transpar
 
 ## Gotchas (each cost a debugging round)
 
-- **Never use `z-index:-1` pseudo-elements for rims/glows behind glass.** Inside any ancestor stacking context they paint behind the ancestor's background and vanish. For gradient rims use the masked-border trick: `padding:1.5px` + `mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask-composite:exclude;` (see grayarea-visual-directions-v2.html, Prism direction).
+- **Never use `z-index:-1` pseudo-elements for rims/glows behind glass.** Inside any ancestor stacking context they paint behind the ancestor's background and vanish. For gradient rims use the masked-border trick: `padding:1.5px` + `mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask-composite:exclude;` (see ~/projects/gray-area/grayarea-visual-directions-v2.html, Prism direction).
 - **Milkiness kills the "clear" read.** If color under the slab isn't clearly visible, lower the white gradient alphas (0.22/0.04/0.13 was the sweet spot) and keep backdrop blur at 1.5px, never more than 3px.
 - **True refraction (edges bending what's underneath) is NOT achievable in CSS.** Apple pre-renders it in 3D. Don't chase it; the rim + streak + color-under-glass carries the illusion. If one hero shot truly needs it, use a pre-rendered video/image.
 - White "working" elements vanish on light backgrounds — the light room uses the gray sweep gradient instead of white.
@@ -104,5 +104,5 @@ background:repeating-linear-gradient(90deg, rgba(80,90,110,0.05) 0 1px, transpar
 
 ## Where this is used
 
-- Gray Area x Modal exhibition identity (locked July 13, 2026): v5 = canonical, v1-v4 = archived options in process/.
+- Gray Area x Modal exhibition identity (locked July 13, 2026): v5 = canonical, v1-v4 = archived options. All Gray Area files live in ~/projects/gray-area (private, outside this repo).
 - Related but distinct: portfolio-ui skill (session-indicator repo) = the dark opacity-hierarchy system; this skill is the glass-material system. They share the amber/green semantics.
