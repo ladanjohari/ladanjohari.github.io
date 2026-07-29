@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preview Panel Options — Process</title>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #F7F6F3; --ink: #111; --mid: #6B6B6B;
+      --rule: #D4D3CF; --accent: #0066FF; --accent-dim: #D6E4FF;
+    }
+    body { font-family: 'Geist', system-ui, sans-serif; background: #E8E7E3; color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+    /* ── Tabs ── */
+    .tabs { display: flex; gap: 4px; padding: 24px 24px 0; }
+    .tab {
+      padding: 8px 20px; border-radius: 6px 6px 0 0;
+      font-size: 0.8rem; font-weight: 600; letter-spacing: -0.01em;
+      border: none; cursor: pointer; background: #D4D3CF; color: var(--mid);
+      transition: background 0.15s, color 0.15s;
+    }
+    .tab.active { background: var(--bg); color: var(--ink); }
+    .tab-label { font-size: 0.68rem; font-weight: 500; color: var(--mid); padding: 0 24px 12px; margin-top: 4px; display: none; }
+    .tab-label.active { display: block; }
+
+    /* ── Viewport frame ── */
+    .frame-wrap { padding: 0 24px 24px; }
+    .frame {
+      background: var(--bg); border-radius: 0 8px 8px 8px;
+      overflow: hidden; position: relative;
+      height: 520px; border: 1px solid var(--rule);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+    }
+    .viewport-label {
+      position: absolute; bottom: 12px; right: 14px;
+      font-size: 0.65rem; color: var(--rule); letter-spacing: 0.06em;
+      font-weight: 500; pointer-events: none;
+    }
+
+    /* ── Shell variants ── */
+    .shell {
+      margin: 0 auto; padding: 0 28px;
+      height: 100%; position: relative;
+    }
+    /* Option A: shell stays 700px, preview smaller (220×138) */
+    .shell-a { max-width: 700px; }
+    /* Option B: shell narrower 560px, preview 320×200 */
+    .shell-b { max-width: 560px; }
+    /* Option C: shell 700px, preview left-edge aligned to shell right */
+    .shell-c { max-width: 700px; }
+
+    /* ── Right column shading ── */
+    .right-col {
+      position: absolute; top: 0; right: 0; bottom: 0;
+      background: rgba(0,102,255,0.04);
+      border-left: 1px dashed var(--accent-dim);
+      pointer-events: none;
+    }
+
+    /* ── Work list ── */
+    .section-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--mid);
+      padding: 32px 0 14px; border-bottom: 1px solid var(--rule);
+    }
+    .work-list { list-style: none; }
+    .work-item { border-bottom: 1px solid var(--rule); }
+    .work-row {
+      display: flex; align-items: center; gap: 20px;
+      padding: 20px 0; text-decoration: none; color: inherit;
+    }
+    .work-thumb {
+      width: 80px; height: 50px; border-radius: 6px;
+      background: #111; flex-shrink: 0; border: 1px solid var(--rule);
+      overflow: hidden;
+    }
+    .work-thumb.light { background: #e0deda; }
+    .work-info { flex: 1; min-width: 0; }
+    .work-title { font-size: 1rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
+    .work-tags { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--mid); margin-top: 4px; }
+    .work-year { font-size: 0.8rem; color: var(--rule); flex-shrink: 0; }
+    .work-arrow { font-size: 15px; color: var(--accent); flex-shrink: 0; }
+
+    /* ── Preview panel ── */
+    .preview-panel {
+      position: absolute; border-radius: 10px;
+      background: #111; border: 1px solid #333;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.20);
+      pointer-events: none; z-index: 10;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .preview-panel span {
+      font-size: 0.7rem; color: #555; letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .preview-panel .preview-inner {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .preview-inner span { font-size: 0.65rem; color: #ffffff55; letter-spacing: 0.08em; text-transform: uppercase; }
+
+    /* Dimension label on preview */
+    .dim-tag {
+      position: absolute; top: 6px; right: 6px;
+      background: var(--accent); color: #fff;
+      font-size: 0.58rem; font-weight: 600; letter-spacing: 0.04em;
+      padding: 2px 6px; border-radius: 3px;
+    }
+
+    /* ── Measurement guides ── */
+    .guide-line {
+      position: absolute; top: 0; bottom: 0; width: 1px;
+      background: rgba(0,102,255,0.3); pointer-events: none;
+    }
+    .guide-label {
+      position: absolute; top: 12px;
+      font-size: 0.6rem; color: var(--accent); font-weight: 600;
+      white-space: nowrap; pointer-events: none;
+    }
+    .measure-bar {
+      position: absolute; height: 1px; background: var(--accent);
+      opacity: 0.4; pointer-events: none;
+    }
+    .measure-label {
+      position: absolute; font-size: 0.58rem; color: var(--accent);
+      font-weight: 600; white-space: nowrap; pointer-events: none;
+    }
+
+    /* ── Info card ── */
+    .info-card {
+      display: none; position: absolute; top: 12px; left: 12px;
+      background: #fff; border: 1px solid var(--rule);
+      border-radius: 8px; padding: 12px 16px; max-width: 220px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08); z-index: 20;
+    }
+    .info-card.active { display: block; }
+    .info-card h3 { font-size: 0.8rem; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+    .info-card p { font-size: 0.72rem; color: var(--mid); line-height: 1.6; }
+    .info-card .pro { color: #16a34a; font-weight: 600; }
+    .info-card .con { color: #dc2626; font-weight: 600; }
+
+    /* ── Panel options ── */
+    .panel { display: none; }
+    .panel.active { display: block; }
+  </style>
+</head>
+<body>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('a')">Option A — Smaller Panel</button>
+    <button class="tab" onclick="switchTab('b')">Option B — Narrower Shell</button>
+    <button class="tab" onclick="switchTab('c')">Option C — Left-aligned Panel</button>
+  </div>
+
+  <!-- Option A -->
+  <div class="panel active" id="panel-a">
+    <p class="tab-label active">Shell stays 700px wide · Preview shrinks to 220 × 138px · Works at ~1100px+ viewport</p>
+    <div class="frame-wrap">
+      <div class="frame" id="frame-a">
+
+        <!-- Right column highlight (computed by JS) -->
+        <div class="right-col" id="rcol-a"></div>
+
+        <div class="shell shell-a" style="max-width:700px;">
+          <p class="section-label">Selected Work</p>
+          <ul class="work-list">
+            <li class="work-item">
+              <div class="work-row" id="row-a-1">
+                <div class="work-thumb"></div>
+                <div class="work-info">
+                  <div class="work-title">Session Indicator</div>
+                  <div class="work-tags">AI Agent UI · Interaction System</div>
+                </div>
+                <span class="work-year">2026</span>
+                <span class="work-arrow">→</span>
+              </div>
+            </li>
+            <li class="work-item">
+              <div class="work-row" id="row-a-2">
+                <div class="work-thumb"></div>
+                <div class="work-info">
+                  <div class="work-title">PromptedFind</div>
+                  <div class="work-tags">AI Interaction Pattern · Prototype</div>
+                </div>
+                <span class="work-year">2025</span>
+                <span class="work-arrow">→</span>
+              </div>
+            </li>
+            <li class="work-item">
+              <div class="work-row">
+                <div class="work-thumb light"></div>
+                <div class="work-info">
+                  <div class="work-title" style="opacity:0.4">Xcode Symbol Browser</div>
+                  <div class="work-tags" style="opacity:0.4">Developer Tools · macOS</div>
+                </div>
+                <span style="font-size:0.58rem;color:var(--mid);border:1px solid var(--rule);border-radius:3px;padding:2px 7px;">Soon</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Preview panel A: 220×138 -->
+        <div class="preview-panel" id="preview-a" style="width:220px;height:138px;display:none;">
+          <div class="preview-inner"><span>Video preview</span></div>
+          <div class="dim-tag">220 × 138</div>
+        </div>
+
+        <div class="info-card active" id="info-a">
+          <h3>Option A — Smaller panel</h3>
+          <p>Preview shrinks to <strong>220 × 138px</strong> (keeps 16:9 ratio). Shell stays at 700px.<br><br>
+          <span class="pro">✓</span> Works from ~1100px viewport<br>
+          <span class="pro">✓</span> No layout changes<br>
+          <span class="con">✗</span> Preview is smaller, less impact
+          </p>
+        </div>
+
+        <div class="viewport-label">Simulated ~1100px viewport</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option B -->
+  <div class="panel" id="panel-b">
+    <p class="tab-label">Shell narrows to 560px · Preview stays 320 × 200px · Works at ~1000px+ viewport</p>
+    <div class="frame-wrap">
+      <div class="frame" id="frame-b">
+
+        <div class="right-col" id="rcol-b"></div>
+
+        <div class="shell shell-b" style="max-width:560px;">
+          <p class="section-label">Selected Work</p>
+          <ul class="work-list">
+            <li class="work-item">
+              <div class="work-row" id="row-b-1">
+                <div class="work-thumb"></div>
+                <div class="work-info">
+                  <div class="work-title">Session Indicator</div>
+                  <div class="work-tags">AI Agent UI · Interaction System</div>
+                </div>
+                <span class="work-year">2026</span>
+                <span class="work-arrow">→</span>
+              </div>
+            </li>
+            <li class="work-item">
+              <div class="work-row" id="row-b-2">
+                <div class="work-thumb"></div>
+                <div class="work-info">
+                  <div class="work-title">PromptedFind</div>
+                  <div class="work-tags">AI Interaction Pattern · Prototype</div>
+                </div>
+                <span class="work-year">2025</span>
+                <span class="work-arrow">→</span>
+              </div>
+            </li>
+            <li class="work-item">
+              <div class="work-row">
+                <div class="work-thumb light"></div>
+                <div class="work-info">
+                  <div class="work-title" style="opacity:0.4">Xcode Symbol Browser</div>
+                  <div class="work-tags" style="opacity:0.4">Developer Tools · macOS</div>
+                </div>
+                <span style="font-size:0.58rem;color:var(--mid);border:1px solid var(--rule);border-radius:3px;padding:2px 7px;">Soon</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Preview panel B: 320×200 -->
+        <div class="preview-panel" id="preview-b" style="width:320px;height:200px;display:none;">
+          <div class="preview-inner"><span>Video preview</span></div>
+          <div class="dim-tag">320 × 200</div>
+        </div>
+
+        <div class="info-card active" id="info-b">
+          <h3>Option B — Narrower shell</h3>
+          <p>Shell shrinks to <strong>560px</strong>. Preview stays full 320 × 200px.<br><br>
+          <span class="pro">✓</span> Preview stays large<br>
+          <span class="pro">✓</span> Works from ~1000px viewport<br>
+          <span class="con">✗</span> Text lines get shorter<br>
+          <span class="con">✗</span> Changes the whole page layout
+          </p>
+        </div>
+
+        <div class="viewport-label">Simulated ~1000px viewport</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option C -->
+  <div class="panel" id="panel-c">
+    <p class="tab-label">Shell stays 700px · Preview 320×200 left-edge flush with shell right edge · Works at ~1350px+ viewport</p>
+    <div class="frame-wrap">
+      <div class="frame" id="frame-c">
+
+        <div class="right-col" id="rcol-c"></div>
+
+        <div class="shell shell-c" style="max-width:700px;">
+          <p class="section-label">Selected Work</p>
+          <ul class="work-list">
+            <li class="work-item">
+              <div class="work-row" id="row-c-1">
+                <div class="work-thumb"></div>
+                <div class="work-info">
+                  <div class="work-title">Session Indicator</div>
+                  <div class="work-tags">AI Agent UI · Interaction System</div>
+                </div>
+                <span class="work-year">2026</span>
+                <span class="work-arrow">→</span>
+              </div>
+            </li>
+            <li class="work-item">
+              <div class="work-row" id="row-c-2">
+                <div class="work-thumb"></div>
+                <div class="work-info">
+                  <div class="work-title">PromptedFind</div>
+                  <div class="work-tags">AI Interaction Pattern · Prototype</div>
+                </div>
+                <span class="work-year">2025</span>
+                <span class="work-arrow">→</span>
+              </div>
+            </li>
+            <li class="work-item">
+              <div class="work-row">
+                <div class="work-thumb light"></div>
+                <div class="work-info">
+                  <div class="work-title" style="opacity:0.4">Xcode Symbol Browser</div>
+                  <div class="work-tags" style="opacity:0.4">Developer Tools · macOS</div>
+                </div>
+                <span style="font-size:0.58rem;color:var(--mid);border:1px solid var(--rule);border-radius:3px;padding:2px 7px;">Soon</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Preview panel C: 320×200, left edge = shell right -->
+        <div class="preview-panel" id="preview-c" style="width:320px;height:200px;display:none;">
+          <div class="preview-inner"><span>Video preview</span></div>
+          <div class="dim-tag">320 × 200</div>
+        </div>
+
+        <div class="info-card active" id="info-c">
+          <h3>Option C — Left-aligned panel</h3>
+          <p>Preview left edge aligns with shell right edge + 16px gap. Preview stays 320 × 200px.<br><br>
+          <span class="pro">✓</span> Preview stays large<br>
+          <span class="pro">✓</span> No layout changes<br>
+          <span class="con">✗</span> Needs ~1350px+ to avoid overflow<br>
+          <span class="con">✗</span> Slightly overflows at 1280px
+          </p>
+        </div>
+
+        <div class="viewport-label">Simulated ~1350px viewport</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(id) {
+      document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', ['a','b','c'][i]===id));
+      document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id==='panel-'+id));
+      document.querySelectorAll('.tab-label').forEach((l,i) => l.classList.toggle('active', ['a','b','c'][i]===id));
+      positionPreviews();
+    }
+
+    function positionPreviews() {
+      // Option A
+      positionOption('frame-a', 'shell-a', 'preview-a', 'rcol-a', 220, 138, 'center', 1100);
+      // Option B
+      positionOption('frame-b', 'shell-b', 'preview-b', 'rcol-b', 320, 200, 'center', 1000);
+      // Option C
+      positionOption('frame-c', 'shell-c', 'preview-c', 'rcol-c', 320, 200, 'left-align', 1350);
+    }
+
+    function positionOption(frameId, shellClass, previewId, rcolId, pw, ph, mode, minVP) {
+      const frame = document.getElementById(frameId);
+      const shell = frame.querySelector('.' + shellClass);
+      const preview = document.getElementById(previewId);
+      const rcol = document.getElementById(rcolId);
+      if (!frame || !shell || !preview) return;
+
+      const frameRect = frame.getBoundingClientRect();
+      const shellRect = shell.getBoundingClientRect();
+
+      // Right column highlight
+      const shellRightInFrame = shellRect.right - frameRect.left;
+      rcol.style.left = shellRightInFrame + 'px';
+      rcol.style.right = '0';
+
+      // Right column width
+      const rightColW = frameRect.width - shellRightInFrame;
+
+      // Preview position
+      let px, py;
+      if (mode === 'center') {
+        px = shellRightInFrame + (rightColW - pw) / 2;
+      } else { // left-align
+        px = shellRightInFrame + 16;
+      }
+
+      // Vertical: center in frame
+      py = frameRect.height / 2 - ph / 2;
+
+      // Show/hide based on whether it fits
+      const fits = (px + pw) <= frameRect.width - 8;
+      preview.style.display = fits ? 'block' : 'none';
+      preview.style.left = px + 'px';
+      preview.style.top = py + 'px';
+
+      // Hover behaviour on rows
+      frame.querySelectorAll('.work-row[id]').forEach(row => {
+        row.onmouseenter = () => {
+          const rRect = row.getBoundingClientRect();
+          const rowCenterY = rRect.top - frameRect.top + rRect.height / 2;
+          preview.style.top = Math.max(12, rowCenterY - ph/2) + 'px';
+          preview.style.opacity = '1';
+        };
+        row.onmouseleave = () => { preview.style.opacity = '0.15'; };
+      });
+      preview.style.opacity = '0.15';
+    }
+
+    // Run on load and resize
+    positionPreviews();
+    window.addEventListener('resize', positionPreviews);
+  </script>
+</body>
+</html>

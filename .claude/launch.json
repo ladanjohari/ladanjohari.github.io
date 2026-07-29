@@ -30,6 +30,30 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8002", "--directory", "/Users/ladanjohari/projects/session-indicator"],
       "port": 8002
+    },
+    {
+      "name": "substrate-store",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["/Users/ladanjohari/projects/substrate/store/substrate_store.py", "serve", "8040"],
+      "port": 8040
+    },
+    {
+      "name": "substrate",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8004", "--directory", "/Users/ladanjohari/projects/substrate"],
+      "port": 8004
+    },
+    {
+      "name": "experiments",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8003", "--directory", "/Users/ladanjohari/projects/experiments"],
+      "port": 8003
+    },
+    {
+      "name": "react-practice",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8005", "--directory", "/Users/ladanjohari/projects/learning/react-practice"],
+      "port": 8005
     }
   ]
 }

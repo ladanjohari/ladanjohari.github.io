@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="light dark" />
+<title>Selected Work &mdash; content options</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#F7F6F3;--ink:#111;--mid:#6B6B6B;--rule:#D4D3CF;--hover-row:#EFEEEA;--accent:#0066FF;--accent-dim:#D6E4FF}
+  @media (prefers-color-scheme:dark){:root{--bg:#1A1A1A;--ink:#E8E8E8;--mid:#9A9A9A;--rule:#333;--hover-row:#242424;--accent:#4D94FF;--accent-dim:#1A3A66}}
+  html{background:var(--bg)}
+  body{font-family:'Geist',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:120px}
+  .shell{max-width:760px;margin:0 auto;padding:0 28px}
+  .optlabel{font-size:0.62rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#fff;background:var(--accent);display:inline-block;padding:4px 10px;border-radius:4px;margin:56px 0 6px}
+  .optsub{font-size:0.82rem;line-height:1.6;color:var(--mid);max-width:620px;margin-bottom:4px}
+  .optsub b{color:var(--ink);font-weight:600}
+  .hig{font-size:0.7rem;color:var(--accent);font-weight:500;margin-bottom:16px}
+  .syslabel{font-size:0.6rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);margin:26px 0 2px}
+  .syslabel .rec{color:#0a7d3a}
+
+  .list{list-style:none;margin:0 -14px}
+  .item{border-bottom:.5px solid var(--rule)}
+  .item:last-child{border-bottom:none}
+  .row{display:flex;align-items:center;gap:22px;text-decoration:none;color:var(--ink);padding:16px 14px;border-radius:14px}
+  .thumb{width:150px;height:94px;border-radius:12px;overflow:hidden;flex-shrink:0;border:1px solid var(--rule);background:#111}
+  .thumb svg{width:100%;height:100%;display:block}
+  .info{flex:1;min-width:0}
+  .title{font-size:1.05rem;font-weight:600;letter-spacing:-0.02em}
+  .desc{font-size:0.85rem;color:var(--mid);margin-top:5px;line-height:1.5}
+  .tags{font-size:0.62rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--mid);margin-top:7px;line-height:1.5}
+  .meta{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex-shrink:0;min-width:104px}
+  .yr{font-size:0.8rem;font-weight:500;color:var(--rule)}
+  .status{font-size:0.62rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--accent);white-space:nowrap}
+
+  /* tag pill variant */
+  .tagpill{display:inline-block;font-size:0.6rem;font-weight:500;letter-spacing:0.03em;color:var(--mid);border:1px solid var(--rule);border-radius:999px;padding:3px 10px;margin-top:8px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="t-si" viewBox="0 0 160 100"><rect width="160" height="100" fill="#111"/><rect x="34" y="30" width="92" height="40" rx="11" fill="#1c1c1c" stroke="#2c2c2c" stroke-width=".5"/><circle cx="52" cy="42" r="3.4" fill="#fff"/><rect x="60" y="39.5" width="26" height="4.5" rx="2" fill="#2a2a2a"/><circle cx="52" cy="54" r="3.4" fill="#E8952A"/><rect x="60" y="51.5" width="34" height="4.5" rx="2" fill="#2a2a2a"/></symbol>
+  <symbol id="t-xc" viewBox="0 0 160 100"><rect width="160" height="100" fill="#1c1c1e"/><rect x="10" y="14" width="42" height="72" rx="4" fill="#252528"/><rect x="56" y="14" width="46" height="72" rx="4" fill="#252528"/><rect x="106" y="14" width="44" height="72" rx="4" fill="#252528"/><rect x="14" y="40" width="34" height="7" rx="2" fill="#0A84FF" opacity=".2"/><rect x="60" y="30" width="38" height="7" rx="2" fill="#0A84FF" opacity=".2"/><rect x="110" y="22" width="36" height="7" rx="2" fill="#BF5AF2" opacity=".2"/></symbol>
+</svg>
+
+<div class="shell">
+  <span class="optlabel" style="background:var(--ink)">Selected Work &middot; content options</span>
+  <p class="optsub" style="margin-top:8px">Deciding the <b>action label</b> (replacing &ldquo;Case study&rdquo;), plus tag density and description tone. Each option is shown in context with a page-linked project (Session Indicator) and a video project (Xcode).</p>
+
+  <!-- ===== LABELS ===== -->
+  <span class="optlabel">1 &middot; Action label &mdash; what replaces &ldquo;Case study&rdquo;</span>
+  <p class="optsub">The label should say what the visitor actually does. Video projects stay &ldquo;Watch demo &#8599;&rdquo; in every system; only the page-linked projects change.</p>
+  <p class="hig">HIG: shared vocabulary &mdash; a small consistent set; text labels beat ambiguous icons. Arrow &rarr; = same tab, &#8599; = new tab/external.</p>
+
+  <p class="syslabel">System 1 &mdash; &ldquo;View project&rdquo; (uniform, neutral, safest)</p>
+  <ul class="list">
+    <li class="item"><a class="row" href="#"><span class="thumb"><svg><use href="#t-si"/></svg></span><span class="info"><span class="title">Session Indicator</span><div class="desc">Awareness across parallel AI agents, without breaking focus.</div></span><span class="meta"><span class="yr">2026</span><span class="status">View project &rarr;</span></span></a></li>
+    <li class="item"><a class="row" href="#"><span class="thumb"><svg><use href="#t-xc"/></svg></span><span class="info"><span class="title">Xcode Symbol Browser</span><div class="desc">A faster way to read a codebase&rsquo;s structure.</div></span><span class="meta"><span class="yr">2025</span><span class="status">Watch demo &#8599;</span></span></a></li>
+  </ul>
+
+  <p class="syslabel"><span class="rec">&#9733;</span> System 2 &mdash; Action-accurate (says what each one is)</p>
+  <ul class="list">
+    <li class="item"><a class="row" href="#"><span class="thumb"><svg><use href="#t-si"/></svg></span><span class="info"><span class="title">Session Indicator</span><div class="desc">Awareness across parallel AI agents, without breaking focus.</div></span><span class="meta"><span class="yr">2026</span><span class="status">Try it live &#8599;</span></span></a></li>
+    <li class="item"><a class="row" href="#"><span class="thumb"><svg><use href="#t-xc"/></svg></span><span class="info"><span class="title">Xcode Symbol Browser</span><div class="desc">A faster way to read a codebase&rsquo;s structure.</div></span><span class="meta"><span class="yr">2025</span><span class="status">Watch demo &#8599;</span></span></a></li>
+  </ul>
+
+  <p class="syslabel">System 3 &mdash; &ldquo;Explore&rdquo; (inviting, design-forward)</p>
+  <ul class="list">
+    <li class="item"><a class="row" href="#"><span class="thumb"><svg><use href="#t-si"/></svg></span><span class="info"><span class="title">Session Indicator</span><div class="desc">Awareness across parallel AI agents, without breaking focus.</div></span><span class="meta"><span class="yr">2026</span><span class="status">Explore &rarr;</span></span></a></li>
+    <li class="item"><a class="row" href="#"><span class="thumb"><svg><use href="#t-xc"/></svg></span><span class="info"><span class="title">Xcode Symbol Browser</span><div class="desc">A faster way to read a codebase&rsquo;s structure.</div></span><span class="meta"><span class="yr">2025</span><span class="status">Watch demo &#8599;</span></span></a></li>
+  </ul>
+
+  <p class="syslabel">System 4 &mdash; Destination-typed (names what you land on)</p>
+  <ul class="list">
+    <li class="item"><a class="row" href="#"><span class="thumb"><svg><use href="#t-si"/></svg></span><span class="info"><span class="title">Session Indicator</span><div class="desc">Awareness across parallel AI agents, without breaking focus.</div></span><span class="meta"><span class="yr">2026</span><span class="status">Live prototype &#8599;</span></span></a></li>
+    <li class="item"><a class="row" href="#"><span class="thumb"><svg><use href="#t-xc"/></svg></span><span class="info"><span class="title">Xcode Symbol Browser</span><div class="desc">A faster way to read a codebase&rsquo;s structure.</div></span><span class="meta"><span class="yr">2025</span><span class="status">Video demo &#8599;</span></span></a></li>
+  </ul>
+
+  <!-- ===== TAGS ===== -->
+  <span class="optlabel">2 &middot; Tags &mdash; how much metadata</span>
+  <p class="optsub">Three keyword tags can feel noisy. Options for how much to show under the description.</p>
+  <p class="hig">HIG: restraint &mdash; the description already carries meaning; tags are secondary scannable metadata.</p>
+
+  <p class="syslabel">T1 &mdash; Three tags (current)</p>
+  <ul class="list"><li class="item"><a class="row" href="#"><span class="thumb"><svg><use href="#t-si"/></svg></span><span class="info"><span class="title">Session Indicator</span><div class="desc">Awareness across parallel AI agents, without breaking focus.</div><div class="tags">AI Agent UI &middot; Interaction System &middot; Design Engineering</div></span><span class="meta"><span class="yr">2026</span><span class="status">Try it live &#8599;</span></span></a></li></ul>
+
+  <p class="syslabel">T2 &mdash; Two tags (tighter)</p>
+  <ul class="list"><li class="item"><a class="row" href="#"><span class="thumb"><svg><use href="#t-si"/></svg></span><span class="info"><span class="title">Session Indicator</span><div class="desc">Awareness across parallel AI agents, without breaking focus.</div><div class="tags">AI Agent UI &middot; Interaction System</div></span><span class="meta"><span class="yr">2026</span><span class="status">Try it live &#8599;</span></span></a></li></ul>
+
+  <p class="syslabel">T3 &mdash; Single category pill</p>
+  <ul class="list"><li class="item"><a class="row" href="#"><span class="thumb"><svg><use href="#t-si"/></svg></span><span class="info"><span class="title">Session Indicator</span><div class="desc">Awareness across parallel AI agents, without breaking focus.</div><span class="tagpill">Interaction System</span></span><span class="meta"><span class="yr">2026</span><span class="status">Try it live &#8599;</span></span></a></li></ul>
+
+  <!-- ===== DESCRIPTION TONE ===== -->
+  <span class="optlabel">3 &middot; Description tone</span>
+  <p class="optsub">Same slot, two voices. The line should read fast and say what the project <b>does</b>, not just what it is.</p>
+  <p class="hig">HIG: decision-moment text is clear and concrete. Emil/craft: say the outcome, cut filler.</p>
+
+  <p class="syslabel">D1 &mdash; Descriptive (what it is)</p>
+  <ul class="list"><li class="item"><a class="row" href="#"><span class="thumb"><svg><use href="#t-si"/></svg></span><span class="info"><span class="title">Session Indicator</span><div class="desc">Awareness across parallel AI agents, without breaking focus.</div></span><span class="meta"><span class="yr">2026</span><span class="status">Try it live &#8599;</span></span></a></li></ul>
+
+  <p class="syslabel">D2 &mdash; Outcome-first (what it does for you)</p>
+  <ul class="list"><li class="item"><a class="row" href="#"><span class="thumb"><svg><use href="#t-si"/></svg></span><span class="info"><span class="title">Session Indicator</span><div class="desc">Track every running AI agent from the menu bar &mdash; without losing your place.</div></span><span class="meta"><span class="yr">2026</span><span class="status">Try it live &#8599;</span></span></a></li></ul>
+
+</div>
+</body>
+</html>

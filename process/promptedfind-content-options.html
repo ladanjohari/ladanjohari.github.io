@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prompted Find &mdash; content options for A+B</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#F7F6F3;--ink:#111;--mid:#6B6B6B;--rule:#D4D3CF;--hover-row:#F0EFEC;--accent:#0066FF;--accent-dim:#D6E4FF;--good:#1B7F3B}
+  html{background:var(--bg)}
+  body{font-family:'Geist',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:140px}
+  .shell{max-width:780px;margin:0 auto;padding:0 28px}
+
+  .doc-head{padding-top:56px;border-bottom:1px solid var(--rule);padding-bottom:24px}
+  .doc-eyebrow{font-size:0.65rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-bottom:12px}
+  .doc-title{font-size:1.55rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:10px}
+  .doc-sub{font-size:0.85rem;line-height:1.7;color:var(--mid);max-width:640px}
+  .doc-sub b{color:var(--ink);font-weight:600}
+
+  .slot{margin-top:56px}
+  .slot-head{display:flex;align-items:baseline;gap:12px;padding-bottom:10px;border-bottom:2px solid var(--ink);margin-bottom:4px}
+  .slot-num{font-size:0.72rem;font-weight:700;color:var(--accent)}
+  .slot-title{font-size:0.85rem;font-weight:600}
+  .slot-note{font-size:0.72rem;color:var(--mid);margin-left:auto}
+
+  .cand{display:flex;gap:16px;padding:20px 2px;border-bottom:0.5px solid var(--rule)}
+  .cand:last-child{border-bottom:none}
+  .cand-tag{flex-shrink:0;width:34px;padding-top:3px}
+  .cand-tag span{display:inline-block;font-size:0.68rem;font-weight:700;color:var(--accent);border:1px solid var(--accent-dim);background:rgba(0,102,204,0.04);border-radius:5px;padding:2px 8px}
+  .cand-tag.rec span{color:#fff;background:var(--good);border-color:var(--good)}
+  .cand-body{flex:1;min-width:0}
+  .cand-why{font-size:0.72rem;color:var(--mid);margin-top:10px;line-height:1.6;font-style:italic}
+
+  /* A+B page styles for candidates, rendered in context */
+  .x-descriptor{font-size:1rem;color:var(--mid);line-height:1.65;max-width:520px}
+  .x-claim{font-size:1.05rem;font-weight:600;letter-spacing:-0.015em;color:var(--ink);line-height:1.5;max-width:560px;margin-bottom:8px}
+  .x-support{font-size:0.875rem;line-height:1.75;color:var(--mid);max-width:560px}
+  .x-support strong{color:var(--ink);font-weight:600}
+
+  .x-facts{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+  .x-fact{background:var(--bg);padding:13px 15px}
+  .x-k{font-size:0.62rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);margin-bottom:5px}
+  .x-v{font-size:0.8rem;font-weight:600;color:var(--ink);line-height:1.45}
+  .x-v span{color:var(--mid);font-weight:400}
+
+  .foot{margin-top:72px;padding-top:18px;border-top:1px solid var(--rule);font-size:0.68rem;color:var(--mid);line-height:1.7}
+  .foot b{color:var(--ink)}
+
+  @media (max-width:600px){ .x-facts{grid-template-columns:1fr 1fr} }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="doc-head">
+    <p class="doc-eyebrow">Process &middot; Content pass &middot; 2026-07-07</p>
+    <h1 class="doc-title">Prompted Find &mdash; the words, slot by slot</h1>
+    <p class="doc-sub">
+      A+B is locked as the format. This doc is only about <b>what the bold lines say</b> &mdash;
+      each scan point gets 2&ndash;3 candidates rendered in the real page styles. Pick per slot
+      (&ldquo;1B, 2A, 3C&hellip;&rdquo;), mix freely, or rewrite any line in your own words.
+      The green tag is my recommendation. Rule for every candidate: no em dashes,
+      no AI-copy rhythm, concrete nouns over abstractions.
+    </p>
+  </div>
+
+  <!-- SLOT 1 -->
+  <div class="slot">
+    <div class="slot-head">
+      <span class="slot-num">1</span><span class="slot-title">Hero descriptor</span>
+      <span class="slot-note">first sentence anyone reads</span>
+    </div>
+    <div class="cand">
+      <div class="cand-tag rec"><span>1A</span></div>
+      <div class="cand-body">
+        <p class="x-descriptor">Ask a question about a video. Jump to the exact moment that answers it.</p>
+        <p class="cand-why">Current line, kept. Two short imperatives that mirror the demo. Hard to beat.</p>
+      </div>
+    </div>
+    <div class="cand">
+      <div class="cand-tag"><span>1B</span></div>
+      <div class="cand-body">
+        <p class="x-descriptor">Search inside a video the way you'd ask a person: &ldquo;where do they talk about landing?&rdquo;</p>
+        <p class="cand-why">More voice, shows a real query. Slightly longer; the quote does the demo's job before the video loads.</p>
+      </div>
+    </div>
+    <div class="cand">
+      <div class="cand-tag"><span>1C</span></div>
+      <div class="cand-body">
+        <p class="x-descriptor">A 74-minute lecture. One question. Zero scrubbing.</p>
+        <p class="cand-why">Punchiest, matches the video's opening card. Risk: reads as a tagline, not an explanation.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLOT 2 -->
+  <div class="slot">
+    <div class="slot-head">
+      <span class="slot-num">2</span><span class="slot-title">Facts bar</span>
+      <span class="slot-note">the 30-second visitor reads only this</span>
+    </div>
+    <div class="cand">
+      <div class="cand-tag"><span>2A</span></div>
+      <div class="cand-body">
+        <div class="x-facts">
+          <div class="x-fact"><p class="x-k">What</p><p class="x-v">Semantic video navigation <span>&middot; ask, then jump</span></p></div>
+          <div class="x-fact"><p class="x-k">My role</p><p class="x-v">Design + code <span>&middot; solo, HTML/JS</span></p></div>
+          <div class="x-fact"><p class="x-k">What&rsquo;s real</p><p class="x-v">Working interface <span>&middot; simulated model</span></p></div>
+          <div class="x-fact"><p class="x-k">The pattern</p><p class="x-v">Video today <span>&middot; prose &amp; research next</span></p></div>
+        </div>
+        <p class="cand-why">Draft from the variant. Neutral, categorical. &ldquo;Semantic video navigation&rdquo; is accurate but jargon-first.</p>
+      </div>
+    </div>
+    <div class="cand">
+      <div class="cand-tag rec"><span>2B</span></div>
+      <div class="cand-body">
+        <div class="x-facts">
+          <div class="x-fact"><p class="x-k">The idea</p><p class="x-v">Ask a video a question, <span>land on the moment</span></p></div>
+          <div class="x-fact"><p class="x-k">Built</p><p class="x-v">Solo, design + code <span>&middot; HTML/JS prototype</span></p></div>
+          <div class="x-fact"><p class="x-k">Honest scope</p><p class="x-v">UI is working code, <span>the AI is simulated</span></p></div>
+          <div class="x-fact"><p class="x-k">Why it matters</p><p class="x-v">One pattern <span>for video, prose, research</span></p></div>
+        </div>
+        <p class="cand-why">Plain-language keys (&ldquo;The idea&rdquo;, &ldquo;Honest scope&rdquo;) carry personality; each cell is a sentence fragment a human would say. &ldquo;Honest scope&rdquo; turns the simulated-model admission into a strength.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLOT 3 -->
+  <div class="slot">
+    <div class="slot-head">
+      <span class="slot-num">3</span><span class="slot-title">The Gap &mdash; lead + support</span>
+    </div>
+    <div class="cand">
+      <div class="cand-tag"><span>3A</span></div>
+      <div class="cand-body">
+        <p class="x-claim">Video is easy to watch and hard to search. A document has headings; a video only has time.</p>
+        <p class="x-support">Prompted Find makes the timeline navigable by meaning. Ask what you want to find, and the answer is a <strong>timestamp you can trust</strong>, not a transcript or a summary.</p>
+        <p class="cand-why">Draft from the variant. Balanced, states the insight cleanly.</p>
+      </div>
+    </div>
+    <div class="cand">
+      <div class="cand-tag rec"><span>3B</span></div>
+      <div class="cand-body">
+        <p class="x-claim">You can skim a document. You cannot skim a 74-minute talk.</p>
+        <p class="x-support">Headings give text an address; video only has a clock. Prompted Find gives the timeline addresses: ask what you're looking for, and the answer is a <strong>place in the video</strong>, not a wall of transcript.</p>
+        <p class="cand-why">Starts from the reader's own experience (&ldquo;you&rdquo;), uses the real 74-minute number, and &ldquo;addresses&rdquo; sets up the method section without naming it yet.</p>
+      </div>
+    </div>
+    <div class="cand">
+      <div class="cand-tag"><span>3C</span></div>
+      <div class="cand-body">
+        <p class="x-claim">Finding one moment in a long video still means scrubbing and guessing.</p>
+        <p class="x-support">Prompted Find replaces the guess with a question. The timeline splits into labeled segments, your question highlights the relevant ones, and one click lands you there.</p>
+        <p class="cand-why">Most mechanical: says exactly what happens on screen. Least lyrical, most literal.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLOT 4 -->
+  <div class="slot">
+    <div class="slot-head">
+      <span class="slot-num">4</span><span class="slot-title">The Method &mdash; lead + support</span>
+      <span class="slot-note">the abstraction; keep it to two lines</span>
+    </div>
+    <div class="cand">
+      <div class="cand-tag"><span>4A</span></div>
+      <div class="cand-body">
+        <p class="x-claim">Semantic Decomposition: split anything long into labeled units, so a question can return a location.</p>
+        <p class="x-support">Prompted Find is the method applied to video. The same move works on any surface with length but no structure: prose, podcasts, research trails.</p>
+        <p class="cand-why">Draft from the variant. Definition-first; fine but reads like a glossary entry.</p>
+      </div>
+    </div>
+    <div class="cand">
+      <div class="cand-tag rec"><span>4B</span></div>
+      <div class="cand-body">
+        <p class="x-claim">The method is Semantic Decomposition: give unstructured content a structure a question can point into.</p>
+        <p class="x-support">Here it's applied to video. The same decomposition works on prose, podcasts, and research trails; only the surface changes.</p>
+        <p class="cand-why">Leads with &ldquo;the method is&hellip;&rdquo; so a scanner knows why this section exists; &ldquo;point into&rdquo; connects back to the timestamp idea.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLOT 5 -->
+  <div class="slot">
+    <div class="slot-head">
+      <span class="slot-num">5</span><span class="slot-title">Section intros &mdash; one line each</span>
+      <span class="slot-note">Decisions &middot; Interaction &middot; How It Works &middot; Surfaces</span>
+    </div>
+    <div class="cand">
+      <div class="cand-tag"><span>5A</span></div>
+      <div class="cand-body">
+        <p class="x-claim">Three choices define what kind of interface this is.</p>
+        <p class="x-claim">Three steps, and none of them take you out of the video.</p>
+        <p class="x-claim">A 74-minute NASA talk, nine labeled segments, four stages between the question and the moment.</p>
+        <p class="x-claim">The medium changes; the interaction stays the same.</p>
+        <p class="cand-why">Draft set from the variant.</p>
+      </div>
+    </div>
+    <div class="cand">
+      <div class="cand-tag rec"><span>5B</span></div>
+      <div class="cand-body">
+        <p class="x-claim">Every decision answered one question: is this a search engine or a navigation system?</p>
+        <p class="x-claim">Ask, point, land. The video never stops being the main event.</p>
+        <p class="x-claim">Four stages sit between your question and the moment it lands you in.</p>
+        <p class="x-claim">Built for video first. The pattern doesn't care what it's navigating.</p>
+        <p class="cand-why">Each line carries a small opinion instead of a count. &ldquo;Is this a search engine or a navigation system&rdquo; frames the Decisions cards as one coherent argument.</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="foot">
+    <b>How to answer:</b> one line like &ldquo;1A, 2B, 3B, 4B, 5B&rdquo; &mdash; or mark any slot &ldquo;rewrite&rdquo; and say
+    what's off about it (too clever / too dry / not me), and I'll take another run at just that slot.
+    Once picked, I apply the winning set to the A+B variant, you scroll it once, then it ships to the live page.<br>
+    Working Document &middot; Not for distribution &middot; process/promptedfind-content-options.html
+  </p>
+</div>
+</body>
+</html>

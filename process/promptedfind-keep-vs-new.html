@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prompted Find &mdash; shipped copy vs A+B draft</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#F7F6F3;--ink:#111;--mid:#6B6B6B;--rule:#D4D3CF;--hover-row:#F0EFEC;--accent:#0066FF;--accent-dim:#D6E4FF;--good:#1B7F3B;--warn:#B37A00;--bad:#B33A3A}
+  html{background:var(--bg)}
+  body{font-family:'Geist',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:140px}
+  .shell{max-width:960px;margin:0 auto;padding:0 28px}
+
+  .doc-head{padding-top:56px;border-bottom:1px solid var(--rule);padding-bottom:24px}
+  .doc-eyebrow{font-size:0.65rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-bottom:12px}
+  .doc-title{font-size:1.55rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:10px}
+  .doc-sub{font-size:0.85rem;line-height:1.7;color:var(--mid);max-width:680px}
+  .doc-sub b{color:var(--ink);font-weight:600}
+
+  .legend{display:flex;gap:18px;margin-top:16px;font-size:0.7rem;color:var(--mid)}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .dot{width:9px;height:9px;border-radius:50%}
+  .dot.keep{background:var(--good)}
+  .dot.merge{background:var(--warn)}
+  .dot.drop{background:var(--bad)}
+
+  .sec{margin-top:52px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;padding-bottom:10px;border-bottom:2px solid var(--ink);margin-bottom:16px}
+  .sec-title{font-size:0.85rem;font-weight:600}
+  .verdict{margin-left:auto;font-size:0.68rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:3px 10px;border-radius:4px;color:#fff}
+  .verdict.keep{background:var(--good)}
+  .verdict.merge{background:var(--warn)}
+  .verdict.drop{background:var(--bad)}
+
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .col{border:1px solid var(--rule);border-radius:10px;padding:20px 22px;background:var(--bg)}
+  .col.chosen{border-color:var(--good);box-shadow:inset 0 0 0 1px var(--good)}
+  .col-tag{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);margin-bottom:14px}
+  .col.chosen .col-tag{color:var(--good)}
+
+  /* page-styles for the copy itself */
+  .p-label{font-size:0.65rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid);padding-bottom:10px;border-bottom:1px solid var(--rule);margin-bottom:16px}
+  .p-body{font-size:0.875rem;line-height:1.75;color:var(--mid);}
+  .p-body strong{color:var(--ink);font-weight:600}
+  .p-claim{font-size:1rem;font-weight:600;letter-spacing:-0.015em;color:var(--ink);line-height:1.5;margin-bottom:8px}
+  .p-quote{font-size:0.875rem;line-height:1.7;color:var(--mid);font-style:italic;padding-left:16px;border-left:2px solid var(--rule);margin-bottom:14px}
+  .p-note{border:1px solid var(--accent-dim);background:rgba(0,102,204,0.03);border-radius:8px;padding:14px 16px;font-size:12.5px;color:var(--mid);line-height:1.7}
+  .p-note strong{color:var(--ink)}
+  .p-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .p-list li{font-size:12.5px;color:var(--mid);line-height:1.65;padding-left:12px;border-left:2px solid var(--rule)}
+  .p-list li strong{color:var(--ink);font-weight:600}
+  .p-list li.cut{opacity:0.45;text-decoration:line-through}
+  .x-facts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+  .x-fact{background:var(--bg);padding:11px 13px}
+  .x-k{font-size:0.6rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);margin-bottom:4px}
+  .x-v{font-size:0.75rem;font-weight:600;color:var(--ink);line-height:1.45}
+  .x-v span{color:var(--mid);font-weight:400}
+
+  .why{margin-top:14px;font-size:0.75rem;line-height:1.65;color:var(--mid);max-width:720px}
+  .why b{color:var(--ink);font-weight:600}
+
+  .foot{margin-top:72px;padding-top:18px;border-top:1px solid var(--rule);font-size:0.68rem;color:var(--mid);line-height:1.7}
+  .foot b{color:var(--ink)}
+
+  @media (max-width:720px){ .cols{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="doc-head">
+    <p class="doc-eyebrow">Process &middot; Keep vs new &middot; 2026-07-07</p>
+    <h1 class="doc-title">Your shipped copy vs the A+B draft, side by side</h1>
+    <p class="doc-sub">
+      <b>Nothing was lost.</b> The live page still has every word you shipped; only the em dashes were removed.
+      Left column: the shipped copy, verbatim. Right: what my A+B draft did to it. The green outline marks
+      which side I now think should win. The pattern that emerges: <b>your copy was already right &mdash;
+      A+B should change the page's shape (facts bar, bold first lines), not its words.</b>
+      The draft's mistake was rewriting instead of restructuring, and leaning on &ldquo;74-minute&rdquo;
+      when the story is the feature, the concept, and where else it applies.
+    </p>
+    <div class="legend">
+      <span><span class="dot keep"></span>Keep shipped copy</span>
+      <span><span class="dot merge"></span>Merge: shipped words, new shape</span>
+      <span><span class="dot drop"></span>Drop the draft&rsquo;s version</span>
+    </div>
+  </div>
+
+  <!-- FACTS BAR -->
+  <div class="sec">
+    <div class="sec-head">
+      <span class="sec-title">Facts bar (new element, no shipped equivalent)</span>
+      <span class="verdict keep">Keep &middot; the one real addition</span>
+    </div>
+    <div class="cols">
+      <div class="col">
+        <p class="col-tag">Shipped page</p>
+        <p class="p-body">Doesn&rsquo;t exist. After the video, the reader goes straight into paragraphs.</p>
+      </div>
+      <div class="col chosen">
+        <p class="col-tag">A+B addition</p>
+        <div class="x-facts">
+          <div class="x-fact"><p class="x-k">What</p><p class="x-v">Ask a video a question, <span>land on the moment</span></p></div>
+          <div class="x-fact"><p class="x-k">The concept</p><p class="x-v">Semantic Decomposition <span>&middot; content gets addresses</span></p></div>
+          <div class="x-fact"><p class="x-k">What&rsquo;s real</p><p class="x-v">Working interface <span>&middot; simulated model</span></p></div>
+          <div class="x-fact"><p class="x-k">Where else</p><p class="x-v">Prose, podcasts, <span>meetings, research</span></p></div>
+        </div>
+        <p class="why">Reworked to match your three priorities: <b>what it does / the bigger concept / where else it applies</b> &mdash; plus the honesty cell. This is the whole page in four cells.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE METHOD -->
+  <div class="sec">
+    <div class="sec-head">
+      <span class="sec-title">The Method</span>
+      <span class="verdict merge">Merge &middot; your words, bold first line</span>
+    </div>
+    <div class="cols">
+      <div class="col chosen">
+        <p class="col-tag">Shipped page &middot; verbatim</p>
+        <p class="p-label">The Method</p>
+        <p class="p-body">
+          <strong>Semantic Decomposition:</strong> break long-form content into labeled, navigable semantic units,
+          so a question can return a location instead of a summary.<br><br>
+          Prompted Find is this method applied to video. The same decomposition works on any surface that has
+          length but no structure: prose, podcasts, research trails. The medium changes; the interaction stays the same.
+        </p>
+      </div>
+      <div class="col">
+        <p class="col-tag">A+B draft</p>
+        <p class="p-claim">Semantic Decomposition: split anything long into labeled units, so a question can return a location.</p>
+        <p class="p-body">Prompted Find is the method applied to video. The same move works on any surface with length but no structure: prose, podcasts, research trails.</p>
+        <p class="why">The rewrite added nothing; &ldquo;split anything long&rdquo; is vaguer than your &ldquo;break long-form content into labeled, navigable semantic units.&rdquo;</p>
+      </div>
+    </div>
+    <p class="why"><b>Merge:</b> keep your sentences exactly; just set the first one (&ldquo;Semantic Decomposition: break long-form content&hellip;&rdquo;) in ink as the bold lead so it scans, and the rest stays gray support.</p>
+  </div>
+
+  <!-- THE GAP -->
+  <div class="sec">
+    <div class="sec-head">
+      <span class="sec-title">The Gap</span>
+      <span class="verdict merge">Merge &middot; your words, minus the pullquote duplication</span>
+    </div>
+    <div class="cols">
+      <div class="col chosen">
+        <p class="col-tag">Shipped page &middot; verbatim</p>
+        <p class="p-label">The Gap</p>
+        <p class="p-quote">&ldquo;Video is visual content, but finding a moment in it means reading transcripts and scrubbing timelines. The thing that makes video easy to watch is exactly what makes it hard to navigate.&rdquo;</p>
+        <p class="p-body">
+          Long-form video has no spatial address. A document has paragraphs, headings, a table of contents. You can navigate it by structure. Video only has time.<br><br>
+          <strong>Prompted Find makes the timeline navigable by meaning.</strong> You ask what you want to find. The interface segments the video semantically, highlights relevant moments, and jumps you there. The query returns a location, not a transcript, not a summary. A timestamp you can trust.
+        </p>
+      </div>
+      <div class="col">
+        <p class="col-tag">A+B draft</p>
+        <p class="p-claim">Video is easy to watch and hard to search. A document has headings; a video only has time.</p>
+        <p class="p-body">Prompted Find makes the timeline navigable by meaning. Ask what you want to find, and the answer is a <strong>timestamp you can trust</strong>, not a transcript or a summary.</p>
+        <p class="why">The compression was fine here, but it silently dropped your strongest observation: &ldquo;the thing that makes video easy to watch is exactly what makes it hard to navigate.&rdquo;</p>
+      </div>
+    </div>
+    <p class="why"><b>Merge:</b> your insight becomes the bold lead: <b>&ldquo;The thing that makes video easy to watch is exactly what makes it hard to navigate.&rdquo;</b> Then your existing body text follows, trimmed only where the pullquote and body said the same thing twice.</p>
+  </div>
+
+  <!-- PATTERN NOTE -->
+  <div class="sec">
+    <div class="sec-head">
+      <span class="sec-title">&ldquo;Why this pattern matters beyond video&rdquo; note</span>
+      <span class="verdict keep">Keep &middot; the draft wrongly removed it</span>
+    </div>
+    <div class="cols">
+      <div class="col chosen">
+        <p class="col-tag">Shipped page &middot; verbatim</p>
+        <p class="p-note">
+          <strong>Why this pattern matters beyond video.</strong>
+          The same logic applies to any long-form content without navigable structure:
+          podcasts, recorded meetings, legal documents, research papers.
+          Prompted Find is a prototype of a pattern: <strong>ask a question, get a location.</strong>
+          The medium changes. The interaction stays the same.
+        </p>
+      </div>
+      <div class="col">
+        <p class="col-tag">A+B draft</p>
+        <p class="p-body">Deleted. I called it a duplicate of the Surfaces strip and cut it.</p>
+        <p class="why">You flagged this: the platforms list (podcasts, recorded meetings, legal documents, research papers) is the &ldquo;where else could this go&rdquo; answer, and the Surfaces strip only covers your three planned projects. Different jobs. It comes back.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT I'D CHANGE -->
+  <div class="sec">
+    <div class="sec-head">
+      <span class="sec-title">What I&rsquo;d Change</span>
+      <span class="verdict keep">Keep all three &middot; the draft over-cut</span>
+    </div>
+    <div class="cols">
+      <div class="col chosen">
+        <p class="col-tag">Shipped page &middot; verbatim</p>
+        <ul class="p-list">
+          <li><strong>Confidence indicators.</strong> Not all matches are equally strong. The timeline should visually encode match confidence so the user can prioritize where to jump.</li>
+          <li><strong>Multi-video support.</strong> The current prototype works with a single video. The real value is cross-video search: &ldquo;find the part about heat shields&rdquo; across an entire lecture series.</li>
+          <li><strong>Real embeddings, not keyword matching.</strong> The prototype uses concept aliasing and keyword scoring. A production version would use semantic embeddings to handle queries the alias table doesn&rsquo;t cover.</li>
+        </ul>
+      </div>
+      <div class="col">
+        <p class="col-tag">A+B draft</p>
+        <ul class="p-list">
+          <li><strong>Confidence indicators.</strong> Kept.</li>
+          <li><strong>Multi-video support.</strong> Kept, shortened.</li>
+          <li class="cut"><strong>Real embeddings.</strong> Deleted as overlap with the &ldquo;what&rsquo;s real&rdquo; note.</li>
+        </ul>
+        <p class="why">The overlap is real but the fix was wrong: this bullet shows engineering judgment (you know what production would need). Keep all three here; instead trim one clause from the &ldquo;what&rsquo;s real&rdquo; note so the two sections stop repeating.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION INTROS -->
+  <div class="sec">
+    <div class="sec-head">
+      <span class="sec-title">Section intro lines (Decisions &middot; Interaction &middot; How It Works)</span>
+      <span class="verdict drop">Drop the draft&rsquo;s rewrites &middot; keep yours</span>
+    </div>
+    <div class="cols">
+      <div class="col chosen">
+        <p class="col-tag">Shipped page &middot; verbatim</p>
+        <p class="p-body">
+          &ldquo;Each decision was a choice about what kind of interface this is: tool, search engine, or navigation system.&rdquo;<br><br>
+          &ldquo;The prototype lives inside a YouTube watch page. The interaction has three steps, and none of them take the user out of the video.&rdquo;<br><br>
+          &ldquo;A 74-minute NASA talk, decomposed into nine labeled segments. Four stages sit between the question and the moment.&rdquo;
+        </p>
+      </div>
+      <div class="col">
+        <p class="col-tag">A+B / content-options drafts</p>
+        <p class="p-body">Multiple rewrites per line (&ldquo;Ask, point, land&hellip;&rdquo;, &ldquo;is this a search engine or a navigation system?&rdquo;&hellip;), drifting further from your voice with each round.</p>
+        <p class="why">This is where &ldquo;weirder and weirder&rdquo; happened. Your lines already work as bold leads with zero rewriting. The one place &ldquo;74 minutes&rdquo; belongs is the How It Works line you wrote, where it&rsquo;s a concrete fact about the demo, not a slogan.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="sec">
+    <div class="sec-head">
+      <span class="sec-title">So the final recipe</span>
+    </div>
+    <p class="p-body" style="max-width:720px">
+      <strong>Keep:</strong> every shipped sentence, including the beyond-video platforms note and all three What I&rsquo;d Change bullets.<br>
+      <strong>Add:</strong> only the facts bar (reworked: What / The concept / What&rsquo;s real / Where else).<br>
+      <strong>Reshape:</strong> in each section, promote one of <em>your existing sentences</em> to the bold ink lead; the rest stays as gray support.<br>
+      <strong>Trim:</strong> only true duplicates: the Gap pullquote-vs-body repetition, one clause in the &ldquo;what&rsquo;s real&rdquo; note that repeats the embeddings bullet.<br>
+      <strong>Plus:</strong> the P3 craft fixes (stepper hover-pause, type floor, hover gating) that ride along.
+    </p>
+  </div>
+
+  <p class="foot">
+    <b>Next:</b> if this recipe reads right, I rebuild the A+B variant from the shipped copy following it &mdash;
+    one pass, no new wording anywhere &mdash; and you compare it against the live page before anything ships.<br>
+    Working Document &middot; Not for distribution &middot; process/promptedfind-keep-vs-new.html
+  </p>
+</div>
+</body>
+</html>

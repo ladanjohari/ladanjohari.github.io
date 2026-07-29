@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OG + Favicon — Final Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Geist', system-ui, sans-serif;
+  background: #ECEAE5;
+  color: #111;
+  padding: 48px 32px;
+  -webkit-font-smoothing: antialiased;
+  max-width: 780px;
+}
+h1 { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-bottom: 48px; }
+.section-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #bbb; margin-bottom: 20px; }
+.card { background: #fff; border-radius: 14px; border: 0.5px solid rgba(0,0,0,0.08); padding: 28px; margin-bottom: 40px; }
+
+/* ── FAVICON ── */
+.fav-sizes { display: flex; align-items: flex-end; gap: 28px; margin-bottom: 28px; }
+.fav-size-group { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.fav-size-label { font-size: 9px; color: #bbb; font-weight: 500; }
+
+/* Full-bleed circle favicon — no background, just a circle SVG */
+.fav-svg { display: block; border-radius: 0; }
+
+/* macOS dock row */
+.dock-label { font-size: 9px; color: #bbb; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
+.dock-row { display: flex; align-items: flex-end; gap: 10px; background: rgba(255,255,255,0.3); backdrop-filter: blur(10px); border-radius: 16px; padding: 8px 16px; width: fit-content; border: 0.5px solid rgba(255,255,255,0.6); margin-bottom: 28px; }
+.dock-icon { display: flex; align-items: center; justify-content: center; }
+.dock-icon svg { border-radius: 22%; }
+.dock-icon.active svg { filter: drop-shadow(0 4px 8px rgba(0,102,255,0.3)); }
+
+/* Browser tabs */
+.tabs-label { font-size: 9px; color: #bbb; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
+.browser-chrome { background: #DEDEDE; border-radius: 10px 10px 0 0; padding: 0; overflow: hidden; }
+.tab-strip { display: flex; padding: 8px 8px 0; gap: 2px; }
+.tab { display: flex; align-items: center; gap: 6px; padding: 6px 12px 7px; border-radius: 6px 6px 0 0; font-size: 11px; color: #555; background: #EFEFEF; max-width: 200px; }
+.tab.active { background: #F9F9F9; color: #111; }
+.tab-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
+.tab-x { color: #bbb; margin-left: 4px; font-size: 10px; }
+.url-bar { background: #F9F9F9; height: 34px; display: flex; align-items: center; padding: 0 12px; gap: 8px; border-top: 0.5px solid #E0E0E0; }
+.url-text { font-size: 11px; color: #666; background: #EDEDED; border-radius: 5px; padding: 3px 10px; flex: 1; text-align: center; }
+.browser-body { background: #F7F6F3; height: 64px; border-top: 0.5px solid #E0E0E0; display: flex; align-items: center; padding: 0 20px; }
+.browser-body-text { font-size: 11px; color: #999; }
+
+/* ── OG IMAGE ── */
+.og-wrap {
+  width: 100%;
+  aspect-ratio: 1200 / 630;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 0.5px solid rgba(0,0,0,0.1);
+  margin-bottom: 28px;
+  position: relative;
+  font-family: 'Geist', system-ui, sans-serif;
+}
+.og-inner {
+  position: absolute; inset: 0;
+  background: #F7F6F3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 9% 10%;
+}
+.og-eyebrow {
+  display: flex; align-items: center; gap: 5px;
+  font-size: clamp(7px, 1vw, 11px);
+  font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  color: #0066FF; margin-bottom: 2%;
+}
+.og-dot { width: 5px; height: 5px; border-radius: 50%; background: #0066FF; flex-shrink: 0; }
+.og-name {
+  font-size: clamp(22px, 4vw, 52px);
+  font-weight: 700; letter-spacing: -0.04em; line-height: 1.08; color: #111;
+  margin-bottom: 2%;
+}
+.og-desc {
+  font-size: clamp(8px, 1.15vw, 15px);
+  color: #6B6B6B; line-height: 1.6; max-width: 52%;
+}
+.og-accent-bar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; background: #0066FF;
+}
+
+/* Social card previews */
+.social-row { display: flex; gap: 20px; flex-wrap: wrap; }
+.social-col-label { font-size: 9px; color: #bbb; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+
+/* iMessage */
+.imsg {
+  width: 248px;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+  border: 0.5px solid rgba(0,0,0,0.07);
+}
+.imsg-thumb {
+  height: 116px;
+  background: #F7F6F3;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 14px 16px; gap: 5px;
+}
+.imsg-eyebrow {
+  font-size: 7.5px; font-weight: 600; letter-spacing: 0.09em;
+  text-transform: uppercase; color: #0066FF;
+  display: flex; align-items: center; gap: 4px;
+}
+.imsg-name { font-size: 16px; font-weight: 700; letter-spacing: -0.03em; color: #111; }
+.imsg-sub { font-size: 9.5px; color: #6B6B6B; line-height: 1.4; }
+.imsg-body { padding: 9px 12px 11px; border-top: 0.5px solid #F0F0F0; }
+.imsg-domain { font-size: 9px; color: #aaa; margin-bottom: 1px; text-transform: uppercase; letter-spacing: 0.04em; }
+.imsg-title { font-size: 11.5px; font-weight: 500; color: #111; }
+
+/* Slack */
+.slack {
+  width: 292px;
+  background: #fff;
+  border-left: 3px solid #E0E0E0;
+  padding: 10px 12px;
+  border-radius: 0 4px 4px 0;
+}
+.slack-domain { font-size: 10px; color: #555; font-weight: 600; margin-bottom: 1px; }
+.slack-title { font-size: 12px; font-weight: 600; color: #1264A3; margin-bottom: 2px; }
+.slack-desc { font-size: 11px; color: #616061; line-height: 1.4; margin-bottom: 8px; }
+.slack-img {
+  width: 100%; height: 116px;
+  background: #F7F6F3;
+  border-radius: 4px;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 12px 14px; gap: 4px;
+  overflow: hidden;
+}
+
+/* Twitter/X card */
+.tweet-card {
+  width: 270px;
+  background: #000;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 0.5px solid #2F3336;
+}
+.tweet-img {
+  height: 120px;
+  background: #F7F6F3;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 12px 14px; gap: 4px;
+}
+.tweet-body { padding: 9px 12px 11px; background: #000; border-top: 0.5px solid #2F3336; }
+.tweet-domain { font-size: 10px; color: #71767B; }
+.tweet-title { font-size: 13px; font-weight: 500; color: #E7E9EA; margin-top: 1px; }
+</style>
+</head>
+<body>
+
+<h1>OG Image + Favicon — Final Versions</h1>
+
+<!-- ══════════════════ FAVICON ══════════════════ -->
+<div class="section-label">Favicon B — Full-bleed circle (final)</div>
+<div class="card">
+
+  <div class="fav-sizes">
+    <!-- 16px -->
+    <div class="fav-size-group">
+      <svg class="fav-svg" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="8" cy="8" r="8" fill="#0066FF"/>
+      </svg>
+      <span class="fav-size-label">16px</span>
+    </div>
+    <!-- 32px -->
+    <div class="fav-size-group">
+      <svg class="fav-svg" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="16" cy="16" r="16" fill="#0066FF"/>
+      </svg>
+      <span class="fav-size-label">32px</span>
+    </div>
+    <!-- 64px -->
+    <div class="fav-size-group">
+      <svg class="fav-svg" width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="32" fill="#0066FF"/>
+      </svg>
+      <span class="fav-size-label">64px</span>
+    </div>
+    <!-- 180px (Apple touch — OS applies rounding) -->
+    <div class="fav-size-group">
+      <!-- Simulate iOS rounded square mask -->
+      <div style="width:80px;height:80px;border-radius:18px;overflow:hidden;">
+        <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <rect width="80" height="80" fill="#0066FF"/>
+        </svg>
+      </div>
+      <span class="fav-size-label">180px (iOS)</span>
+    </div>
+  </div>
+
+  <!-- macOS dock simulation -->
+  <div class="dock-label">How it sits next to other app icons in a dock / launcher</div>
+  <div class="dock-row" style="background:#2C2C2E;">
+    <!-- Safari -->
+    <div class="dock-icon">
+      <svg width="48" height="48" viewBox="0 0 48 48"><rect width="48" height="48" rx="11" fill="#fff"/><circle cx="24" cy="24" r="18" fill="none" stroke="#E0E0E0" stroke-width="1"/><path d="M24 6 L26 22 L24 24 L22 22Z" fill="#FF3B30"/><path d="M24 42 L22 26 L24 24 L26 26Z" fill="#999"/><circle cx="24" cy="24" r="2" fill="#fff" stroke="#999" stroke-width="1"/></svg>
+    </div>
+    <!-- your site -->
+    <div class="dock-icon active">
+      <svg width="56" height="56" viewBox="0 0 56 56" style="filter:drop-shadow(0 6px 14px rgba(0,102,255,0.4));">
+        <rect width="56" height="56" rx="13" fill="#0066FF"/>
+      </svg>
+    </div>
+    <!-- Figma placeholder -->
+    <div class="dock-icon">
+      <svg width="48" height="48" viewBox="0 0 48 48"><rect width="48" height="48" rx="11" fill="#1E1E1E"/><circle cx="24" cy="24" r="8" fill="#A259FF"/><circle cx="16" cy="16" r="6" fill="#F24E1E"/><circle cx="32" cy="16" r="6" fill="#FF7262"/></svg>
+    </div>
+    <!-- VSCode placeholder -->
+    <div class="dock-icon">
+      <svg width="48" height="48" viewBox="0 0 48 48"><rect width="48" height="48" rx="11" fill="#0078D4"/><text x="9" y="34" font-family="system-ui" font-size="26" font-weight="700" fill="#fff">&lt;/&gt;</text></svg>
+    </div>
+  </div>
+
+  <!-- Browser tab -->
+  <div class="tabs-label">Browser tab</div>
+  <div class="browser-chrome">
+    <div class="tab-strip">
+      <div class="tab" style="background:#EFEFEF;opacity:0.6;">
+        <svg width="14" height="14" viewBox="0 0 14 14"><rect width="14" height="14" rx="3" fill="#999"/></svg>
+        <span class="tab-title" style="font-size:10px;color:#888;">New Tab</span>
+      </div>
+      <div class="tab active">
+        <!-- full-bleed circle favicon in tab -->
+        <svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="7" cy="7" r="7" fill="#0066FF"/>
+        </svg>
+        <span class="tab-title">Ladan Johari — Design Engineer</span>
+        <span class="tab-x">✕</span>
+      </div>
+      <div class="tab" style="background:#EFEFEF;opacity:0.6;">
+        <svg width="14" height="14" viewBox="0 0 14 14"><rect width="14" height="14" rx="3" fill="#ccc"/></svg>
+        <span class="tab-title" style="font-size:10px;color:#888;">GitHub</span>
+      </div>
+    </div>
+    <div class="url-bar">
+      <svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1a5 5 0 100 10A5 5 0 006 1zm0 1.5a3.5 3.5 0 110 7 3.5 3.5 0 010-7z" fill="#34C759"/></svg>
+      <div class="url-text">ladanjohari.com</div>
+    </div>
+    <div class="browser-body">
+      <span class="browser-body-text">ladanjohari.com</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════ OG IMAGE ══════════════════ -->
+<div class="section-label">OG Image A — Matches hero (final)</div>
+<div class="card">
+
+  <div class="og-wrap">
+    <div class="og-inner">
+      <div class="og-eyebrow">
+        <span class="og-dot"></span>
+        Design Engineer × Creative Technologist — Bay Area, CA
+      </div>
+      <div class="og-name">Ladan Johari</div>
+      <div class="og-desc">I build interfaces and interaction systems.</div>
+    </div>
+    <div class="og-accent-bar"></div>
+  </div>
+
+  <!-- Social previews -->
+  <div class="social-row">
+
+    <!-- iMessage -->
+    <div>
+      <div class="social-col-label">iMessage</div>
+      <div class="imsg">
+        <div class="imsg-thumb">
+          <div class="imsg-eyebrow">
+            <span style="width:4px;height:4px;border-radius:50%;background:#0066FF;display:inline-block;flex-shrink:0;"></span>
+            Design Engineer × Creative Technologist
+          </div>
+          <div class="imsg-name">Ladan Johari</div>
+          <div class="imsg-sub">I build interfaces and interaction systems.</div>
+        </div>
+        <div class="imsg-body">
+          <div class="imsg-domain">LADANJOHARI.COM</div>
+          <div class="imsg-title">Ladan Johari — Design Engineer</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slack -->
+    <div>
+      <div class="social-col-label">Slack</div>
+      <div class="slack">
+        <div class="slack-domain">ladanjohari.com</div>
+        <div class="slack-title">Ladan Johari — Design Engineer</div>
+        <div class="slack-desc">Design Engineer in the Bay Area. AI interfaces, interaction craft, design systems.</div>
+        <div class="slack-img">
+          <div style="font-size:7px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:#0066FF;display:flex;align-items:center;gap:4px;">
+            <span style="width:4px;height:4px;border-radius:50%;background:#0066FF;display:inline-block;"></span>Design Engineer × Creative Technologist
+          </div>
+          <div style="font-size:18px;font-weight:700;letter-spacing:-0.03em;color:#111;">Ladan Johari</div>
+          <div style="font-size:10px;color:#6B6B6B;margin-top:2px;">I build interfaces and interaction systems.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Twitter/X — dark OG version -->
+    <div>
+      <div class="social-col-label">Twitter / X</div>
+      <div class="tweet-card">
+        <div class="tweet-img" style="background:#111;">
+          <div style="font-size:7px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:#4D94FF;display:flex;align-items:center;gap:4px;">
+            <span style="width:4px;height:4px;border-radius:50%;background:#4D94FF;display:inline-block;flex-shrink:0;"></span>Design Engineer × Creative Technologist
+          </div>
+          <div style="font-size:18px;font-weight:700;letter-spacing:-0.03em;color:#E8E8E8;margin-top:3px;">Ladan Johari</div>
+          <div style="font-size:10px;color:#6B6B6B;margin-top:2px;">I build interfaces and interaction systems.</div>
+        </div>
+        <div class="tweet-body">
+          <div class="tweet-domain">ladanjohari.com</div>
+          <div class="tweet-title">Ladan Johari — Design Engineer</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="light dark" />
+<title>Selected Work &middot; visual iterations</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#F7F6F3;--ink:#111;--mid:#6B6B6B;--rule:#D4D3CF;--hover-row:#EFEEEA;--accent:#0066FF;--accent-dim:#D6E4FF}
+  @media (prefers-color-scheme:dark){:root{--bg:#1A1A1A;--ink:#E8E8E8;--mid:#9A9A9A;--rule:#333;--hover-row:#242424;--accent:#4D94FF;--accent-dim:#1A3A66}}
+  html{background:var(--bg)}
+  body{font-family:'Geist',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:120px}
+  .shell{max-width:760px;margin:0 auto;padding:0 28px}
+  .proj{font-size:0.62rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#fff;background:var(--ink);display:inline-block;padding:4px 10px;border-radius:4px;margin:56px 0 4px}
+  .optsub{font-size:0.82rem;line-height:1.6;color:var(--mid);max-width:620px;margin-bottom:2px}
+  .optsub b{color:var(--ink);font-weight:600}
+  .hig{font-size:0.7rem;color:var(--accent);font-weight:500;margin:6px 0 6px}
+  .pick{font-size:0.58rem;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:var(--mid);margin:20px 0 0}
+  .pick .rec{color:#0a7d3a}
+
+  .list{list-style:none;margin:0 -14px 2px}
+  .item{border-bottom:.5px solid var(--rule)}
+  .row{display:flex;align-items:center;gap:22px;text-decoration:none;color:var(--ink);padding:16px 14px;border-radius:14px}
+  .thumb{width:196px;height:122px;border-radius:12px;overflow:hidden;flex-shrink:0;border:1px solid var(--rule);background:#111}
+  .thumb svg,.thumb img{width:100%;height:100%;display:block;object-fit:cover}
+  .info{flex:1;min-width:0}
+  .title{font-size:1.1rem;font-weight:600;letter-spacing:-0.02em}
+  .desc{font-size:0.85rem;color:var(--mid);margin-top:5px;line-height:1.5}
+  .tags{font-size:0.62rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--mid);margin-top:7px}
+  .meta{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex-shrink:0;min-width:100px}
+  .yr{font-size:0.8rem;font-weight:500;color:var(--rule)}
+  .status{font-size:0.62rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--accent);white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="shell">
+  <p class="optsub" style="margin-top:40px"><b>Visual iterations.</b> Each project shows the options to choose between, in the live row. Session Indicator is locked. Pick one per project and I&rsquo;ll lock the set.</p>
+
+  <!-- ===================== SESSION INDICATOR (LOCKED) ===================== -->
+  <span class="proj" style="background:#0a7d3a">Session Indicator &mdash; locked &#10003;</span>
+  <ul class="list"><li class="item"><a class="row" href="#">
+    <span class="thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="196" height="122" fill="#0e0e12"/>
+      <rect width="196" height="16" fill="#18181d"/><rect y="15.5" width="196" height=".5" fill="#26262c"/>
+      <rect x="116" y="4" width="62" height="8" rx="4" fill="#242429" stroke="#34343c" stroke-width=".5"/>
+      <circle cx="126" cy="8" r="2" fill="#fff"/><circle cx="135" cy="8" r="2" fill="#E8952A"/><circle cx="144" cy="8" r="2" fill="#34C759"/>
+      <text x="154" y="10.4" fill="#6b6b72" font-family="Geist,sans-serif" font-size="5" font-weight="600">+3</text>
+      <rect x="34" y="32" width="128" height="74" rx="9" fill="#16161b" stroke="#2b2b32" stroke-width=".6"/>
+      <text x="44" y="47" fill="#8a8a93" font-family="Geist,sans-serif" font-size="5.5" font-weight="600">Sessions</text>
+      <circle cx="46" cy="61" r="2.6" fill="#fff"/><rect x="54" y="58.5" width="50" height="4.6" rx="2.3" fill="#2d2d34"/><text x="150" y="62.4" fill="#5b5b62" font-family="Geist,sans-serif" font-size="4.6" text-anchor="end">1m 23s</text>
+      <circle cx="46" cy="75" r="2.6" fill="#E8952A"/><rect x="54" y="72.5" width="42" height="4.6" rx="2.3" fill="#2d2d34"/><text x="150" y="76.4" fill="#E8952A" font-family="Geist,sans-serif" font-size="4.6" text-anchor="end">waiting</text>
+      <circle cx="46" cy="89" r="2.6" fill="#34C759"/><rect x="54" y="86.5" width="34" height="4.6" rx="2.3" fill="#2d2d34"/><text x="150" y="90.4" fill="#5b5b62" font-family="Geist,sans-serif" font-size="4.6" text-anchor="end">done</text>
+    </svg></span>
+    <span class="info"><span class="title">Session Indicator</span><div class="desc">Track every running AI agent from the menu bar so you never lose your place.</div><div class="tags">AI Agent UI &middot; Interaction System</div></span>
+    <span class="meta"><span class="yr">2026</span><span class="status">View project &rarr;</span></span>
+  </a></li></ul>
+
+  <!-- ===================== PROMPTEDFIND ===================== -->
+  <span class="proj">PromptedFind &mdash; pick one</span>
+  <p class="hig">Rework based on your real timeline: video player on top, moments spread across the timeline as chips, playhead, red progress. Color: added the red progress + brighter selected chip so it reads as &ldquo;jump between moments,&rdquo; not one segment.</p>
+
+  <p class="pick">V1 &mdash; current (one highlighted segment)</p>
+  <ul class="list"><li class="item"><a class="row" href="#">
+    <span class="thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="196" height="122" fill="#0a0f1c"/>
+      <rect x="18" y="13" width="160" height="52" rx="7" fill="#0f1730" stroke="#1c2b52" stroke-width=".6"/><path d="M92 32 L92 46 L105 39 Z" fill="#2b3d6b"/>
+      <rect x="40" y="56" width="116" height="16" rx="8" fill="#12203f" stroke="#284169" stroke-width=".7"/><circle cx="50" cy="64" r="3" fill="#4d94ff"/><rect x="57" y="62" width="66" height="4" rx="2" fill="#2a3f66"/><path d="M139 60 l6 4 -6 4" stroke="#4d94ff" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="20" y="94" width="156" height="3" rx="1.5" fill="#1a2745"/><rect x="96" y="93.3" width="26" height="4.4" rx="2.2" fill="#4d94ff"/><circle cx="109" cy="95.5" r="3.4" fill="#4d94ff" stroke="#0a0f1c" stroke-width="1"/>
+      <text x="20" y="108" fill="#33477a" font-family="Geist,sans-serif" font-size="4">0:00</text><text x="176" y="108" fill="#33477a" font-family="Geist,sans-serif" font-size="4" text-anchor="end">1:14:31</text>
+    </svg></span>
+    <span class="info"><span class="title">PromptedFind</span><div class="desc">Find the moment you need in a long video by meaning, not keywords.</div><div class="tags">AI Interaction Pattern &middot; Semantic Navigation</div></span>
+    <span class="meta"><span class="yr">2025</span><span class="status">View project &rarr;</span></span>
+  </a></li></ul>
+
+  <p class="pick"><span class="rec">&#9733;</span> V2 &mdash; iterated (spread moments, playhead, red progress)</p>
+  <ul class="list"><li class="item"><a class="row" href="#">
+    <span class="thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="196" height="122" fill="#0c111e"/>
+      <!-- video player -->
+      <rect x="16" y="10" width="164" height="40" rx="6" fill="#0f1830" stroke="#1e2d52" stroke-width=".6"/>
+      <path d="M92 24 L92 36 L103 30 Z" fill="#33477a"/>
+      <!-- time ruler labels -->
+      <text x="16" y="60" fill="#3a5384" font-family="Geist,sans-serif" font-size="4">0:00</text>
+      <text x="98" y="60" fill="#3a5384" font-family="Geist,sans-serif" font-size="4" text-anchor="middle">37:00</text>
+      <text x="180" y="60" fill="#3a5384" font-family="Geist,sans-serif" font-size="4" text-anchor="end">1:14:31</text>
+      <!-- spread moment chips -->
+      <g>
+        <rect x="16" y="66" width="30" height="24" rx="3" fill="#131d33"/><rect x="19" y="69" width="22" height="3" rx="1.5" fill="#4d94ff" opacity=".8"/><rect x="19" y="76" width="18" height="2.4" rx="1" fill="#3a4d73"/><rect x="19" y="81" width="14" height="2" rx="1" fill="#2a3a5e"/>
+      </g>
+      <g>
+        <rect x="52" y="66" width="30" height="24" rx="3" fill="#17233f" stroke="#4d94ff" stroke-width=".8"/><rect x="55" y="69" width="22" height="3" rx="1.5" fill="#6fa8ff"/><rect x="55" y="76" width="18" height="2.4" rx="1" fill="#4a6296"/><rect x="55" y="81" width="14" height="2" rx="1" fill="#3a4d73"/>
+      </g>
+      <g>
+        <rect x="104" y="66" width="30" height="24" rx="3" fill="#131d33"/><rect x="107" y="69" width="22" height="3" rx="1.5" fill="#4d94ff" opacity=".8"/><rect x="107" y="76" width="18" height="2.4" rx="1" fill="#3a4d73"/><rect x="107" y="81" width="14" height="2" rx="1" fill="#2a3a5e"/>
+      </g>
+      <g>
+        <rect x="150" y="66" width="30" height="24" rx="3" fill="#131d33"/><rect x="153" y="69" width="22" height="3" rx="1.5" fill="#4d94ff" opacity=".8"/><rect x="153" y="76" width="18" height="2.4" rx="1" fill="#3a4d73"/><rect x="153" y="81" width="14" height="2" rx="1" fill="#2a3a5e"/>
+      </g>
+      <!-- playhead -->
+      <line x1="60" y1="62" x2="60" y2="104" stroke="#d4dcec" stroke-width="1"/><circle cx="60" cy="62" r="2.6" fill="#d4dcec"/>
+      <!-- red progress -->
+      <rect x="16" y="99" width="44" height="2.6" rx="1.3" fill="#ff4d4d"/><rect x="60" y="99" width="120" height="2.6" rx="1.3" fill="#20304f"/>
+    </svg></span>
+    <span class="info"><span class="title">PromptedFind</span><div class="desc">Find the moment you need in a long video by meaning, not keywords.</div><div class="tags">AI Interaction Pattern &middot; Semantic Navigation</div></span>
+    <span class="meta"><span class="yr">2025</span><span class="status">View project &rarr;</span></span>
+  </a></li></ul>
+
+  <!-- ===================== XCODE ===================== -->
+  <span class="proj">Xcode Symbol Browser &mdash; pick one</span>
+  <p class="hig">Connector lines removed. The Miller-column relationship now reads through the selection path: the highlighted row in each column carries a chevron, showing it drills into the next column. Plus the real screenshot to compare.</p>
+
+  <p class="pick"><span class="rec">&#9733;</span> A &mdash; motif, selection path (lines removed)</p>
+  <ul class="list"><li class="item"><a class="row" href="#">
+    <span class="thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="196" height="122" fill="#1c1c20"/>
+      <rect width="196" height="12" fill="#242429"/><circle cx="8" cy="6" r="1.6" fill="#ff5f57"/><circle cx="14" cy="6" r="1.6" fill="#febc2e"/><circle cx="20" cy="6" r="1.6" fill="#28c840"/><rect x="30" y="4" width="46" height="4" rx="2" fill="#33333a"/>
+      <rect x="10" y="18" width="54" height="96" rx="5" fill="#26262b" stroke="#31313a" stroke-width=".5"/>
+      <rect x="71" y="18" width="54" height="96" rx="5" fill="#26262b" stroke="#31313a" stroke-width=".5"/>
+      <rect x="132" y="18" width="54" height="96" rx="5" fill="#26262b" stroke="#31313a" stroke-width=".5"/>
+      <!-- col1: selected 'GitRepo' with green dot + chevron -->
+      <rect x="16" y="26" width="42" height="6" rx="2" fill="#34343b"/>
+      <rect x="15" y="36" width="44" height="8" rx="2" fill="#2a3a5e"/><rect x="18" y="38.5" width="3" height="3" rx="1" fill="#28c840"/><rect x="24" y="38.5" width="24" height="3" rx="1.5" fill="#8fb4ec"/><path d="M53 38.5 l2.5 1.5 -2.5 1.5" stroke="#6f9fe0" fill="none" stroke-width="1"/>
+      <rect x="16" y="48" width="42" height="6" rx="2" fill="#34343b"/><rect x="16" y="58" width="42" height="6" rx="2" fill="#34343b"/><rect x="16" y="68" width="42" height="6" rx="2" fill="#34343b"/>
+      <!-- col2: type dots, selected 'EntryType' orange + chevron -->
+      <rect x="77" y="26" width="42" height="6" rx="2" fill="#34343b"/><rect x="79" y="27.5" width="3" height="3" rx="1" fill="#4d94ff"/>
+      <rect x="77" y="36" width="42" height="6" rx="2" fill="#34343b"/><rect x="79" y="37.5" width="3" height="3" rx="1" fill="#4d94ff"/>
+      <rect x="77" y="46" width="42" height="6" rx="2" fill="#34343b"/><rect x="79" y="47.5" width="3" height="3" rx="1" fill="#4d94ff"/>
+      <rect x="76" y="56" width="44" height="8" rx="2" fill="#4a3620"/><rect x="79" y="58.5" width="3" height="3" rx="1" fill="#ff9f0a"/><rect x="85" y="58.5" width="24" height="3" rx="1.5" fill="#e0b070"/><path d="M114 58.5 l2.5 1.5 -2.5 1.5" stroke="#e0b070" fill="none" stroke-width="1"/>
+      <rect x="77" y="68" width="42" height="6" rx="2" fill="#34343b"/><rect x="79" y="69.5" width="3" height="3" rx="1" fill="#ff5f57"/>
+      <!-- col3: cases, selected 'case blob' purple -->
+      <rect x="137" y="26" width="44" height="8" rx="2" fill="#3a2a5e"/><rect x="140" y="28.5" width="3" height="3" rx="1" fill="#bf5af2"/><rect x="146" y="28.5" width="26" height="3" rx="1.5" fill="#c79bea"/>
+      <rect x="138" y="38" width="42" height="6" rx="2" fill="#34343b"/><rect x="140" y="39.5" width="3" height="3" rx="1" fill="#bf5af2"/>
+      <rect x="138" y="48" width="42" height="6" rx="2" fill="#34343b"/><rect x="140" y="49.5" width="3" height="3" rx="1" fill="#bf5af2"/>
+      <rect x="138" y="58" width="42" height="6" rx="2" fill="#34343b"/><rect x="140" y="59.5" width="3" height="3" rx="1" fill="#bf5af2"/>
+    </svg></span>
+    <span class="info"><span class="title">Xcode Symbol Browser</span><div class="desc">Read a codebase&rsquo;s structure at a glance instead of digging through files.</div><div class="tags">Developer Tools &middot; Information Architecture</div></span>
+    <span class="meta"><span class="yr">2024</span><span class="status">Watch demo &#8599;</span></span>
+  </a></li></ul>
+
+  <p class="pick">B &mdash; real screenshot</p>
+  <ul class="list"><li class="item"><a class="row" href="#">
+    <span class="thumb"><img src="/process/research-frames/xcode-real.jpg" alt=""></span>
+    <span class="info"><span class="title">Xcode Symbol Browser</span><div class="desc">Read a codebase&rsquo;s structure at a glance instead of digging through files.</div><div class="tags">Developer Tools &middot; Information Architecture</div></span>
+    <span class="meta"><span class="yr">2024</span><span class="status">Watch demo &#8599;</span></span>
+  </a></li></ul>
+
+  <!-- ===================== TRAILS ===================== -->
+  <span class="proj">Trails &mdash; pick one</span>
+  <p class="hig">A is the &ldquo;living graph&rdquo; (matches your tagline, most distinctive). B is the real co-scroll: two documents with a connected passage, closer to the shipped product.</p>
+
+  <p class="pick">A &mdash; node graph (current)</p>
+  <ul class="list"><li class="item"><a class="row" href="#">
+    <span class="thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="196" height="122" fill="#0f0f13"/>
+      <path d="M48 46 C 72 42, 86 66, 106 72" stroke="#ff6b5c" stroke-width="1.5" fill="none" opacity=".8"/>
+      <path d="M106 72 C 130 78, 142 52, 152 44" stroke="#ff6b5c" stroke-width="1.5" fill="none" opacity=".8"/>
+      <path d="M106 72 C 102 90, 122 96, 132 90" stroke="#ff6b5c" stroke-width="1.2" fill="none" opacity=".5"/>
+      <g><rect x="32" y="32" width="32" height="26" rx="4" fill="#1a1a20" stroke="#2c2c34" stroke-width=".6"/><rect x="36" y="37" width="20" height="2.4" rx="1" fill="#3a3a44"/><rect x="36" y="42" width="24" height="2.4" rx="1" fill="#2e2e37"/><rect x="36" y="47" width="16" height="2.4" rx="1" fill="#2e2e37"/></g>
+      <g><rect x="138" y="30" width="32" height="26" rx="4" fill="#1a1a20" stroke="#2c2c34" stroke-width=".6"/><rect x="142" y="35" width="18" height="2.4" rx="1" fill="#3a3a44"/><rect x="142" y="40" width="24" height="2.4" rx="1" fill="#2e2e37"/><rect x="142" y="45" width="20" height="2.4" rx="1" fill="#2e2e37"/></g>
+      <g><rect x="116" y="80" width="30" height="24" rx="4" fill="#1a1a20" stroke="#2c2c34" stroke-width=".6"/><rect x="120" y="85" width="16" height="2.2" rx="1" fill="#3a3a44"/><rect x="120" y="89" width="22" height="2.2" rx="1" fill="#2e2e37"/></g>
+      <g><rect x="88" y="58" width="36" height="28" rx="5" fill="#131a2c" stroke="#4d94ff" stroke-width="1.2"/><rect x="93" y="63" width="22" height="2.6" rx="1" fill="#6f9fe0"/><rect x="93" y="68" width="26" height="2.6" rx="1" fill="#2b3f66"/><rect x="93" y="73" width="18" height="2.6" rx="1" fill="#2b3f66"/><rect x="93" y="78" width="24" height="2.6" rx="1" fill="#2b3f66"/></g>
+      <circle cx="48" cy="46" r="1.8" fill="#ff6b5c"/><circle cx="152" cy="44" r="1.8" fill="#ff6b5c"/><circle cx="132" cy="90" r="1.6" fill="#ff6b5c" opacity=".7"/>
+    </svg></span>
+    <span class="info"><span class="title">Trails</span><div class="desc">See everything you&rsquo;ve read as a living graph you can navigate.</div><div class="tags">Knowledge Navigation &middot; Graph Interface</div></span>
+    <span class="meta"><span class="yr">2024</span><span class="status">Watch demo &#8599;</span></span>
+  </a></li></ul>
+
+  <p class="pick">B &mdash; co-scroll, connected documents (like image 3)</p>
+  <ul class="list"><li class="item"><a class="row" href="#">
+    <span class="thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="196" height="122" fill="#0e0e12"/>
+      <rect x="8" y="10" width="180" height="102" rx="8" fill="#131318" stroke="#26262c" stroke-width=".6"/>
+      <!-- sidebar -->
+      <rect x="14" y="18" width="36" height="86" rx="4" fill="#17171c"/>
+      <rect x="18" y="24" width="28" height="7" rx="2" fill="#2a3a5e"/><rect x="20" y="26.5" width="16" height="2" rx="1" fill="#6f9fe0"/>
+      <rect x="18" y="35" width="28" height="6" rx="2" fill="#22222a"/><rect x="18" y="44" width="28" height="6" rx="2" fill="#22222a"/><rect x="18" y="53" width="28" height="6" rx="2" fill="#22222a"/>
+      <!-- doc 1 -->
+      <rect x="56" y="20" width="60" height="76" rx="4" fill="#f3f2ee"/>
+      <rect x="61" y="26" width="30" height="3" rx="1.5" fill="#c9c7c0"/>
+      <rect x="61" y="34" width="50" height="2.2" rx="1" fill="#dcdad3"/><rect x="61" y="39" width="46" height="2.2" rx="1" fill="#dcdad3"/>
+      <rect x="61" y="45" width="50" height="4" rx="1.5" fill="#bcd3f5"/><rect x="61" y="52" width="42" height="2.2" rx="1" fill="#dcdad3"/><rect x="61" y="57" width="48" height="2.2" rx="1" fill="#dcdad3"/>
+      <!-- doc 2 -->
+      <rect x="122" y="20" width="60" height="76" rx="4" fill="#f3f2ee"/>
+      <rect x="127" y="26" width="28" height="3" rx="1.5" fill="#c9c7c0"/>
+      <rect x="127" y="34" width="50" height="2.2" rx="1" fill="#dcdad3"/>
+      <rect x="127" y="40" width="50" height="4" rx="1.5" fill="#f5b8b0"/><rect x="127" y="47" width="44" height="2.2" rx="1" fill="#dcdad3"/><rect x="127" y="52" width="48" height="2.2" rx="1" fill="#dcdad3"/><rect x="127" y="57" width="42" height="2.2" rx="1" fill="#dcdad3"/>
+      <!-- connection between highlighted passages -->
+      <path d="M111 47 C 118 47, 118 42, 127 42" stroke="#4d94ff" stroke-width="1.1" fill="none"/>
+      <!-- bottom trail bar -->
+      <rect x="56" y="100" width="40" height="6" rx="3" fill="#1e1e25"/><rect x="100" y="100" width="40" height="6" rx="3" fill="#1e1e25"/>
+    </svg></span>
+    <span class="info"><span class="title">Trails</span><div class="desc">See everything you&rsquo;ve read as a living graph you can navigate.</div><div class="tags">Knowledge Navigation &middot; Graph Interface</div></span>
+    <span class="meta"><span class="yr">2024</span><span class="status">Watch demo &#8599;</span></span>
+  </a></li></ul>
+
+</div>
+</body>
+</html>

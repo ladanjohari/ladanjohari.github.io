@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prompted Find &mdash; post-restructure audit</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#F7F6F3;--ink:#111;--mid:#6B6B6B;--rule:#D4D3CF;--accent:#0066FF;--good:#1B7F3B;--warn:#B37A00;--bad:#B33A3A}
+  html{background:var(--bg)}
+  body{font-family:'Geist',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:140px}
+  .shell{max-width:780px;margin:0 auto;padding:0 28px}
+  .doc-head{padding-top:56px;border-bottom:1px solid var(--rule);padding-bottom:24px}
+  .doc-eyebrow{font-size:0.65rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-bottom:12px}
+  .doc-title{font-size:1.55rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:10px}
+  .doc-sub{font-size:0.85rem;line-height:1.7;color:var(--mid);max-width:640px}
+  .doc-sub b{color:var(--ink);font-weight:600}
+
+  .band{margin-top:48px}
+  .band-head{display:flex;align-items:baseline;gap:12px;padding-bottom:10px;border-bottom:2px solid var(--ink)}
+  .band-tag{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#fff;padding:3px 9px;border-radius:4px}
+  .band-tag.p1{background:var(--bad)}
+  .band-tag.p2{background:var(--warn)}
+  .band-tag.p3{background:var(--mid)}
+  .band-title{font-size:0.82rem;font-weight:600}
+  .band-note{font-size:0.72rem;color:var(--mid);margin-left:auto}
+
+  ul.items{list-style:none;margin-top:4px}
+  ul.items li{display:flex;gap:12px;padding:14px 2px;border-bottom:0.5px solid var(--rule);font-size:0.82rem;line-height:1.65;color:var(--mid)}
+  ul.items li:last-child{border-bottom:none}
+  .num{flex-shrink:0;font-weight:700;color:var(--accent);font-size:0.75rem;width:24px;padding-top:2px}
+  ul.items b{color:var(--ink);font-weight:600}
+  .fix{display:block;margin-top:5px;font-size:0.75rem;color:var(--mid)}
+  .fix b{font-weight:600;color:var(--good)}
+  .q{display:inline-block;font-size:0.65rem;font-weight:700;letter-spacing:0.05em;color:#fff;background:var(--accent);border-radius:4px;padding:1px 7px;margin-right:6px;vertical-align:1px}
+
+  .foot{margin-top:64px;padding-top:18px;border-top:1px solid var(--rule);font-size:0.68rem;color:var(--mid);line-height:1.7}
+  .foot b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="doc-head">
+    <p class="doc-eyebrow">Process &middot; Audit no. 2 &middot; 2026-07-08 &middot; after the restructure</p>
+    <h1 class="doc-title">Prompted Find &mdash; what a recruiter sees now, and what&rsquo;s left</h1>
+    <p class="doc-sub">
+      Fresh pass over the <b>live page</b> (commit 1ab2ef6) with recruiter eyes, HIG legibility rules,
+      and the craft skills. The big things are right: the story order works, the copy is yours,
+      the visuals carry the interaction. What&rsquo;s left is small and mostly about <b>repetition that
+      snuck in when sections moved</b>. Each item says exactly what I&rsquo;d change; you approve per item.
+    </p>
+  </div>
+
+  <div class="band">
+    <div class="band-head">
+      <span class="band-tag p1">P1</span>
+      <span class="band-title">Repetition a careful reader will notice</span>
+      <span class="band-note">15 min total</span>
+    </div>
+    <ul class="items">
+      <li><span class="num">1</span><div><b>The same sentence appears twice, 10 lines apart.</b> The Method body ends &ldquo;The medium changes; the interaction stays the same&rdquo; and the blue note right under it ends &ldquo;The medium changes. The interaction stays the same.&rdquo; This became a visible duplicate when the note moved into the Method section.<span class="fix"><b>Fix:</b> delete the sentence from the body paragraph, keep it as the note&rsquo;s closing line where it lands harder.</span></div></li>
+      <li><span class="num">2</span><div><b>The hero descriptor and the Gap section overlap.</b> Descriptor: &ldquo;Search that returns a location, not a list.&rdquo; Gap body: &ldquo;The query returns a location, not a transcript, not a summary.&rdquo; A scanner reads the same idea twice before the video.<span class="fix"><b>Fix:</b> shorten the descriptor to its first two sentences: &ldquo;Ask a question about a video. Jump to the exact moment that answers it.&rdquo; The Gap keeps the location line.</span></div></li>
+      <li><span class="num">3</span><div><b>The video caption repeats the descriptor.</b> &ldquo;Type a question, jump to the moment&rdquo; sits directly under a descriptor that just said it.<span class="fix"><b>Fix:</b> make the caption say what the reader is actually watching: &ldquo;Live prototype on a 74-minute NASA talk.&rdquo; Concrete, new information, and the one right place for the 74-minute fact.</span></div></li>
+    </ul>
+  </div>
+
+  <div class="band">
+    <div class="band-head">
+      <span class="band-tag p2">P2</span>
+      <span class="band-title">Credibility &amp; access &mdash; worth a decision each</span>
+    </div>
+    <ul class="items">
+      <li><span class="num">4</span><div><b>Nothing on the page says what&rsquo;s real vs simulated anymore.</b> That disclosure left with the How It Works section. A technical reviewer who suspects the AI is mocked finds no answer; unanswered suspicion reads worse than the honest note did.<span class="fix"><b>Fix:</b> one sentence added to the caption of the stepper section or as a third &ldquo;What I&rsquo;d Change&rdquo;-style line: &ldquo;The interface is working code; the understanding layer is simulated, swappable for real embeddings.&rdquo; One line, not a box.</span></div></li>
+      <li><span class="num">5</span><div><b>The GitHub link shows a different prototype than the page.</b> The public repo is the older &ldquo;Web Science&rdquo; version; the page shows the NASA talk. A curious recruiter clicking through sees a mismatch.<span class="fix"><b>Fix options:</b> nothing now (tour phase pushes the NASA version anyway) &middot; or add one line to the repo README: &ldquo;The case study shows the current build; this repo holds the earlier prototype.&rdquo; I&rsquo;d do the README line, 2 minutes.</span></div></li>
+      <li><span class="num">6</span><div><b>Keyboard focus on the stepper tabs uses the browser default outline.</b> Mouse and touch got the polish pass; tab-key users get a mismatched default ring on top of the blue inset.<span class="fix"><b>Fix:</b> <span style="font-family:ui-monospace,monospace;font-size:0.7rem">:focus-visible</span> style matching the active inset, and suppress the default. Five lines of CSS.</span></div></li>
+    </ul>
+  </div>
+
+  <div class="band">
+    <div class="band-head">
+      <span class="band-tag p3">P3</span>
+      <span class="band-title">Consistency questions &mdash; your call, no strong pull</span>
+    </div>
+    <ul class="items">
+      <li><span class="num">7</span><div><span class="q">Q</span><b>&ldquo;Works&rdquo; vs &ldquo;Selected Work.&rdquo;</b> The back link says &ldquo;Works&rdquo;; the homepage section it lands on is titled &ldquo;Selected Work.&rdquo; Same label on both ends reads more deliberate. Keep &ldquo;Works&rdquo; or match it?</div></li>
+      <li><span class="num">8</span><div><span class="q">Q</span><b>Eyebrow leads with jargon.</b> &ldquo;Semantic Decomposition &middot; Applied to Video &middot; Coded Prototype&rdquo; is the first text on the page, before the reader knows what Semantic Decomposition is. It does set up the Method section. Keep as a deliberate tease, or flip to &ldquo;Coded Prototype &middot; Semantic Video Navigation&rdquo;?</div></li>
+      <li><span class="num">9</span><div><b>Hero loop feel</b> &mdash; still the one un-checked item from the first punch list: watch the 35s loop once and confirm the loop point isn&rsquo;t jarring. Pure taste check, needs your eyes, 40 seconds.</div></li>
+      <li><span class="num">10</span><div><b>Dark mode</b> &mdash; unchanged position: portfolio-wide decision (0/4 project pages have it), belongs to its own session, not this page.</div></li>
+    </ul>
+  </div>
+
+  <p class="foot">
+    <b>How to answer:</b> &ldquo;do 1&ndash;3&rdquo; / &ldquo;do 1&ndash;6&rdquo; / cherry-pick numbers, and answers for 7 and 8 if you have a preference.
+    Items 1&ndash;3 + 6 are pure fixes I can ship in one commit; 4 and 5 change what the page says, so they wait for your yes.<br>
+    Working Document &middot; Not for distribution &middot; process/promptedfind-audit-2.html
+  </p>
+</div>
+</body>
+</html>

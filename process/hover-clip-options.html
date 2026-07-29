@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="light dark" />
+<title>Hover clips &middot; candidates</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#F7F6F3;--ink:#111;--mid:#6B6B6B;--rule:#D4D3CF;--accent:#0066FF}
+  @media (prefers-color-scheme:dark){:root{--bg:#1A1A1A;--ink:#E8E8E8;--mid:#9A9A9A;--rule:#333;--accent:#4D94FF}}
+  html{background:var(--bg)}
+  body{font-family:'Geist',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:120px}
+  .shell{max-width:760px;margin:0 auto;padding:0 28px}
+  .proj{font-size:0.62rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#fff;background:var(--ink);display:inline-block;padding:4px 10px;border-radius:4px;margin:48px 0 4px}
+  .optsub{font-size:0.82rem;line-height:1.6;color:var(--mid);max-width:620px;margin-bottom:10px}
+  .optsub b{color:var(--ink);font-weight:600}
+  .list{list-style:none;margin:0 -14px 2px}
+  .item{border-bottom:.5px solid var(--rule)}
+  .item:last-child{border-bottom:none}
+  .row{display:flex;align-items:center;gap:22px;text-decoration:none;color:var(--ink);padding:16px 14px;border-radius:14px}
+  .thumb{position:relative;width:196px;height:122px;border-radius:12px;overflow:hidden;flex-shrink:0;border:1px solid var(--rule);background:#111}
+  .thumb video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .info{flex:1;min-width:0}
+  .title{font-size:1.1rem;font-weight:600;letter-spacing:-0.02em}
+  .desc{font-size:0.85rem;color:var(--mid);margin-top:5px;line-height:1.5}
+  .note{font-size:0.72rem;color:var(--accent);margin-top:7px;font-weight:500}
+</style>
+</head>
+<body>
+<div class="shell">
+  <p class="optsub" style="margin-top:40px"><b>Hover-clip candidates, playing inside the thumbnail frame.</b> On the live site these appear on hover, crossfading over the SVG. Here they loop continuously so you can judge the footage. All three open on the real product UI. Each is a 6-second cut, 22&ndash;63&nbsp;KB.</p>
+
+  <span class="proj">Prompted Find &mdash; cut from PromptedFind_web.mp4 (25s&ndash;31s)</span>
+  <ul class="list"><li class="item"><span class="row">
+    <span class="thumb"><video src="/process/hover-clips/promptedfind-hover.mp4" autoplay loop muted playsinline></video></span>
+    <span class="info"><span class="title">Prompted Find</span><div class="desc">Find the moment you need in a long video by meaning, not keywords.</div><div class="note">Opens on the ask-a-question panel over the video, moment chips on the timeline.</div></span>
+  </span></li></ul>
+
+  <span class="proj">Xcode Symbol Browser &mdash; cut from Xcod Symbol Browser.mov (3s&ndash;9s)</span>
+  <ul class="list"><li class="item"><span class="row">
+    <span class="thumb"><video src="/process/hover-clips/xcode-hover.mp4" autoplay loop muted playsinline></video></span>
+    <span class="info"><span class="title">Xcode Symbol Browser</span><div class="desc">Read a codebase&rsquo;s structure at a glance instead of digging through files.</div><div class="note">Real Miller columns being browsed, EntryType selected, code pane below.</div></span>
+  </span></li></ul>
+
+  <span class="proj">Trails &mdash; cut from Trails.mov (2s&ndash;8s)</span>
+  <ul class="list"><li class="item"><span class="row">
+    <span class="thumb"><video src="/process/hover-clips/trails-hover.mp4" autoplay loop muted playsinline></video></span>
+    <span class="info"><span class="title">Trails</span><div class="desc">See everything you&rsquo;ve read as a living graph you can navigate.</div><div class="note">The co-scroll view: document and video connected by the red trail line.</div></span>
+  </span></li></ul>
+
+</div>
+</body>
+</html>

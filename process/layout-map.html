@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Layout Map — ladanjohari.com</title>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Geist', system-ui, sans-serif;
+      background: #1a1a1a; color: #e8e8e8;
+      -webkit-font-smoothing: antialiased;
+      padding: 32px 24px 80px;
+    }
+
+    h1 { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #555; margin-bottom: 4px; }
+    .subtitle { font-size: 0.72rem; color: #444; margin-bottom: 32px; }
+
+    /* ── Viewport selector ── */
+    .vp-tabs { display: flex; gap: 6px; margin-bottom: 28px; flex-wrap: wrap; }
+    .vp-btn {
+      padding: 6px 14px; border-radius: 5px; border: 1px solid #333;
+      background: #222; color: #666; font-family: 'Geist', sans-serif;
+      font-size: 0.72rem; font-weight: 600; cursor: pointer; letter-spacing: 0.02em;
+      transition: all 0.12s;
+    }
+    .vp-btn.active { background: #0066FF; border-color: #0066FF; color: #fff; }
+    .vp-btn:hover:not(.active) { border-color: #555; color: #aaa; }
+
+    /* ── Canvas area ── */
+    .canvas-wrap {
+      overflow-x: auto; overflow-y: visible;
+      border: 1px solid #2a2a2a; border-radius: 10px;
+      background: #111; padding: 24px;
+    }
+    svg { display: block; overflow: visible; }
+
+    /* ── Legend ── */
+    .legend {
+      display: flex; flex-wrap: wrap; gap: 16px 28px;
+      margin-top: 24px;
+    }
+    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.68rem; color: #666; }
+    .legend-swatch { width: 24px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+  <h1>Layout Map</h1>
+  <p class="subtitle">ladanjohari.com · homepage · all pixel values from source CSS</p>
+
+  <div class="vp-tabs">
+    <button class="vp-btn active" onclick="draw(1440)">1440px desktop</button>
+    <button class="vp-btn" onclick="draw(1280)">1280px laptop</button>
+    <button class="vp-btn" onclick="draw(1200)">1200px (preview threshold)</button>
+    <button class="vp-btn" onclick="draw(768)">768px tablet</button>
+    <button class="vp-btn" onclick="draw(540)">540px mobile</button>
+    <button class="vp-btn" onclick="draw(375)">375px iPhone</button>
+  </div>
+
+  <div class="canvas-wrap">
+    <svg id="map" width="900" height="900" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch" style="background:#F7F6F3;border:1px solid #444"></div>Background #F7F6F3</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:rgba(0,102,255,0.12);border:1px solid rgba(0,102,255,0.4)"></div>Shell / content area</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:rgba(0,102,255,0.06);border:1px dashed rgba(0,102,255,0.4)"></div>Right white column</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:rgba(255,160,0,0.18);border:1px solid rgba(255,160,0,0.5)"></div>Spacing / padding</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:rgba(0,200,100,0.18);border:1px solid rgba(0,200,100,0.5)"></div>Component blocks</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:rgba(220,40,40,0.18);border:1px solid rgba(220,40,40,0.5)"></div>Preview panel</div>
+  </div>
+
+<script>
+// ── Drawing helpers ──────────────────────────────────────────────────────────
+const svg = document.getElementById('map');
+const ns = 'http://www.w3.org/2000/svg';
+
+function el(tag, attrs, text) {
+  const e = document.createElementNS(ns, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+
+function rect(x, y, w, h, fill, stroke, strokeW=1, rx=0) {
+  return el('rect', {x,y,width:w,height:h,fill,stroke,rx,'stroke-width':strokeW});
+}
+
+function line(x1,y1,x2,y2,stroke='#333',sw=1,dash='') {
+  return el('line', {x1,y1,x2,y2,stroke,'stroke-width':sw,'stroke-dasharray':dash});
+}
+
+function text(x, y, content, size=10, color='#888', anchor='middle', weight='400') {
+  return el('text', {x, y, 'font-size':size, fill:color, 'text-anchor':anchor, 'font-family':'Geist,sans-serif', 'font-weight':weight}, content);
+}
+
+function measureH(x1, x2, y, label, color='#0066FF') {
+  // horizontal dimension line
+  const g = el('g', {});
+  g.appendChild(line(x1, y, x2, y, color, 1));
+  g.appendChild(line(x1, y-4, x1, y+4, color, 1));
+  g.appendChild(line(x2, y-4, x2, y+4, color, 1));
+  const mid = (x1+x2)/2;
+  const bg = el('rect', {x:mid-22, y:y-8, width:44, height:12, fill:'#111', rx:2});
+  g.appendChild(bg);
+  g.appendChild(text(mid, y+2, label, 8.5, color, 'middle', '600'));
+  return g;
+}
+
+function measureV(x, y1, y2, label, color='#ff9900', side='right') {
+  const g = el('g', {});
+  g.appendChild(line(x, y1, x, y2, color, 1));
+  g.appendChild(line(x-4, y1, x+4, y1, color, 1));
+  g.appendChild(line(x-4, y2, x+4, y2, color, 1));
+  const mid = (y1+y2)/2;
+  const lx = side === 'right' ? x+6 : x-6;
+  const anchor = side === 'right' ? 'start' : 'end';
+  const bg = el('rect', {x: side==='right'?x+4:x-36, y:mid-7, width:32, height:12, fill:'#111', rx:2});
+  g.appendChild(bg);
+  g.appendChild(text(lx, mid+3, label, 8.5, color, anchor, '600'));
+  return g;
+}
+
+function label(x, y, content, size=9, color='#666', anchor='start') {
+  return text(x, y, content, size, color, anchor, '500');
+}
+
+// ── Main draw function ────────────────────────────────────────────────────────
+function draw(vpWidth) {
+  // Update active button
+  document.querySelectorAll('.vp-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.includes(vpWidth+'px') || (vpWidth===1440 && b.textContent.includes('1440')));
+  });
+
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+  // Scale: fit viewport into ~860px canvas width
+  const canvasW = 860;
+  const scale = Math.min(1, canvasW / vpWidth);
+  const drawVP = vpWidth * scale;
+
+  // Shell
+  const isMobile = vpWidth <= 540;
+  const isTablet = vpWidth <= 768;
+  const shellMax = 700;
+  const shellPad = isMobile ? 20 : 28;
+  const shellW = Math.min(shellMax, vpWidth);
+  const shellX = (drawVP - shellW * scale) / 2;
+  const contentW = (shellW - shellPad * 2);
+
+  // Pixel values (actual, unscaled)
+  const navPadTop    = isMobile ? 28 : 40;
+  const navH         = 20; // approx nav row height
+  const heroPadTop   = isMobile ? 56 : 80;
+  const heroPadBot   = isMobile ? 48 : 72;
+  const heroH        = 110; // approx hero content height (eyebrow + h1 + desc)
+  const sectionLabelH = 14 + 14; // text + padding-bottom
+  const workRowH     = 20 + 75 + 20; // padding-top + thumb + padding-bot (approx)
+  const numRows      = 4;
+  const workListMB   = 80;
+  const wfH          = 18 + 44 + 60 + 13; // margin+track+detail+pips
+  const wfMT         = 40;
+  const aboutH       = 60;
+  const footerPad    = 26 + 52;
+
+  const S = scale; // convenience
+
+  // Running Y cursor (scaled)
+  let y = 0;
+  const sections = [];
+
+  // helper to push section
+  function push(name, h, color, label, pixH) {
+    sections.push({name, y, h: h*S, color, label, pixH: pixH||h});
+    y += h * S;
+  }
+
+  push('navTop', navPadTop, 'rgba(255,160,0,0.15)', `nav-top\n${navPadTop}px`, navPadTop);
+  push('nav', navH, 'rgba(0,200,100,0.18)', `nav ${navH}px`, navH);
+  push('heroPadTop', heroPadTop, 'rgba(255,160,0,0.15)', `hero padding-top\n${heroPadTop}px`, heroPadTop);
+  push('heroContent', heroH, 'rgba(0,200,100,0.18)', `hero content ~${heroH}px`, heroH);
+  push('heroPadBot', heroPadBot, 'rgba(255,160,0,0.15)', `hero padding-bottom\n${heroPadBot}px`, heroPadBot);
+  push('sectionLabel', sectionLabelH, 'rgba(0,200,100,0.18)', `SELECTED WORK label ${sectionLabelH}px`, sectionLabelH);
+
+  for (let i = 0; i < numRows; i++) {
+    push(`row${i}`, workRowH, i%2===0 ? 'rgba(0,200,100,0.18)' : 'rgba(0,200,100,0.10)', `work row ~${workRowH}px`, workRowH);
+  }
+
+  push('workListMB', workListMB, 'rgba(255,160,0,0.15)', `margin-bottom ${workListMB}px`, workListMB);
+  push('sectionLabel2', sectionLabelH, 'rgba(0,200,100,0.18)', `WORKFLOW label`, sectionLabelH);
+  push('wfMT', wfMT, 'rgba(255,160,0,0.15)', `margin-top ${wfMT}px`, wfMT);
+  push('workflow', wfH, 'rgba(0,200,100,0.18)', `Workflow widget ~${wfH}px`, wfH);
+  push('aboutH', 80, 'rgba(255,160,0,0.15)', `gap 80px`, 80);
+  push('about', aboutH, 'rgba(0,200,100,0.18)', `About text ~${aboutH}px`, aboutH);
+  push('footerPad', footerPad, 'rgba(255,160,0,0.15)', `footer pad ${footerPad}px`, footerPad);
+
+  const totalH = y + 10;
+  svg.setAttribute('height', totalH + 60);
+  svg.setAttribute('width', canvasW);
+
+  // ── Background ──
+  svg.appendChild(rect(0, 0, drawVP, totalH, '#F7F6F3', 'none'));
+
+  // ── Left/right gutters ──
+  if (!isMobile) {
+    const gutterW = (drawVP - shellW * S) / 2;
+    if (gutterW > 0) {
+      svg.appendChild(rect(0, 0, gutterW, totalH, 'rgba(0,0,0,0.04)', 'none'));
+      svg.appendChild(rect(drawVP - gutterW, 0, gutterW, totalH, 'rgba(0,102,255,0.05)', 'rgba(0,102,255,0.2)', 0.5));
+    }
+  }
+
+  // ── Shell fill ──
+  svg.appendChild(rect(shellX, 0, shellW*S, totalH, 'rgba(0,102,255,0.04)', 'rgba(0,102,255,0.15)', 0.5));
+
+  // ── Section blocks ──
+  sections.forEach(sec => {
+    const bx = shellX + shellPad * S;
+    const bw = contentW * S;
+    if (sec.h > 1) {
+      svg.appendChild(rect(bx, sec.y, bw, sec.h, sec.color, 'none'));
+    }
+  });
+
+  // ── Divider lines at key boundaries ──
+  const dividerX1 = shellX + shellPad * S;
+  const dividerX2 = dividerX1 + contentW * S;
+
+  // ── Section labels (right side) ──
+  sections.forEach(sec => {
+    if (sec.h < 4 * S) return;
+    const ly = sec.y + sec.h / 2 + 4;
+    const lines = sec.label.split('\n');
+    lines.forEach((ln, i) => {
+      svg.appendChild(text(dividerX2 + 8, ly + (i - (lines.length-1)/2) * 11, ln, 8.5, '#666', 'start'));
+    });
+  });
+
+  // ── Shell width measurement ──
+  svg.appendChild(measureH(shellX, shellX + shellW*S, totalH + 20, `${shellW}px shell`, '#0066FF'));
+
+  // ── Content width measurement (inside padding) ──
+  svg.appendChild(measureH(shellX + shellPad*S, shellX + shellPad*S + contentW*S, totalH + 36, `${contentW}px content`, '#4D94FF'));
+
+  // ── Padding indicators ──
+  svg.appendChild(measureH(shellX, shellX + shellPad*S, totalH + 52, `${shellPad}px`, '#ff9900'));
+  svg.appendChild(measureH(shellX + (shellW - shellPad)*S, shellX + shellW*S, totalH + 52, `${shellPad}px`, '#ff9900'));
+
+  // ── Vertical spacings ──
+  const measX = shellX - 28;
+  sections.forEach(sec => {
+    if (sec.color.includes('160,0') && sec.h > 6) { // orange = spacing
+      svg.appendChild(measureV(measX, sec.y, sec.y + sec.h, `${sec.pixH}`, '#ff9900', 'right'));
+    }
+  });
+
+  // ── Viewport width label ──
+  svg.appendChild(measureH(0, drawVP, -14, `${vpWidth}px viewport`, '#444'));
+
+  // ── Work row detail (zoom in) ──
+  const rowSec = sections.find(s => s.name === 'row0');
+  if (rowSec) {
+    const rx = shellX + shellPad * S;
+    const rw = contentW * S;
+    const ry = rowSec.y;
+    const rh = rowSec.h;
+    // thumb: 120×75 (or 80×50 on mobile)
+    const thumbW = isMobile ? 80 : 120;
+    const thumbH = isMobile ? 50 : 75;
+    const gap = isMobile ? 14 : 20;
+    const thumbX = rx;
+    const thumbY = ry + (rh - thumbH*S) / 2;
+    svg.appendChild(rect(thumbX, thumbY, thumbW*S, thumbH*S, 'rgba(0,0,0,0.4)', '#333', 0.5, 4*S));
+    svg.appendChild(text(thumbX + thumbW*S/2, thumbY + thumbH*S/2 + 3, `${thumbW}×${thumbH}`, 7.5, '#555', 'middle'));
+
+    // row padding indicators
+    svg.appendChild(measureV(rx + rw - 2, ry, ry + 20*S, '20px', '#ff9900', 'right'));
+    svg.appendChild(measureV(rx + rw - 2, ry + rh - 20*S, ry + rh, '20px', '#ff9900', 'right'));
+
+    // gap
+    svg.appendChild(measureH(thumbX + thumbW*S, thumbX + thumbW*S + gap*S, thumbY + thumbH*S/2, `${gap}px gap`, '#ff9900'));
+
+    // year + arrow on right
+    const arrowX = rx + rw - 24*S;
+    svg.appendChild(text(arrowX, ry + rh/2 + 4, '→', 12*S, '#D4D3CF', 'middle'));
+  }
+
+  // ── Preview panel (only if viewport >= 1200) ──
+  if (vpWidth >= 1200) {
+    const rightGutterStart = shellX + shellW * S;
+    const rightGutterW = drawVP - rightGutterStart;
+    const pw = 220 * S;
+    const ph = 138 * S;
+    const px = rightGutterStart + (rightGutterW - pw) / 2;
+    const py = totalH / 2 - ph / 2;
+
+    // right column shading
+    svg.appendChild(rect(rightGutterStart, 0, rightGutterW, totalH, 'rgba(0,102,255,0.06)', 'rgba(0,102,255,0.2)', 0.5));
+
+    // preview panel
+    svg.appendChild(rect(px, py, pw, ph, 'rgba(220,40,40,0.18)', 'rgba(220,40,40,0.6)', 1, 6*S));
+    svg.appendChild(text(px + pw/2, py + ph/2 - 5, 'Preview panel', 9, 'rgba(220,100,100,0.9)', 'middle', '600'));
+    svg.appendChild(text(px + pw/2, py + ph/2 + 8, '220 × 138px', 8.5, 'rgba(220,100,100,0.7)', 'middle'));
+
+    // measure: right column width
+    svg.appendChild(measureH(rightGutterStart, drawVP, totalH + 20, `${Math.round((drawVP/S) - shellW)}px`, '#4D94FF'));
+    // measure: preview width
+    svg.appendChild(measureH(px, px + pw, py - 10, '220px preview', 'rgba(220,60,60,0.9)'));
+
+    // align line: shell right edge to preview left edge
+    svg.appendChild(el('line', {
+      x1: rightGutterStart, y1: 0,
+      x2: rightGutterStart, y2: totalH,
+      stroke: 'rgba(0,102,255,0.25)',
+      'stroke-width': 1, 'stroke-dasharray': '4,3'
+    }));
+    svg.appendChild(text(rightGutterStart + 3, 12, 'shell right edge', 8, 'rgba(0,102,255,0.5)', 'start'));
+  }
+
+  // ── Shell left edge guide ──
+  svg.appendChild(el('line', {
+    x1: shellX, y1: 0, x2: shellX, y2: totalH,
+    stroke: 'rgba(0,102,255,0.2)', 'stroke-width': 0.5, 'stroke-dasharray': '3,3'
+  }));
+  svg.appendChild(el('line', {
+    x1: shellX + shellW*S, y1: 0, x2: shellX + shellW*S, y2: totalH,
+    stroke: 'rgba(0,102,255,0.2)', 'stroke-width': 0.5, 'stroke-dasharray': '3,3'
+  }));
+
+  // ── Content edge guides ──
+  svg.appendChild(el('line', {
+    x1: shellX + shellPad*S, y1: 0, x2: shellX + shellPad*S, y2: totalH,
+    stroke: 'rgba(0,102,255,0.12)', 'stroke-width': 0.5, 'stroke-dasharray': '2,4'
+  }));
+  svg.appendChild(el('line', {
+    x1: shellX + (shellW - shellPad)*S, y1: 0, x2: shellX + (shellW - shellPad)*S, y2: totalH,
+    stroke: 'rgba(0,102,255,0.12)', 'stroke-width': 0.5, 'stroke-dasharray': '2,4'
+  }));
+}
+
+draw(1440);
+</script>
+</body>
+</html>

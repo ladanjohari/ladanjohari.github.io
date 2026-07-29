@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="light dark" />
+<title>Selected Work &mdash; hover &amp; thumbnail options</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#F7F6F3;--ink:#111;--mid:#6B6B6B;--rule:#D4D3CF;--hover-row:#F0EFEC;--accent:#0066FF;--accent-dim:#D6E4FF;--soon:#9A9A9A}
+  @media (prefers-color-scheme:dark){:root{--bg:#1A1A1A;--ink:#E8E8E8;--mid:#9A9A9A;--rule:#333;--hover-row:#242424;--accent:#4D94FF;--accent-dim:#1A3A66;--soon:#777}}
+  html{background:var(--bg)}
+  body{font-family:'Geist',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:120px}
+  .shell{max-width:720px;margin:0 auto;padding:0 28px}
+  .optlabel{font-size:0.62rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#fff;background:var(--accent);display:inline-block;padding:4px 10px;border-radius:4px;margin:64px 0 4px}
+  .optsub{font-size:0.82rem;line-height:1.6;color:var(--mid);max-width:600px;margin-bottom:8px}
+  .optsub b{color:var(--ink);font-weight:600}
+  .hig{font-size:0.7rem;color:var(--accent);font-weight:500;margin-bottom:22px;letter-spacing:0.01em}
+  .section-label{font-size:0.68rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid);padding-bottom:14px;border-bottom:1px solid var(--rule)}
+  .hint{font-size:0.68rem;color:var(--soon);margin:10px 0 0;font-style:italic}
+
+  .st{font-size:0.62rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap}
+  .st-live{color:var(--accent)}
+  .st-soon{color:var(--soon);border:1px solid var(--rule);border-radius:999px;padding:3px 10px;text-transform:none;letter-spacing:0;font-weight:500}
+  .yr{font-size:0.8rem;font-weight:500;color:var(--rule)}
+  .thumb{overflow:hidden;flex-shrink:0;border:1px solid var(--rule);background:#111;display:block;position:relative}
+  .thumb svg{width:100%;height:100%;display:block}
+  .thumb-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .22s ease-out;pointer-events:none}
+
+  .list{list-style:none}
+  .item{border-bottom:.5px solid var(--rule)}
+  .item:last-child{border-bottom:none}
+  .row{display:flex;align-items:center;gap:20px;text-decoration:none;color:var(--ink);padding:18px 0;transition:transform .16s ease-out}
+  .info{flex:1;min-width:0}
+  .title{font-size:1.05rem;font-weight:600;letter-spacing:-0.02em}
+  .desc{font-size:0.8rem;color:var(--mid);margin-top:4px;line-height:1.5}
+  .tags{font-size:0.64rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--mid);margin-top:6px}
+  .meta{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;min-width:84px}
+  .item.soon .thumb{opacity:.5}.item.soon .title{color:var(--mid)}
+  @media(hover:hover){.row:hover .thumb-video{opacity:1}.row:hover .thumb{border-color:var(--accent-dim)}}
+
+  /* V1 compact */
+  .v1 .thumb{width:120px;height:75px;border-radius:9px}
+  /* V2 large fixed */
+  .v2 .thumb{width:200px;height:125px;border-radius:12px}
+  .v2 .row{gap:24px;padding:20px 0}
+  /* V3 hover-expand disclosure */
+  .v3 .thumb{width:132px;height:82px;border-radius:10px}
+  .v3 .reveal{max-height:0;opacity:0;overflow:hidden;transition:max-height .32s cubic-bezier(0.32,0.72,0,1),opacity .28s ease-out,margin .32s cubic-bezier(0.32,0.72,0,1);margin-top:0}
+  .v3 .preview{border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:#111;aspect-ratio:16/9;position:relative}
+  .v3 .preview video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  @media(hover:hover){.v3 .item:hover .reveal{max-height:420px;opacity:1;margin-top:16px}}
+  /* V4 tap-to-expand accordion */
+  .v4 .thumb{width:132px;height:82px;border-radius:10px}
+  .v4 .reveal{max-height:0;opacity:0;overflow:hidden;transition:max-height .34s cubic-bezier(0.32,0.72,0,1),opacity .3s ease-out,margin .34s cubic-bezier(0.32,0.72,0,1)}
+  .v4 .item.open .reveal{max-height:440px;opacity:1;margin-top:16px}
+  .v4 .preview{border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:#111;aspect-ratio:16/9;position:relative}
+  .v4 .preview video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .v4 .chev{font-size:14px;color:var(--rule);transition:transform .3s cubic-bezier(0.32,0.72,0,1)}
+  .v4 .item.open .chev{transform:rotate(90deg);color:var(--accent)}
+
+  @media(max-width:560px){
+    .v2 .thumb{width:140px;height:88px}
+    .v1 .thumb{width:92px;height:58px}
+    .v3 .thumb,.v4 .thumb{width:100px;height:62px}
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="t-si" viewBox="0 0 160 100"><rect width="160" height="100" fill="#111"/><rect x="34" y="30" width="92" height="40" rx="11" fill="#1c1c1c" stroke="#2c2c2c" stroke-width=".5"/><circle cx="52" cy="42" r="3.4" fill="#fff"/><rect x="60" y="39.5" width="26" height="4.5" rx="2" fill="#2a2a2a"/><circle cx="52" cy="54" r="3.4" fill="#E8952A"/><rect x="60" y="51.5" width="34" height="4.5" rx="2" fill="#2a2a2a"/></symbol>
+  <symbol id="t-pf" viewBox="0 0 160 100"><rect width="160" height="100" fill="#0a1628"/><rect x="14" y="44" width="132" height="3" rx="1.5" fill="#1a2a44"/><rect x="10" y="54" width="26" height="10" rx="3" fill="#2563EB" opacity=".85"/><rect x="42" y="54" width="30" height="10" rx="3" fill="#2563EB" opacity=".55"/><rect x="80" y="54" width="28" height="10" rx="3" fill="#2563EB" opacity=".55"/><rect x="116" y="54" width="32" height="10" rx="3" fill="#2563EB" opacity=".55"/><circle cx="23" cy="45.5" r="4" fill="#2563EB"/></symbol>
+  <symbol id="t-xc" viewBox="0 0 160 100"><rect width="160" height="100" fill="#1c1c1e"/><rect x="10" y="14" width="42" height="72" rx="4" fill="#252528"/><rect x="56" y="14" width="46" height="72" rx="4" fill="#252528"/><rect x="106" y="14" width="44" height="72" rx="4" fill="#252528"/><rect x="14" y="40" width="34" height="7" rx="2" fill="#0A84FF" opacity=".2"/><rect x="60" y="30" width="38" height="7" rx="2" fill="#0A84FF" opacity=".2"/><rect x="110" y="22" width="36" height="7" rx="2" fill="#BF5AF2" opacity=".2"/></symbol>
+  <symbol id="t-tr" viewBox="0 0 160 100"><rect width="160" height="100" fill="#111"/><rect x="10" y="14" width="40" height="72" rx="3" fill="#1a1a1a"/><rect x="56" y="14" width="44" height="72" rx="3" fill="#f5f5f0"/><rect x="106" y="14" width="44" height="72" rx="3" fill="#f5f5f0"/><rect x="60" y="34" width="36" height="8" rx="2" fill="#4D94FF" opacity=".18"/><rect x="110" y="30" width="36" height="8" rx="2" fill="#FF6B6B" opacity=".18"/></symbol>
+</svg>
+
+<div class="shell">
+  <span class="optlabel" style="background:var(--ink)">Brainstorm &middot; Option A rows &middot; hover + thumbnail sizing</span>
+  <p class="optsub" style="margin-top:8px">All four keep the Option A row anatomy you chose. They differ in <b>how big the visual is</b> and <b>how the preview reveals</b>. Hover the live rows (Session Indicator, PromptedFind) to feel each. The two &ldquo;soon&rdquo; rows stay static so you can judge cohesion.</p>
+
+  <!-- V1 -->
+  <span class="optlabel">V1 &mdash; Compact (today&rsquo;s size, ~120&times;75)</span>
+  <p class="optsub">Great for scanning; the gif is small. Baseline for comparison.</p>
+  <p class="hig">HIG: concentric radius, springs-from-source (video is the thumbnail). Best scan, weakest preview.</p>
+  <p class="section-label">Selected Work</p>
+  <ul class="list v1">
+    <li class="item"><a class="row" href="#"><span class="thumb"><svg><use href="#t-si"/></svg><video class="thumb-video" src="/assets/previews/session-indicator-frame.mp4" loop muted playsinline preload="metadata"></video></span><span class="info"><span class="title">Session Indicator</span><div class="desc">Awareness across parallel AI agents, without breaking focus.</div></span><span class="meta"><span class="yr">2026</span><span class="st st-live">Case study &rarr;</span></span></a></li>
+    <li class="item"><a class="row" href="#"><span class="thumb"><svg><use href="#t-pf"/></svg><video class="thumb-video" src="/assets/previews/promptedfind-frame.mp4" loop muted playsinline preload="metadata"></video></span><span class="info"><span class="title">PromptedFind</span><div class="desc">Semantic navigation &mdash; jump through long media by meaning.</div></span><span class="meta"><span class="yr">2025</span><span class="st st-live">Case study &rarr;</span></span></a></li>
+    <li class="item soon"><a class="row" href="#"><span class="thumb"><svg><use href="#t-xc"/></svg></span><span class="info"><span class="title">Xcode Symbol Browser</span><div class="desc">A faster way to read a codebase&rsquo;s structure.</div></span><span class="meta"><span class="yr">2025</span><span class="st st-soon">Coming soon</span></span></a></li>
+  </ul>
+
+  <!-- V2 -->
+  <span class="optlabel">V2 &mdash; Large fixed thumbnail (~200&times;125)</span>
+  <p class="optsub">The gif is legible at rest &mdash; no interaction needed to read it. Still scannable, just taller rows.</p>
+  <p class="hig">HIG: larger canvas fixes the &ldquo;too small for gifs&rdquo; problem directly; concentric 12px radius. Costs vertical space.</p>
+  <p class="section-label">Selected Work</p>
+  <ul class="list v2">
+    <li class="item"><a class="row" href="#"><span class="thumb"><svg><use href="#t-si"/></svg><video class="thumb-video" src="/assets/previews/session-indicator-frame.mp4" loop muted playsinline preload="metadata"></video></span><span class="info"><span class="title">Session Indicator</span><div class="desc">Awareness across parallel AI agents, without breaking focus.</div><div class="tags">AI Agent UI &middot; Interaction System</div></span><span class="meta"><span class="yr">2026</span><span class="st st-live">Case study &rarr;</span></span></a></li>
+    <li class="item"><a class="row" href="#"><span class="thumb"><svg><use href="#t-pf"/></svg><video class="thumb-video" src="/assets/previews/promptedfind-frame.mp4" loop muted playsinline preload="metadata"></video></span><span class="info"><span class="title">PromptedFind</span><div class="desc">Semantic navigation &mdash; jump through long media by meaning.</div><div class="tags">AI Interaction Pattern &middot; Prototype</div></span><span class="meta"><span class="yr">2025</span><span class="st st-live">Case study &rarr;</span></span></a></li>
+    <li class="item soon"><a class="row" href="#"><span class="thumb"><svg><use href="#t-tr"/></svg></span><span class="info"><span class="title">Trails</span><div class="desc">Knowledge navigation as a living graph of what you&rsquo;ve read.</div><div class="tags">Knowledge Navigation &middot; Graph Interface</div></span><span class="meta"><span class="yr">2024</span><span class="st st-soon">Coming soon</span></span></a></li>
+  </ul>
+
+  <!-- V3 -->
+  <span class="optlabel">V3 &mdash; Hover-expand (compact scan &rarr; big 16:9 preview)</span>
+  <p class="optsub">Best of both: small for scanning, but hovering a row <b>opens a large preview inline below it</b>. The row deepens focus as you engage.</p>
+  <p class="hig">HIG: &ldquo;deepening focus &rarr; surface grows&rdquo; + springs-from-source. Desktop-only reveal &mdash; needs a touch answer (see V4).</p>
+  <p class="section-label">Selected Work</p>
+  <ul class="list v3">
+    <li class="item"><a class="row" href="#"><span class="thumb"><svg><use href="#t-si"/></svg><video class="thumb-video" src="/assets/previews/session-indicator-frame.mp4" loop muted playsinline preload="metadata"></video></span><span class="info"><span class="title">Session Indicator</span><div class="desc">Awareness across parallel AI agents, without breaking focus.</div><div class="reveal"><div class="preview"><video src="/assets/previews/session-indicator-frame.mp4" loop muted playsinline preload="none" data-hover></video></div></div></span><span class="meta"><span class="yr">2026</span><span class="st st-live">Case study &rarr;</span></span></a></li>
+    <li class="item"><a class="row" href="#"><span class="thumb"><svg><use href="#t-pf"/></svg><video class="thumb-video" src="/assets/previews/promptedfind-frame.mp4" loop muted playsinline preload="metadata"></video></span><span class="info"><span class="title">PromptedFind</span><div class="desc">Semantic navigation &mdash; jump through long media by meaning.</div><div class="reveal"><div class="preview"><video src="/assets/previews/promptedfind-frame.mp4" loop muted playsinline preload="none" data-hover></video></div></div></span><span class="meta"><span class="yr">2025</span><span class="st st-live">Case study &rarr;</span></span></a></li>
+  </ul>
+  <p class="hint">Hover a row above &mdash; the big preview slides open beneath the title.</p>
+
+  <!-- V4 -->
+  <span class="optlabel">V4 &mdash; Tap / click-expand (touch-native accordion)</span>
+  <p class="optsub">Same big preview as V3, but toggled by <b>click/tap</b> and it stays open. Works identically on desktop and mobile &mdash; a recruiter on a phone gets the full preview too.</p>
+  <p class="hig">HIG: solves the touch-equivalent gap; explicit affordance (chevron rotates). Costs one click vs instant hover.</p>
+  <p class="section-label">Selected Work</p>
+  <ul class="list v4">
+    <li class="item"><div class="row" role="button" tabindex="0"><span class="thumb"><svg><use href="#t-si"/></svg><video class="thumb-video" src="/assets/previews/session-indicator-frame.mp4" loop muted playsinline preload="metadata"></video></span><span class="info"><span class="title">Session Indicator</span><div class="desc">Awareness across parallel AI agents, without breaking focus.</div><div class="reveal"><div class="preview"><video src="/assets/previews/session-indicator-frame.mp4" loop muted playsinline preload="none" data-open></video></div></div></span><span class="meta"><span class="yr">2026</span><span class="chev">&rarr;</span></span></div></li>
+    <li class="item"><div class="row" role="button" tabindex="0"><span class="thumb"><svg><use href="#t-pf"/></svg><video class="thumb-video" src="/assets/previews/promptedfind-frame.mp4" loop muted playsinline preload="metadata"></video></span><span class="info"><span class="title">PromptedFind</span><div class="desc">Semantic navigation &mdash; jump through long media by meaning.</div><div class="reveal"><div class="preview"><video src="/assets/previews/promptedfind-frame.mp4" loop muted playsinline preload="none" data-open></video></div></div></span><span class="meta"><span class="yr">2025</span><span class="chev">&rarr;</span></span></div></li>
+  </ul>
+  <p class="hint">Click a row above &mdash; it expands and stays open; click again to close.</p>
+</div>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  // play thumbnail video on row hover (V1/V2/V3/V4 thumbnails)
+  if (canHover && !reduce) {
+    document.querySelectorAll('.row').forEach(row => {
+      const tv = row.querySelector('.thumb-video');
+      if (tv) {
+        row.addEventListener('mouseenter', () => tv.play && tv.play());
+        row.addEventListener('mouseleave', () => { if (tv.pause){ tv.pause(); tv.currentTime = 0; } });
+      }
+      // V3 big preview plays on hover
+      const hv = row.querySelector('video[data-hover]');
+      if (hv) {
+        row.addEventListener('mouseenter', () => hv.play && hv.play());
+        row.addEventListener('mouseleave', () => { if (hv.pause){ hv.pause(); hv.currentTime = 0; } });
+      }
+    });
+  }
+  // V4 click accordion
+  document.querySelectorAll('.v4 .row').forEach(row => {
+    const item = row.closest('.item');
+    const ov = row.querySelector('video[data-open]');
+    const toggle = () => {
+      const open = item.classList.toggle('open');
+      if (ov) { if (open) ov.play && ov.play(); else { ov.pause && ov.pause(); ov.currentTime = 0; } }
+    };
+    row.addEventListener('click', toggle);
+    row.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+  });
+</script>
+</body>
+</html>

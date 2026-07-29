@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About section &middot; options</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#F7F6F3;--ink:#111;--mid:#6B6B6B;--rule:#D4D3CF;--accent:#0066FF}
+  html{background:var(--bg)}
+  body{font-family:'Geist',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding:48px 28px 140px}
+  .shell{max-width:820px;margin:0 auto}
+  h1{font-size:1.4rem;letter-spacing:-0.02em;margin-bottom:6px}
+  .note{font-size:0.85rem;color:var(--mid);max-width:640px;line-height:1.6;margin-bottom:8px}
+  .optname{font-size:1.0rem;font-weight:600;letter-spacing:-0.01em;margin:52px 0 2px}
+  .optsub{font-size:0.8rem;line-height:1.6;color:var(--mid);max-width:640px;margin-bottom:14px}
+
+  /* replica of the homepage context: 700px shell */
+  .pagectx{max-width:700px;background:var(--bg);border:1px dashed var(--rule);border-radius:12px;padding:36px 28px 40px}
+  .section-label{font-size:0.68rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid);padding-bottom:14px;border-bottom:1px solid var(--rule)}
+  .about-text{font-size:0.925rem;line-height:1.85;color:var(--mid);max-width:520px;text-wrap:pretty;margin-top:20px}
+  .about-text b{color:var(--ink);font-weight:600}
+  .about-facts{font-size:0.66rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--mid);margin-top:16px}
+  .about-tease{font-size:0.875rem;line-height:1.8;color:var(--mid);max-width:520px;margin-top:18px;padding-top:16px;border-top:1px solid var(--rule)}
+  .resume-line{margin-top:18px;font-size:0.875rem}
+  .resume-line a{color:var(--ink);font-weight:500;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--rule)}
+  .resume-slot{font-size:0.72rem;color:var(--accent);margin-top:14px}
+</style>
+</head>
+<body>
+<div class="shell">
+  <h1>About section &mdash; three options</h1>
+  <p class="note">Sits between Selected Work and Elsewhere. Confident senior tone, no em dashes, resume link slot marked (hidden until the PDF exists). The dashed frame is the homepage 700px shell for context.</p>
+
+  <p class="optname">Option A &middot; One breath</p>
+  <p class="optsub">A single paragraph: who, how, and what you&rsquo;re after. Fastest to read, hardest to skim wrong. Bold pulls carry a skimmer through credentials.</p>
+  <div class="pagectx" id="optA">
+    <p class="section-label">About</p>
+    <p class="about-text">I&rsquo;m a design engineer with an <b>MFA in Design from UC Davis</b> and a background in architecture and sculpture. I design the interaction, then build the real thing, in <b>SwiftUI</b> and on the <b>web</b>, with AI tooling in the loop. Right now I&rsquo;m looking for <b>senior design engineer and prototyping roles</b> in the Bay Area.</p>
+    <p class="resume-slot">[ Resume &#8599; goes here when the PDF is ready ]</p>
+  </div>
+
+  <p class="optname">Option B &middot; Short + facts line</p>
+  <p class="optsub">Two sentences of voice, then the scannable credentials as a quiet uppercase line in the same style as the work-row tags. Recruiters who skim get everything from the facts line alone.</p>
+  <div class="pagectx" id="optB">
+    <p class="section-label">About</p>
+    <p class="about-text">I design interactions and build them for real, in SwiftUI and on the web, with AI tooling in the loop. Before software I studied architecture and made sculpture, and it shows in how I think about structure.</p>
+    <p class="about-facts">MFA Design, UC Davis &middot; SwiftUI + Web &middot; AI Tooling &middot; Bay Area, CA &middot; Open to senior design engineer roles</p>
+    <p class="resume-slot">[ Resume &#8599; goes here when the PDF is ready ]</p>
+  </div>
+
+  <p class="optname">Option C &middot; With the physical-work tease</p>
+  <p class="optsub">Option A&rsquo;s core plus a quiet closing block that plants the art story now and becomes the link to the art page when it exists. Buys the future section its place without a dead link today.</p>
+  <div class="pagectx" id="optC">
+    <p class="section-label">About</p>
+    <p class="about-text">I&rsquo;m a design engineer. I design the interaction, then build the real thing, in <b>SwiftUI</b> and on the <b>web</b>, with AI tooling in the loop. <b>MFA in Design from UC Davis</b>; looking for <b>senior design engineer and prototyping roles</b> in the Bay Area.</p>
+    <p class="about-tease">Before all this I made physical things. Architecture, sculpture, light installations. The same instinct, now in code.</p>
+    <p class="resume-slot">[ Resume &#8599; goes here when the PDF is ready &middot; the tease becomes the art-page link later ]</p>
+  </div>
+</div>
+</body>
+</html>

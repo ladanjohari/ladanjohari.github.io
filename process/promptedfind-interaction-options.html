@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prompted Find &mdash; Interaction section, Option 1 vs 2 in context</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* Matches promptedfind.html exactly — this doc previews the real section, not a schematic. */
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#F7F6F3;--ink:#111111;--mid:#6B6B6B;--rule:#D4D3CF;--hover-row:#F0EFEC;--accent:#0066FF;--accent-dim:#D6E4FF}
+  html{background:var(--bg)}
+  body{font-family:'Geist',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:120px}
+  .shell{max-width:760px;margin:0 auto;padding:0 28px}
+
+  .doc-head{padding-top:56px;border-bottom:1px solid var(--rule);padding-bottom:26px;margin-bottom:8px}
+  .doc-eyebrow{font-size:0.65rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-bottom:12px}
+  .doc-title{font-size:1.55rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:10px}
+  .doc-sub{font-size:0.85rem;line-height:1.7;color:var(--mid);max-width:640px}
+  .doc-sub b{color:var(--ink);font-weight:600}
+
+  .optlabel{font-size:0.62rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#fff;background:var(--accent);display:inline-block;padding:4px 10px;border-radius:4px;margin:60px 0 6px}
+  .optsub{font-size:0.82rem;line-height:1.65;color:var(--mid);max-width:640px;margin-bottom:24px}
+  .optsub b{color:var(--ink);font-weight:600}
+
+  /* ── the real case-study section shell ── */
+  .cs-section{border:1px dashed var(--rule);border-radius:12px;padding:28px;background:var(--bg)}
+  .cs-label{font-size:0.68rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid);padding-bottom:14px;border-bottom:1px solid var(--rule);margin-bottom:24px}
+  .cs-body-text{font-size:0.925rem;line-height:1.8;color:var(--mid);max-width:560px}
+  .cs-body-text strong{color:var(--ink);font-weight:600}
+
+  /* ══ OPTION 1 : repaired stepper ══ */
+  .stepper{margin-top:28px;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:#0a0a0a}
+  .stepper-frame{position:relative;width:100%;aspect-ratio:1280/614;overflow:hidden}
+  .stepper-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.25s ease-out}
+  .stepper-frame img.is-active{opacity:1}
+  .stepper-spotlight{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
+  .stepper-nav{display:flex;border-top:1px solid var(--rule);background:var(--bg)}
+  .stepper-tab{flex:1;padding:15px 14px;border:none;background:none;cursor:pointer;text-align:left;border-right:1px solid var(--rule);transition:background 0.15s ease-out;position:relative;font-family:inherit}
+  .stepper-tab:last-child{border-right:none}
+  .stepper-tab.is-active{background:var(--hover-row);box-shadow:inset 0 -2px 0 var(--accent)}
+  .stepper-tab:hover{background:var(--hover-row)}
+  .stepper-tab-num{font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--accent);display:block;margin-bottom:5px}
+  .stepper-tab-title{font-size:13px;font-weight:600;color:var(--ink);display:block;line-height:1.35;letter-spacing:-0.01em}
+  .stepper-tab-desc{font-size:11.5px;color:var(--mid);display:block;line-height:1.5;margin-top:4px}
+
+  /* ══ OPTION 2 : live embed ══ */
+  .live{margin-top:28px;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:#0a0a0a}
+  .live-chrome{display:flex;align-items:center;gap:10px;background:#181818;padding:9px 14px;border-bottom:1px solid #262626}
+  .live-dots{display:flex;gap:5px}
+  .live-dots span{width:9px;height:9px;border-radius:50%;background:#3a3a3a}
+  .live-url{flex:1;font-size:10.5px;color:#8a8a8a;background:#232323;border-radius:5px;padding:4px 10px;letter-spacing:0.02em}
+  .live-badge{font-size:9px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#7fd18f;border:1px solid rgba(127,209,143,0.35);border-radius:20px;padding:3px 8px}
+  .live-stage{position:relative;width:100%;height:460px;overflow:hidden;background:#0d0d0d}
+  .live-stage iframe{width:1440px;height:940px;border:none;transform-origin:top left;position:absolute;top:0;left:0}
+  /* tour overlay (parent-side simulation of driver.js) */
+  .tour-mask{position:absolute;inset:0;z-index:5;display:none}
+  .tour-mask.on{display:block}
+  .tour-mask svg{width:100%;height:100%;display:block}
+  .tour-pop{position:absolute;z-index:6;width:250px;background:#1c1c1e;border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:14px 16px;box-shadow:0 12px 40px rgba(0,0,0,0.5)}
+  .tour-pop-step{font-size:9.5px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:6px}
+  .tour-pop-title{font-size:13px;font-weight:600;color:rgba(255,255,255,0.92);margin-bottom:5px}
+  .tour-pop-desc{font-size:11.5px;line-height:1.55;color:rgba(255,255,255,0.55)}
+  .tour-pop-btns{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+  .tour-pop-btns button{font-family:inherit;font-size:11px;padding:5px 14px;border-radius:20px;border:none;cursor:pointer}
+  .tour-next{background:#0A84FF;color:#fff}
+  .tour-skip{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.65);border:0.5px solid rgba(255,255,255,0.18)!important}
+  .live-bar{display:flex;align-items:center;gap:14px;border-top:1px solid var(--rule);background:var(--bg);padding:13px 16px}
+  .live-cta{font-family:inherit;font-size:12px;font-weight:600;color:#fff;background:var(--accent);border:none;border-radius:20px;padding:7px 16px;cursor:pointer;transition:opacity .15s}
+  .live-cta:hover{opacity:.88}
+  .live-alt{font-size:12px;font-weight:500;color:var(--accent);text-decoration:none}
+  .live-alt:hover{text-decoration:underline}
+  .live-note{margin-left:auto;font-size:10.5px;color:var(--mid)}
+
+  /* decision notes */
+  .note{border-left:3px solid var(--accent);background:rgba(0,102,255,0.05);border-radius:0 8px 8px 0;padding:14px 18px;margin-top:18px}
+  .note p{font-size:0.8rem;line-height:1.65;color:var(--mid)}
+  .note b{color:var(--ink);font-weight:600}
+
+  .foot{margin-top:80px;padding-top:20px;border-top:1px solid var(--rule);font-size:0.68rem;color:var(--mid)}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="doc-head">
+    <p class="doc-eyebrow">Process &middot; Working document</p>
+    <h1 class="doc-title">The Interaction section &mdash; Option 1 vs Option 2, in context</h1>
+    <p class="doc-sub">
+      Both rendered inside the exact section shell from promptedfind.html (dashed border marks the
+      section boundary; everything inside is 1:1). <b>Option 1</b> ships now: same screenshots,
+      corrected captions, aligned spotlights, readable tabs. <b>Option 2</b> is the destination:
+      the live prototype embedded with a guided tour &mdash; shown here running against the local repo
+      (needs the promptedfind server on port 8001), exactly how the deployed Pages version would sit.
+    </p>
+  </div>
+
+  <!-- ═══════════════ OPTION 1 ═══════════════ -->
+  <p class="optlabel">Option 1 &middot; Repaired stepper &mdash; ships now</p>
+  <p class="optsub">
+    Fixes over the live page: frame uses the images&rsquo; native 1280&times;614 ratio (no crop, spotlight
+    coordinates now true), captions rewritten to match what each screenshot actually shows,
+    tab type raised from 10&ndash;11px to 11.5&ndash;13px, overlay lightened 0.55 &rarr; 0.45,
+    auto-advance pauses when scrolled off-screen.
+  </p>
+
+  <div class="cs-section">
+    <p class="cs-label">The Interaction</p>
+    <p class="cs-body-text" style="margin-bottom:0">
+      The prototype lives inside a YouTube watch page. The interaction has three steps, and none of them take the user out of the video.
+    </p>
+    <div class="stepper" id="stepper">
+      <div class="stepper-frame">
+        <img src="../assets/img/pf/step-01.jpg" alt="Ask panel open beside the playing video; the timeline below shows labeled semantic segments" class="is-active" data-step="0" />
+        <img src="../assets/img/pf/step-02.jpg" alt="A timeline segment hovered with its label tooltip; the AI summary for the playing range shown in the panel" data-step="1" />
+        <img src="../assets/img/pf/step-03.jpg" alt="Video jumped to the chosen moment; the AI summary stays open beside it" data-step="2" />
+        <svg class="stepper-spotlight" viewBox="0 0 1280 614" preserveAspectRatio="none">
+          <defs>
+            <mask id="spot-mask">
+              <rect width="1280" height="614" fill="white"/>
+              <rect id="spot-window" x="828" y="48" width="285" height="270" rx="16" fill="black"/>
+            </mask>
+          </defs>
+          <rect width="1280" height="614" fill="rgba(0,0,0,0.45)" mask="url(#spot-mask)"/>
+          <rect id="spot-border" x="828" y="48" width="285" height="270" rx="16" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="stepper-nav">
+        <button class="stepper-tab is-active" data-step="0">
+          <span class="stepper-tab-num">01</span>
+          <span class="stepper-tab-title">Open the Ask panel</span>
+          <span class="stepper-tab-desc">The video keeps playing. The timeline decomposes into labeled semantic segments.</span>
+        </button>
+        <button class="stepper-tab" data-step="1">
+          <span class="stepper-tab-num">02</span>
+          <span class="stepper-tab-title">Ask, or point at a segment</span>
+          <span class="stepper-tab-desc">Relevant ranges highlight. Hovering previews the idea each range holds.</span>
+        </button>
+        <button class="stepper-tab" data-step="2">
+          <span class="stepper-tab-num">03</span>
+          <span class="stepper-tab-title">Land in the moment</span>
+          <span class="stepper-tab-desc">The video seeks. The AI summary keeps the context beside it for follow-ups.</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <p><b>What ships:</b> drop-in replacement for the current stepper markup + spot coordinates.
+    No new assets, no dependencies. This is the &ldquo;page looks done&rdquo; state, and it stays as the
+    mobile / reduced-motion fallback after Option 2 lands.</p>
+  </div>
+
+  <!-- ═══════════════ OPTION 2 ═══════════════ -->
+  <p class="optlabel">Option 2 &middot; Live prototype &plus; guided tour &mdash; the destination</p>
+  <p class="optsub">
+    The real prototype in a frame, exactly where the stepper sits today. &ldquo;Take the tour&rdquo; runs a
+    3-step driver.js walkthrough over the live UI (simulated here from the parent page &mdash; the real
+    one lives inside the prototype repo, like Session Indicator&rsquo;s). If the frame below is empty,
+    start the <b>promptedfind</b> server (port 8001).
+  </p>
+
+  <div class="cs-section">
+    <p class="cs-label">The Interaction</p>
+    <p class="cs-body-text" style="margin-bottom:0">
+      This is the working prototype, not a recording. Ask it something, or take the tour.
+    </p>
+    <div class="live">
+      <div class="live-chrome">
+        <div class="live-dots"><span></span><span></span><span></span></div>
+        <span class="live-url">promptedfind.ladanjohari.com</span>
+        <span class="live-badge">Live</span>
+      </div>
+      <div class="live-stage" id="liveStage">
+        <iframe id="liveFrame" src="http://localhost:8001/index.html" title="Prompted Find live prototype" loading="lazy"></iframe>
+        <div class="tour-mask" id="tourMask">
+          <svg preserveAspectRatio="none">
+            <defs>
+              <mask id="tour-hole">
+                <rect width="100%" height="100%" fill="white"/>
+                <rect id="tourHoleRect" x="0" y="0" width="0" height="0" rx="10" fill="black"/>
+              </mask>
+            </defs>
+            <rect width="100%" height="100%" fill="rgba(0,0,0,0.55)" mask="url(#tour-hole)"/>
+          </svg>
+          <div class="tour-pop" id="tourPop">
+            <p class="tour-pop-step" id="tourStep">1 of 3</p>
+            <p class="tour-pop-title" id="tourTitle"></p>
+            <p class="tour-pop-desc" id="tourDesc"></p>
+            <div class="tour-pop-btns">
+              <button class="tour-skip" id="tourSkip">Skip</button>
+              <button class="tour-next" id="tourNext">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="live-bar">
+        <button class="live-cta" id="tourStart">&#9654;&nbsp; Take the tour</button>
+        <a class="live-alt" href="http://localhost:8001/index.html" target="_blank" rel="noopener">Open full prototype &rarr;</a>
+        <span class="live-note">Embedded &middot; scaled 49% &middot; fully interactive</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <p><b>What it takes to ship:</b> (1) compress nasa-talk-clean.mp4 569&nbsp;MB &rarr; under 100&nbsp;MB
+    (GitHub file limit) and strip the 725&nbsp;MB source from history, (2) build the real driver.js tour
+    inside the PromptedFind repo, (3) deploy to Pages with a CNAME like Session Indicator,
+    (4) swap this block in on the case-study page, keeping Option&nbsp;1&rsquo;s stepper as the
+    mobile / reduced-motion / iframe-blocked fallback.</p>
+  </div>
+
+  <p class="foot">Working Document &middot; Not for distribution &middot; process/promptedfind-interaction-options.html</p>
+</div>
+
+<script>
+  /* Option 1 — repaired stepper (with off-screen pause) */
+  (() => {
+    const stepper = document.getElementById('stepper');
+    const imgs = stepper.querySelectorAll('.stepper-frame img');
+    const tabs = stepper.querySelectorAll('.stepper-tab');
+    const spotWindow = document.getElementById('spot-window');
+    const spotBorder = document.getElementById('spot-border');
+    let current = 0, timer = null, anim = null;
+
+    /* Corrected coordinates — image native 1280x614, frame now same ratio so these are true */
+    const spots = [
+      { x: 828, y: 48,  w: 285, h: 270, rx: 16 },  /* Ask panel + hint */
+      { x: 165, y: 425, w: 680, h: 92,  rx: 10 },  /* segments row + tooltip */
+      { x: 838, y: 168, w: 268, h: 148, rx: 14 }   /* AI summary card */
+    ];
+    let cur = { ...spots[0] };
+    const lerp = (a,b,t) => a + (b-a)*t;
+    function setSpot(s){[spotWindow,spotBorder].forEach(el=>{el.setAttribute('x',s.x);el.setAttribute('y',s.y);el.setAttribute('width',s.w);el.setAttribute('height',s.h);el.setAttribute('rx',s.rx)})}
+    function animateTo(target){
+      if(anim)cancelAnimationFrame(anim);
+      const from={...cur},start=performance.now(),dur=400;
+      function tick(now){const t=Math.min((now-start)/dur,1),e=1-Math.pow(1-t,4);
+        cur={x:lerp(from.x,target.x,e),y:lerp(from.y,target.y,e),w:lerp(from.w,target.w,e),h:lerp(from.h,target.h,e),rx:lerp(from.rx,target.rx,e)};
+        setSpot(cur);if(t<1)anim=requestAnimationFrame(tick)}
+      anim=requestAnimationFrame(tick);
+    }
+    function goTo(i){current=i;imgs.forEach((im,x)=>im.classList.toggle('is-active',x===i));tabs.forEach((tb,x)=>tb.classList.toggle('is-active',x===i));animateTo(spots[i])}
+    const advance=()=>goTo((current+1)%imgs.length);
+    function startTimer(){stopTimer();timer=setInterval(advance,3500)}
+    function stopTimer(){if(timer){clearInterval(timer);timer=null}}
+    tabs.forEach((tb,i)=>tb.addEventListener('click',()=>{goTo(i);startTimer()}));
+    /* pause auto-advance while off-screen */
+    new IntersectionObserver(en=>en.forEach(e=>e.isIntersecting?startTimer():stopTimer()),{threshold:0.3}).observe(stepper);
+    setSpot(spots[0]);
+  })();
+
+  /* Option 2 — iframe scale + simulated tour */
+  (() => {
+    const stage = document.getElementById('liveStage');
+    const frame = document.getElementById('liveFrame');
+    function fit(){
+      const w = stage.clientWidth, scale = w/1440;
+      frame.style.transform = 'scale('+scale+')';
+      frame.style.height = (stage.clientHeight/scale)+'px';
+    }
+    fit(); window.addEventListener('resize', fit);
+
+    const mask = document.getElementById('tourMask');
+    const hole = document.getElementById('tourHoleRect');
+    const pop = document.getElementById('tourPop');
+    const elStep=document.getElementById('tourStep'),elTitle=document.getElementById('tourTitle'),elDesc=document.getElementById('tourDesc');
+    /* highlight regions as fractions of the stage, matching the prototype layout */
+    const steps = [
+      { fx:0.665, fy:0.06, fw:0.28, fh:0.42, title:'Open the Ask panel', desc:'A question box native to the watch page. The video never stops.', px:0.36, py:0.14 },
+      { fx:0.03,  fy:0.60, fw:0.60, fh:0.16, title:'Segments appear', desc:'The timeline decomposes into labeled semantic ranges. Click one.', px:0.30, py:0.30 },
+      { fx:0.665, fy:0.18, fw:0.28, fh:0.34, title:'Land in the moment', desc:'The video seeks to the range; the AI summary keeps the context.', px:0.36, py:0.56 }
+    ];
+    let i = 0;
+    function show(n){
+      i = n;
+      const s = steps[n], W = stage.clientWidth, H = stage.clientHeight;
+      hole.setAttribute('x', s.fx*W); hole.setAttribute('y', s.fy*H);
+      hole.setAttribute('width', s.fw*W); hole.setAttribute('height', s.fh*H);
+      pop.style.left = (s.px*W)+'px'; pop.style.top = (s.py*H)+'px';
+      elStep.textContent = (n+1)+' of 3';
+      elTitle.textContent = s.title; elDesc.textContent = s.desc;
+      document.getElementById('tourNext').textContent = n === 2 ? 'Done' : 'Next';
+      mask.classList.add('on');
+    }
+    document.getElementById('tourStart').addEventListener('click', ()=>show(0));
+    document.getElementById('tourNext').addEventListener('click', ()=>{ i<2 ? show(i+1) : mask.classList.remove('on'); });
+    document.getElementById('tourSkip').addEventListener('click', ()=>mask.classList.remove('on'));
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="light dark" />
+<title>V2 row &mdash; hover feel options</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#F7F6F3;--ink:#111;--mid:#6B6B6B;--rule:#D4D3CF;--hover-row:#EFEEEA;--accent:#0066FF;--accent-dim:#D6E4FF;--soon:#9A9A9A;--eout:cubic-bezier(0.23,1,0.32,1)}
+  @media (prefers-color-scheme:dark){:root{--bg:#1A1A1A;--ink:#E8E8E8;--mid:#9A9A9A;--rule:#333;--hover-row:#242424;--accent:#4D94FF;--accent-dim:#1A3A66;--soon:#777}}
+  html{background:var(--bg)}
+  body{font-family:'Geist',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:120px}
+  .shell{max-width:720px;margin:0 auto;padding:0 28px}
+  .optlabel{font-size:0.62rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#fff;background:var(--accent);display:inline-block;padding:4px 10px;border-radius:4px;margin:52px 0 4px}
+  .optsub{font-size:0.82rem;line-height:1.6;color:var(--mid);max-width:600px;margin-bottom:6px}
+  .optsub b{color:var(--ink);font-weight:600}
+  .hig{font-size:0.7rem;color:var(--accent);font-weight:500;margin-bottom:14px}
+  .tag-rest{font-size:0.58rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--soon);margin:0 0 2px 12px}
+
+  .list{list-style:none;margin:0 -12px}
+  .item{border-bottom:.5px solid var(--rule)}
+  .item:last-child{border-bottom:none}
+  .row{display:flex;align-items:center;gap:24px;text-decoration:none;color:var(--ink);padding:18px 12px;border-radius:14px;position:relative;transition:background .14s ease,transform .16s var(--eout)}
+  .row:active{transform:scale(.995)}
+  .thumb{width:196px;height:122px;border-radius:12px;overflow:hidden;flex-shrink:0;border:1px solid var(--rule);background:#111;position:relative}
+  .tzoom{position:absolute;inset:0;transition:transform .3s var(--eout)}
+  .thumb svg{width:100%;height:100%;display:block}
+  .thumb-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .22s ease-out;pointer-events:none}
+  .row:hover .thumb-video,.row.dh .thumb-video{opacity:1}
+  .info{flex:1;min-width:0}
+  .title{font-size:1.1rem;font-weight:600;letter-spacing:-0.02em;display:inline-block;position:relative;transition:color .14s ease}
+  .title::after{content:'';position:absolute;left:0;right:0;bottom:-3px;height:1.5px;background:var(--accent);border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .24s var(--eout)}
+  .desc{font-size:0.82rem;color:var(--mid);margin-top:5px;line-height:1.5}
+  .tags{font-size:0.62rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--mid);margin-top:7px}
+  .meta{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;min-width:96px}
+  .yr{font-size:0.8rem;font-weight:500;color:var(--rule)}
+  .cta{font-size:0.62rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--accent);white-space:nowrap}
+  .arrow{transition:transform .16s var(--eout),color .14s ease;display:inline-block}
+  .chev{font-size:1.05rem;color:var(--rule);transition:transform .18s var(--eout),color .14s ease}
+
+  /* A — background tint + arrow nudge */
+  .oA .row:hover,.oA .row.dh{background:var(--hover-row)}
+  .oA .row:hover .arrow,.oA .row.dh .arrow{transform:translateX(4px);color:var(--accent)}
+
+  /* B — reveal CTA (rest: only year; hover: CTA slides in) */
+  .oB .cta{opacity:0;transform:translateX(8px);transition:opacity .18s ease-out,transform .2s var(--eout)}
+  .oB .row:hover .cta,.oB .row.dh .cta{opacity:1;transform:translateX(0)}
+
+  /* C — title accent + underline wipe */
+  .oC .row:hover .title,.oC .row.dh .title{color:var(--accent)}
+  .oC .row:hover .title::after,.oC .row.dh .title::after{transform:scaleX(1)}
+
+  /* D — thumbnail gentle zoom + faint tint */
+  .oD .row:hover,.oD .row.dh{background:var(--hover-row)}
+  .oD .row:hover .tzoom,.oD .row.dh .tzoom{transform:scale(1.05)}
+
+  /* E — chevron travel */
+  .oE .row:hover .chev,.oE .row.dh .chev{transform:translateX(5px);color:var(--accent)}
+
+  /* Combo — tint + arrow nudge + title accent (recommended blend) */
+  .oX .row:hover,.oX .row.dh{background:var(--hover-row)}
+  .oX .row:hover .title,.oX .row.dh .title{color:var(--accent)}
+  .oX .row:hover .arrow,.oX .row.dh .arrow{transform:translateX(4px);color:var(--accent)}
+
+  @media (prefers-reduced-motion:reduce){
+    .row,.title,.title::after,.arrow,.chev,.cta,.tzoom,.thumb-video{transition:none}
+    .thumb-video{display:none}
+  }
+  @media(max-width:560px){.thumb{width:132px;height:82px}.row{gap:14px}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="t-si" viewBox="0 0 160 100"><rect width="160" height="100" fill="#111"/><rect x="34" y="30" width="92" height="40" rx="11" fill="#1c1c1c" stroke="#2c2c2c" stroke-width=".5"/><circle cx="52" cy="42" r="3.4" fill="#fff"/><rect x="60" y="39.5" width="26" height="4.5" rx="2" fill="#2a2a2a"/><circle cx="52" cy="54" r="3.4" fill="#E8952A"/><rect x="60" y="51.5" width="34" height="4.5" rx="2" fill="#2a2a2a"/></symbol>
+  <symbol id="t-pf" viewBox="0 0 160 100"><rect width="160" height="100" fill="#0a1628"/><rect x="14" y="44" width="132" height="3" rx="1.5" fill="#1a2a44"/><rect x="10" y="54" width="26" height="10" rx="3" fill="#2563EB" opacity=".85"/><rect x="42" y="54" width="30" height="10" rx="3" fill="#2563EB" opacity=".55"/><rect x="80" y="54" width="28" height="10" rx="3" fill="#2563EB" opacity=".55"/><rect x="116" y="54" width="32" height="10" rx="3" fill="#2563EB" opacity=".55"/><circle cx="23" cy="45.5" r="4" fill="#2563EB"/></symbol>
+</svg>
+
+<div class="shell">
+  <span class="optlabel" style="background:var(--ink)">V2 row &middot; hover-feel options</span>
+  <p class="optsub" style="margin-top:8px">Each row below <b>auto-previews its hover on a loop</b> so you can watch the motion &mdash; and you can hover it yourself too. The last section shows Rest &harr; Hover side by side. All motion is transform / opacity / background only, ease-out, ~140&ndash;300ms.</p>
+
+  <span class="optlabel">A &mdash; Background tint + arrow nudge</span>
+  <p class="optsub">Row background lifts to a soft gray, the arrow slides right and turns accent. The classic, safest choice.</p>
+  <p class="hig">HIG: material signals focus &middot; directional affordance. Emil: bg 140ms ease, arrow ease-out.</p>
+  <ul class="list oA"><li class="item"><a class="row" data-demo href="#"><span class="thumb"><span class="tzoom"><svg><use href="#t-si"/></svg></span><video class="thumb-video" src="/assets/previews/session-indicator-frame.mp4" loop muted playsinline preload="metadata"></video></span><span class="info"><span class="title">Session Indicator</span><div class="desc">Awareness across parallel AI agents, without breaking focus.</div></span><span class="meta"><span class="yr">2026</span><span class="cta">Case study <span class="arrow">&rarr;</span></span></span></a></li></ul>
+
+  <span class="optlabel">B &mdash; Reveal the CTA</span>
+  <p class="optsub">At rest the row shows only the year &mdash; very calm. On hover, &ldquo;Case study &rarr;&rdquo; fades and slides in. Rewards intent, keeps the resting list quiet.</p>
+  <p class="hig">HIG: progressive disclosure. Emil: entering element &rarr; ease-out, translateX 8&rarr;0.</p>
+  <ul class="list oB"><li class="item"><a class="row" data-demo href="#"><span class="thumb"><span class="tzoom"><svg><use href="#t-pf"/></svg></span><video class="thumb-video" src="/assets/previews/promptedfind-frame.mp4" loop muted playsinline preload="metadata"></video></span><span class="info"><span class="title">PromptedFind</span><div class="desc">Semantic navigation &mdash; jump through long media by meaning.</div></span><span class="meta"><span class="yr">2025</span><span class="cta">Case study <span class="arrow">&rarr;</span></span></span></a></li></ul>
+
+  <span class="optlabel">C &mdash; Title accent + underline wipe</span>
+  <p class="optsub">Title shifts to accent and an underline wipes in left-to-right. The most editorial / typographic feel.</p>
+  <p class="hig">HIG: hierarchy from weight/color. Emil: underline scaleX from origin left, 240ms ease-out.</p>
+  <ul class="list oC"><li class="item"><a class="row" data-demo href="#"><span class="thumb"><span class="tzoom"><svg><use href="#t-si"/></svg></span><video class="thumb-video" src="/assets/previews/session-indicator-frame.mp4" loop muted playsinline preload="metadata"></video></span><span class="info"><span class="title">Session Indicator</span><div class="desc">Awareness across parallel AI agents, without breaking focus.</div></span><span class="meta"><span class="yr">2026</span><span class="cta">Case study <span class="arrow">&rarr;</span></span></span></a></li></ul>
+
+  <span class="optlabel">D &mdash; Thumbnail zoom + faint tint</span>
+  <p class="optsub">The thumbnail gently scales (1.05) while the video plays, drawing the eye to the visual. Faint row tint underneath.</p>
+  <p class="hig">HIG: springs from the source visual. Emil: scale subtle, transform-only, 300ms ease-out.</p>
+  <ul class="list oD"><li class="item"><a class="row" data-demo href="#"><span class="thumb"><span class="tzoom"><svg><use href="#t-pf"/></svg></span><video class="thumb-video" src="/assets/previews/promptedfind-frame.mp4" loop muted playsinline preload="metadata"></video></span><span class="info"><span class="title">PromptedFind</span><div class="desc">Semantic navigation &mdash; jump through long media by meaning.</div></span><span class="meta"><span class="yr">2025</span><span class="cta">Case study <span class="arrow">&rarr;</span></span></span></a></li></ul>
+
+  <span class="optlabel">E &mdash; Chevron travel</span>
+  <p class="optsub">A single chevron sits muted at rest, then slides right and turns accent. Minimal, all the motion on one element.</p>
+  <p class="hig">HIG: one clear affordance. Emil: translateX + color, 180ms ease-out.</p>
+  <ul class="list oE"><li class="item"><a class="row" data-demo href="#"><span class="thumb"><span class="tzoom"><svg><use href="#t-si"/></svg></span><video class="thumb-video" src="/assets/previews/session-indicator-frame.mp4" loop muted playsinline preload="metadata"></video></span><span class="info"><span class="title">Session Indicator</span><div class="desc">Awareness across parallel AI agents, without breaking focus.</div></span><span class="meta"><span class="yr">2026</span><span class="chev">&rsaquo;</span></span></a></li></ul>
+
+  <span class="optlabel" style="background:#0a7d3a">Recommended blend &mdash; tint + title accent + arrow nudge</span>
+  <p class="optsub">A restrained combination: soft bg tint, title to accent, arrow nudges. Three tiny cues that all say &ldquo;this is clickable&rdquo; without competing. Shown rest &harr; hover.</p>
+  <p class="hig">HIG: restraint &mdash; one coherent focus state. Reads instantly to any recruiter.</p>
+  <ul class="list oX">
+    <li class="item"><p class="tag-rest">Rest</p><a class="row" href="#"><span class="thumb"><span class="tzoom"><svg><use href="#t-si"/></svg></span><video class="thumb-video" src="/assets/previews/session-indicator-frame.mp4" loop muted playsinline preload="metadata"></video></span><span class="info"><span class="title">Session Indicator</span><div class="desc">Awareness across parallel AI agents, without breaking focus.</div></span><span class="meta"><span class="yr">2026</span><span class="cta">Case study <span class="arrow">&rarr;</span></span></span></a></li>
+    <li class="item"><p class="tag-rest">Hover</p><a class="row dh" href="#"><span class="thumb"><span class="tzoom"><svg><use href="#t-pf"/></svg></span><video class="thumb-video" src="/assets/previews/promptedfind-frame.mp4" loop muted playsinline preload="metadata"></video></span><span class="info"><span class="title">PromptedFind</span><div class="desc">Semantic navigation &mdash; jump through long media by meaning.</div></span><span class="meta"><span class="yr">2025</span><span class="cta">Case study <span class="arrow">&rarr;</span></span></span></a></li>
+  </ul>
+</div>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // keep the static combo "Hover" row playing
+  if (!reduce) document.querySelectorAll('.row.dh .thumb-video').forEach(v => v.play && v.play());
+
+  // live hover: play video + let CSS :hover drive the interaction
+  document.querySelectorAll('.row').forEach(row => {
+    const v = row.querySelector('.thumb-video');
+    if (!v) return;
+    row.addEventListener('mouseenter', () => { row._hovering = true; v.play && v.play(); });
+    row.addEventListener('mouseleave', () => { row._hovering = false; if (!row.classList.contains('dh') && v.pause){ v.pause(); v.currentTime = 0; } });
+  });
+
+  // auto-preview: cycle each demo row in/out of the hover state so the motion is visible without hovering
+  if (!reduce) {
+    const demos = [...document.querySelectorAll('.row[data-demo]')];
+    demos.forEach((row, i) => {
+      const v = row.querySelector('.thumb-video');
+      const on  = () => { if (row._hovering) return; row.classList.add('dh'); v && v.play && v.play(); };
+      const off = () => { if (row._hovering) return; row.classList.remove('dh'); };
+      setTimeout(() => {
+        on();
+        setTimeout(off, 1800);
+        setInterval(() => { on(); setTimeout(off, 1800); }, 3400);
+      }, i * 600);
+    });
+  }
+</script>
+</body>
+</html>

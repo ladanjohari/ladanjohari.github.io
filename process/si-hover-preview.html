@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Session Indicator hover — light vs dark</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Geist',system-ui,sans-serif;background:#e9e8e4;color:#111;padding:40px 24px 80px;-webkit-font-smoothing:antialiased}
+  .shell{max-width:900px;margin:0 auto}
+  h1{font-size:1.3rem;letter-spacing:-.02em;margin-bottom:6px}
+  p{font-size:.85rem;color:#666;margin-bottom:28px;line-height:1.6}
+  .cap{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;font-weight:600;color:#666;margin:26px 0 10px}
+  video{width:100%;max-width:560px;display:block;border-radius:14px;border:1px solid #d4d3cf;box-shadow:0 18px 50px rgba(0,0,0,.18)}
+  .dark-wrap{background:#111;padding:0;border-radius:14px;display:inline-block}
+</style>
+</head>
+<body>
+<div class="shell">
+  <h1>Session Indicator — hover clip</h1>
+  <p>The new light-mode clip (top) rebuilt to match the original dark clip (bottom): far-left pill, cursor sweeping in from the clock to click the pill, popover springing from it. Both loop every 9&nbsp;seconds.</p>
+
+  <div class="cap">Light &mdash; new</div>
+  <video src="/assets/previews/session-indicator-frame-light.mp4" autoplay loop muted playsinline></video>
+
+  <div class="cap">Dark &mdash; original (for reference)</div>
+  <video src="/assets/previews/session-indicator-frame.mp4" autoplay loop muted playsinline></video>
+</div>
+</body>
+</html>

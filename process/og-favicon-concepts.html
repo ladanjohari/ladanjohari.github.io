@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OG Image + Favicon Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Geist', system-ui, sans-serif;
+  background: #ECEAE5;
+  color: #111;
+  padding: 48px 32px;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-bottom: 40px; }
+h2 { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-bottom: 20px; }
+
+.section { margin-bottom: 60px; }
+
+/* ── FAVICON SECTION ── */
+.fav-grid { display: flex; flex-direction: column; gap: 32px; }
+.fav-option { background: #fff; border-radius: 12px; border: 0.5px solid rgba(0,0,0,0.08); padding: 24px; }
+.fav-option-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #999; margin-bottom: 16px; }
+.fav-row { display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
+.fav-size-group { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.fav-size-label { font-size: 9px; color: #bbb; font-weight: 500; }
+
+/* browser tab mockup */
+.tab-mockup { display: flex; align-items: center; gap: 8px; background: #f0f0f0; border-radius: 8px 8px 0 0; padding: 7px 14px 7px 10px; width: fit-content; border: 0.5px solid rgba(0,0,0,0.1); border-bottom: none; }
+.tab-title { font-size: 11px; color: #444; font-weight: 500; }
+.tab-bar { background: #E8E8E8; border-radius: 0 0 4px 4px; height: 28px; width: 320px; border: 0.5px solid rgba(0,0,0,0.08); border-top: none; display: flex; align-items: center; padding: 0 10px; gap: 6px; }
+.tab-bar-dot { width: 10px; height: 10px; border-radius: 50%; background: #ccc; }
+.tab-url { font-size: 10px; color: #888; flex: 1; text-align: center; }
+
+/* ── FAVICON SVGs ── */
+
+/* A: LJ monogram */
+.fav-lj-16 { display: inline-flex; width: 16px; height: 16px; background: #0066FF; border-radius: 2.5px; align-items: center; justify-content: center; }
+.fav-lj-32 { display: inline-flex; width: 32px; height: 32px; background: #0066FF; border-radius: 5px; align-items: center; justify-content: center; }
+.fav-lj-180 { display: inline-flex; width: 64px; height: 64px; background: #0066FF; border-radius: 14px; align-items: center; justify-content: center; }
+
+/* B: Dot */
+.fav-dot-16 { display: inline-flex; width: 16px; height: 16px; background: #F7F6F3; border-radius: 2.5px; align-items: center; justify-content: center; }
+.fav-dot-32 { display: inline-flex; width: 32px; height: 32px; background: #F7F6F3; border-radius: 5px; align-items: center; justify-content: center; border: 0.5px solid rgba(0,0,0,0.1); }
+.fav-dot-180 { display: inline-flex; width: 64px; height: 64px; background: #F7F6F3; border-radius: 14px; align-items: center; justify-content: center; border: 0.5px solid rgba(0,0,0,0.1); }
+
+/* C: L initial */
+.fav-l-16 { display: inline-flex; width: 16px; height: 16px; background: #111; border-radius: 2.5px; align-items: center; justify-content: center; }
+.fav-l-32 { display: inline-flex; width: 32px; height: 32px; background: #111; border-radius: 5px; align-items: center; justify-content: center; }
+.fav-l-180 { display: inline-flex; width: 64px; height: 64px; background: #111; border-radius: 14px; align-items: center; justify-content: center; }
+
+/* D: Monogram on cream */
+.fav-cream-16 { display: inline-flex; width: 16px; height: 16px; background: #F7F6F3; border-radius: 2.5px; align-items: center; justify-content: center; border: 0.5px solid rgba(0,0,0,0.1); }
+.fav-cream-32 { display: inline-flex; width: 32px; height: 32px; background: #F7F6F3; border-radius: 5px; align-items: center; justify-content: center; border: 0.5px solid rgba(0,0,0,0.1); }
+.fav-cream-180 { display: inline-flex; width: 64px; height: 64px; background: #F7F6F3; border-radius: 14px; align-items: center; justify-content: center; border: 0.5px solid rgba(0,0,0,0.1); }
+
+/* ── OG SECTION ── */
+.og-grid { display: flex; flex-direction: column; gap: 40px; }
+.og-option { background: #fff; border-radius: 12px; border: 0.5px solid rgba(0,0,0,0.08); padding: 24px; }
+.og-option-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #999; margin-bottom: 16px; }
+
+/* OG card scaled to fit — actual ratio 1200×630 */
+.og-card {
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 1200 / 630;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 0.5px solid rgba(0,0,0,0.1);
+  margin-bottom: 16px;
+  position: relative;
+}
+
+/* Social preview mockups */
+.social-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; }
+
+/* iMessage style */
+.imessage-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  width: 240px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  border: 0.5px solid rgba(0,0,0,0.08);
+}
+.imessage-thumb { width: 100%; height: 120px; object-fit: cover; display: block; }
+.imessage-body { padding: 10px 12px; }
+.imessage-domain { font-size: 9px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+.imessage-title { font-size: 12px; font-weight: 600; color: #111; line-height: 1.3; }
+
+/* Slack style */
+.slack-card {
+  background: #fff;
+  border-left: 3px solid #E8E8E8;
+  padding: 10px 12px;
+  width: 280px;
+  font-family: 'Geist', system-ui, sans-serif;
+}
+.slack-thumb { width: 100%; height: 130px; object-fit: cover; display: block; margin-top: 8px; border-radius: 4px; }
+.slack-domain { font-size: 10px; color: #666; font-weight: 500; margin-bottom: 2px; }
+.slack-title { font-size: 12px; font-weight: 600; color: #1264A3; }
+.slack-desc { font-size: 11px; color: #666; margin-top: 2px; }
+
+/* ── OG DESIGNS ── */
+
+/* OG A: Matches hero */
+.og-a {
+  background: #F7F6F3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8% 9%;
+  font-family: 'Geist', system-ui, sans-serif;
+}
+.og-a-eyebrow {
+  font-size: 1.1vw;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #0066FF;
+  margin-bottom: 1.2%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.og-a-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: #0066FF; flex-shrink: 0; }
+.og-a-name { font-size: 3.8vw; font-weight: 700; letter-spacing: -0.04em; line-height: 1.1; color: #111; margin-bottom: 1.5%; max-width: 75%; }
+.og-a-desc { font-size: 1.2vw; color: #6B6B6B; line-height: 1.6; max-width: 55%; }
+.og-a-rule { position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: #0066FF; opacity: 0.6; }
+
+/* OG B: Dark */
+.og-b {
+  background: #111;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8% 9%;
+  font-family: 'Geist', system-ui, sans-serif;
+}
+.og-b-eyebrow {
+  font-size: 1.0vw;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #4D94FF;
+  margin-bottom: 1.2%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.og-b-dot { width: 5px; height: 5px; border-radius: 50%; background: #4D94FF; flex-shrink: 0; }
+.og-b-name { font-size: 3.8vw; font-weight: 700; letter-spacing: -0.04em; line-height: 1.1; color: #E8E8E8; margin-bottom: 1.5%; max-width: 75%; }
+.og-b-desc { font-size: 1.2vw; color: #6B6B6B; line-height: 1.6; max-width: 55%; }
+
+/* OG C: Collage */
+.og-c {
+  background: #111;
+  display: flex;
+  align-items: center;
+  font-family: 'Geist', system-ui, sans-serif;
+  padding: 6%;
+  gap: 4%;
+}
+.og-c-left {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+}
+.og-c-name { font-size: 2.2vw; font-weight: 700; letter-spacing: -0.03em; color: #E8E8E8; line-height: 1.15; }
+.og-c-role { font-size: 0.85vw; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #4D94FF; margin-top: 1%; }
+.og-c-thumbs { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 3%; }
+.og-c-thumb { aspect-ratio: 16/10; border-radius: 4px; overflow: hidden; border: 0.5px solid rgba(255,255,255,0.08); }
+.og-c-divider { width: 0.5px; background: #2a2a2a; flex-shrink: 0; align-self: stretch; }
+
+/* OG D: Minimal LJ */
+.og-d {
+  background: #F7F6F3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Geist', system-ui, sans-serif;
+  flex-direction: column;
+  gap: 2%;
+}
+.og-d-mono { font-size: 11vw; font-weight: 700; letter-spacing: -0.06em; color: #111; line-height: 1; }
+.og-d-sub { font-size: 1.0vw; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #999; }
+</style>
+</head>
+<body>
+
+<h1>OG Image + Favicon — Concepts</h1>
+
+<!-- ══════════════════════════════════════════
+     FAVICON
+══════════════════════════════════════════ -->
+<div class="section">
+<h2>Favicon Options</h2>
+<div class="fav-grid">
+
+  <!-- A: LJ on blue -->
+  <div class="fav-option">
+    <div class="fav-option-label">Option A — LJ monogram on blue</div>
+    <div class="fav-row">
+      <div class="fav-size-group">
+        <div class="fav-lj-16">
+          <svg width="10" height="10" viewBox="0 0 10 10"><text x="0" y="8" font-family="Geist,system-ui" font-size="7" font-weight="700" fill="#fff">LJ</text></svg>
+        </div>
+        <span class="fav-size-label">16px</span>
+      </div>
+      <div class="fav-size-group">
+        <div class="fav-lj-32">
+          <svg width="20" height="20" viewBox="0 0 20 20"><text x="1" y="15" font-family="Geist,system-ui" font-size="13" font-weight="700" fill="#fff">LJ</text></svg>
+        </div>
+        <span class="fav-size-label">32px</span>
+      </div>
+      <div class="fav-size-group">
+        <div class="fav-lj-180">
+          <svg width="42" height="42" viewBox="0 0 42 42"><text x="2" y="32" font-family="Geist,system-ui" font-size="28" font-weight="700" fill="#fff">LJ</text></svg>
+        </div>
+        <span class="fav-size-label">180px</span>
+      </div>
+    </div>
+    <div class="tab-mockup">
+      <div class="fav-lj-16">
+        <svg width="10" height="10" viewBox="0 0 10 10"><text x="0" y="8" font-family="Geist,system-ui" font-size="7" font-weight="700" fill="#fff">LJ</text></svg>
+      </div>
+      <span class="tab-title">Ladan Johari — Design Engineer</span>
+    </div>
+    <div class="tab-bar">
+      <div class="tab-bar-dot"></div><div class="tab-bar-dot"></div><div class="tab-bar-dot"></div>
+      <span class="tab-url">ladanjohari.com</span>
+    </div>
+  </div>
+
+  <!-- B: Blue dot on cream -->
+  <div class="fav-option">
+    <div class="fav-option-label">Option B — Accent dot on cream</div>
+    <div class="fav-row">
+      <div class="fav-size-group">
+        <div class="fav-dot-16">
+          <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3.5" fill="#0066FF"/></svg>
+        </div>
+        <span class="fav-size-label">16px</span>
+      </div>
+      <div class="fav-size-group">
+        <div class="fav-dot-32">
+          <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#0066FF"/></svg>
+        </div>
+        <span class="fav-size-label">32px</span>
+      </div>
+      <div class="fav-size-group">
+        <div class="fav-dot-180">
+          <svg width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#0066FF"/></svg>
+        </div>
+        <span class="fav-size-label">180px</span>
+      </div>
+    </div>
+    <div class="tab-mockup">
+      <div class="fav-dot-16">
+        <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3.5" fill="#0066FF"/></svg>
+      </div>
+      <span class="tab-title">Ladan Johari — Design Engineer</span>
+    </div>
+    <div class="tab-bar">
+      <div class="tab-bar-dot"></div><div class="tab-bar-dot"></div><div class="tab-bar-dot"></div>
+      <span class="tab-url">ladanjohari.com</span>
+    </div>
+  </div>
+
+  <!-- C: L on black -->
+  <div class="fav-option">
+    <div class="fav-option-label">Option C — "L" initial on black</div>
+    <div class="fav-row">
+      <div class="fav-size-group">
+        <div class="fav-l-16">
+          <svg width="9" height="9" viewBox="0 0 9 9"><text x="1" y="8" font-family="Geist,system-ui" font-size="9" font-weight="700" fill="#fff">L</text></svg>
+        </div>
+        <span class="fav-size-label">16px</span>
+      </div>
+      <div class="fav-size-group">
+        <div class="fav-l-32">
+          <svg width="20" height="20" viewBox="0 0 20 20"><text x="3" y="16" font-family="Geist,system-ui" font-size="16" font-weight="700" fill="#fff">L</text></svg>
+        </div>
+        <span class="fav-size-label">32px</span>
+      </div>
+      <div class="fav-size-group">
+        <div class="fav-l-180">
+          <svg width="42" height="42" viewBox="0 0 42 42"><text x="7" y="34" font-family="Geist,system-ui" font-size="34" font-weight="700" fill="#fff">L</text></svg>
+        </div>
+        <span class="fav-size-label">180px</span>
+      </div>
+    </div>
+    <div class="tab-mockup">
+      <div class="fav-l-16">
+        <svg width="9" height="9" viewBox="0 0 9 9"><text x="1" y="8" font-family="Geist,system-ui" font-size="9" font-weight="700" fill="#fff">L</text></svg>
+      </div>
+      <span class="tab-title">Ladan Johari — Design Engineer</span>
+    </div>
+    <div class="tab-bar">
+      <div class="tab-bar-dot"></div><div class="tab-bar-dot"></div><div class="tab-bar-dot"></div>
+      <span class="tab-url">ladanjohari.com</span>
+    </div>
+  </div>
+
+  <!-- D: LJ on cream -->
+  <div class="fav-option">
+    <div class="fav-option-label">Option D — LJ monogram on cream</div>
+    <div class="fav-row">
+      <div class="fav-size-group">
+        <div class="fav-cream-16">
+          <svg width="10" height="10" viewBox="0 0 10 10"><text x="0" y="8" font-family="Geist,system-ui" font-size="7" font-weight="700" fill="#111">LJ</text></svg>
+        </div>
+        <span class="fav-size-label">16px</span>
+      </div>
+      <div class="fav-size-group">
+        <div class="fav-cream-32">
+          <svg width="20" height="20" viewBox="0 0 20 20"><text x="1" y="15" font-family="Geist,system-ui" font-size="13" font-weight="700" fill="#111">LJ</text></svg>
+        </div>
+        <span class="fav-size-label">32px</span>
+      </div>
+      <div class="fav-size-group">
+        <div class="fav-cream-180">
+          <svg width="42" height="42" viewBox="0 0 42 42"><text x="2" y="32" font-family="Geist,system-ui" font-size="28" font-weight="700" fill="#111">LJ</text></svg>
+        </div>
+        <span class="fav-size-label">180px</span>
+      </div>
+    </div>
+    <div class="tab-mockup">
+      <div class="fav-cream-16">
+        <svg width="10" height="10" viewBox="0 0 10 10"><text x="0" y="8" font-family="Geist,system-ui" font-size="7" font-weight="700" fill="#111">LJ</text></svg>
+      </div>
+      <span class="tab-title">Ladan Johari — Design Engineer</span>
+    </div>
+    <div class="tab-bar">
+      <div class="tab-bar-dot"></div><div class="tab-bar-dot"></div><div class="tab-bar-dot"></div>
+      <span class="tab-url">ladanjohari.com</span>
+    </div>
+  </div>
+
+</div><!-- /fav-grid -->
+</div><!-- /section -->
+
+
+<!-- ══════════════════════════════════════════
+     OG IMAGE
+══════════════════════════════════════════ -->
+<div class="section">
+<h2>OG Image Options</h2>
+<div class="og-grid">
+
+  <!-- OG A: Matches hero -->
+  <div class="og-option">
+    <div class="og-option-label">Option A — Matches the hero (cream)</div>
+    <div class="og-card">
+      <div class="og-a" style="height:100%;position:relative;">
+        <div class="og-a-eyebrow"><span class="og-a-eyebrow-dot"></span>Design Engineer × Creative Technologist</div>
+        <div class="og-a-name">Ladan Johari</div>
+        <div class="og-a-desc">I build interfaces and interaction systems.</div>
+        <div class="og-a-rule"></div>
+      </div>
+    </div>
+    <div class="social-row">
+      <!-- iMessage -->
+      <div>
+        <div style="font-size:9px;color:#bbb;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;">iMessage</div>
+        <div class="imessage-card">
+          <div style="background:#F7F6F3;height:120px;display:flex;flex-direction:column;justify-content:center;padding:14px 16px;gap:4px;">
+            <div style="font-size:8px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#0066FF;display:flex;align-items:center;gap:4px;"><span style="width:4px;height:4px;border-radius:50%;background:#0066FF;display:inline-block;"></span>Design Engineer × Creative Technologist</div>
+            <div style="font-size:15px;font-weight:700;letter-spacing:-0.03em;color:#111;">Ladan Johari</div>
+            <div style="font-size:10px;color:#6B6B6B;">I build interfaces and interaction systems.</div>
+          </div>
+          <div class="imessage-body">
+            <div class="imessage-domain">ladanjohari.com</div>
+            <div class="imessage-title">Ladan Johari — Design Engineer</div>
+          </div>
+        </div>
+      </div>
+      <!-- Slack -->
+      <div>
+        <div style="font-size:9px;color:#bbb;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;">Slack</div>
+        <div class="slack-card">
+          <div class="slack-domain">ladanjohari.com</div>
+          <div class="slack-title">Ladan Johari — Design Engineer</div>
+          <div class="slack-desc">Design Engineer in the Bay Area. AI interfaces, interaction craft.</div>
+          <div style="background:#F7F6F3;height:110px;margin-top:8px;border-radius:4px;display:flex;flex-direction:column;justify-content:center;padding:12px 14px;gap:3px;">
+            <div style="font-size:7px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#0066FF;">Design Engineer</div>
+            <div style="font-size:13px;font-weight:700;letter-spacing:-0.03em;color:#111;">Ladan Johari</div>
+            <div style="font-size:9px;color:#6B6B6B;">I build interfaces and interaction systems.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OG B: Dark -->
+  <div class="og-option">
+    <div class="og-option-label">Option B — Dark card</div>
+    <div class="og-card">
+      <div class="og-b" style="height:100%;">
+        <div class="og-b-eyebrow"><span class="og-b-dot"></span>Design Engineer × Creative Technologist</div>
+        <div class="og-b-name">Ladan Johari</div>
+        <div class="og-b-desc">I build interfaces and interaction systems.</div>
+      </div>
+    </div>
+    <div class="social-row">
+      <div>
+        <div style="font-size:9px;color:#bbb;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;">iMessage</div>
+        <div class="imessage-card">
+          <div style="background:#111;height:120px;display:flex;flex-direction:column;justify-content:center;padding:14px 16px;gap:4px;">
+            <div style="font-size:7px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#4D94FF;display:flex;align-items:center;gap:4px;"><span style="width:4px;height:4px;border-radius:50%;background:#4D94FF;display:inline-block;"></span>Design Engineer</div>
+            <div style="font-size:15px;font-weight:700;letter-spacing:-0.03em;color:#E8E8E8;">Ladan Johari</div>
+            <div style="font-size:10px;color:#6B6B6B;">I build interfaces and interaction systems.</div>
+          </div>
+          <div class="imessage-body">
+            <div class="imessage-domain">ladanjohari.com</div>
+            <div class="imessage-title">Ladan Johari — Design Engineer</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:9px;color:#bbb;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;">Slack</div>
+        <div class="slack-card">
+          <div class="slack-domain">ladanjohari.com</div>
+          <div class="slack-title">Ladan Johari — Design Engineer</div>
+          <div class="slack-desc">Design Engineer in the Bay Area. AI interfaces, interaction craft.</div>
+          <div style="background:#111;height:110px;margin-top:8px;border-radius:4px;display:flex;flex-direction:column;justify-content:center;padding:12px 14px;gap:3px;">
+            <div style="font-size:7px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#4D94FF;">Design Engineer</div>
+            <div style="font-size:13px;font-weight:700;letter-spacing:-0.03em;color:#E8E8E8;">Ladan Johari</div>
+            <div style="font-size:9px;color:#555;">I build interfaces and interaction systems.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OG C: Collage -->
+  <div class="og-option">
+    <div class="og-option-label">Option C — Work collage (dark)</div>
+    <div class="og-card">
+      <div class="og-c" style="height:100%;">
+        <div class="og-c-left" style="width:36%;">
+          <div style="font-size:0.75vw;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#4D94FF;margin-bottom:6px;display:flex;align-items:center;gap:5px;">
+            <span style="width:4px;height:4px;border-radius:50%;background:#4D94FF;display:inline-block;"></span>Design Engineer
+          </div>
+          <div class="og-c-name">Ladan<br>Johari</div>
+          <div style="width:24px;height:1.5px;background:#333;margin:8px 0;"></div>
+          <div class="og-c-role">Bay Area, CA</div>
+        </div>
+        <div class="og-c-divider"></div>
+        <div class="og-c-thumbs" style="flex:1;margin-left:4%;">
+          <!-- SI thumb -->
+          <div class="og-c-thumb">
+            <svg viewBox="0 0 160 100" style="width:100%;height:100%;display:block;"><rect width="160" height="100" fill="#111"/><rect x="30" y="22" width="100" height="56" rx="12" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="0.5"/><circle cx="48" cy="38" r="3.5" fill="#fff" opacity="0.7"/><rect x="57" y="35.5" width="28" height="4.5" rx="2" fill="#2a2a2a"/><circle cx="48" cy="50" r="3.5" fill="#E8952A"/><rect x="57" y="47.5" width="35" height="4.5" rx="2" fill="#2a2a2a"/><circle cx="48" cy="62" r="3.5" fill="#34C759"/><rect x="57" y="59.5" width="22" height="4.5" rx="2" fill="#2a2a2a"/></svg>
+          </div>
+          <!-- PF thumb -->
+          <div class="og-c-thumb">
+            <svg viewBox="0 0 160 100" style="width:100%;height:100%;display:block;"><rect width="160" height="100" fill="#0a1628"/><rect x="12" y="42" width="136" height="3" rx="1.5" fill="#1a2a44"/><rect x="12" y="42" width="18" height="3" rx="1.5" fill="#2563EB" opacity="0.7"/><rect x="45" y="42" width="25" height="3" rx="1.5" fill="#2563EB" opacity="0.7"/><rect x="8" y="52" width="26" height="10" rx="3" fill="#EF4444"/><rect x="40" y="52" width="32" height="10" rx="3" fill="#2563EB" opacity="0.6"/><circle cx="21" cy="43.5" r="4" fill="#EF4444"/></svg>
+          </div>
+          <!-- Xcode thumb -->
+          <div class="og-c-thumb">
+            <svg viewBox="0 0 160 100" style="width:100%;height:100%;display:block;"><rect width="160" height="100" fill="#1c1c1e"/><rect x="6" y="8" width="45" height="84" rx="4" fill="#252528"/><rect x="55" y="8" width="48" height="84" rx="4" fill="#252528"/><rect x="107" y="8" width="47" height="84" rx="4" fill="#252528"/><rect x="10" y="33" width="37" height="7" rx="2" fill="#0A84FF" opacity="0.15"/><rect x="59" y="43" width="40" height="7" rx="2" fill="#0A84FF" opacity="0.15"/></svg>
+          </div>
+          <!-- Trails thumb -->
+          <div class="og-c-thumb">
+            <svg viewBox="0 0 160 100" style="width:100%;height:100%;display:block;"><rect width="160" height="100" fill="#111"/><rect x="4" y="6" width="38" height="88" rx="3" fill="#1a1a1a"/><rect x="46" y="6" width="52" height="72" rx="3" fill="#f5f5f0"/><rect x="102" y="6" width="52" height="72" rx="3" fill="#f5f5f0"/><rect x="49" y="35" width="46" height="10" rx="2" fill="#4D94FF" opacity="0.12"/><rect x="105" y="27" width="46" height="10" rx="2" fill="#FF6B6B" opacity="0.12"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="social-row">
+      <div>
+        <div style="font-size:9px;color:#bbb;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;">iMessage</div>
+        <div class="imessage-card">
+          <div style="background:#111;height:120px;display:grid;grid-template-columns:1fr 1fr;gap:2px;">
+            <div style="background:#1a1a1a;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 160 100" style="width:80%;height:80%;"><rect width="160" height="100" fill="#111"/><circle cx="48" cy="38" r="5" fill="#fff" opacity="0.7"/><circle cx="48" cy="55" r="5" fill="#E8952A"/><circle cx="48" cy="72" r="5" fill="#34C759"/></svg></div>
+            <div style="background:#0a1628;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 160 100" style="width:80%;height:80%;"><rect width="160" height="100" fill="#0a1628"/><circle cx="21" cy="50" r="7" fill="#EF4444"/></svg></div>
+            <div style="background:#1c1c1e;"></div>
+            <div style="background:#111;"></div>
+          </div>
+          <div class="imessage-body">
+            <div class="imessage-domain">ladanjohari.com</div>
+            <div class="imessage-title">Ladan Johari — Design Engineer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OG D: Minimal -->
+  <div class="og-option">
+    <div class="og-option-label">Option D — Minimal LJ wordmark</div>
+    <div class="og-card">
+      <div class="og-d" style="height:100%;">
+        <div class="og-d-mono">LJ</div>
+        <div class="og-d-sub">Design Engineer · Bay Area</div>
+      </div>
+    </div>
+    <div class="social-row">
+      <div>
+        <div style="font-size:9px;color:#bbb;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;">iMessage</div>
+        <div class="imessage-card">
+          <div style="background:#F7F6F3;height:120px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
+            <div style="font-size:42px;font-weight:700;letter-spacing:-0.05em;color:#111;line-height:1;">LJ</div>
+            <div style="font-size:8px;color:#999;letter-spacing:0.1em;text-transform:uppercase;">Design Engineer</div>
+          </div>
+          <div class="imessage-body">
+            <div class="imessage-domain">ladanjohari.com</div>
+            <div class="imessage-title">Ladan Johari — Design Engineer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /og-grid -->
+</div><!-- /section -->
+
+</body>
+</html>

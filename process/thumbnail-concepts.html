@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Thumbnail Concepts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #F7F6F3; --ink: #111111; --mid: #6B6B6B;
+      --rule: #D4D3CF; --hover-row: #F0EFEC;
+      --accent: #0066FF; --accent-dim: #D6E4FF;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1A1A1A; --ink: #E8E8E8; --mid: #9A9A9A;
+        --rule: #333333; --hover-row: #242424;
+        --accent: #4D94FF; --accent-dim: #1A3A66;
+      }
+    }
+    html { background: var(--bg); }
+    body { font-family: 'Geist', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+    .shell { max-width: 900px; margin: 0 auto; padding: 40px 28px 80px; }
+
+    h1 { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .subtitle { font-size: 0.82rem; color: var(--mid); margin-bottom: 48px; }
+
+    .project-section { margin-bottom: 56px; }
+    .project-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); padding-bottom: 14px; border-bottom: 1px solid var(--rule); margin-bottom: 20px; }
+
+    .variations { display: flex; gap: 24px; flex-wrap: wrap; }
+    .variation { display: flex; flex-direction: column; gap: 8px; }
+    .var-tag { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+    .var-desc { font-size: 0.72rem; color: var(--mid); max-width: 200px; line-height: 1.5; }
+
+    .thumb { width: 160px; height: 100px; border-radius: 10px; overflow: hidden; border: 1px solid var(--rule); position: relative; flex-shrink: 0; }
+    .thumb svg { width: 100%; height: 100%; display: block; }
+
+    /* Preview row context */
+    .preview-row { display: flex; align-items: center; gap: 20px; padding: 16px 0; border-bottom: 0.5px solid var(--rule); margin-top: 20px; }
+    .preview-info { flex: 1; }
+    .preview-title { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.02em; }
+    .preview-tags { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--mid); margin-top: 5px; }
+    .preview-year { font-size: 0.82rem; color: var(--rule); }
+    .preview-arrow { font-size: 16px; color: var(--rule); }
+
+    @media (max-width: 600px) {
+      .variations { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+<div class="shell">
+
+<h1>Thumbnail Concepts</h1>
+<p class="subtitle">Abstract thumbnails for the project rows. Rectangle ratio (160 &times; 100) matching V1 layout.</p>
+
+<!-- ==================== SESSION INDICATOR ==================== -->
+<div class="project-section">
+  <p class="project-label">Session Indicator</p>
+  <div class="variations">
+
+    <div class="variation">
+      <div class="thumb">
+        <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="160" height="100" fill="#111"/>
+          <!-- pill with 3 parallel sessions -->
+          <rect x="30" y="22" width="100" height="56" rx="12" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="0.5"/>
+          <!-- session rows -->
+          <circle cx="48" cy="38" r="3.5" fill="#fff" opacity="0.7">
+            <animate attributeName="opacity" values="0.7;0.15;0.7" dur="1.6s" repeatCount="indefinite"/>
+            <animate attributeName="r" values="3.5;2.5;3.5" dur="1.6s" repeatCount="indefinite"/>
+          </circle>
+          <rect x="57" y="35.5" width="28" height="4.5" rx="2" fill="#2a2a2a"/>
+          <text x="90" y="40" fill="#444" font-family="Geist, sans-serif" font-size="5" font-weight="500">running</text>
+
+          <circle cx="48" cy="50" r="3.5" fill="#E8952A"/>
+          <rect x="57" y="47.5" width="35" height="4.5" rx="2" fill="#2a2a2a"/>
+          <text x="97" y="52" fill="#444" font-family="Geist, sans-serif" font-size="5" font-weight="500">waiting</text>
+
+          <circle cx="48" cy="62" r="3.5" fill="#34C759"/>
+          <rect x="57" y="59.5" width="22" height="4.5" rx="2" fill="#2a2a2a"/>
+          <text x="84" y="64" fill="#444" font-family="Geist, sans-serif" font-size="5" font-weight="500">done</text>
+        </svg>
+      </div>
+      <span class="var-tag">Option A &middot; Parallel moment</span>
+      <p class="var-desc">Three sessions in three states simultaneously. The shimmer dot shows motion = state.</p>
+    </div>
+
+    <div class="variation">
+      <div class="thumb">
+        <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="160" height="100" fill="#111"/>
+          <!-- pill cycling through states -->
+          <rect x="45" y="30" width="70" height="28" rx="10" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="0.5"/>
+          <text x="80" y="39" text-anchor="middle" fill="#666" font-family="Geist, sans-serif" font-size="6" font-weight="500">claude</text>
+          <!-- single cycling dot -->
+          <circle cx="105" cy="44" r="4" fill="#E8952A">
+            <animate attributeName="fill" values="#E8952A;#E8952A;#ffffff;#ffffff;#34C759;#34C759;#FF3B30;#FF3B30;#E8952A" dur="6s" repeatCount="indefinite"/>
+          </circle>
+          <!-- state label -->
+          <text x="80" y="70" text-anchor="middle" fill="#555" font-family="Geist, sans-serif" font-size="6" font-weight="500">
+            <animate attributeName="opacity" values="1;0;1;0;1;0;1;0;1" dur="6s" repeatCount="indefinite"/>
+            waiting
+          </text>
+        </svg>
+      </div>
+      <span class="var-tag">Option B &middot; State carousel</span>
+      <p class="var-desc">Single pill cycling through all states. Educational, shows the full vocabulary.</p>
+    </div>
+
+  </div>
+
+  <!-- In-context preview -->
+  <div class="preview-row">
+    <div class="thumb" style="width:120px; height:75px;">
+      <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+        <rect width="160" height="100" fill="#111"/>
+        <rect x="30" y="22" width="100" height="56" rx="12" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="0.5"/>
+        <circle cx="48" cy="38" r="3.5" fill="#fff" opacity="0.7">
+          <animate attributeName="opacity" values="0.7;0.15;0.7" dur="1.6s" repeatCount="indefinite"/>
+          <animate attributeName="r" values="3.5;2.5;3.5" dur="1.6s" repeatCount="indefinite"/>
+        </circle>
+        <rect x="57" y="35.5" width="28" height="4.5" rx="2" fill="#2a2a2a"/>
+        <text x="90" y="40" fill="#444" font-family="Geist, sans-serif" font-size="5">running</text>
+        <circle cx="48" cy="50" r="3.5" fill="#E8952A"/>
+        <rect x="57" y="47.5" width="35" height="4.5" rx="2" fill="#2a2a2a"/>
+        <text x="97" y="52" fill="#444" font-family="Geist, sans-serif" font-size="5">waiting</text>
+        <circle cx="48" cy="62" r="3.5" fill="#34C759"/>
+        <rect x="57" y="59.5" width="22" height="4.5" rx="2" fill="#2a2a2a"/>
+        <text x="84" y="64" fill="#444" font-family="Geist, sans-serif" font-size="5">done</text>
+      </svg>
+    </div>
+    <div class="preview-info">
+      <span class="preview-title">Session Indicator</span>
+      <div class="preview-tags">AI Agent UI &middot; Interaction System &middot; Design Engineering</div>
+    </div>
+    <span class="preview-year">2025</span>
+    <span class="preview-arrow">&rarr;</span>
+  </div>
+</div>
+
+<!-- ==================== PROMPTEDFIND ==================== -->
+<div class="project-section">
+  <p class="project-label">PromptedFind</p>
+  <div class="variations">
+
+    <div class="variation">
+      <div class="thumb">
+        <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="160" height="100" fill="#0a1628"/>
+          <!-- video timeline bar -->
+          <rect x="12" y="70" width="136" height="3" rx="1.5" fill="#1a2a44"/>
+          <!-- played portion -->
+          <rect x="12" y="70" width="60" height="3" rx="1.5" fill="#4D94FF" opacity="0.6"/>
+          <!-- playhead -->
+          <circle cx="72" cy="71.5" r="4" fill="#4D94FF"/>
+          <!-- timestamp segments -->
+          <rect x="20" y="78" width="24" height="8" rx="2" fill="#4D94FF" opacity="0.7"/>
+          <text x="32" y="84" text-anchor="middle" fill="#fff" font-family="Geist, sans-serif" font-size="4" font-weight="500">0:30</text>
+          <rect x="52" y="78" width="30" height="8" rx="2" fill="#4D94FF" opacity="0.5"/>
+          <text x="67" y="84" text-anchor="middle" fill="#fff" font-family="Geist, sans-serif" font-size="4" font-weight="500">14:54</text>
+          <rect x="90" y="78" width="28" height="8" rx="2" fill="#FF3B30" opacity="0.5"/>
+          <text x="104" y="84" text-anchor="middle" fill="#fff" font-family="Geist, sans-serif" font-size="4" font-weight="500">44:42</text>
+          <!-- content area above -->
+          <rect x="20" y="18" width="120" height="5" rx="2" fill="#1a3a66" opacity="0.3"/>
+          <rect x="20" y="28" width="90" height="5" rx="2" fill="#1a3a66" opacity="0.3"/>
+          <rect x="20" y="38" width="105" height="5" rx="2" fill="#4D94FF" opacity="0.6"/>
+          <rect x="20" y="48" width="70" height="5" rx="2" fill="#1a3a66" opacity="0.3"/>
+          <rect x="20" y="58" width="110" height="5" rx="2" fill="#1a3a66" opacity="0.2"/>
+          <!-- highlight on matched line -->
+          <rect x="16" y="36" width="130" height="9" rx="2" fill="#4D94FF" opacity="0.1"/>
+          <!-- scanning indicator -->
+          <rect x="12" y="15" width="136" height="56" rx="0" fill="url(#pfBeam)" opacity="0.2">
+            <animate attributeName="y" values="15;60;15" dur="3.5s" repeatCount="indefinite"/>
+          </rect>
+          <defs>
+            <linearGradient id="pfBeam" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#4D94FF" stop-opacity="0"/>
+              <stop offset="50%" stop-color="#4D94FF" stop-opacity="1"/>
+              <stop offset="100%" stop-color="#4D94FF" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <span class="var-tag">Option A &middot; Timeline + Stamps</span>
+      <p class="var-desc">Video timeline with semantic timestamps below. A scan beam sweeps through the transcript above, finding matches.</p>
+    </div>
+
+    <div class="variation">
+      <div class="thumb">
+        <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="160" height="100" fill="#0a1628"/>
+          <!-- full timeline bar -->
+          <rect x="12" y="45" width="136" height="4" rx="2" fill="#1a2a44"/>
+          <!-- colored segments on timeline -->
+          <rect x="12" y="45" width="18" height="4" rx="2" fill="#4D94FF" opacity="0.8"/>
+          <rect x="42" y="45" width="25" height="4" rx="2" fill="#4D94FF" opacity="0.6"/>
+          <rect x="80" y="45" width="15" height="4" rx="2" fill="#FF3B30" opacity="0.6"/>
+          <rect x="108" y="45" width="30" height="4" rx="2" fill="#4D94FF" opacity="0.5"/>
+          <!-- timestamp labels below -->
+          <text x="21" y="58" text-anchor="middle" fill="#4D94FF" font-family="Geist, sans-serif" font-size="5" font-weight="500" opacity="0.8">Why h...</text>
+          <text x="54" y="58" text-anchor="middle" fill="#4D94FF" font-family="Geist, sans-serif" font-size="5" font-weight="500" opacity="0.7">Mars at...</text>
+          <text x="88" y="58" text-anchor="middle" fill="#FF3B30" font-family="Geist, sans-serif" font-size="5" font-weight="500" opacity="0.7">Deploy...</text>
+          <text x="123" y="58" text-anchor="middle" fill="#4D94FF" font-family="Geist, sans-serif" font-size="5" font-weight="500" opacity="0.6">Precision...</text>
+          <!-- time markers -->
+          <text x="12" y="40" fill="#335" font-family="Geist, sans-serif" font-size="4">0:00</text>
+          <text x="75" y="40" fill="#335" font-family="Geist, sans-serif" font-size="4">37:00</text>
+          <text x="135" y="40" fill="#335" font-family="Geist, sans-serif" font-size="4">1:14</text>
+          <!-- playhead -->
+          <circle cx="55" cy="47" r="3" fill="#4D94FF">
+            <animate attributeName="cx" values="12;148;12" dur="8s" repeatCount="indefinite"/>
+          </circle>
+        </svg>
+      </div>
+      <span class="var-tag">Option B &middot; Pure timeline</span>
+      <p class="var-desc">Focuses on the timeline itself with colored segments and labels. The playhead scrubs continuously.</p>
+    </div>
+
+  </div>
+
+  <div class="preview-row">
+    <div class="thumb" style="width:120px; height:75px;">
+      <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+        <rect width="160" height="100" fill="#0a1628"/>
+        <rect x="12" y="70" width="136" height="3" rx="1.5" fill="#1a2a44"/>
+        <rect x="12" y="70" width="60" height="3" rx="1.5" fill="#4D94FF" opacity="0.6"/>
+        <circle cx="72" cy="71.5" r="4" fill="#4D94FF"/>
+        <rect x="20" y="78" width="24" height="8" rx="2" fill="#4D94FF" opacity="0.7"/>
+        <text x="32" y="84" text-anchor="middle" fill="#fff" font-family="Geist, sans-serif" font-size="4">0:30</text>
+        <rect x="52" y="78" width="30" height="8" rx="2" fill="#4D94FF" opacity="0.5"/>
+        <text x="67" y="84" text-anchor="middle" fill="#fff" font-family="Geist, sans-serif" font-size="4">14:54</text>
+        <rect x="90" y="78" width="28" height="8" rx="2" fill="#FF3B30" opacity="0.5"/>
+        <text x="104" y="84" text-anchor="middle" fill="#fff" font-family="Geist, sans-serif" font-size="4">44:42</text>
+        <rect x="20" y="18" width="120" height="5" rx="2" fill="#1a3a66" opacity="0.3"/>
+        <rect x="20" y="28" width="90" height="5" rx="2" fill="#1a3a66" opacity="0.3"/>
+        <rect x="20" y="38" width="105" height="5" rx="2" fill="#4D94FF" opacity="0.6"/>
+        <rect x="20" y="48" width="70" height="5" rx="2" fill="#1a3a66" opacity="0.3"/>
+        <rect x="20" y="58" width="110" height="5" rx="2" fill="#1a3a66" opacity="0.2"/>
+        <rect x="16" y="36" width="130" height="9" rx="2" fill="#4D94FF" opacity="0.1"/>
+      </svg>
+    </div>
+    <div class="preview-info">
+      <span class="preview-title">PromptedFind</span>
+      <div class="preview-tags">AI Interaction Pattern &middot; Prototype &middot; Semantic Navigation</div>
+    </div>
+    <span class="preview-year">2025</span>
+    <span class="preview-arrow">&rarr;</span>
+  </div>
+</div>
+
+<!-- ==================== XCODE SYMBOL BROWSER ==================== -->
+<div class="project-section">
+  <p class="project-label">Xcode Symbol Browser</p>
+  <div class="variations">
+
+    <div class="variation">
+      <div class="thumb">
+        <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="160" height="100" fill="#1c1c1e"/>
+          <!-- 3-column navigation -->
+          <line x1="55" y1="10" x2="55" y2="90" stroke="#333" stroke-width="0.5"/>
+          <line x1="108" y1="10" x2="108" y2="90" stroke="#333" stroke-width="0.5"/>
+          <!-- Column 1: modules -->
+          <rect x="8" y="18" width="40" height="8" rx="2" fill="#333"/>
+          <rect x="8" y="30" width="40" height="8" rx="2" fill="#0A84FF" opacity="0.2"/>
+          <rect x="10" y="31.5" width="4" height="5" rx="1" fill="#34C759"/>
+          <rect x="16" y="32" width="26" height="4" rx="2" fill="#555"/>
+          <rect x="8" y="42" width="40" height="8" rx="2" fill="#333"/>
+          <rect x="8" y="54" width="40" height="8" rx="2" fill="#333"/>
+          <!-- Column 2: types -->
+          <rect x="60" y="18" width="42" height="7" rx="2" fill="#333"/>
+          <rect x="60" y="28" width="42" height="7" rx="2" fill="#333"/>
+          <rect x="60" y="38" width="42" height="7" rx="2" fill="#0A84FF" opacity="0.2"/>
+          <rect x="62" y="39.5" width="3" height="4" rx="1" fill="#FF9F0A"/>
+          <rect x="67" y="40" width="28" height="3" rx="1.5" fill="#555"/>
+          <rect x="60" y="48" width="42" height="7" rx="2" fill="#333"/>
+          <rect x="60" y="58" width="42" height="7" rx="2" fill="#333"/>
+          <!-- Column 3: members -->
+          <rect x="113" y="18" width="40" height="7" rx="2" fill="#333"/>
+          <rect x="113" y="28" width="40" height="7" rx="2" fill="#0A84FF" opacity="0.2"/>
+          <rect x="115" y="29.5" width="3" height="4" rx="1" fill="#BF5AF2"/>
+          <rect x="120" y="30" width="26" height="3" rx="1.5" fill="#555"/>
+          <rect x="113" y="38" width="40" height="7" rx="2" fill="#333"/>
+          <rect x="113" y="48" width="40" height="7" rx="2" fill="#333"/>
+          <!-- selection cascade indicator -->
+          <rect x="48" y="30" width="3" height="8" rx="1" fill="#0A84FF" opacity="0.5"/>
+          <rect x="101" y="38" width="3" height="7" rx="1" fill="#0A84FF" opacity="0.5"/>
+          <!-- bottom detail bar -->
+          <rect x="8" y="78" width="144" height="14" rx="3" fill="#252528"/>
+          <rect x="14" y="83" width="50" height="4" rx="2" fill="#444"/>
+          <rect x="70" y="83" width="30" height="4" rx="2" fill="#444"/>
+        </svg>
+      </div>
+      <span class="var-tag">Option A &middot; Column cascade</span>
+      <p class="var-desc">Three-column Finder-style navigation. Blue highlights cascade left to right showing the drill-down path.</p>
+    </div>
+
+    <div class="variation">
+      <div class="thumb">
+        <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="160" height="100" fill="#1c1c1e"/>
+          <!-- Animated column slide -->
+          <!-- Column 1 -->
+          <g>
+            <rect x="8" y="15" width="45" height="70" rx="4" fill="#252528"/>
+            <rect x="12" y="20" width="37" height="6" rx="2" fill="#333"/>
+            <rect x="12" y="29" width="37" height="6" rx="2" fill="#0A84FF" opacity="0.15"/>
+            <circle cx="16" cy="32" r="2" fill="#34C759"/>
+            <rect x="20" y="30" width="24" height="3" rx="1.5" fill="#555"/>
+            <rect x="12" y="38" width="37" height="6" rx="2" fill="#333"/>
+            <rect x="12" y="47" width="37" height="6" rx="2" fill="#333"/>
+            <rect x="12" y="56" width="37" height="6" rx="2" fill="#333"/>
+            <rect x="12" y="65" width="37" height="6" rx="2" fill="#333"/>
+          </g>
+          <!-- Column 2 (slides in) -->
+          <g opacity="0.9">
+            <rect x="57" y="15" width="45" height="70" rx="4" fill="#252528"/>
+            <rect x="61" y="20" width="37" height="6" rx="2" fill="#333"/>
+            <rect x="61" y="29" width="37" height="6" rx="2" fill="#333"/>
+            <rect x="61" y="38" width="37" height="6" rx="2" fill="#0A84FF" opacity="0.15"/>
+            <circle cx="65" cy="41" r="2" fill="#FF9F0A"/>
+            <rect x="69" y="39.5" width="22" height="3" rx="1.5" fill="#555"/>
+            <rect x="61" y="47" width="37" height="6" rx="2" fill="#333"/>
+            <rect x="61" y="56" width="37" height="6" rx="2" fill="#333"/>
+          </g>
+          <!-- Column 3 -->
+          <g opacity="0.8">
+            <rect x="106" y="15" width="45" height="70" rx="4" fill="#252528"/>
+            <rect x="110" y="20" width="37" height="6" rx="2" fill="#333"/>
+            <rect x="110" y="29" width="37" height="6" rx="2" fill="#0A84FF" opacity="0.15"/>
+            <circle cx="114" cy="32" r="2" fill="#BF5AF2"/>
+            <rect x="118" y="30" width="20" height="3" rx="1.5" fill="#555"/>
+            <rect x="110" y="38" width="37" height="6" rx="2" fill="#333"/>
+            <rect x="110" y="47" width="37" height="6" rx="2" fill="#333"/>
+          </g>
+          <!-- connection lines -->
+          <line x1="49" y1="32" x2="57" y2="41" stroke="#0A84FF" stroke-width="1" opacity="0.4"/>
+          <line x1="98" y1="41" x2="106" y2="32" stroke="#0A84FF" stroke-width="1" opacity="0.4"/>
+        </svg>
+      </div>
+      <span class="var-tag">Option B &middot; Card columns</span>
+      <p class="var-desc">Separated card panels with connection lines. Emphasizes the spatial metaphor and depth of navigation.</p>
+    </div>
+
+  </div>
+
+  <div class="preview-row">
+    <div class="thumb" style="width:120px; height:75px;">
+      <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+        <rect width="160" height="100" fill="#1c1c1e"/>
+        <line x1="55" y1="10" x2="55" y2="90" stroke="#333" stroke-width="0.5"/>
+        <line x1="108" y1="10" x2="108" y2="90" stroke="#333" stroke-width="0.5"/>
+        <rect x="8" y="30" width="40" height="8" rx="2" fill="#0A84FF" opacity="0.2"/>
+        <rect x="10" y="31.5" width="4" height="5" rx="1" fill="#34C759"/>
+        <rect x="16" y="32" width="26" height="4" rx="2" fill="#555"/>
+        <rect x="8" y="18" width="40" height="8" rx="2" fill="#333"/>
+        <rect x="8" y="42" width="40" height="8" rx="2" fill="#333"/>
+        <rect x="60" y="38" width="42" height="7" rx="2" fill="#0A84FF" opacity="0.2"/>
+        <rect x="62" y="39.5" width="3" height="4" rx="1" fill="#FF9F0A"/>
+        <rect x="67" y="40" width="28" height="3" rx="1.5" fill="#555"/>
+        <rect x="60" y="18" width="42" height="7" rx="2" fill="#333"/>
+        <rect x="60" y="28" width="42" height="7" rx="2" fill="#333"/>
+        <rect x="113" y="28" width="40" height="7" rx="2" fill="#0A84FF" opacity="0.2"/>
+        <rect x="115" y="29.5" width="3" height="4" rx="1" fill="#BF5AF2"/>
+        <rect x="120" y="30" width="26" height="3" rx="1.5" fill="#555"/>
+        <rect x="113" y="18" width="40" height="7" rx="2" fill="#333"/>
+        <rect x="113" y="38" width="40" height="7" rx="2" fill="#333"/>
+      </svg>
+    </div>
+    <div class="preview-info">
+      <span class="preview-title">Xcode Symbol Browser</span>
+      <div class="preview-tags">Developer Tools &middot; Information Architecture &middot; macOS</div>
+    </div>
+    <span class="preview-year">2024</span>
+    <span class="preview-arrow">&rarr;</span>
+  </div>
+</div>
+
+<!-- ==================== TRAILS ==================== -->
+<div class="project-section">
+  <p class="project-label">Trails</p>
+  <div class="variations">
+
+    <div class="variation">
+      <div class="thumb">
+        <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="160" height="100" fill="#111"/>
+          <!-- document nodes as small rectangles -->
+          <line x1="50" y1="35" x2="35" y2="55" stroke="#333" stroke-width="1"/>
+          <line x1="50" y1="35" x2="80" y2="28" stroke="#333" stroke-width="1"/>
+          <line x1="80" y1="28" x2="115" y2="38" stroke="#333" stroke-width="1"/>
+          <line x1="35" y1="55" x2="65" y2="70" stroke="#333" stroke-width="1"/>
+          <line x1="115" y1="38" x2="110" y2="62" stroke="#333" stroke-width="1"/>
+          <line x1="65" y1="70" x2="110" y2="62" stroke="#333" stroke-width="1"/>
+          <line x1="80" y1="28" x2="120" y2="18" stroke="#333" stroke-width="1"/>
+          <!-- active trail -->
+          <line x1="50" y1="35" x2="35" y2="55" stroke="#4D94FF" stroke-width="1.5" opacity="0.6"/>
+          <line x1="35" y1="55" x2="65" y2="70" stroke="#4D94FF" stroke-width="1.5" opacity="0.6"/>
+          <!-- document rectangles -->
+          <rect x="42" y="28" width="16" height="14" rx="3" fill="#222" stroke="#4D94FF" stroke-width="0.8"/>
+          <rect x="44" y="31" width="8" height="1.5" rx="0.5" fill="#555"/>
+          <rect x="44" y="34" width="11" height="1.5" rx="0.5" fill="#444"/>
+          <rect x="44" y="37" width="6" height="1.5" rx="0.5" fill="#444"/>
+
+          <rect x="27" y="48" width="16" height="14" rx="3" fill="#222" stroke="#4D94FF" stroke-width="0.8"/>
+          <rect x="29" y="51" width="9" height="1.5" rx="0.5" fill="#555"/>
+          <rect x="29" y="54" width="11" height="1.5" rx="0.5" fill="#444"/>
+
+          <rect x="57" y="63" width="16" height="14" rx="3" fill="#222" stroke="#4D94FF" stroke-width="0.8"/>
+          <rect x="59" y="66" width="10" height="1.5" rx="0.5" fill="#555"/>
+          <rect x="59" y="69" width="7" height="1.5" rx="0.5" fill="#444"/>
+
+          <rect x="72" y="21" width="16" height="14" rx="3" fill="#222" stroke="#444" stroke-width="0.5"/>
+          <rect x="74" y="24" width="8" height="1.5" rx="0.5" fill="#444"/>
+          <rect x="74" y="27" width="11" height="1.5" rx="0.5" fill="#333"/>
+
+          <rect x="107" y="31" width="16" height="14" rx="3" fill="#222" stroke="#444" stroke-width="0.5"/>
+          <rect x="109" y="34" width="9" height="1.5" rx="0.5" fill="#444"/>
+          <rect x="109" y="37" width="7" height="1.5" rx="0.5" fill="#333"/>
+
+          <rect x="102" y="55" width="16" height="14" rx="3" fill="#222" stroke="#444" stroke-width="0.5"/>
+          <rect x="104" y="58" width="10" height="1.5" rx="0.5" fill="#444"/>
+          <rect x="104" y="61" width="8" height="1.5" rx="0.5" fill="#333"/>
+
+          <rect x="112" y="11" width="16" height="14" rx="3" fill="#222" stroke="#444" stroke-width="0.5"/>
+          <rect x="114" y="14" width="8" height="1.5" rx="0.5" fill="#444"/>
+          <rect x="114" y="17" width="11" height="1.5" rx="0.5" fill="#333"/>
+        </svg>
+      </div>
+      <span class="var-tag">Option A &middot; Document graph</span>
+      <p class="var-desc">Rectangles as document cards with text lines inside. Connected by edges, active trail highlighted in blue. Dark palette matching other thumbnails.</p>
+    </div>
+
+    <div class="variation">
+      <div class="thumb">
+        <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="160" height="100" fill="#111"/>
+          <!-- sidebar list -->
+          <rect x="8" y="12" width="42" height="76" rx="4" fill="#1a1a1a"/>
+          <rect x="12" y="17" width="34" height="6" rx="2" fill="#333"/>
+          <rect x="12" y="26" width="34" height="6" rx="2" fill="#4D94FF" opacity="0.2"/>
+          <rect x="14" y="27.5" width="20" height="3" rx="1.5" fill="#4D94FF" opacity="0.6"/>
+          <rect x="12" y="35" width="34" height="6" rx="2" fill="#333"/>
+          <rect x="12" y="44" width="34" height="6" rx="2" fill="#333"/>
+          <rect x="12" y="53" width="34" height="6" rx="2" fill="#333"/>
+          <rect x="12" y="62" width="34" height="6" rx="2" fill="#333"/>
+          <!-- main content: trail view -->
+          <rect x="55" y="12" width="97" height="76" rx="4" fill="#1a1a1a"/>
+          <!-- trail nodes stacked vertically with connections -->
+          <rect x="65" y="20" width="40" height="12" rx="3" fill="#222" stroke="#4D94FF" stroke-width="0.5"/>
+          <rect x="68" y="23" width="20" height="2" rx="1" fill="#555"/>
+          <rect x="68" y="27" width="28" height="2" rx="1" fill="#444"/>
+          <line x1="85" y1="32" x2="85" y2="38" stroke="#4D94FF" stroke-width="1" opacity="0.4"/>
+          <rect x="65" y="38" width="40" height="12" rx="3" fill="#222" stroke="#4D94FF" stroke-width="0.5"/>
+          <rect x="68" y="41" width="24" height="2" rx="1" fill="#555"/>
+          <rect x="68" y="45" width="30" height="2" rx="1" fill="#444"/>
+          <line x1="85" y1="50" x2="85" y2="56" stroke="#4D94FF" stroke-width="1" opacity="0.4"/>
+          <rect x="65" y="56" width="40" height="12" rx="3" fill="#222" stroke="#4D94FF" stroke-width="0.5"/>
+          <rect x="68" y="59" width="18" height="2" rx="1" fill="#555"/>
+          <rect x="68" y="63" width="26" height="2" rx="1" fill="#444"/>
+          <!-- related docs panel -->
+          <rect x="112" y="20" width="35" height="10" rx="2" fill="#222" stroke="#333" stroke-width="0.5"/>
+          <rect x="115" y="23" width="16" height="2" rx="1" fill="#444"/>
+          <rect x="112" y="34" width="35" height="10" rx="2" fill="#222" stroke="#333" stroke-width="0.5"/>
+          <rect x="115" y="37" width="20" height="2" rx="1" fill="#444"/>
+          <line x1="105" y1="26" x2="112" y2="25" stroke="#333" stroke-width="0.5"/>
+          <line x1="105" y1="44" x2="112" y2="39" stroke="#333" stroke-width="0.5"/>
+        </svg>
+      </div>
+      <span class="var-tag">Option B &middot; Trail view UI</span>
+      <p class="var-desc">Sidebar + trail view layout. Shows the app&rsquo;s actual navigation pattern: list on left, connected trail on right.</p>
+    </div>
+
+  </div>
+
+  <div class="preview-row">
+    <div class="thumb" style="width:120px; height:75px;">
+      <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+        <rect width="160" height="100" fill="#111"/>
+        <line x1="50" y1="35" x2="35" y2="55" stroke="#4D94FF" stroke-width="1.5" opacity="0.6"/>
+        <line x1="35" y1="55" x2="65" y2="70" stroke="#4D94FF" stroke-width="1.5" opacity="0.6"/>
+        <line x1="50" y1="35" x2="80" y2="28" stroke="#333" stroke-width="1"/>
+        <line x1="80" y1="28" x2="115" y2="38" stroke="#333" stroke-width="1"/>
+        <line x1="115" y1="38" x2="110" y2="62" stroke="#333" stroke-width="1"/>
+        <line x1="65" y1="70" x2="110" y2="62" stroke="#333" stroke-width="1"/>
+        <rect x="42" y="28" width="16" height="14" rx="3" fill="#222" stroke="#4D94FF" stroke-width="0.8"/>
+        <rect x="44" y="31" width="8" height="1.5" rx="0.5" fill="#555"/>
+        <rect x="44" y="34" width="11" height="1.5" rx="0.5" fill="#444"/>
+        <rect x="27" y="48" width="16" height="14" rx="3" fill="#222" stroke="#4D94FF" stroke-width="0.8"/>
+        <rect x="29" y="51" width="9" height="1.5" rx="0.5" fill="#555"/>
+        <rect x="57" y="63" width="16" height="14" rx="3" fill="#222" stroke="#4D94FF" stroke-width="0.8"/>
+        <rect x="59" y="66" width="10" height="1.5" rx="0.5" fill="#555"/>
+        <rect x="72" y="21" width="16" height="14" rx="3" fill="#222" stroke="#444" stroke-width="0.5"/>
+        <rect x="107" y="31" width="16" height="14" rx="3" fill="#222" stroke="#444" stroke-width="0.5"/>
+        <rect x="102" y="55" width="16" height="14" rx="3" fill="#222" stroke="#444" stroke-width="0.5"/>
+      </svg>
+    </div>
+    <div class="preview-info">
+      <span class="preview-title">Trails</span>
+      <div class="preview-tags">Knowledge Navigation &middot; Graph Interface &middot; Research Tools</div>
+    </div>
+    <span class="preview-year">2023</span>
+    <span class="preview-arrow">&rarr;</span>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

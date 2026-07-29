@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Skills Map — Ladan, Design Engineer</title>
+<style>
+  :root{
+    --bg:#F7F6F3; --ink:#111111; --mid:#6B6B6B; --rule:rgba(0,0,0,0.10);
+    --accent:#0066FF;
+    --solid:#1B7A3D; --rusty:#B5721A; --missing:#B22222; --ignore:#6B6B6B;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#1A1A1A; --ink:#E8E8E8; --mid:#9A9A9A; --rule:#333; --accent:#4D94FF;
+      --solid:#5BD98A; --rusty:#E0A54A; --missing:#F07A7A; --ignore:#9A9A9A; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Geist",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:920px;margin:0 auto;padding:56px 28px 96px;}
+  @media (max-width:540px){ .wrap{padding:36px 20px 72px;} }
+  h1{font-size:26px;font-weight:600;letter-spacing:-0.02em;margin:0 0 6px;}
+  .sub{color:var(--mid);font-size:15px;margin:0 0 4px;}
+  .date{color:var(--mid);font-size:13px;margin:0 0 40px;}
+  .lede{font-size:16px;border-left:2px solid var(--accent);padding:2px 0 2px 16px;margin:0 0 44px;color:var(--ink);}
+  .lede b{font-weight:600;}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;margin:0 0 14px;display:flex;align-items:baseline;gap:10px;}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+  .col{border-top:1px solid var(--rule);padding-top:22px;margin-bottom:44px;}
+  .tag{font-size:12px;color:var(--mid);font-weight:400;text-transform:none;letter-spacing:0;}
+  ul{margin:0;padding:0;list-style:none;}
+  li{border-bottom:1px solid var(--rule);padding:13px 0;}
+  li:last-child{border-bottom:none;}
+  .item{font-size:15px;font-weight:500;margin:0 0 3px;}
+  .note{font-size:14px;color:var(--mid);margin:0;}
+  .note b{color:var(--ink);font-weight:500;}
+  .rank{display:inline-block;min-width:20px;color:var(--accent);font-weight:600;}
+  .cap{border:1px solid var(--rule);border-radius:14px;padding:24px;margin:8px 0 40px;background:transparent;}
+  .cap .label{font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--mid);margin:0 0 10px;}
+  .cap p{font-size:18px;line-height:1.5;margin:0;letter-spacing:-0.01em;}
+  .prio{counter-reset:p;}
+  .prio .p{border-bottom:1px solid var(--rule);padding:14px 0;}
+  .prio .p:last-child{border-bottom:none;}
+  .prio .h{font-size:15px;font-weight:600;margin:0 0 2px;}
+  .prio .d{font-size:14px;color:var(--mid);margin:0;}
+  .s-solid{color:var(--solid);} .bg-solid{background:var(--solid);}
+  .s-rusty{color:var(--rusty);} .bg-rusty{background:var(--rusty);}
+  .s-missing{color:var(--missing);} .bg-missing{background:var(--missing);}
+  .s-ignore{color:var(--ignore);} .bg-ignore{background:var(--ignore);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>The Skills Map</h1>
+  <p class="sub">Ladan Johari · Design Engineer · honest self-assessment, measured against what the role actually hires for.</p>
+  <p class="date">Built July 19, 2026. One rule everywhere: this grades <i>can I produce a working result with my tools</i>, not <i>can I write it cold from a blank file</i>. Those are different tests. You kept failing yourself on the second one and calling real work fake.</p>
+
+  <p class="lede">A design engineer is <b>a full designer who builds the front of the front-end</b> — not half a designer and half a backend engineer. That framing decides every column below. The things you feel guilty about (databases, auth, algorithms) are not your job. The things you undercount (systems, motion, shipping, directing agents to real code) <b>are</b>.</p>
+
+  <!-- SOLID -->
+  <div class="col">
+    <h2><span class="dot bg-solid"></span> Solid <span class="tag">— claim these out loud in interviews</span></h2>
+    <ul>
+      <li>
+        <p class="item">Hand-built interface systems from a design system</p>
+        <p class="note">Tokens, dark mode, responsive layout, concentric radii, 1px-rule discipline. Evidence: the whole live portfolio + the SI spec. This is your center of gravity.</p>
+      </li>
+      <li>
+        <p class="item">Interaction &amp; motion <b>design</b> — state models, hover/focus/reduced-motion behavior</p>
+        <p class="note">The SI 5-state model (motion = state, color = exception, Reduce Motion path), the hover-preview crossfades. You <b>design</b> motion at a senior level even when you can't hand-type keyframes from memory. Interviewers care about the first thing.</p>
+      </li>
+      <li>
+        <p class="item">Turning ambiguous problems into working, deployed prototypes</p>
+        <p class="note">PromptedFind (semantic video nav, 74-min NASA demo), Session Indicator, the Substrate prototypes. This is the literal one-line job description of a design engineer.</p>
+      </li>
+      <li>
+        <p class="item">Directing AI coding agents to ship real software</p>
+        <p class="note">Daily fluency with Claude Code as your build tool — reaching into real Swift, Python, SQLite. In 2026 this is a genuine differentiator, not a crutch. Name it as a skill.</p>
+      </li>
+      <li>
+        <p class="item">Shipping &amp; running live products</p>
+        <p class="note">A real Swift menu-bar app (process scan, 5 states, running), live sites on GitHub Pages, an animation capture pipeline (Puppeteer → ffmpeg). You <b>ship</b>. Many stronger coders don't.</p>
+      </li>
+      <li>
+        <p class="item">Reading &amp; modifying real code across HTML / CSS / JS / Swift / Python</p>
+        <p class="note">You read and steer your own Swift app, Python transcript parsers, a SQLite-backed store. Recognition is high even where blank-file recall is low.</p>
+      </li>
+      <li>
+        <p class="item">User research &amp; product-systems thinking</p>
+        <p class="note">The Substrate study (within-subject, think-aloud, 5 conditions, moderator script) and the substrate model itself (exit criteria, task trees, state of record). Real, claimable design work.</p>
+      </li>
+      <li>
+        <p class="item">Basic unaided JavaScript, DOM level — and growing</p>
+        <p class="note">As of today: grab an element, wire a click, change text/classes, catch your own bugs. Small but real, and it's on an upward ladder. Don't call this nothing.</p>
+      </li>
+    </ul>
+  </div>
+
+  <!-- RUSTY -->
+  <div class="col">
+    <h2><span class="dot bg-rusty"></span> Rusty <span class="tag">— you did this; it faded; a short refresher brings it back</span></h2>
+    <ul>
+      <li>
+        <p class="item">SwiftUI</p>
+        <p class="note"><b>Refresher:</b> rebuild one small view from a blank file using your own Session Indicator code as the reference sheet. Two short sittings. You can read it; you just can't start cold yet.</p>
+      </li>
+      <li>
+        <p class="item">CSS animation / motion &amp; dark mode / responsive <span class="tag">(you rated these fog — they are not)</span></p>
+        <p class="note"><b>Refresher:</b> none needed to <i>keep using</i> them. To <i>trust</i> them, read back your own hover-preview + token CSS and annotate what each line does. This is a confidence gap, not a knowledge gap.</p>
+      </li>
+      <li>
+        <p class="item">Git &amp; GitHub</p>
+        <p class="note"><b>Refresher:</b> a one-page cheat sheet of the ~8 commands you actually use (commit, push, branch, status, log). Pin it. Stop treating this as a skill to "master" — it's a lookup.</p>
+      </li>
+      <li>
+        <p class="item">Figma</p>
+        <p class="note"><b>Refresher:</b> recreate one screen you already designed to reload the muscle memory. Half a day.</p>
+      </li>
+      <li>
+        <p class="item">Your MillerKit / Swift packages</p>
+        <p class="note"><b>Refresher:</b> reread your own repo with notes — don't rebuild. Goal is to be able to talk through it in an interview, not reconstruct it.</p>
+      </li>
+    </ul>
+  </div>
+
+  <!-- MISSING -->
+  <div class="col">
+    <h2><span class="dot bg-missing"></span> Missing <span class="tag">— real gaps, ranked by how much they block getting hired</span></h2>
+    <ul>
+      <li>
+        <p class="item"><span class="rank">1</span> React</p>
+        <p class="note">The single biggest gate on most design-engineer postings. <b>First step:</b> build the exact click-counter you did today, but in React with <code>useState</code>. One sitting. That's the whole on-ramp.</p>
+      </li>
+      <li>
+        <p class="item"><span class="rank">2</span> Unaided JS fluency — loops, array methods, functions that return values</p>
+        <p class="note">You're already on the ladder for this. <b>First step:</b> finish Exercise 3 (the to-do list) in your fluency track. This directly feeds React and the Recurse pairing.</p>
+      </li>
+      <li>
+        <p class="item"><span class="rank">3</span> Accessibility fundamentals</p>
+        <p class="note">Cheap to learn, expected of design engineers, and you're closer than you think (semantic HTML, reduced-motion already in your work). <b>First step:</b> run one axe / Lighthouse pass on the portfolio and fix what it flags. One afternoon.</p>
+      </li>
+      <li>
+        <p class="item"><span class="rank">4</span> Component thinking inside a framework — props, state, composition</p>
+        <p class="note">Flows straight out of React. <b>First step:</b> split your React counter into two components passing one prop. Don't start this before #1.</p>
+      </li>
+      <li>
+        <p class="item"><span class="rank">5</span> TypeScript</p>
+        <p class="note">Lowest priority. Only worth touching <i>after</i> React feels comfortable. <b>First step for now:</b> none. Ignore it until then, guilt-free.</p>
+      </li>
+    </ul>
+  </div>
+
+  <!-- IGNORE -->
+  <div class="col">
+    <h2><span class="dot bg-ignore"></span> Ignore <span class="tag">— not your job; stop feeling guilty about the fog here</span></h2>
+    <ul>
+      <li>
+        <p class="item">Backend depth — Postgres internals, auth systems, API architecture, servers</p>
+        <p class="note">Your whole March backend course went to fog and <b>that is fine</b>. A design engineer doesn't build the backend. If you ever need data, you wire to an API someone else owns.</p>
+      </li>
+      <li>
+        <p class="item">SQL beyond reading a simple query</p>
+        <p class="note">Recognition is plenty. You will never be asked to optimize a query.</p>
+      </li>
+      <li>
+        <p class="item">Algorithms / data structures / LeetCode</p>
+        <p class="note">Not a design-engineer screen, and even the Recurse pairing is about thinking out loud, not algorithm mastery. Don't spend an hour here.</p>
+      </li>
+      <li>
+        <p class="item">DevOps, build systems, deployment pipelines beyond "git push deploys"</p>
+        <p class="note">"It's live on push to main" is all the deployment story you need.</p>
+      </li>
+      <li>
+        <p class="item">Data engineering, distributed systems, infra design</p>
+        <p class="note">Different job entirely. Feeling behind on this is like a chef feeling guilty they can't do plumbing.</p>
+      </li>
+    </ul>
+  </div>
+
+  <!-- CAPABILITY STATEMENT -->
+  <h2><span class="dot bg-solid"></span> Your capability statement <span class="tag">— true today, say it in an interview</span></h2>
+  <div class="cap">
+    <p class="label">One sentence</p>
+    <p>"I'm a design engineer who turns ambiguous product problems into working, deployed prototypes — I design and build interface systems (tokens, dark mode, motion, state models) in the browser, and I use AI coding agents to reach into real Swift and Python when a concept needs to become a running app."</p>
+  </div>
+
+  <!-- PRIORITY -->
+  <h2><span class="dot bg-missing"></span> Close the top 3 gaps, in this order</h2>
+  <div class="prio">
+    <div class="p">
+      <p class="h">1 · React — start this week, start tiny</p>
+      <p class="d">Click-counter in React with useState. Highest hiring leverage of anything on this page. Everything else in Missing hangs off it.</p>
+    </div>
+    <div class="p">
+      <p class="h">2 · Unaided JS fluency — keep the ladder you're already on</p>
+      <p class="d">Finish the to-do list exercise. This is the confidence fix and the Recurse-readiness fix at once. Already in motion — don't drop it.</p>
+    </div>
+    <div class="p">
+      <p class="h">3 · Accessibility pass — one afternoon</p>
+      <p class="d">Run axe on the portfolio, fix the flags. Fast, visible, and it's a line you can then say honestly on a résumé.</p>
+    </div>
+  </div>
+
+  <p class="date" style="margin-top:40px;">The honest headline: you are not a con artist. You are a strong designer with real shipping ability whose <i>unaided-recall</i> muscle went slack from building everything with AI. That is a small, fixable, well-defined gap — and closing React + JS fluency turns "faking it" into simply <i>it</i>.</p>
+
+</div>
+</body>
+</html>

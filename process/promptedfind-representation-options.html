@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="light dark" />
+<title>Prompted Find &mdash; representation options</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#F7F6F3;--ink:#111;--mid:#6B6B6B;--rule:#D4D3CF;--hover-row:#F0EFEC;--accent:#0066FF;--accent-dim:#D6E4FF;--soon:#9A9A9A;--good:#1B7F3B;--bad:#B33A3A}
+  @media (prefers-color-scheme:dark){:root{--bg:#1A1A1A;--ink:#E8E8E8;--mid:#9A9A9A;--rule:#333;--hover-row:#242424;--accent:#4D94FF;--accent-dim:#1A3A66;--soon:#777;--good:#4CAF6E;--bad:#D66}}
+  html{background:var(--bg)}
+  body{font-family:'Geist',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:120px}
+  .shell{max-width:760px;margin:0 auto;padding:0 28px}
+
+  .doc-head{padding-top:64px;border-bottom:1px solid var(--rule);padding-bottom:28px}
+  .doc-eyebrow{font-size:0.65rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-bottom:12px}
+  .doc-title{font-size:1.7rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:10px}
+  .doc-sub{font-size:0.875rem;line-height:1.7;color:var(--mid);max-width:620px}
+  .doc-sub b{color:var(--ink);font-weight:600}
+
+  .part-label{font-size:0.68rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink);margin-top:72px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+  .part-q{font-size:0.85rem;color:var(--mid);line-height:1.65;margin-top:12px;max-width:620px}
+
+  .optlabel{font-size:0.62rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#fff;background:var(--accent);display:inline-block;padding:4px 10px;border-radius:4px;margin:56px 0 4px}
+  .optlabel.rec::after{content:" · recommended";opacity:.85}
+  .optsub{font-size:0.82rem;line-height:1.65;color:var(--mid);max-width:640px;margin-bottom:22px}
+  .optsub b{color:var(--ink);font-weight:600}
+
+  /* in-context frame */
+  .ctx{border:1px solid var(--rule);border-radius:10px;overflow:hidden;margin-bottom:14px}
+  .ctx-bar{font-size:0.6rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);background:var(--hover-row);padding:7px 14px;border-bottom:1px solid var(--rule)}
+  .ctx-body{padding:20px 22px;background:var(--bg)}
+
+  /* homepage row mock */
+  .hp-row{display:flex;align-items:center;gap:18px;padding:14px 0}
+  .hp-row + .hp-row{border-top:.5px solid var(--rule)}
+  .hp-thumb{width:96px;height:60px;border-radius:7px;border:1px solid var(--rule);background:#111;flex-shrink:0;overflow:hidden}
+  .hp-thumb svg{width:100%;height:100%;display:block}
+  .hp-info{flex:1;min-width:0}
+  .hp-title{font-size:0.95rem;font-weight:600;letter-spacing:-0.02em}
+  .hp-tags{font-size:0.62rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--mid);margin-top:4px}
+  .hp-arrow{color:var(--rule);font-size:14px}
+  .hp-dim{opacity:.45}
+
+  /* page skeleton mock */
+  .skel{display:flex;flex-direction:column;gap:7px}
+  .skel-block{border:1px solid var(--rule);border-radius:6px;padding:9px 12px;font-size:0.68rem;font-weight:500;color:var(--mid);letter-spacing:0.02em;background:var(--bg)}
+  .skel-block.hero{background:#111;color:rgba(255,255,255,.75);border-color:#111}
+  .skel-block.new{border-color:var(--accent);color:var(--accent);background:rgba(0,102,255,0.04);border-style:dashed}
+  .skel-block b{font-weight:650;color:inherit}
+  .skel-note{font-size:0.62rem;color:var(--mid);font-style:italic;padding:2px 2px 0}
+  .skel-indent{margin-left:22px;display:flex;flex-direction:column;gap:7px}
+
+  /* pros cons */
+  .pc{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px}
+  .pc ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+  .pc li{font-size:0.75rem;line-height:1.55;color:var(--mid);padding-left:16px;position:relative}
+  .pc .pro li::before{content:"+";position:absolute;left:0;color:var(--good);font-weight:700}
+  .pc .con li::before{content:"\2212";position:absolute;left:0;color:var(--bad);font-weight:700}
+  .pc-h{font-size:0.62rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px}
+  .pc .pro .pc-h{color:var(--good)}
+  .pc .con .pc-h{color:var(--bad)}
+  @media(max-width:560px){.pc{grid-template-columns:1fr}}
+
+  /* stepper mock pieces */
+  .mock-stage{border:1px solid var(--rule);border-radius:8px;overflow:hidden;background:#0a0a0a;margin-bottom:10px}
+  .mock-stage svg{display:block;width:100%}
+  .mock-tabs{display:flex;border-top:1px solid var(--rule);background:var(--bg)}
+  .mock-tab{flex:1;padding:10px 12px;border-right:1px solid var(--rule);font-size:0.68rem;line-height:1.5;color:var(--mid)}
+  .mock-tab:last-child{border-right:none}
+  .mock-tab b{display:block;color:var(--ink);font-weight:600;font-size:0.72rem}
+  .mock-tab.on{background:var(--hover-row);box-shadow:inset 0 -2px 0 var(--accent)}
+
+  .verdict{border-left:3px solid var(--accent);background:rgba(0,102,255,0.05);border-radius:0 8px 8px 0;padding:16px 20px;margin-top:56px}
+  .verdict p{font-size:0.82rem;line-height:1.7;color:var(--mid)}
+  .verdict b{color:var(--ink);font-weight:600}
+  .verdict .pc-h{color:var(--accent);margin-bottom:6px}
+
+  .foot{margin-top:80px;padding-top:20px;border-top:1px solid var(--rule);font-size:0.68rem;color:var(--mid)}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="doc-head">
+    <p class="doc-eyebrow">Process &middot; Working document</p>
+    <h1 class="doc-title">Prompted Find &mdash; how to represent it</h1>
+    <p class="doc-sub">
+      Two decisions, taken separately. <b>Part 1</b> &mdash; story architecture: is Prompted Find a standalone
+      project, or one surface of a named method (Semantic Decomposition)? <b>Part 2</b> &mdash; the Interaction
+      section: what replaces the current broken screenshot stepper? Each option is shown in the context it
+      would actually appear in, with trade-offs, so a direction can be picked before any code changes.
+    </p>
+  </div>
+
+  <!-- ============================================================ -->
+  <p class="part-label">Part 1 &middot; Story architecture</p>
+  <p class="part-q">
+    The audience is recruiters, hiring managers, and practitioners skimming. The question:
+    does naming the method upgrade the story ("she has a repeatable interaction primitive")
+    without burying the artifact they actually want to see first?
+  </p>
+
+  <!-- OPTION A -->
+  <p class="optlabel">Option A &middot; Standalone, as today</p>
+  <p class="optsub">
+    Prompted Find stays a self-contained case study. Semantic Decomposition is never named;
+    the existing &ldquo;why this pattern matters beyond video&rdquo; note carries the generalization.
+    Fix the page, change nothing structural.
+  </p>
+  <div class="ctx">
+    <div class="ctx-bar">In context &middot; homepage &middot; Selected Work</div>
+    <div class="ctx-body">
+      <div class="hp-row">
+        <span class="hp-thumb"><svg viewBox="0 0 96 60"><rect width="96" height="60" fill="#111"/><rect x="8" y="8" width="52" height="30" rx="2" fill="#2a2a2a"/><rect x="64" y="8" width="24" height="44" rx="2" fill="#1c2b45"/><rect x="8" y="42" width="10" height="4" rx="1" fill="#4D94FF"/><rect x="22" y="42" width="8" height="4" rx="1" fill="#333"/><rect x="34" y="42" width="12" height="4" rx="1" fill="#4D94FF"/><rect x="50" y="42" width="7" height="4" rx="1" fill="#333"/></svg></span>
+        <div class="hp-info">
+          <p class="hp-title">Prompted Find</p>
+          <p class="hp-tags">AI Interaction &middot; Video Navigation &middot; Coded Prototype</p>
+        </div>
+        <span class="hp-arrow">&rarr;</span>
+      </div>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="pro"><p class="pc-h">For</p><ul>
+      <li>Zero restructuring &mdash; effort goes entirely into quality of this one page</li>
+      <li>The artifact stays front and center; nothing abstract to explain</li>
+    </ul></div>
+    <div class="con"><p class="pc-h">Against</p><ul>
+      <li>Reads as &ldquo;a nice one-off demo&rdquo; &mdash; the weakest version of the story</li>
+      <li>When view-spec / Trails ship, they will look like unrelated one-offs too; no through-line accumulates</li>
+      <li>The most valuable sentence for the target roles is never written down</li>
+    </ul></div>
+  </div>
+
+  <!-- OPTION B -->
+  <p class="optlabel rec">Option B &middot; Method &plus; application</p>
+  <p class="optsub">
+    Prompted Find remains an individual project page &mdash; but it opens by naming the method.
+    <b>Semantic Decomposition</b> = break long-form content into labeled, navigable semantic units.
+    <b>Prompted Find</b> = that method applied to video (&ldquo;ask a question, get a location&rdquo;).
+    A compact &ldquo;One pattern, three surfaces&rdquo; strip inside the page points at the sibling surfaces
+    (prose &rarr; view-spec lanes, research &rarr; Trails) as the family grows. No new page needed yet.
+  </p>
+  <div class="ctx">
+    <div class="ctx-bar">In context &middot; homepage &middot; Selected Work</div>
+    <div class="ctx-body">
+      <div class="hp-row">
+        <span class="hp-thumb"><svg viewBox="0 0 96 60"><rect width="96" height="60" fill="#111"/><rect x="8" y="8" width="52" height="30" rx="2" fill="#2a2a2a"/><rect x="64" y="8" width="24" height="44" rx="2" fill="#1c2b45"/><rect x="8" y="42" width="10" height="4" rx="1" fill="#4D94FF"/><rect x="22" y="42" width="8" height="4" rx="1" fill="#333"/><rect x="34" y="42" width="12" height="4" rx="1" fill="#4D94FF"/><rect x="50" y="42" width="7" height="4" rx="1" fill="#333"/></svg></span>
+        <div class="hp-info">
+          <p class="hp-title">Prompted Find</p>
+          <p class="hp-tags">Semantic Decomposition &middot; Applied to Video &middot; Coded Prototype</p>
+        </div>
+        <span class="hp-arrow">&rarr;</span>
+      </div>
+    </div>
+  </div>
+  <div class="ctx">
+    <div class="ctx-bar">In context &middot; promptedfind.html &middot; page structure (new blocks dashed)</div>
+    <div class="ctx-body">
+      <div class="skel">
+        <div class="skel-block hero">Hero video &mdash; unchanged</div>
+        <div class="skel-block new"><b>The Method</b> &mdash; 3 sentences: Semantic Decomposition named and defined; &ldquo;Prompted Find is this method applied to video&rdquo;</div>
+        <div class="skel-block">The Gap &mdash; existing, trimmed</div>
+        <div class="skel-block">Decisions &mdash; existing 3 frames</div>
+        <div class="skel-block">The Interaction &mdash; rebuilt (see Part 2)</div>
+        <div class="skel-block new"><b>How it works</b> &mdash; the architecture pipeline that already exists in the CSS but was never added to the page: query &rarr; segmentation &rarr; scoring &rarr; seek</div>
+        <div class="skel-block new"><b>One pattern, three surfaces</b> &mdash; small strip: Video (this project) &middot; Prose (view-spec lanes) &middot; Research (Trails) &mdash; siblings marked &ldquo;in progress&rdquo; until real</div>
+        <div class="skel-block">What I&rsquo;d Change &mdash; existing</div>
+        <div class="skel-block new"><b>Closing CTA</b> &mdash; currently commented out; restore</div>
+      </div>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="pro"><p class="pc-h">For</p><ul>
+      <li>Upgrades the story from &ldquo;nice AI UI&rdquo; to &ldquo;repeatable interaction primitive, shipped&rdquo; &mdash; the exact through-line for Agentic-UX roles</li>
+      <li>Artifact-first: recruiter still lands on a video demo, not an essay about a method</li>
+      <li>Scales gracefully &mdash; each future surface (prose, research) slots into the strip; the umbrella page can be extracted later if the family earns it</li>
+      <li>Cheap: one new section plus copy edits, no new routes</li>
+    </ul></div>
+    <div class="con"><p class="pc-h">Against</p><ul>
+      <li>The method lives inside one project page &mdash; someone landing on Trails first won&rsquo;t see it (mitigated by repeating the tag line on siblings)</li>
+      <li>&ldquo;Three surfaces&rdquo; strip shows unshipped work; must be honest about status</li>
+    </ul></div>
+  </div>
+
+  <!-- OPTION C -->
+  <p class="optlabel">Option C &middot; Umbrella page</p>
+  <p class="optsub">
+    A dedicated <b>Semantic Decomposition</b> page becomes the parent: defines the method, then chapters
+    for each surface. Prompted Find shrinks to a chapter (or keeps a thin page that redirects up).
+    The homepage lists the umbrella as one large entry.
+  </p>
+  <div class="ctx">
+    <div class="ctx-bar">In context &middot; homepage &middot; Selected Work</div>
+    <div class="ctx-body">
+      <div class="hp-row">
+        <span class="hp-thumb"><svg viewBox="0 0 96 60"><rect width="96" height="60" fill="#111"/><rect x="8" y="10" width="80" height="5" rx="1.5" fill="#4D94FF"/><rect x="8" y="20" width="34" height="5" rx="1.5" fill="#3a6b3f"/><rect x="46" y="20" width="20" height="5" rx="1.5" fill="#3a6b3f"/><rect x="8" y="30" width="18" height="5" rx="1.5" fill="#8a6d2f"/><rect x="30" y="30" width="40" height="5" rx="1.5" fill="#8a6d2f"/><rect x="8" y="40" width="26" height="5" rx="1.5" fill="#7a3b3b"/><rect x="40" y="40" width="14" height="5" rx="1.5" fill="#7a3b3b"/></svg></span>
+        <div class="hp-info">
+          <p class="hp-title">Semantic Decomposition</p>
+          <p class="hp-tags">Interaction Method &middot; Video / Prose / Research &middot; 3 Prototypes</p>
+        </div>
+        <span class="hp-arrow">&rarr;</span>
+      </div>
+      <div class="hp-row hp-dim">
+        <span class="hp-thumb"><svg viewBox="0 0 96 60"><rect width="96" height="60" fill="#111"/></svg></span>
+        <div class="hp-info">
+          <p class="hp-title">Prompted Find <span style="font-weight:400;color:var(--mid);font-size:0.75rem">&mdash; absorbed, no longer its own row</span></p>
+          <p class="hp-tags">&nbsp;</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="pro"><p class="pc-h">For</p><ul>
+      <li>The strongest conceptual statement &mdash; one idea, three surfaces, on one page</li>
+      <li>One canonical URL to put in an application</li>
+    </ul></div>
+    <div class="con"><p class="pc-h">Against</p><ul>
+      <li>Only one surface actually exists today &mdash; the umbrella would be 1/3 real, 2/3 promises</li>
+      <li>Method-first pages open with abstraction; skimming recruiters bounce before the demo</li>
+      <li>Demotes a finished, polished artifact into a chapter</li>
+      <li>Highest effort, and it front-loads work on things that haven&rsquo;t been built</li>
+    </ul></div>
+  </div>
+
+  <div class="verdict">
+    <p class="pc-h">Working recommendation</p>
+    <p>
+      <b>Option B now, Option C later if earned.</b> Keep Prompted Find as the individual, artifact-first
+      project page; name Semantic Decomposition inside it as the method it applies. When a second surface
+      genuinely ships (view-spec on prose, or Trails), extract the umbrella page and let each project link up
+      to it. That way the story upgrade lands today without building a page around unshipped work.
+    </p>
+  </div>
+
+  <!-- ============================================================ -->
+  <p class="part-label">Part 2 &middot; The Interaction section</p>
+  <p class="part-q">
+    Current problems: the three screenshots don&rsquo;t match the step captions (step&nbsp;1 &ldquo;open the panel&rdquo;
+    already shows segments; step&nbsp;2 &ldquo;segments appear&rdquo; already shows the AI summary), the SVG spotlight
+    coordinates are hardcoded against a 1280&times;614 image that gets cropped by <code>object-fit:cover</code>
+    into a 16:8 box so the highlight drifts off-target, tab text is 10&ndash;11px, and step-04.jpg is shipped
+    but never used. Three ways to rebuild it:
+  </p>
+
+  <!-- OPTION 1 -->
+  <p class="optlabel">Option 1 &middot; Repair the static stepper</p>
+  <p class="optsub">
+    Keep the format. Re-capture one screenshot per step that actually shows that step, fix the aspect
+    ratio so nothing crops, align the spotlights, raise tab type to readable sizes. Smallest possible change.
+  </p>
+  <div class="ctx">
+    <div class="ctx-bar">In context &middot; The Interaction &middot; corrected frames</div>
+    <div class="ctx-body">
+      <div class="mock-stage">
+        <svg viewBox="0 0 640 300"><rect width="640" height="300" fill="#0a0a0a"/><rect x="40" y="24" width="380" height="200" rx="4" fill="#1e1e1e"/><rect x="40" y="236" width="380" height="12" rx="3" fill="#181818"/><rect x="440" y="24" width="160" height="252" rx="8" fill="#15202e" stroke="#4D94FF" stroke-width="1.5"/><rect x="452" y="40" width="136" height="18" rx="9" fill="#22303f"/><text x="460" y="53" fill="#5a7a9a" font-size="9" font-family="Geist,sans-serif">Ask a question&hellip;</text><rect x="0" y="0" width="430" height="300" fill="rgba(0,0,0,0.5)"/></svg>
+      </div>
+      <div class="mock-tabs">
+        <div class="mock-tab on"><b>01 &middot; Ask</b>Panel opens, video keeps playing</div>
+        <div class="mock-tab"><b>02 &middot; See</b>Segments light up the timeline</div>
+        <div class="mock-tab"><b>03 &middot; Land</b>Click a segment, jump to the moment</div>
+      </div>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="pro"><p class="pc-h">For</p><ul>
+      <li>A few hours of work; no deploy dependencies, no iframe weight</li>
+      <li>Works on mobile and in screenshots/OG previews exactly as designed</li>
+    </ul></div>
+    <div class="con"><p class="pc-h">Against</p><ul>
+      <li>Still static &mdash; a navigation pattern demonstrated without navigation</li>
+      <li>Undersells that a working 2,400-line prototype exists one click away</li>
+    </ul></div>
+  </div>
+
+  <!-- OPTION 2 -->
+  <p class="optlabel rec">Option 2 &middot; Live prototype &plus; guided tour (Session Indicator pattern)</p>
+  <p class="optsub">
+    Do what session-indicator.html does: the repo becomes the demo. Deploy the PromptedFind repo to
+    GitHub Pages with a slim video (the repo currently carries a 725&nbsp;MB source MP4 &mdash; needs a compressed
+    cut or the existing 84&nbsp;MB webm trimmed further), embed it on the case-study page in a device frame,
+    and drive a 3-step guided tour (driver.js, already proven in the Session Indicator repo) over the
+    <b>real UI</b>: opens the Ask panel, highlights the segments, clicks one and seeks. The static stepper
+    becomes the reduced-motion / mobile fallback.
+  </p>
+  <div class="ctx">
+    <div class="ctx-bar">In context &middot; The Interaction &middot; live embed with tour step 2 active</div>
+    <div class="ctx-body">
+      <div class="mock-stage">
+        <svg viewBox="0 0 640 320"><rect width="640" height="320" fill="#0a0a0a"/><rect x="30" y="20" width="400" height="210" rx="4" fill="#1e1e1e"/><polygon points="215,105 245,122 215,139" fill="#555"/><rect x="450" y="20" width="160" height="270" rx="8" fill="#15202e"/><rect x="30" y="244" width="400" height="14" rx="3" fill="#161616"/><rect x="44" y="247" width="34" height="8" rx="2" fill="#4D94FF"/><rect x="98" y="247" width="52" height="8" rx="2" fill="#4D94FF"/><rect x="210" y="247" width="30" height="8" rx="2" fill="#2a3a52"/><rect x="330" y="247" width="44" height="8" rx="2" fill="#2a3a52"/><rect x="24" y="238" width="412" height="26" rx="6" fill="none" stroke="#4D94FF" stroke-width="2"/><rect x="120" y="150" width="220" height="58" rx="8" fill="#1c1c1e" stroke="#333"/><text x="136" y="172" fill="#eee" font-size="11" font-weight="600" font-family="Geist,sans-serif">2 of 3 &middot; Segments appear</text><text x="136" y="190" fill="#888" font-size="9.5" font-family="Geist,sans-serif">Semantic ranges map ideas to time. Click one.</text><rect x="288" y="196" width="40" height="14" rx="7" fill="#4D94FF"/><text x="298" y="206" fill="#fff" font-size="8.5" font-family="Geist,sans-serif">Next</text></svg>
+      </div>
+      <div class="mock-tabs">
+        <div class="mock-tab"><b>Take the tour</b>3 steps over the live UI</div>
+        <div class="mock-tab"><b>Or just try it</b>Real Ask panel, real seeking</div>
+        <div class="mock-tab"><b>Fallback</b>Static frames for mobile / reduced motion</div>
+      </div>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="pro"><p class="pc-h">For</p><ul>
+      <li>The claim <i>is</i> the proof &mdash; &ldquo;ask a question, get a location&rdquo; happens in front of the reviewer</li>
+      <li>Reuses an already-proven pattern and codebase from Session Indicator (driver.js tour, Pages deploy, CNAME)</li>
+      <li>Turns the GitHub link from &ldquo;trust me&rdquo; into &ldquo;touch it&rdquo;; strongest possible signal for design-engineer roles</li>
+    </ul></div>
+    <div class="con"><p class="pc-h">Against</p><ul>
+      <li>Requires repo cleanup first: strip the 725&nbsp;MB video, produce a ~10&ndash;20&nbsp;MB cut, deploy to Pages</li>
+      <li>Iframe on a case-study page costs load weight; needs lazy-load and a poster state</li>
+      <li>Most work of the three options</li>
+    </ul></div>
+  </div>
+
+  <!-- OPTION 3 -->
+  <p class="optlabel">Option 3 &middot; In-page mini demo (Video Tape pattern)</p>
+  <p class="optsub">
+    Middle path, borrowed from the &ldquo;Video Tape&rdquo; decomposition page: no iframe &mdash; rebuild just the
+    <b>semantic timeline component</b> natively on the case-study page, wired to the hero video that is
+    already there. Labeled lanes under the video; click a segment, the hero seeks; the playhead tracks.
+    The Ask panel is shown as stills; the timeline is real.
+  </p>
+  <div class="ctx">
+    <div class="ctx-bar">In context &middot; under the hero video &middot; live lanes, playhead at 2:58</div>
+    <div class="ctx-body">
+      <div class="mock-stage" style="background:var(--bg);border-color:var(--rule)">
+        <svg viewBox="0 0 640 150"><rect width="640" height="150" fill="none"/><text x="16" y="22" fill="var(--mid)" font-size="9" letter-spacing="1.5" font-family="Geist,sans-serif">SEMANTIC DECOMPOSITION</text><text x="590" y="22" fill="var(--mid)" font-size="9" font-family="Geist,sans-serif">2:58 / 11:11</text><text x="60" y="46" fill="var(--mid)" font-size="8" text-anchor="end" font-family="Geist,sans-serif">SETUP</text><rect x="70" y="38" width="60" height="10" rx="2" fill="#3b3b8f"/><text x="60" y="66" fill="var(--mid)" font-size="8" text-anchor="end" font-family="Geist,sans-serif">PROBLEM</text><rect x="140" y="58" width="90" height="10" rx="2" fill="#8f3b3b"/><text x="60" y="86" fill="var(--mid)" font-size="8" text-anchor="end" font-family="Geist,sans-serif">DEMO</text><rect x="240" y="78" width="110" height="10" rx="2" fill="#3b8f57"/><rect x="360" y="78" width="50" height="10" rx="2" fill="#3b8f57"/><text x="60" y="106" fill="var(--mid)" font-size="8" text-anchor="end" font-family="Geist,sans-serif">SHAPES</text><rect x="420" y="98" width="90" height="10" rx="2" fill="#a8862f"/><text x="60" y="126" fill="var(--mid)" font-size="8" text-anchor="end" font-family="Geist,sans-serif">OUTLOOK</text><rect x="540" y="118" width="70" height="10" rx="2" fill="#8f3b3b"/><line x1="205" y1="30" x2="205" y2="140" stroke="#B33A3A" stroke-width="1.5"/><circle cx="205" cy="30" r="3" fill="#B33A3A"/></svg>
+      </div>
+      <p class="skel-note">Clicking a lane segment seeks the hero video above it; the red playhead follows playback.</p>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="pro"><p class="pc-h">For</p><ul>
+      <li>Interactive proof without iframe weight or a repo deploy &mdash; all data is a small JSON of ranges</li>
+      <li>The component <i>is</i> the thesis: the decomposition itself becomes the interface on the page</li>
+      <li>Reusable: the same lane component later demos view-spec and the umbrella page</li>
+    </ul></div>
+    <div class="con"><p class="pc-h">Against</p><ul>
+      <li>Only demonstrates half the loop &mdash; navigation yes, the &ldquo;ask a question&rdquo; half stays static</li>
+      <li>A second bespoke component to maintain alongside the real prototype</li>
+    </ul></div>
+  </div>
+
+  <div class="verdict">
+    <p class="pc-h">Working recommendation</p>
+    <p>
+      <b>Option 3 as the near-term fix, Option 2 as the destination.</b> The lane component under the hero
+      is achievable now, kills every current bug (mismatched frames, drifting spotlight, 10px type), and
+      directly visualizes Semantic Decomposition &mdash; which also serves Part&nbsp;1 Option&nbsp;B. Then, when the
+      PromptedFind repo is slimmed and deployed, add the live tour embed and keep the lanes as the summary
+      view. Option&nbsp;1 alone spends effort on a format that still can&rsquo;t demonstrate the pattern.
+    </p>
+  </div>
+
+  <p class="foot">Working Document &middot; Not for distribution &middot; process/promptedfind-representation-options.html</p>
+</div>
+</body>
+</html>

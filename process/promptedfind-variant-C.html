@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Variant C · Prompted Find</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F7F6F3; --ink: #111111; --mid: #6B6B6B;
+      --rule: #D4D3CF; --hover-row: #F0EFEC;
+      --accent: #0066FF; --accent-dim: #D6E4FF;
+    }
+
+    html { background: var(--bg); }
+    body {
+      font-family: 'Geist', system-ui, -apple-system, sans-serif;
+      background: var(--bg); color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Variant switcher (process only) ── */
+    .variant-bar {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--ink); color: #fff;
+      display: flex; align-items: center; gap: 16px;
+      padding: 9px 20px; font-size: 12px;
+    }
+    .variant-bar b { font-weight: 600; letter-spacing: 0.04em; }
+    .variant-bar nav { display: flex; gap: 4px; margin-left: auto; }
+    .variant-bar a {
+      color: rgba(255,255,255,0.65); text-decoration: none;
+      padding: 3px 10px; border-radius: 5px; font-weight: 500;
+    }
+    .variant-bar a.on { background: rgba(255,255,255,0.16); color: #fff; }
+    .variant-bar a:hover { color: #fff; }
+
+    /* C uses a wider shell so captions get a real column */
+    .shell { max-width: 880px; margin: 0 auto; padding-left: 28px; padding-right: 28px; }
+
+    .pf-nav { padding-top: 40px; display: flex; align-items: center; justify-content: space-between; }
+    .pf-wordmark { font-size: 0.875rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
+
+    /* ── Header ── */
+    .cs-header { padding-top: 48px; }
+    .cs-eyebrow {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--mid); margin-bottom: 16px;
+    }
+    .cs-title {
+      font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700;
+      letter-spacing: -0.04em; line-height: 1.08; margin-bottom: 14px;
+    }
+    .cs-descriptor { font-size: 1rem; color: var(--mid); line-height: 1.65; margin-bottom: 20px; max-width: 520px; }
+    .cs-meta {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 0.78rem; color: var(--mid);
+      padding-bottom: 40px; border-bottom: 1px solid var(--rule);
+      flex-wrap: wrap;
+    }
+    .cs-meta .sep { color: var(--rule); }
+    .cs-meta a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    @media (hover: hover) and (pointer: fine) { .cs-meta a:hover { text-decoration: underline; } }
+
+    /* ── Artifact rows: visual + caption column ── */
+    .artifact { margin-top: 64px; }
+    .artifact-label {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--mid);
+      padding-bottom: 14px; border-bottom: 1px solid var(--rule);
+      margin-bottom: 26px;
+    }
+    .duo { display: grid; grid-template-columns: 1.7fr 1fr; gap: 28px; align-items: start; }
+    .duo.flip { grid-template-columns: 1fr 1.7fr; }
+    .duo.flip .duo-visual { order: 2; }
+    .duo.flip .duo-caption { order: 1; }
+    .duo-caption { position: sticky; top: 64px; padding-top: 2px; }
+    .duo-caption h3 {
+      font-size: 1rem; font-weight: 600; letter-spacing: -0.015em;
+      line-height: 1.45; margin-bottom: 10px;
+    }
+    .duo-caption p { font-size: 0.82rem; line-height: 1.75; color: var(--mid); }
+    .duo-caption p strong { color: var(--ink); font-weight: 600; }
+    .duo-caption .principle {
+      display: inline-block; margin-top: 12px;
+      font-size: 0.75rem; font-style: italic; color: var(--accent);
+    }
+
+    /* ── Video ── */
+    .video-wrap {
+      width: 100%; aspect-ratio: 16/9;
+      border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--rule); background: #0a0a0a;
+    }
+    .video-wrap video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ── Stepper ── */
+    .stepper { border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; background: #0a0a0a; }
+    .stepper-frame { position: relative; width: 100%; aspect-ratio: 1280/614; overflow: hidden; }
+    .stepper-frame img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; opacity: 0; transition: opacity 0.25s ease-out;
+    }
+    .stepper-frame img.is-active { opacity: 1; }
+    .stepper-spotlight { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+    .stepper-nav { display: flex; border-top: 1px solid var(--rule); background: var(--bg); }
+    .stepper-tab {
+      flex: 1; padding: 12px 12px;
+      border: none; background: none; cursor: pointer; text-align: left;
+      border-right: 1px solid var(--rule);
+      transition: background 0.15s ease-out, transform 0.16s ease-out;
+    }
+    .stepper-tab:last-child { border-right: none; }
+    .stepper-tab:active { transform: scale(0.97); }
+    .stepper-tab.is-active { background: var(--hover-row); box-shadow: inset 0 0 0 2px var(--accent); }
+    @media (hover: hover) and (pointer: fine) { .stepper-tab:hover { background: var(--hover-row); } }
+    .stepper-tab-num { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--accent); display: block; margin-bottom: 4px; }
+    .stepper-tab-title { font-size: 13px; font-weight: 600; color: var(--ink); display: block; line-height: 1.35; letter-spacing: -0.01em; }
+
+    /* ── Pipeline ── */
+    .pipeline { display: flex; flex-direction: column; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+    .pipeline-stage { display: flex; align-items: stretch; border-bottom: 1px solid var(--rule); }
+    .pipeline-stage:last-child { border-bottom: none; }
+    .pipeline-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent);
+      min-width: 90px; padding: 14px 16px;
+      display: flex; align-items: center;
+      border-right: 1px solid var(--rule);
+      background: rgba(0, 102, 204, 0.02);
+    }
+    .pipeline-value { flex: 1; padding: 14px 18px; font-size: 13px; line-height: 1.55; }
+    .pipeline-value span { color: var(--mid); }
+
+    /* ── Decisions / surfaces grids (full width, already visual) ── */
+    .frames-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--rule);
+      border: 1px solid var(--rule); border-radius: 8px; overflow: hidden;
+    }
+    .frame-col { background: var(--bg); padding: 20px 18px 22px; }
+    .frame-num { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; color: var(--mid); margin-bottom: 6px; text-transform: uppercase; }
+    .frame-title { font-size: 0.875rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 6px; line-height: 1.35; }
+    .frame-principle { font-size: 0.75rem; font-style: italic; color: var(--accent); margin-bottom: 10px; }
+    .frame-body { font-size: 0.8rem; color: var(--mid); line-height: 1.65; }
+
+    /* ── Short story block (the only prose section left) ── */
+    .story { max-width: 620px; }
+    .story p { font-size: 0.9rem; line-height: 1.8; color: var(--mid); }
+    .story p strong { color: var(--ink); font-weight: 600; }
+    .story .change { margin-top: 14px; font-size: 13px; padding-left: 14px; border-left: 2px solid var(--rule); line-height: 1.7; }
+
+    /* ── Closing + footer ── */
+    .cs-closing { padding: 72px 0 56px; text-align: center; }
+    .cs-closing-line { font-size: 14px; color: var(--mid); line-height: 1.7; }
+    .cs-closing-line a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    .pf-footer {
+      border-top: 1px solid var(--rule);
+      padding: 26px 0 52px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .pf-footer-copy { font-size: 0.76rem; color: var(--mid); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .stepper-frame img, .stepper-tab { transition: none; }
+    }
+
+    @media (max-width: 700px) {
+      .duo, .duo.flip { grid-template-columns: 1fr; }
+      .duo.flip .duo-visual { order: 1; }
+      .duo.flip .duo-caption { order: 2; }
+      .duo-caption { position: static; }
+      .frames-grid { grid-template-columns: 1fr; }
+      .stepper-nav { flex-direction: column; }
+      .stepper-tab { border-right: none; border-bottom: 1px solid var(--rule); }
+      .stepper-tab:last-child { border-bottom: none; }
+      .pipeline-stage { flex-direction: column; }
+      .pipeline-label { border-right: none; border-bottom: 1px solid var(--rule); min-width: unset; padding: 10px 16px; }
+      .pf-footer { flex-direction: column; gap: 14px; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="variant-bar">
+    <b>VARIANT C</b> visual-first &middot; prose becomes captions beside the artifacts &middot; process mockup
+    <nav>
+      <a href="../projects/promptedfind.html">Live</a>
+      <a href="promptedfind-variant-AB.html">A+B</a>
+      <a class="on" href="promptedfind-variant-C.html">C</a>
+    </nav>
+  </div>
+
+  <div class="shell">
+
+    <nav class="pf-nav">
+      <a class="pf-wordmark" href="/">Ladan Johari</a>
+    </nav>
+
+    <div class="cs-header">
+      <p class="cs-eyebrow">Semantic Decomposition &middot; Applied to Video &middot; Coded Prototype</p>
+      <h1 class="cs-title">Prompted Find</h1>
+      <p class="cs-descriptor">
+        Ask a question about a video. Jump to the exact moment that answers it.
+      </p>
+      <div class="cs-meta">
+        <span>2025</span>
+        <span class="sep">/</span>
+        <span>Coded prototype &middot; HTML/JS</span>
+        <span class="sep">/</span>
+        <a href="https://github.com/ladanjohari/PromptedFind" target="_blank" rel="noopener">GitHub &rarr;</a>
+      </div>
+    </div>
+
+    <!-- Artifact 1: hero video + the gap, as caption -->
+    <div class="artifact">
+      <div class="duo">
+        <div class="duo-visual">
+          <div class="video-wrap">
+            <video controls autoplay muted loop playsinline poster="../assets/video/promptedfind-poster.jpg" preload="metadata">
+              <source src="../assets/video/PromptedFind_web.mp4" type="video/mp4" />
+              Your browser does not support video.
+            </video>
+          </div>
+        </div>
+        <div class="duo-caption">
+          <h3>Video is easy to watch and hard to search</h3>
+          <p>
+            A document has headings; a video only has time. Prompted Find makes the timeline
+            navigable by meaning: ask what you want to find, and the answer is a
+            <strong>timestamp you can trust</strong>, not a transcript.
+          </p>
+          <span class="principle">&ldquo;Search as navigation.&rdquo;</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Artifact 2: stepper + interaction caption -->
+    <div class="artifact">
+      <p class="artifact-label">The Interaction</p>
+      <div class="duo flip">
+        <div class="duo-caption">
+          <h3>Three steps, none of them leave the video</h3>
+          <p>
+            Open the Ask panel and the timeline decomposes into labeled segments.
+            Ask, or point at a segment, and relevant ranges highlight.
+            Click, and you land in the moment with the summary still beside you.
+          </p>
+          <span class="principle">&ldquo;Context persists.&rdquo;</span>
+        </div>
+        <div class="duo-visual">
+          <div class="stepper" id="stepper">
+            <div class="stepper-frame">
+              <img src="../assets/img/pf/step-01.jpg" alt="Ask panel open beside the playing video" class="is-active" data-step="0" />
+              <img src="../assets/img/pf/step-02.jpg" alt="A timeline segment hovered with its label tooltip" data-step="1" />
+              <img src="../assets/img/pf/step-03.jpg" alt="Video jumped to the chosen moment" data-step="2" />
+              <svg class="stepper-spotlight" viewBox="0 0 1280 614" preserveAspectRatio="none">
+                <defs>
+                  <mask id="spot-mask">
+                    <rect width="1280" height="614" fill="white" />
+                    <rect id="spot-window" x="828" y="48" width="285" height="270" rx="16" fill="black" />
+                  </mask>
+                </defs>
+                <rect width="1280" height="614" fill="rgba(0,0,0,0.45)" mask="url(#spot-mask)" />
+                <rect id="spot-border" x="828" y="48" width="285" height="270" rx="16"
+                  fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="1.5" />
+              </svg>
+            </div>
+            <div class="stepper-nav">
+              <button class="stepper-tab is-active" data-step="0">
+                <span class="stepper-tab-num">01</span>
+                <span class="stepper-tab-title">Open the Ask panel</span>
+              </button>
+              <button class="stepper-tab" data-step="1">
+                <span class="stepper-tab-num">02</span>
+                <span class="stepper-tab-title">Ask, or point at a&nbsp;segment</span>
+              </button>
+              <button class="stepper-tab" data-step="2">
+                <span class="stepper-tab-num">03</span>
+                <span class="stepper-tab-title">Land in the&nbsp;moment</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Artifact 3: pipeline + method caption -->
+    <div class="artifact">
+      <p class="artifact-label">How It Works</p>
+      <div class="duo">
+        <div class="duo-visual">
+          <div class="pipeline">
+            <div class="pipeline-stage">
+              <div class="pipeline-label">Ask</div>
+              <div class="pipeline-value">A natural-language question. <span>&ldquo;How do they slow down?&rdquo;</span></div>
+            </div>
+            <div class="pipeline-stage">
+              <div class="pipeline-label">Expand</div>
+              <div class="pipeline-value">Concept aliases broaden the query. <span>&ldquo;EDL&rdquo; also means entry, descent, landing.</span></div>
+            </div>
+            <div class="pipeline-stage">
+              <div class="pipeline-label">Score</div>
+              <div class="pipeline-value">Every segment&rsquo;s label and summary is scored against the expanded terms.</div>
+            </div>
+            <div class="pipeline-stage">
+              <div class="pipeline-label">Locate</div>
+              <div class="pipeline-value">Matching ranges highlight on the timeline. Clicking one seeks the video.</div>
+            </div>
+          </div>
+        </div>
+        <div class="duo-caption">
+          <h3>Semantic Decomposition, applied to a 74-minute NASA talk</h3>
+          <p>
+            Split anything long into labeled units, so a question can return a location.
+            <strong>The interface is working code;</strong> the understanding layer is concept
+            aliasing and keyword scoring. A production version would swap in embeddings;
+            the interaction wouldn&rsquo;t change.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Artifact 4: decisions, already visual, full width -->
+    <div class="artifact">
+      <p class="artifact-label">Decisions</p>
+      <div class="frames-grid">
+        <div class="frame-col">
+          <p class="frame-num">01</p>
+          <p class="frame-title">The answer is a timestamp, not&nbsp;text</p>
+          <p class="frame-principle">&ldquo;Search as navigation.&rdquo;</p>
+          <p class="frame-body">The query relocates you to the moment where the answer lives. No summaries, no transcripts.</p>
+        </div>
+        <div class="frame-col">
+          <p class="frame-num">02</p>
+          <p class="frame-title">Segments, not a search results&nbsp;list</p>
+          <p class="frame-principle">&ldquo;The timeline is the interface.&rdquo;</p>
+          <p class="frame-body">Labeled semantic segments; relevant ones highlight. You see the shape of the answer before you click.</p>
+        </div>
+        <div class="frame-col">
+          <p class="frame-num">03</p>
+          <p class="frame-title">The query stays visible while you&nbsp;watch</p>
+          <p class="frame-principle">&ldquo;Context persists.&rdquo;</p>
+          <p class="frame-body">The panel stays open beside the video, so follow-ups never cost you your place.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Artifact 5: surfaces strip -->
+    <div class="artifact">
+      <p class="artifact-label">One Pattern, Three Surfaces</p>
+      <div class="frames-grid">
+        <div class="frame-col">
+          <p class="frame-num">Video</p>
+          <p class="frame-title">Prompted Find</p>
+          <p class="frame-principle">&ldquo;Ask a question, get a moment.&rdquo;</p>
+          <p class="frame-body">This project. A query lands you inside the video.</p>
+        </div>
+        <div class="frame-col">
+          <p class="frame-num">Prose</p>
+          <p class="frame-title">View-spec lanes <span style="font-weight:400;color:var(--mid);">&middot; in progress</span></p>
+          <p class="frame-principle">&ldquo;Every paragraph has an address.&rdquo;</p>
+          <p class="frame-body">Labeled semantic lanes over long-form writing.</p>
+        </div>
+        <div class="frame-col">
+          <p class="frame-num">Research</p>
+          <p class="frame-title">Trails <span style="font-weight:400;color:var(--mid);">&middot; in progress</span></p>
+          <p class="frame-principle">&ldquo;Navigate what you&rsquo;ve learned.&rdquo;</p>
+          <p class="frame-body">A research session decomposed into revisitable units.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- The one remaining prose block -->
+    <div class="artifact">
+      <p class="artifact-label">What I&rsquo;d Change</p>
+      <div class="story">
+        <p class="change"><strong>Confidence indicators.</strong> The timeline should visually encode match confidence so the user can prioritize where to jump.</p>
+        <p class="change"><strong>Multi-video support.</strong> The real value is cross-video search: &ldquo;find the part about heat shields&rdquo; across an entire lecture series.</p>
+      </div>
+    </div>
+
+    <div class="cs-closing">
+      <p class="cs-closing-line">
+        Interested in the interaction pattern or how I built it?
+        <a href="mailto:ladan.joharizadeh@gmail.com">I'd love to talk about it.</a>
+      </p>
+    </div>
+
+    <footer class="pf-footer">
+      <span class="pf-footer-copy">&copy; 2026 Ladan Johari</span>
+    </footer>
+
+  </div>
+
+  <script>
+    (() => {
+      const stepper = document.getElementById('stepper');
+      if (!stepper) return;
+      const imgs = stepper.querySelectorAll('.stepper-frame img');
+      const tabs = stepper.querySelectorAll('.stepper-tab');
+      const spotWindow = document.getElementById('spot-window');
+      const spotBorder = document.getElementById('spot-border');
+      let current = 0;
+      let timer = null;
+      let hovered = false;
+
+      const spots = [
+        { x: 828, y: 48,  w: 285, h: 270, rx: 16 },
+        { x: 165, y: 425, w: 680, h: 92,  rx: 10 },
+        { x: 838, y: 168, w: 268, h: 148, rx: 14 }
+      ];
+
+      let anim = null;
+      let cur = { ...spots[0] };
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      function setSpot(s) {
+        [spotWindow, spotBorder].forEach(el => {
+          el.setAttribute('x', s.x);
+          el.setAttribute('y', s.y);
+          el.setAttribute('width', s.w);
+          el.setAttribute('height', s.h);
+          el.setAttribute('rx', s.rx);
+        });
+      }
+
+      function animateTo(target) {
+        if (anim) cancelAnimationFrame(anim);
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          cur = { ...target }; setSpot(cur); return;
+        }
+        const from = { ...cur };
+        const start = performance.now();
+        const dur = 400;
+        function tick(now) {
+          const t = Math.min((now - start) / dur, 1);
+          const ease = 1 - Math.pow(1 - t, 4);
+          cur = {
+            x: lerp(from.x, target.x, ease),
+            y: lerp(from.y, target.y, ease),
+            w: lerp(from.w, target.w, ease),
+            h: lerp(from.h, target.h, ease),
+            rx: lerp(from.rx, target.rx, ease)
+          };
+          setSpot(cur);
+          if (t < 1) anim = requestAnimationFrame(tick);
+        }
+        anim = requestAnimationFrame(tick);
+      }
+
+      function goTo(i) {
+        current = i;
+        imgs.forEach((img, idx) => img.classList.toggle('is-active', idx === i));
+        tabs.forEach((tab, idx) => tab.classList.toggle('is-active', idx === i));
+        animateTo(spots[i]);
+      }
+
+      function advance() { goTo((current + 1) % imgs.length); }
+      function startTimer() {
+        stopTimer();
+        if (hovered) return;
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          timer = setInterval(advance, 3500);
+        }
+      }
+      function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
+
+      stepper.addEventListener('mouseenter', () => { hovered = true; stopTimer(); });
+      stepper.addEventListener('mouseleave', () => { hovered = false; startTimer(); });
+      stepper.addEventListener('focusin', () => { hovered = true; stopTimer(); });
+      stepper.addEventListener('focusout', () => { hovered = false; startTimer(); });
+
+      tabs.forEach((tab, idx) => {
+        tab.addEventListener('click', () => { goTo(idx); startTimer(); });
+      });
+
+      new IntersectionObserver((entries) => {
+        entries.forEach(e => e.isIntersecting ? startTimer() : stopTimer());
+      }, { threshold: 0.3 }).observe(stepper);
+
+      setSpot(spots[0]);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Project Rows — Homepage Context</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #F7F6F3; --ink: #111111; --mid: #6B6B6B;
+      --rule: #D4D3CF; --hover-row: #F0EFEC;
+      --accent: #0066FF; --accent-dim: #D6E4FF;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1A1A1A; --ink: #E8E8E8; --mid: #9A9A9A;
+        --rule: #333333; --hover-row: #242424;
+        --accent: #4D94FF; --accent-dim: #1A3A66;
+      }
+    }
+    html { background: var(--bg); }
+    body { font-family: 'Geist', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+    .shell { max-width: 700px; margin: 0 auto; padding: 0 28px; }
+
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 40px 0 0; }
+    .nav-name { font-size: 0.875rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
+
+    .hero { padding: 80px 0 72px; }
+    .hero-eyebrow { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; }
+    .hero-desc { font-size: 0.975rem; line-height: 1.7; color: var(--mid); max-width: 460px; text-wrap: pretty; }
+    .eyebrow-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: var(--accent); margin-right: 8px; vertical-align: middle; position: relative; top: -1px; animation: dot-shimmer 3s ease-in-out infinite; }
+    @keyframes dot-shimmer { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+    .hero-line { opacity: 0; animation: hero-fade 0.6s ease-out forwards; }
+    .hero-line:nth-child(1) { animation-delay: 0.15s; }
+    .hero-line:nth-child(2) { animation-delay: 0.35s; }
+    .hero-eyebrow { opacity: 0; animation: hero-fade 0.6s ease-out forwards; animation-delay: 0s; }
+    @keyframes hero-fade { from { opacity: 0; } to { opacity: 1; } }
+
+    .section-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
+
+    .work-list { list-style: none; margin-bottom: 80px; }
+    .work-item { border-bottom: 0.5px solid var(--rule); }
+    .work-item:last-child { border-bottom: none; }
+    .work-row { display: flex; align-items: center; gap: 20px; text-decoration: none; color: var(--ink); padding: 20px 0; position: relative; transition: transform 0.16s ease-out; }
+    .work-row:active { transform: scale(0.99); }
+    @media (hover: hover) and (pointer: fine) {
+      .work-row:hover .work-arrow { color: var(--accent); transform: translateX(4px); }
+      .work-row:hover .work-thumb { border-color: var(--accent-dim); }
+    }
+
+    .work-thumb { width: 120px; height: 75px; border-radius: 8px; overflow: hidden; flex-shrink: 0; border: 1px solid var(--rule); transition: border-color 0.12s ease-out; }
+    .work-thumb svg { width: 100%; height: 100%; display: block; }
+
+    .work-info { flex: 1; min-width: 0; }
+    .work-title { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.02em; }
+    .work-tags { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--mid); margin-top: 5px; line-height: 1.5; }
+    .work-year { font-size: 0.82rem; font-weight: 500; color: var(--rule); flex-shrink: 0; }
+    .work-arrow { font-size: 16px; color: var(--rule); flex-shrink: 0; transition: color 0.12s ease-out, transform 0.14s cubic-bezier(0.23, 1, 0.32, 1); }
+
+    .elsewhere { padding: 0; margin-bottom: 12px; }
+    .elsewhere-text { font-size: 0.925rem; line-height: 1.7; color: var(--mid); text-wrap: pretty; }
+    .elsewhere-text a { color: var(--ink); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--rule); }
+    footer { border-top: 1px solid var(--rule); padding: 26px 0 52px; }
+    .footer-copy { font-size: 0.72rem; color: var(--rule); }
+
+    /* SI carousel: vertical slide transition */
+    .si-label-wrap { overflow: hidden; height: 8px; position: relative; }
+    .si-dot-el { transition: fill 0.3s ease-out, opacity 0.3s ease-out; }
+    .si-label-el {
+      transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.25s ease-out;
+      display: block;
+    }
+    .si-label-el.slide-out {
+      transform: translateY(-10px);
+      opacity: 0;
+    }
+    .si-label-el.slide-in-prep {
+      transform: translateY(10px);
+      opacity: 0;
+      transition: none;
+    }
+
+    @media (max-width: 540px) {
+      .shell { padding: 0 20px; }
+      nav { padding-top: 28px; }
+      .hero { padding: 56px 0 48px; }
+      .work-thumb { width: 80px; height: 50px; border-radius: 6px; }
+      .work-row { gap: 14px; }
+      .work-title { font-size: 0.95rem; }
+      .work-tags { font-size: 0.58rem; }
+      .work-year { font-size: 0.72rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="shell">
+
+  <nav><a href="/" class="nav-name">Ladan Johari</a></nav>
+
+  <header class="hero">
+    <p class="hero-eyebrow"><span class="eyebrow-dot"></span>Design Engineer &times; Creative Technologist</p>
+    <p class="hero-desc">
+      <span class="hero-line">I make interfaces and interaction systems.</span><br>
+      <span class="hero-line">I like to create software that&rsquo;s easy to read, fast to move through, and intentional with&nbsp;details.</span>
+    </p>
+  </header>
+
+  <section id="work" aria-label="Selected work">
+    <p class="section-label">Selected Work</p>
+    <ul class="work-list">
+
+      <!-- SESSION INDICATOR — Option B: State Carousel -->
+      <li class="work-item">
+        <a class="work-row" href="/projects/session-indicator.html">
+          <div class="work-thumb">
+            <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+              <rect width="160" height="100" fill="#111"/>
+              <rect x="48" y="30" width="64" height="20" rx="10" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="0.5"/>
+              <text x="72" y="42.5" text-anchor="middle" fill="#666" font-family="Geist, sans-serif" font-size="7" font-weight="500">claude</text>
+              <circle class="si-dot-el" cx="100" cy="40" r="3.5" fill="rgba(255,255,255,0.16)"/>
+              <foreignObject x="20" y="56" width="120" height="14">
+                <div xmlns="http://www.w3.org/1999/xhtml" class="si-label-wrap">
+                  <span class="si-label-el" style="font-family:Geist,sans-serif;font-size:5.5px;color:#555;text-align:center;display:block;">idle — connected</span>
+                </div>
+              </foreignObject>
+            </svg>
+          </div>
+          <div class="work-info">
+            <span class="work-title">Session Indicator</span>
+            <div class="work-tags">AI Agent UI &middot; Interaction System &middot; Design Engineering</div>
+          </div>
+          <span class="work-year">2025</span>
+          <span class="work-arrow">&rarr;</span>
+        </a>
+      </li>
+
+      <!-- PROMPTEDFIND — Option B: Jumping Playhead -->
+      <li class="work-item">
+        <a class="work-row" href="/projects/promptedfind.html">
+          <div class="work-thumb">
+            <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+              <rect width="160" height="100" fill="#0a1628"/>
+              <rect x="12" y="42" width="136" height="3" rx="1.5" fill="#1a2a44"/>
+              <rect x="12" y="42" width="18" height="3" rx="1.5" fill="#2563EB" opacity="0.7"/>
+              <rect x="45" y="42" width="25" height="3" rx="1.5" fill="#2563EB" opacity="0.7"/>
+              <rect x="85" y="42" width="20" height="3" rx="1.5" fill="#2563EB" opacity="0.7"/>
+              <rect x="118" y="42" width="24" height="3" rx="1.5" fill="#2563EB" opacity="0.7"/>
+              <rect class="pf-chip" data-idx="0" x="8" y="52" width="26" height="10" rx="3" fill="#2563EB" opacity="0.8"/>
+              <text x="21" y="59" text-anchor="middle" fill="#fff" font-family="Geist, sans-serif" font-size="4.5" font-weight="500">Why h...</text>
+              <rect class="pf-chip" data-idx="1" x="40" y="52" width="32" height="10" rx="3" fill="#2563EB" opacity="0.6"/>
+              <text x="56" y="59" text-anchor="middle" fill="#fff" font-family="Geist, sans-serif" font-size="4.5" font-weight="500">Mars at...</text>
+              <rect class="pf-chip" data-idx="2" x="80" y="52" width="30" height="10" rx="3" fill="#2563EB" opacity="0.6"/>
+              <text x="95" y="59" text-anchor="middle" fill="#fff" font-family="Geist, sans-serif" font-size="4.5" font-weight="500">Deploy...</text>
+              <rect class="pf-chip" data-idx="3" x="118" y="52" width="34" height="10" rx="3" fill="#2563EB" opacity="0.6"/>
+              <text x="135" y="59" text-anchor="middle" fill="#fff" font-family="Geist, sans-serif" font-size="4.5" font-weight="500">Precision</text>
+              <text x="12" y="38" fill="#335" font-family="Geist, sans-serif" font-size="4">0:00</text>
+              <text x="75" y="38" fill="#335" font-family="Geist, sans-serif" font-size="4">37:00</text>
+              <text x="130" y="38" fill="#335" font-family="Geist, sans-serif" font-size="4">1:14:31</text>
+              <rect x="15" y="12" width="90" height="4" rx="1.5" fill="#1a3a66" opacity="0.3"/>
+              <rect x="15" y="19" width="70" height="4" rx="1.5" fill="#1a3a66" opacity="0.3"/>
+              <rect x="15" y="26" width="100" height="4" rx="1.5" fill="#1a3a66" opacity="0.3"/>
+              <circle class="pf-head" cx="21" cy="43.5" r="4" fill="#2563EB"/>
+              <rect class="pf-highlight" x="13" y="10" width="96" height="8" rx="2" fill="#2563EB" opacity="0.08"/>
+            </svg>
+          </div>
+          <div class="work-info">
+            <span class="work-title">PromptedFind</span>
+            <div class="work-tags">AI Interaction Pattern &middot; Prototype &middot; Semantic Navigation</div>
+          </div>
+          <span class="work-year">2025</span>
+          <span class="work-arrow">&rarr;</span>
+        </a>
+      </li>
+
+      <!-- XCODE — Option C: Symbol Columns -->
+      <li class="work-item">
+        <a class="work-row" href="/projects/xcode-symbol-browser.html">
+          <div class="work-thumb">
+            <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+              <rect width="160" height="100" fill="#1c1c1e"/>
+              <rect x="6" y="8" width="45" height="84" rx="4" fill="#252528"/>
+              <rect x="10" y="13" width="37" height="7" rx="2" fill="#333"/>
+              <rect x="10" y="23" width="37" height="7" rx="2" fill="#333"/>
+              <rect x="10" y="33" width="37" height="7" rx="2" fill="#0A84FF" opacity="0.15"/>
+              <rect x="12" y="34" width="3" height="5" rx="1" fill="#34C759"/>
+              <text x="17" y="38.5" fill="#ccc" font-family="Geist, monospace" font-size="4">GitRepo</text>
+              <rect x="10" y="43" width="37" height="7" rx="2" fill="#333"/>
+              <rect x="10" y="53" width="37" height="7" rx="2" fill="#333"/>
+              <rect x="10" y="63" width="37" height="7" rx="2" fill="#333"/>
+              <rect x="55" y="8" width="48" height="84" rx="4" fill="#252528"/>
+              <rect x="59" y="13" width="40" height="7" rx="2" fill="#333"/>
+              <rect x="61" y="14" width="3" height="5" rx="1" fill="#0A84FF"/><text x="66" y="18.5" fill="#aaa" font-family="Geist, monospace" font-size="3.5">Hash</text>
+              <rect x="59" y="23" width="40" height="7" rx="2" fill="#333"/>
+              <rect x="61" y="24" width="3" height="5" rx="1" fill="#0A84FF"/><text x="66" y="28.5" fill="#aaa" font-family="Geist, monospace" font-size="3.5">Commit</text>
+              <rect x="59" y="33" width="40" height="7" rx="2" fill="#333"/>
+              <rect x="61" y="34" width="3" height="5" rx="1" fill="#0A84FF"/><text x="66" y="38.5" fill="#aaa" font-family="Geist, monospace" font-size="3.5">Tree</text>
+              <rect x="59" y="43" width="40" height="7" rx="2" fill="#0A84FF" opacity="0.15"/>
+              <rect x="61" y="44" width="3" height="5" rx="1" fill="#FF9F0A"/><text x="66" y="48.5" fill="#ccc" font-family="Geist, monospace" font-size="3.5">EntryType</text>
+              <rect x="59" y="53" width="40" height="7" rx="2" fill="#333"/>
+              <rect x="61" y="54" width="3" height="5" rx="1" fill="#FF375F"/><text x="66" y="58.5" fill="#aaa" font-family="Geist, monospace" font-size="3.5">RepoError</text>
+              <rect x="107" y="8" width="47" height="84" rx="4" fill="#252528"/>
+              <rect x="111" y="13" width="39" height="7" rx="2" fill="#0A84FF" opacity="0.15"/>
+              <rect x="113" y="14" width="2.5" height="5" rx="0.8" fill="#BF5AF2"/><text x="117" y="18.5" fill="#ccc" font-family="Geist, monospace" font-size="3.5">case blob</text>
+              <rect x="111" y="23" width="39" height="7" rx="2" fill="#333"/>
+              <rect x="113" y="24" width="2.5" height="5" rx="0.8" fill="#BF5AF2"/><text x="117" y="28.5" fill="#aaa" font-family="Geist, monospace" font-size="3.5">case commit</text>
+              <rect x="111" y="33" width="39" height="7" rx="2" fill="#333"/>
+              <rect x="113" y="34" width="2.5" height="5" rx="0.8" fill="#BF5AF2"/><text x="117" y="38.5" fill="#aaa" font-family="Geist, monospace" font-size="3.5">case exec</text>
+              <rect x="111" y="43" width="39" height="7" rx="2" fill="#333"/>
+              <rect x="113" y="44" width="2.5" height="5" rx="0.8" fill="#BF5AF2"/><text x="117" y="48.5" fill="#aaa" font-family="Geist, monospace" font-size="3.5">case tree</text>
+              <line x1="47" y1="36.5" x2="55" y2="46.5" stroke="#0A84FF" stroke-width="0.8" opacity="0.5"/>
+              <line x1="99" y1="46.5" x2="107" y2="16.5" stroke="#0A84FF" stroke-width="0.8" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="work-info">
+            <span class="work-title">Xcode Symbol Browser</span>
+            <div class="work-tags">Developer Tools &middot; Information Architecture &middot; macOS</div>
+          </div>
+          <span class="work-year">2024</span>
+          <span class="work-arrow">&rarr;</span>
+        </a>
+      </li>
+
+      <!-- TRAILS — Option C: Research Documents -->
+      <li class="work-item">
+        <a class="work-row" href="/projects/trails.html">
+          <div class="work-thumb">
+            <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+              <rect width="160" height="100" fill="#111"/>
+              <rect x="4" y="6" width="38" height="88" rx="3" fill="#1a1a1a"/>
+              <rect x="7" y="10" width="32" height="7" rx="2" fill="#0A84FF" opacity="0.15"/>
+              <rect x="9" y="12" width="18" height="3" rx="1" fill="#4D94FF" opacity="0.7"/>
+              <rect x="7" y="20" width="32" height="7" rx="2" fill="#252528"/><rect x="9" y="22" width="22" height="3" rx="1" fill="#444"/>
+              <rect x="7" y="30" width="32" height="7" rx="2" fill="#252528"/><rect x="9" y="32" width="16" height="3" rx="1" fill="#444"/>
+              <rect x="7" y="40" width="32" height="7" rx="2" fill="#252528"/><rect x="9" y="42" width="20" height="3" rx="1" fill="#444"/>
+              <rect x="7" y="50" width="32" height="7" rx="2" fill="#252528"/>
+              <rect x="46" y="6" width="52" height="72" rx="3" fill="#f5f5f0"/>
+              <rect x="50" y="10" width="28" height="3" rx="1" fill="#bbb"/>
+              <rect x="50" y="15" width="44" height="2" rx="0.5" fill="#ddd"/>
+              <rect x="50" y="19" width="42" height="2" rx="0.5" fill="#ddd"/>
+              <rect x="50" y="23" width="38" height="2" rx="0.5" fill="#ddd"/>
+              <rect x="50" y="27" width="44" height="2" rx="0.5" fill="#ddd"/>
+              <rect x="50" y="31" width="40" height="2" rx="0.5" fill="#ddd"/>
+              <rect x="49" y="35" width="46" height="10" rx="2" fill="#4D94FF" opacity="0.12"/>
+              <rect x="50" y="36" width="44" height="2" rx="0.5" fill="#99c2ff"/>
+              <rect x="50" y="40" width="38" height="2" rx="0.5" fill="#99c2ff"/>
+              <rect x="50" y="47" width="44" height="2" rx="0.5" fill="#ddd"/>
+              <rect x="50" y="51" width="40" height="2" rx="0.5" fill="#ddd"/>
+              <rect x="50" y="55" width="36" height="2" rx="0.5" fill="#ddd"/>
+              <rect x="50" y="59" width="44" height="2" rx="0.5" fill="#ddd"/>
+              <rect x="102" y="6" width="52" height="72" rx="3" fill="#f5f5f0"/>
+              <rect x="106" y="10" width="24" height="3" rx="1" fill="#bbb"/>
+              <rect x="106" y="15" width="44" height="2" rx="0.5" fill="#ddd"/>
+              <rect x="106" y="19" width="40" height="2" rx="0.5" fill="#ddd"/>
+              <rect x="106" y="23" width="44" height="2" rx="0.5" fill="#ddd"/>
+              <rect x="105" y="27" width="46" height="10" rx="2" fill="#FF6B6B" opacity="0.12"/>
+              <rect x="106" y="28" width="42" height="2" rx="0.5" fill="#ff9999"/>
+              <rect x="106" y="32" width="38" height="2" rx="0.5" fill="#ff9999"/>
+              <rect x="106" y="39" width="44" height="2" rx="0.5" fill="#ddd"/>
+              <rect x="106" y="43" width="40" height="2" rx="0.5" fill="#ddd"/>
+              <rect x="106" y="47" width="36" height="2" rx="0.5" fill="#ddd"/>
+              <rect x="106" y="51" width="44" height="2" rx="0.5" fill="#ddd"/>
+              <rect x="106" y="59" width="44" height="14" rx="1" fill="#e8e4de"/>
+              <rect x="116" y="62" width="14" height="8" rx="1" fill="#ccc"/>
+              <rect x="132" y="64" width="10" height="6" rx="1" fill="#ccc"/>
+              <line x1="95" y1="40" x2="105" y2="32" stroke="#4D94FF" stroke-width="1" opacity="0.5"/>
+              <rect x="94" y="8" width="1.5" height="20" rx="0.75" fill="#4D94FF" opacity="0.3"/>
+              <rect x="46" y="82" width="108" height="12" rx="3" fill="#1a1a1a"/>
+              <rect x="50" y="85" width="30" height="5" rx="2" fill="#252528"/>
+              <rect x="85" y="85" width="30" height="5" rx="2" fill="#252528"/>
+            </svg>
+          </div>
+          <div class="work-info">
+            <span class="work-title">Trails</span>
+            <div class="work-tags">Knowledge Navigation &middot; Graph Interface &middot; Research Tools</div>
+          </div>
+          <span class="work-year">2023</span>
+          <span class="work-arrow">&rarr;</span>
+        </a>
+      </li>
+
+    </ul>
+  </section>
+
+  <section class="elsewhere" aria-label="Elsewhere" style="margin-bottom:80px;">
+    <p class="section-label">Elsewhere</p>
+    <p class="elsewhere-text" style="margin-top:20px;">Browse my code on <a href="#">GitHub</a>, connect on <a href="#">LinkedIn</a>, get in touch via <a href="#">email</a>.</p>
+  </section>
+
+  <footer>
+    <span class="footer-copy">&copy; 2026 Ladan Johari</span>
+  </footer>
+
+</div>
+
+<script>
+  // Session Indicator: vertical slide state carousel
+  const siStates = [
+    { color: 'rgba(255,255,255,0.16)', label: 'idle — connected', shimmer: false },
+    { color: '#FF3B30', label: 'error — needs attention', shimmer: false },
+    { color: '#E8952A', label: 'waiting — stalled', shimmer: false },
+    { color: '#ffffff', label: 'running — active', shimmer: true },
+    { color: '#34C759', label: 'done — completed', shimmer: false }
+  ];
+  const siDot = document.querySelector('.si-dot-el');
+  const siLabel = document.querySelector('.si-label-el');
+  let siStep = 0;
+  let siShimmerInterval = null;
+
+  function siStopShimmer() {
+    if (siShimmerInterval) { clearInterval(siShimmerInterval); siShimmerInterval = null; }
+    siDot.style.opacity = '1';
+  }
+
+  function siCycle() {
+    const state = siStates[siStep];
+    siStopShimmer();
+
+    // Step 1: slide current label up and out
+    siLabel.classList.add('slide-out');
+
+    setTimeout(() => {
+      // Step 2: update text, position below, no transition
+      siLabel.textContent = state.label;
+      siLabel.classList.remove('slide-out');
+      siLabel.classList.add('slide-in-prep');
+
+      // Update dot color
+      siDot.style.fill = state.color;
+      if (state.shimmer) {
+        let on = true;
+        siShimmerInterval = setInterval(() => {
+          on = !on;
+          siDot.style.opacity = on ? '0.7' : '0.15';
+        }, 500);
+      }
+
+      // Step 3: next frame, slide up into view with transition
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          siLabel.classList.remove('slide-in-prep');
+        });
+      });
+    }, 250);
+
+    siStep = (siStep + 1) % siStates.length;
+  }
+
+  siCycle();
+  setInterval(siCycle, 2400);
+
+  // PromptedFind: jumping playhead (slower pace, pause after full cycle)
+  const pfChips = document.querySelectorAll('.pf-chip');
+  const pfHead = document.querySelector('.pf-head');
+  const pfHighlight = document.querySelector('.pf-highlight');
+  const pfPositions = [21, 56, 95, 135];
+  const pfHighlightYs = [10, 17, 24, 10];
+  let pfStep = 0;
+  let pfCycleCount = 0;
+
+  function pfJump() {
+    pfChips.forEach(c => {
+      c.setAttribute('fill', '#2563EB');
+      c.setAttribute('opacity', '0.6');
+    });
+    pfChips[pfStep].setAttribute('fill', '#EF4444');
+    pfChips[pfStep].setAttribute('opacity', '1');
+    pfHead.setAttribute('cx', pfPositions[pfStep]);
+    pfHead.setAttribute('fill', '#EF4444');
+    pfHighlight.setAttribute('y', pfHighlightYs[pfStep]);
+    pfHighlight.setAttribute('fill', '#EF4444');
+    pfStep = (pfStep + 1) % 4;
+    if (pfStep === 0) pfCycleCount++;
+  }
+
+  function pfSchedule() {
+    pfJump();
+    // After a full cycle, pause 5s before restarting
+    const delay = (pfStep === 0 && pfCycleCount > 0) ? 5000 : 2800;
+    setTimeout(pfSchedule, delay);
+  }
+
+  pfSchedule();
+</script>
+</body>
+</html>

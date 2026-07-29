@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session Indicator — Thumbnail Variations v2</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif; -webkit-font-smoothing: antialiased; background: #f5f4f0; padding: 40px 24px; max-width: 700px; margin: 0 auto; }
+
+h1 { font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(0,0,0,0.35); margin-bottom: 24px; }
+
+.hp { background: #fff; border-radius: 12px; border: 0.5px solid rgba(0,0,0,0.08); overflow: hidden; margin-bottom: 20px; }
+.hp-label { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(0,0,0,0.3); padding: 10px 16px 0; font-weight: 600; }
+.hp-row { display: flex; align-items: center; gap: 24px; padding: 16px; }
+.hp-thumb { width: 160px; height: 100px; border-radius: 6px; overflow: hidden; flex-shrink: 0; background: #161616; display: flex; align-items: center; justify-content: center; }
+.hp-meta { flex: 1; min-width: 0; }
+.hp-title { font-size: 18px; font-weight: 600; color: #111; letter-spacing: -0.02em; margin-bottom: 5px; }
+.hp-tags { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(0,0,0,0.35); }
+.hp-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.hp-year { font-size: 13px; color: rgba(0,0,0,0.3); }
+.hp-arrow { font-size: 16px; color: rgba(0,0,0,0.25); }
+
+@keyframes shimmer {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50%     { transform: scale(0.35); opacity: 0.15; }
+}
+@keyframes dotCycle {
+  0%,1%     { background: rgba(255,255,255,0.16); transform: scale(1); opacity: 1; }
+  18%       { background: rgba(255,255,255,0.16); }
+  20%       { background: #ffffff; }
+  22%       { transform: scale(1); opacity: 1; }
+  25%       { transform: scale(0.35); opacity: 0.15; }
+  28%       { transform: scale(1); opacity: 1; }
+  31%       { transform: scale(0.35); opacity: 0.15; }
+  34%       { transform: scale(1); opacity: 1; }
+  37%       { transform: scale(0.35); opacity: 0.15; }
+  38%       { transform: scale(1); opacity: 1; }
+  40%       { background: #E8952A; transform: scale(1); opacity: 1; }
+  58%       { background: #E8952A; }
+  60%       { background: #FF3B30; }
+  78%       { background: #FF3B30; }
+  80%       { background: #34C759; }
+  98%       { background: #34C759; }
+  100%      { background: rgba(255,255,255,0.16); }
+}
+@keyframes labelCycle {
+  0%    { opacity: 0; transform: translateY(3px); }
+  3%    { opacity: 1; transform: translateY(0); }
+  17%   { opacity: 1; transform: translateY(0); }
+  20%   { opacity: 0; transform: translateY(-3px); }
+  100%  { opacity: 0; }
+}
+
+.dot-anim { animation: dotCycle 9s ease infinite; }
+.pill { background: rgba(48,48,48,0.95); border: 0.5px solid rgba(155,155,155,0.38); border-radius: 10px; display: flex; align-items: center; }
+.sm-dot { width: 6px; height: 6px; border-radius: 50%; }
+.app-name { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.6); }
+
+.lbl-wrap { position: relative; height: 14px; width: 130px; display: flex; align-items: center; justify-content: center; }
+.lbl { position: absolute; white-space: nowrap; opacity: 0; font-size: 10px; color: rgba(255,255,255,0.3); }
+.lbl:nth-child(1) { animation: labelCycle 9s ease infinite 0s; }
+.lbl:nth-child(2) { animation: labelCycle 9s ease infinite 1.8s; }
+.lbl:nth-child(3) { animation: labelCycle 9s ease infinite 3.6s; }
+.lbl:nth-child(4) { animation: labelCycle 9s ease infinite 5.4s; }
+.lbl:nth-child(5) { animation: labelCycle 9s ease infinite 7.2s; }
+
+.v3-lbl-wrap { position: relative; width: 60px; height: 12px; display: flex; align-items: center; }
+.v3-lbl { position: absolute; font-size: 10px; white-space: nowrap; opacity: 0; }
+.v3-lbl:nth-child(1) { animation: labelCycle 9s ease infinite 0s; }
+.v3-lbl:nth-child(2) { animation: labelCycle 9s ease infinite 1.8s; }
+.v3-lbl:nth-child(3) { animation: labelCycle 9s ease infinite 3.6s; }
+.v3-lbl:nth-child(4) { animation: labelCycle 9s ease infinite 5.4s; }
+.v3-lbl:nth-child(5) { animation: labelCycle 9s ease infinite 7.2s; }
+</style>
+</head>
+<body>
+
+<h1>Session Indicator &mdash; Thumbnail variations</h1>
+
+<!-- A: Current -->
+<div class="hp">
+  <div class="hp-label">Variation A &mdash; current (pill + label below)</div>
+  <div class="hp-row">
+    <div class="hp-thumb">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="app-name">claude</span>
+          <div class="pill" style="height:14px;padding:0 5px;"><div class="sm-dot dot-anim"></div></div>
+        </div>
+        <div class="lbl-wrap">
+          <span class="lbl">idle &mdash; connected</span>
+          <span class="lbl">active &mdash; running</span>
+          <span class="lbl">waiting &mdash; stalled</span>
+          <span class="lbl">error &mdash; needs attention</span>
+          <span class="lbl">done &mdash; completed</span>
+        </div>
+      </div>
+    </div>
+    <div class="hp-meta">
+      <div class="hp-title">Session Indicator</div>
+      <div class="hp-tags">AI Agent UI &middot; Interaction System &middot; Design Engineering</div>
+    </div>
+    <div class="hp-right"><span class="hp-year">2026</span><span class="hp-arrow">&rarr;</span></div>
+  </div>
+</div>
+
+<!-- B: Large dot -->
+<div class="hp">
+  <div class="hp-label">Variation B &mdash; large dot</div>
+  <div class="hp-row">
+    <div class="hp-thumb">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+        <div class="sm-dot dot-anim" style="width:20px;height:20px;"></div>
+        <div class="lbl-wrap">
+          <span class="lbl">idle &mdash; connected</span>
+          <span class="lbl">active &mdash; running</span>
+          <span class="lbl">waiting &mdash; stalled</span>
+          <span class="lbl">error &mdash; needs attention</span>
+          <span class="lbl">done &mdash; completed</span>
+        </div>
+      </div>
+    </div>
+    <div class="hp-meta">
+      <div class="hp-title">Session Indicator</div>
+      <div class="hp-tags">AI Agent UI &middot; Interaction System &middot; Design Engineering</div>
+    </div>
+    <div class="hp-right"><span class="hp-year">2026</span><span class="hp-arrow">&rarr;</span></div>
+  </div>
+</div>
+
+<!-- C: Inline label -->
+<div class="hp">
+  <div class="hp-label">Variation C &mdash; inline label</div>
+  <div class="hp-row">
+    <div class="hp-thumb">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+        <div class="pill" style="height:18px;padding:0 9px;gap:6px;">
+          <div class="sm-dot dot-anim"></div>
+          <div class="v3-lbl-wrap">
+            <span class="v3-lbl" style="color:rgba(255,255,255,0.3);">idle</span>
+            <span class="v3-lbl" style="color:rgba(255,255,255,0.55);">active</span>
+            <span class="v3-lbl" style="color:#E8952A;">waiting</span>
+            <span class="v3-lbl" style="color:#FF3B30;">error</span>
+            <span class="v3-lbl" style="color:#34C759;">done</span>
+          </div>
+        </div>
+        <span style="font-size:9px;color:rgba(255,255,255,0.18);">session status indicator</span>
+      </div>
+    </div>
+    <div class="hp-meta">
+      <div class="hp-title">Session Indicator</div>
+      <div class="hp-tags">AI Agent UI &middot; Interaction System &middot; Design Engineering</div>
+    </div>
+    <div class="hp-right"><span class="hp-year">2026</span><span class="hp-arrow">&rarr;</span></div>
+  </div>
+</div>
+
+<!-- D: Live feature -->
+<div class="hp">
+  <div class="hp-label">Variation D &mdash; live feature</div>
+  <div class="hp-row">
+    <div class="hp-thumb">
+      <div class="pill" style="height:18px;padding:0 7px;gap:5px;">
+        <div class="sm-dot" style="background:#FF3B30;"></div>
+        <div class="sm-dot" style="background:#E8952A;"></div>
+        <div class="sm-dot" style="background:#fff;animation:shimmer 1.6s ease-in-out infinite;"></div>
+        <div class="sm-dot" style="background:#34C759;"></div>
+        <span style="font-size:9px;color:rgba(255,255,255,0.45);font-weight:500;padding-left:1px;">+2</span>
+      </div>
+    </div>
+    <div class="hp-meta">
+      <div class="hp-title">Session Indicator</div>
+      <div class="hp-tags">AI Agent UI &middot; Interaction System &middot; Design Engineering</div>
+    </div>
+    <div class="hp-right"><span class="hp-year">2026</span><span class="hp-arrow">&rarr;</span></div>
+  </div>
+</div>
+
+</body>
+</html>

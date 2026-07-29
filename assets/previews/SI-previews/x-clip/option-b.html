@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { width: 360px; height: 225px; overflow: hidden; background: #161616; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif; -webkit-font-smoothing: antialiased; }
+
+.scene { width: 360px; height: 225px; position: relative; overflow: hidden; }
+.scene::before {
+  content: ''; position: absolute; inset: 0 auto 0 0;
+  width: 50px;
+  background: linear-gradient(to right, rgba(10,10,10,0.85) 0%, transparent 100%);
+  z-index: 30; pointer-events: none;
+}
+.wallpaper {
+  position: absolute; inset: 0;
+  background: url('helios-dark.jpg') center center / cover no-repeat;
+}
+
+.menubar {
+  position: relative; z-index: 10;
+  height: 24px;
+  background: rgba(22,22,22,0.88);
+  border-bottom: 0.5px solid rgba(255,255,255,0.06);
+  display: flex; align-items: center; justify-content: flex-end;
+  padding: 0 10px; gap: 1px; flex-shrink: 0;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+}
+.mb-item { font-size: 12px; color: rgba(255,255,255,0.75); padding: 0 5px; height: 24px; display: flex; align-items: center; white-space: nowrap; }
+.mb-datetime { font-size: 12px; color: rgba(255,255,255,0.82); letter-spacing: 0.01em; }
+
+.si-wrap { padding: 0 6px; height: 24px; display: flex; align-items: center; border-radius: 5px; position: relative; }
+.si-pill {
+  background: rgba(48,48,48,0.95);
+  border: 0.5px solid rgba(155,155,155,0.38);
+  border-radius: 10px; height: 16px;
+  display: flex; align-items: center;
+  padding: 0 6px; gap: 5px;
+}
+.dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.plus-badge  { font-size: 10px; color: rgba(255,255,255,0.45); font-weight: 500; padding-left: 1px; }
+
+@keyframes shimmer {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50%     { transform: scale(0.35); opacity: 0.15; }
+}
+
+/* dot 1: running the whole time, shimmering */
+.dot.d1 { background: #fff; animation: shimmer 1.6s ease-in-out infinite; }
+
+/* dot 2: running, finishes (goes green) at ~4.5s */
+.dot.d2 { animation: d2states 15s linear infinite; }
+@keyframes d2states {
+  0%, 29.8% { background: #fff; }
+  30%, 100% { background: #34C759; }
+}
+
+/* dot 3: waiting (amber), starts running at ~8s */
+.dot.d3 { animation: d3states 15s linear infinite; }
+@keyframes d3states {
+  0%, 53%  { background: #E8952A; }
+  53.5%, 100% { background: #fff; }
+}
+
+/* dot 4: running, hits an error at ~11.5s with a soft double pulse */
+.dot.d4 { animation: d4states 15s linear infinite; }
+@keyframes d4states {
+  0%, 76%   { background: #fff; transform: scale(1); }
+  77%       { background: #FF3B30; transform: scale(1.35); }
+  79%       { background: #FF3B30; transform: scale(1); }
+  81%       { background: #FF3B30; transform: scale(1.25); }
+  83%, 100% { background: #FF3B30; transform: scale(1); }
+}
+</style>
+</head>
+<body>
+<div class="scene">
+  <div class="wallpaper"></div>
+  <div style="position:relative;z-index:5;display:flex;flex-direction:column;height:100%;">
+    <div class="menubar">
+      <div class="si-wrap">
+        <div class="si-pill">
+          <div class="dot d1"></div>
+          <div class="dot d2"></div>
+          <div class="dot d3"></div>
+          <div class="dot d4"></div>
+          <span class="plus-badge">+2</span>
+        </div>
+      </div>
+      <div class="mb-item" style="padding:0 4px;">
+        <svg width="15" height="12" viewBox="0 0 15 12" fill="none">
+          <path d="M7.5 2.8C9.7 2.8 11.7 3.7 13.1 5.2L14.2 4.1C12.5 2.3 10.1 1.2 7.5 1.2C4.9 1.2 2.5 2.3 0.8 4.1L1.9 5.2C3.3 3.7 5.3 2.8 7.5 2.8Z" fill="rgba(255,255,255,0.75)"/>
+          <path d="M7.5 5.2C9.1 5.2 10.5 5.9 11.5 7L12.6 5.9C11.3 4.5 9.5 3.6 7.5 3.6C5.5 3.6 3.7 4.5 2.4 5.9L3.5 7C4.5 5.9 5.9 5.2 7.5 5.2Z" fill="rgba(255,255,255,0.75)"/>
+          <path d="M7.5 7.6C8.5 7.6 9.3 8 9.9 8.7L11 7.6C10.1 6.6 8.9 6 7.5 6C6.1 6 4.9 6.6 4 7.6L5.1 8.7C5.7 8 6.5 7.6 7.5 7.6Z" fill="rgba(255,255,255,0.75)"/>
+          <circle cx="7.5" cy="10.5" r="1.2" fill="rgba(255,255,255,0.75)"/>
+        </svg>
+      </div>
+      <div class="mb-item" style="padding:0 4px;">
+        <svg width="22" height="12" viewBox="0 0 22 12" fill="none">
+          <rect x="0.5" y="1.5" width="18" height="9" rx="2" stroke="rgba(255,255,255,0.45)" stroke-width="1"/>
+          <rect x="2" y="3" width="12" height="6" rx="1" fill="rgba(255,255,255,0.55)"/>
+          <path d="M19.5 4.5V7.5C20.3 7.2 20.8 6.4 20.8 6C20.8 5.6 20.3 4.8 19.5 4.5Z" fill="rgba(255,255,255,0.35)"/>
+        </svg>
+      </div>
+      <div class="mb-item mb-datetime">Thu May 28&nbsp;&nbsp;1:47 PM</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

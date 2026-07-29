@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prompted Find &mdash; scannability options</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#F7F6F3;--ink:#111;--mid:#6B6B6B;--rule:#D4D3CF;--hover-row:#F0EFEC;--accent:#0066FF;--accent-dim:#D6E4FF;--good:#1B7F3B;--warn:#B37A00;--bad:#B33A3A}
+  html{background:var(--bg)}
+  body{font-family:'Geist',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:140px}
+  .shell{max-width:820px;margin:0 auto;padding:0 28px}
+
+  .doc-head{padding-top:56px;border-bottom:1px solid var(--rule);padding-bottom:24px}
+  .doc-eyebrow{font-size:0.65rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-bottom:12px}
+  .doc-title{font-size:1.55rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:10px}
+  .doc-sub{font-size:0.85rem;line-height:1.7;color:var(--mid);max-width:660px}
+  .doc-sub b{color:var(--ink);font-weight:600}
+
+  .band{margin-top:52px}
+  .band-head{display:flex;align-items:baseline;gap:12px;padding-bottom:10px;border-bottom:2px solid var(--ink)}
+  .band-tag{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#fff;padding:3px 9px;border-radius:4px;background:var(--ink)}
+  .band-tag.p1{background:var(--bad)}
+  .band-tag.p2{background:var(--warn)}
+  .band-tag.p3{background:var(--mid)}
+  .band-title{font-size:0.82rem;font-weight:600}
+  .band-note{font-size:0.72rem;color:var(--mid);margin-left:auto}
+
+  ul.items{list-style:none;margin-top:4px}
+  ul.items li{display:flex;gap:12px;padding:12px 2px;border-bottom:0.5px solid var(--rule);font-size:0.82rem;line-height:1.6;color:var(--mid)}
+  ul.items li:last-child{border-bottom:none}
+  .num{flex-shrink:0;font-weight:700;color:var(--accent);font-size:0.75rem;width:20px;padding-top:2px}
+  ul.items b{color:var(--ink);font-weight:600}
+
+  /* ── Option blocks ── */
+  .opt{margin-top:56px}
+  .opt-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+  .opt-letter{font-size:1.05rem;font-weight:700;color:var(--accent)}
+  .opt-name{font-size:1.02rem;font-weight:700;letter-spacing:-0.02em}
+  .opt-verdict{margin-left:auto;font-size:0.68rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase}
+  .opt-verdict.rec{color:var(--good)}
+  .opt-desc{font-size:0.82rem;line-height:1.7;color:var(--mid);max-width:660px;margin-bottom:8px}
+  .opt-trade{font-size:0.75rem;line-height:1.65;color:var(--mid);max-width:660px;margin-bottom:18px}
+  .opt-trade b{font-weight:600}
+  .opt-trade .plus{color:var(--good)}
+  .opt-trade .minus{color:var(--bad)}
+
+  /* in-context mock frame: reproduces the real page's tokens at full width */
+  .mock{border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--bg)}
+  .mock-bar{display:flex;gap:6px;padding:10px 14px;border-bottom:1px solid var(--rule);background:var(--hover-row)}
+  .mock-bar span{width:9px;height:9px;border-radius:50%;background:var(--rule)}
+  .mock-inner{max-width:700px;margin:0 auto;padding:34px 28px 40px}
+
+  /* real page styles, namespaced for the mocks */
+  .m-eyebrow{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);margin-bottom:14px}
+  .m-title{font-size:2rem;font-weight:700;letter-spacing:-0.04em;line-height:1.08;margin-bottom:12px}
+  .m-descriptor{font-size:0.95rem;color:var(--mid);line-height:1.65;max-width:520px;margin-bottom:18px}
+  .m-label{font-size:0.68rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid);padding-bottom:12px;border-bottom:1px solid var(--rule);margin-bottom:20px;margin-top:40px}
+  .m-body{font-size:0.925rem;line-height:1.8;color:var(--mid);max-width:560px}
+  .m-body strong{color:var(--ink);font-weight:600}
+  .m-videoph{aspect-ratio:16/9;border-radius:10px;border:1px solid var(--rule);background:#0a0a0a;display:flex;align-items:center;justify-content:center;color:#555;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase}
+
+  /* Option A: facts bar */
+  .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:8px;overflow:hidden;margin-top:22px}
+  .fact{background:var(--bg);padding:14px 16px}
+  .fact-k{font-size:0.62rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);margin-bottom:5px}
+  .fact-v{font-size:0.8rem;font-weight:600;color:var(--ink);line-height:1.4}
+  .fact-v span{color:var(--mid);font-weight:400}
+
+  /* Option B: bold-lead sections */
+  .lead-claim{font-size:1.02rem;font-weight:600;letter-spacing:-0.015em;color:var(--ink);line-height:1.5;max-width:560px;margin-bottom:10px}
+  .lead-support{font-size:0.85rem;line-height:1.75;color:var(--mid);max-width:560px}
+
+  /* Option C: caption-first */
+  .cap-grid{display:flex;gap:14px;align-items:flex-start;margin-top:6px}
+  .cap-visual{flex:1.6}
+  .cap-side{flex:1;padding-top:4px}
+  .cap-side h4{font-size:0.875rem;font-weight:600;letter-spacing:-0.01em;margin-bottom:8px}
+  .cap-side p{font-size:0.8rem;line-height:1.7;color:var(--mid)}
+  .m-pipeline{border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+  .m-stage{display:flex;border-bottom:1px solid var(--rule)}
+  .m-stage:last-child{border-bottom:none}
+  .m-stage-l{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);min-width:74px;padding:11px 12px;border-right:1px solid var(--rule);background:rgba(0,102,204,0.02);display:flex;align-items:center}
+  .m-stage-v{flex:1;padding:11px 13px;font-size:12.5px;color:var(--ink);line-height:1.5}
+  .m-stage-v span{color:var(--mid)}
+
+  .word-tally{display:inline-block;margin-left:8px;font-size:0.68rem;font-weight:600;color:var(--good);background:rgba(27,127,59,0.08);padding:2px 8px;border-radius:4px}
+
+  .foot{margin-top:72px;padding-top:18px;border-top:1px solid var(--rule);font-size:0.68rem;color:var(--mid);line-height:1.7}
+  .foot b{color:var(--ink)}
+
+  @media (max-width:600px){
+    .facts{grid-template-columns:1fr 1fr}
+    .cap-grid{flex-direction:column}
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="doc-head">
+    <p class="doc-eyebrow">Process &middot; Brainstorm &middot; 2026-07-07</p>
+    <h1 class="doc-title">Prompted Find &mdash; making the page scannable</h1>
+    <p class="doc-sub">
+      The problem, in your words: <b>the content is too much for a recruiter to scan and get the idea.</b>
+      The video and stepper carry the visual story; the six prose sections fight it &mdash; ~600 words,
+      all in the same gray paragraph voice, and three sections repeat the same
+      &ldquo;pattern beyond video&rdquo; point. Below: the prioritized findings, then three treatments
+      rendered in the page&rsquo;s real type and colors so you can judge them in context.
+      The options are not exclusive &mdash; A and B combine naturally.
+    </p>
+  </div>
+
+  <!-- FINDINGS -->
+  <div class="band">
+    <div class="band-head">
+      <span class="band-tag p1">P1</span>
+      <span class="band-title">Structural &mdash; changes what a scanner actually reads</span>
+    </div>
+    <ul class="items">
+      <li><span class="num">1</span><div><b>There is no at-a-glance layer.</b> After the hero, every fact on the page lives inside a full paragraph. A recruiter&rsquo;s first pass is 30&ndash;60 seconds; right now that pass yields the title, the video, and gray text blocks.</div></li>
+      <li><span class="num">2</span><div><b>The same meta-point is made three times.</b> &ldquo;The medium changes; the interaction stays the same&rdquo; appears in The Method, again in the &ldquo;why this pattern matters&rdquo; note, and again as One Pattern Three Surfaces. Keep the strip (it&rsquo;s visual), fold the other two into it. Saves ~120 words.</div></li>
+      <li><span class="num">3</span><div><b>&ldquo;What I&rsquo;d Change&rdquo; repeats &ldquo;What&rsquo;s real, what&rsquo;s simulated.&rdquo;</b> The real-embeddings point is made in both. Keep it in the honesty note, cut the third reflection bullet. (Already on the punch list as P1.)</div></li>
+    </ul>
+  </div>
+
+  <div class="band">
+    <div class="band-head">
+      <span class="band-tag p2">P2</span>
+      <span class="band-title">Copy density &mdash; cut ~40% without losing the story</span>
+    </div>
+    <ul class="items">
+      <li><span class="num">4</span><div><b>Paragraphs run 3&ndash;4 sentences with double line breaks.</b> Nearly every section reduces to one ink-colored claim plus one gray supporting line. The Gap&rsquo;s pullquote and its body text also say the same thing twice &mdash; keep whichever reads better, not both.</div></li>
+      <li><span class="num">5</span><div><b>The Method opens the body with the most abstract text on the page.</b> A scanner meets &ldquo;Semantic Decomposition: break long-form content into labeled, navigable semantic units&rdquo; before they&rsquo;ve seen the concrete thing. Either compress it to one line, or let the concrete Gap section come first and name the method after.</div></li>
+    </ul>
+  </div>
+
+  <div class="band">
+    <div class="band-head">
+      <span class="band-tag p3">P3</span>
+      <span class="band-title">Craft details &mdash; quick wins, do alongside whichever option</span>
+    </div>
+    <ul class="items">
+      <li><span class="num">6</span><div><b>Stepper auto-advances every 3.5s with no pause on hover.</b> It&rsquo;s the one element a reader studies closely, and it moves while they read. Pause while hovered or focused; resume on leave.</div></li>
+      <li><span class="num">7</span><div><b>Type floor:</b> pipeline labels are 10px, stepper tab numbers 11px &mdash; below the 11&ndash;12px floor the rest of the page respects.</div></li>
+      <li><span class="num">8</span><div><b>The meta-row link hover isn&rsquo;t gated</b> behind <i>(hover:hover)</i> like every other hover on the page &mdash; taps on phones trigger a stuck hover state.</div></li>
+    </ul>
+  </div>
+
+  <!-- OPTION A -->
+  <div class="opt">
+    <div class="opt-head">
+      <span class="opt-letter">A</span>
+      <span class="opt-name">Facts bar &mdash; give the scanner a landing strip</span>
+      <span class="opt-verdict rec">Recommended, combined with B</span>
+    </div>
+    <p class="opt-desc">
+      One four-cell strip under the hero descriptor answers the recruiter&rsquo;s first four questions
+      &mdash; what is it, what did you do, what&rsquo;s real, where&rsquo;s the pattern going &mdash; before any
+      paragraph. Everything below it becomes optional depth instead of required reading.
+    </p>
+    <p class="opt-trade"><span class="plus">+</span> Biggest scan payoff for the smallest change; nothing else has to move. &nbsp;<span class="minus">&minus;</span> Adds one more boxed element to a page that already has four.</p>
+    <div class="mock">
+      <div class="mock-bar"><span></span><span></span><span></span></div>
+      <div class="mock-inner">
+        <p class="m-eyebrow">Semantic Decomposition &middot; Applied to Video &middot; Coded Prototype</p>
+        <h2 class="m-title">Prompted Find</h2>
+        <p class="m-descriptor">Ask a question about a video. Jump to the exact moment that answers it.</p>
+        <div class="m-videoph">hero video</div>
+        <div class="facts">
+          <div class="fact"><p class="fact-k">What</p><p class="fact-v">Semantic video navigation <span>&middot; ask, then jump</span></p></div>
+          <div class="fact"><p class="fact-k">My role</p><p class="fact-v">Design + code <span>&middot; solo, HTML/JS</span></p></div>
+          <div class="fact"><p class="fact-k">What&rsquo;s real</p><p class="fact-v">Working interface <span>&middot; simulated model</span></p></div>
+          <div class="fact"><p class="fact-k">The pattern</p><p class="fact-v">Video today <span>&middot; prose &amp; research next</span></p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTION B -->
+  <div class="opt">
+    <div class="opt-head">
+      <span class="opt-letter">B</span>
+      <span class="opt-name">Bold lead &mdash; every section scannable by its first line</span>
+      <span class="opt-verdict rec">Recommended, combined with A</span>
+    </div>
+    <p class="opt-desc">
+      Each section opens with one ink-colored claim set slightly larger; the gray support text shrinks
+      to one or two sentences. A scanner who reads only the bold lines gets the whole story;
+      a reader who wants depth still has it. This is where the ~40% copy cut lands.
+    </p>
+    <p class="opt-trade"><span class="plus">+</span> Fixes density everywhere at once, no new components, keeps the current structure. &nbsp;<span class="minus">&minus;</span> Requires a real copy pass &mdash; it&rsquo;s editing work, not layout work.</p>
+    <div class="mock">
+      <div class="mock-bar"><span></span><span></span><span></span></div>
+      <div class="mock-inner">
+        <p class="m-label" style="margin-top:0">The Gap</p>
+        <p class="lead-claim">Video is easy to watch and hard to search: a document has headings, a video only has time.</p>
+        <p class="lead-support">Prompted Find makes the timeline navigable by meaning. Ask what you want to find; the answer is a timestamp, not a transcript.</p>
+        <p class="m-label">The Method</p>
+        <p class="lead-claim">Semantic Decomposition: split anything long into labeled units, so a question can return a location.</p>
+        <p class="lead-support">Prompted Find is the method applied to video. The same move works on prose, podcasts, and research trails.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTION C -->
+  <div class="opt">
+    <div class="opt-head">
+      <span class="opt-letter">C</span>
+      <span class="opt-name">Visual-first &mdash; prose becomes captions beside the artifacts</span>
+      <span class="opt-verdict">Bigger swing</span>
+    </div>
+    <p class="opt-desc">
+      Lean fully into &ldquo;the video and stepper carry the story&rdquo;: text moves next to the visuals as
+      side captions, and the page becomes a sequence of artifacts &mdash; video, stepper, pipeline, surfaces strip &mdash;
+      each with a short caption column. Almost nothing left to &ldquo;read,&rdquo; everything to look at.
+    </p>
+    <p class="opt-trade"><span class="plus">+</span> Most distinctive; strongest match to how a design-eng audience actually browses. &nbsp;<span class="minus">&minus;</span> Real layout surgery: side captions need a second column that collapses on mobile, and section order has to be rebuilt. Riskier for a page that&rsquo;s already live and working.</p>
+    <div class="mock">
+      <div class="mock-bar"><span></span><span></span><span></span></div>
+      <div class="mock-inner">
+        <p class="m-label" style="margin-top:0">How It Works</p>
+        <div class="cap-grid">
+          <div class="cap-visual">
+            <div class="m-pipeline">
+              <div class="m-stage"><div class="m-stage-l">Ask</div><div class="m-stage-v">A natural-language question. <span>&ldquo;How do they slow down?&rdquo;</span></div></div>
+              <div class="m-stage"><div class="m-stage-l">Expand</div><div class="m-stage-v">Concept aliases broaden the query.</div></div>
+              <div class="m-stage"><div class="m-stage-l">Score</div><div class="m-stage-v">Segments scored against expanded terms.</div></div>
+              <div class="m-stage"><div class="m-stage-l">Locate</div><div class="m-stage-v">Matches highlight; clicking seeks the video.</div></div>
+            </div>
+          </div>
+          <div class="cap-side">
+            <h4>Four stages between the question and the moment</h4>
+            <p>A 74-minute NASA talk, decomposed into nine labeled segments. The interface is working code; the understanding layer is simulated.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="foot">
+    <b>My read:</b> A + B together is the honest fix &mdash; a landing strip for the 30-second visitor, bold leads
+    for the 2-minute one, ~250 words cut, zero layout risk on a live page. C is worth keeping for the tour phase,
+    when the live embed will reshape the page anyway. The P3 craft items ship regardless.<br>
+    Working Document &middot; Not for distribution &middot; process/promptedfind-scannability-options.html
+  </p>
+</div>
+</body>
+</html>

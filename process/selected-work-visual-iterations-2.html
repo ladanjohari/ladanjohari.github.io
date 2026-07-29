@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="light dark" />
+<title>Selected Work &middot; visual iterations 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#F7F6F3;--ink:#111;--mid:#6B6B6B;--rule:#D4D3CF;--accent:#0066FF;--accent-dim:#D6E4FF}
+  @media (prefers-color-scheme:dark){:root{--bg:#1A1A1A;--ink:#E8E8E8;--mid:#9A9A9A;--rule:#333;--accent:#4D94FF;--accent-dim:#1A3A66}}
+  html{background:var(--bg)}
+  body{font-family:'Geist',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:120px}
+  .shell{max-width:760px;margin:0 auto;padding:0 28px}
+  .proj{font-size:0.62rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#fff;background:var(--ink);display:inline-block;padding:4px 10px;border-radius:4px;margin:56px 0 4px}
+  .optsub{font-size:0.82rem;line-height:1.6;color:var(--mid);max-width:620px;margin-bottom:2px}
+  .optsub b{color:var(--ink);font-weight:600}
+  .hig{font-size:0.7rem;color:var(--accent);font-weight:500;margin:6px 0 6px}
+  .pick{font-size:0.58rem;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:var(--mid);margin:20px 0 0}
+  .pick .rec{color:#0a7d3a}
+  .list{list-style:none;margin:0 -14px 2px}
+  .item{border-bottom:.5px solid var(--rule)}
+  .row{display:flex;align-items:center;gap:22px;text-decoration:none;color:var(--ink);padding:16px 14px;border-radius:14px}
+  .thumb{width:196px;height:122px;border-radius:12px;overflow:hidden;flex-shrink:0;border:1px solid var(--rule);background:#111}
+  .thumb svg,.thumb img{width:100%;height:100%;display:block;object-fit:cover}
+  .info{flex:1;min-width:0}
+  .title{font-size:1.1rem;font-weight:600;letter-spacing:-0.02em}
+  .desc{font-size:0.85rem;color:var(--mid);margin-top:5px;line-height:1.5}
+  .tags{font-size:0.62rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--mid);margin-top:7px}
+  .meta{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex-shrink:0;min-width:100px}
+  .yr{font-size:0.8rem;font-weight:500;color:var(--rule)}
+  .status{font-size:0.62rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--accent);white-space:nowrap}
+</style>
+</head>
+<body>
+<!-- shared gradient + shadow defs -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="g-si" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8f6b"/><stop offset="1" stop-color="#ff4f73"/></linearGradient>
+  <linearGradient id="g-pf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5aa2ff"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+  <linearGradient id="g-xc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9b83ff"/><stop offset="1" stop-color="#6a5cff"/></linearGradient>
+  <linearGradient id="g-tr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#41dca0"/><stop offset="1" stop-color="#12b981"/></linearGradient>
+  <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.6" flood-color="#000" flood-opacity="0.16"/></filter>
+</defs></svg>
+
+<div class="shell">
+  <p class="optsub" style="margin-top:40px"><b>Round 2.</b> PromptedFind with image-1 timestamps, Xcode with a code pane below the columns, and a full <b>Apple &ldquo;New and updated&rdquo; gradient-card</b> direction for all four to compare against the dark motifs.</p>
+
+  <!-- ============ PROMPTEDFIND V3 ============ -->
+  <span class="proj">PromptedFind &mdash; V2 vs V3</span>
+  <p class="hig">V3 matches image 1: time ruler (0:00 / 37:00 / 1:14:31), a playhead handle on the track, and moments as pill buttons &mdash; blue, with the matched one in red.</p>
+
+  <p class="pick">V2 &mdash; card chips + red progress (from round 1)</p>
+  <ul class="list"><li class="item"><a class="row" href="#">
+    <span class="thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="196" height="122" fill="#0c111e"/>
+      <rect x="16" y="10" width="164" height="40" rx="6" fill="#0f1830" stroke="#1e2d52" stroke-width=".6"/><path d="M92 24 L92 36 L103 30 Z" fill="#33477a"/>
+      <text x="16" y="60" fill="#3a5384" font-family="Geist,sans-serif" font-size="4">0:00</text><text x="98" y="60" fill="#3a5384" font-family="Geist,sans-serif" font-size="4" text-anchor="middle">37:00</text><text x="180" y="60" fill="#3a5384" font-family="Geist,sans-serif" font-size="4" text-anchor="end">1:14:31</text>
+      <g><rect x="16" y="66" width="30" height="24" rx="3" fill="#131d33"/><rect x="19" y="69" width="22" height="3" rx="1.5" fill="#4d94ff" opacity=".8"/><rect x="19" y="76" width="18" height="2.4" rx="1" fill="#3a4d73"/></g>
+      <g><rect x="52" y="66" width="30" height="24" rx="3" fill="#17233f" stroke="#4d94ff" stroke-width=".8"/><rect x="55" y="69" width="22" height="3" rx="1.5" fill="#6fa8ff"/><rect x="55" y="76" width="18" height="2.4" rx="1" fill="#4a6296"/></g>
+      <g><rect x="104" y="66" width="30" height="24" rx="3" fill="#131d33"/><rect x="107" y="69" width="22" height="3" rx="1.5" fill="#4d94ff" opacity=".8"/><rect x="107" y="76" width="18" height="2.4" rx="1" fill="#3a4d73"/></g>
+      <g><rect x="150" y="66" width="30" height="24" rx="3" fill="#131d33"/><rect x="153" y="69" width="22" height="3" rx="1.5" fill="#4d94ff" opacity=".8"/><rect x="153" y="76" width="18" height="2.4" rx="1" fill="#3a4d73"/></g>
+      <line x1="60" y1="62" x2="60" y2="104" stroke="#d4dcec" stroke-width="1"/><circle cx="60" cy="62" r="2.6" fill="#d4dcec"/>
+      <rect x="16" y="99" width="44" height="2.6" rx="1.3" fill="#ff4d4d"/><rect x="60" y="99" width="120" height="2.6" rx="1.3" fill="#20304f"/>
+    </svg></span>
+    <span class="info"><span class="title">PromptedFind</span><div class="desc">Find the moment you need in a long video by meaning, not keywords.</div><div class="tags">AI Interaction Pattern &middot; Semantic Navigation</div></span>
+    <span class="meta"><span class="yr">2025</span><span class="status">View project &rarr;</span></span>
+  </a></li></ul>
+
+  <p class="pick"><span class="rec">&#9733;</span> V3 &mdash; pill buttons + ruler (image 1)</p>
+  <ul class="list"><li class="item"><a class="row" href="#">
+    <span class="thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="196" height="122" fill="#0c111e"/>
+      <rect x="16" y="8" width="164" height="34" rx="6" fill="#0f1830" stroke="#1e2d52" stroke-width=".6"/><path d="M92 20 L92 30 L101 25 Z" fill="#33477a"/>
+      <text x="16" y="53" fill="#4a6ba0" font-family="Geist,sans-serif" font-size="4.4">0:00</text><text x="98" y="53" fill="#4a6ba0" font-family="Geist,sans-serif" font-size="4.4" text-anchor="middle">37:00</text><text x="180" y="53" fill="#4a6ba0" font-family="Geist,sans-serif" font-size="4.4" text-anchor="end">1:14:31</text>
+      <rect x="16" y="58" width="164" height="3.4" rx="1.7" fill="#1c2b4c"/>
+      <rect x="16" y="58" width="30" height="3.4" rx="1.7" fill="#2f6fe0"/><rect x="54" y="58" width="34" height="3.4" rx="1.7" fill="#2f6fe0"/><rect x="120" y="58" width="26" height="3.4" rx="1.7" fill="#2f6fe0"/><rect x="154" y="58" width="26" height="3.4" rx="1.7" fill="#2f6fe0"/>
+      <circle cx="104" cy="59.7" r="4.6" fill="#dbe4f4" stroke="#2563eb" stroke-width="1"/>
+      <rect x="16" y="74" width="36" height="16" rx="8" fill="#2f6fe0"/><rect x="21" y="80.5" width="24" height="3" rx="1.5" fill="#cfe0ff"/>
+      <rect x="58" y="74" width="40" height="16" rx="8" fill="#2f6fe0"/><rect x="63" y="80.5" width="28" height="3" rx="1.5" fill="#cfe0ff"/>
+      <rect x="104" y="74" width="38" height="16" rx="8" fill="#ef4444"/><rect x="109" y="80.5" width="26" height="3" rx="1.5" fill="#ffd9d9"/>
+      <rect x="148" y="74" width="34" height="16" rx="8" fill="#2f6fe0"/><rect x="153" y="80.5" width="22" height="3" rx="1.5" fill="#cfe0ff"/>
+    </svg></span>
+    <span class="info"><span class="title">PromptedFind</span><div class="desc">Find the moment you need in a long video by meaning, not keywords.</div><div class="tags">AI Interaction Pattern &middot; Semantic Navigation</div></span>
+    <span class="meta"><span class="yr">2025</span><span class="status">View project &rarr;</span></span>
+  </a></li></ul>
+
+  <!-- ============ XCODE A2 (code pane) ============ -->
+  <span class="proj">Xcode &mdash; A vs A2 (code pane)</span>
+  <p class="hig">A2 adds the code editor pane below the columns (image 2): pick a symbol, its definition shows underneath with the selected line highlighted. Closer to the real product layout.</p>
+
+  <p class="pick"><span class="rec">&#9733;</span> A2 &mdash; columns + code pane below</p>
+  <ul class="list"><li class="item"><a class="row" href="#">
+    <span class="thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="196" height="122" fill="#1c1c20"/>
+      <rect width="196" height="11" fill="#242429"/><circle cx="8" cy="5.5" r="1.5" fill="#ff5f57"/><circle cx="13.5" cy="5.5" r="1.5" fill="#febc2e"/><circle cx="19" cy="5.5" r="1.5" fill="#28c840"/>
+      <!-- columns (compressed, top) -->
+      <rect x="10" y="15" width="54" height="46" rx="4" fill="#26262b" stroke="#31313a" stroke-width=".5"/>
+      <rect x="71" y="15" width="54" height="46" rx="4" fill="#26262b" stroke="#31313a" stroke-width=".5"/>
+      <rect x="132" y="15" width="54" height="46" rx="4" fill="#26262b" stroke="#31313a" stroke-width=".5"/>
+      <rect x="15" y="21" width="44" height="8" rx="2" fill="#2a3a5e"/><rect x="18" y="23.5" width="3" height="3" rx="1" fill="#28c840"/><rect x="24" y="23.5" width="24" height="3" rx="1.5" fill="#8fb4ec"/><path d="M54 23.5 l2.4 1.5 -2.4 1.5" stroke="#6f9fe0" fill="none" stroke-width="1"/>
+      <rect x="15" y="32" width="44" height="6" rx="2" fill="#33333a"/><rect x="15" y="41" width="44" height="6" rx="2" fill="#33333a"/><rect x="15" y="50" width="44" height="6" rx="2" fill="#33333a"/>
+      <rect x="76" y="21" width="44" height="6" rx="2" fill="#33333a"/><rect x="78" y="22.5" width="3" height="3" rx="1" fill="#4d94ff"/>
+      <rect x="75" y="30" width="46" height="8" rx="2" fill="#4a3620"/><rect x="78" y="32.5" width="3" height="3" rx="1" fill="#ff9f0a"/><rect x="84" y="32.5" width="24" height="3" rx="1.5" fill="#e0b070"/><path d="M116 32.5 l2.4 1.5 -2.4 1.5" stroke="#e0b070" fill="none" stroke-width="1"/>
+      <rect x="76" y="41" width="44" height="6" rx="2" fill="#33333a"/><rect x="78" y="42.5" width="3" height="3" rx="1" fill="#ff5f57"/>
+      <rect x="76" y="50" width="44" height="6" rx="2" fill="#33333a"/><rect x="78" y="51.5" width="3" height="3" rx="1" fill="#4d94ff"/>
+      <rect x="137" y="21" width="46" height="8" rx="2" fill="#3a2a5e"/><rect x="140" y="23.5" width="3" height="3" rx="1" fill="#bf5af2"/><rect x="146" y="23.5" width="26" height="3" rx="1.5" fill="#c79bea"/>
+      <rect x="138" y="32" width="44" height="6" rx="2" fill="#33333a"/><rect x="140" y="33.5" width="3" height="3" rx="1" fill="#bf5af2"/>
+      <rect x="138" y="41" width="44" height="6" rx="2" fill="#33333a"/><rect x="140" y="42.5" width="3" height="3" rx="1" fill="#bf5af2"/>
+      <!-- code pane below -->
+      <rect x="10" y="66" width="176" height="50" rx="4" fill="#19191d" stroke="#2a2a30" stroke-width=".5"/>
+      <rect x="10" y="66" width="16" height="50" fill="#161619"/>
+      <g font-family="'SF Mono',Menlo,monospace" font-size="4.6">
+        <text x="14" y="76" fill="#44444c">1</text><text x="30" y="76" fill="#c98fff">class</text><text x="52" y="76" fill="#6fc3ff">GitRepository</text><text x="98" y="76" fill="#6a6a72">{</text>
+        <text x="14" y="86" fill="#44444c">2</text><text x="34" y="86" fill="#c98fff">struct</text><text x="60" y="86" fill="#6fc3ff">Tree</text><text x="80" y="86" fill="#6a6a72">{</text>
+        <rect x="26" y="90" width="160" height="8" fill="#2a3a5e" opacity=".55"/>
+        <text x="14" y="96" fill="#8fb4ec">3</text><text x="38" y="96" fill="#c98fff">let</text><text x="52" y="96" fill="#e6e6ea">location</text><text x="84" y="96" fill="#6fc3ff">Location</text>
+        <text x="14" y="106" fill="#44444c">4</text><text x="38" y="106" fill="#c98fff">let</text><text x="52" y="106" fill="#e6e6ea">contents</text><text x="86" y="106" fill="#6fc3ff">Entry</text>
+      </g>
+    </svg></span>
+    <span class="info"><span class="title">Xcode Symbol Browser</span><div class="desc">Read a codebase&rsquo;s structure at a glance instead of digging through files.</div><div class="tags">Developer Tools &middot; Information Architecture</div></span>
+    <span class="meta"><span class="yr">2024</span><span class="status">Watch demo &#8599;</span></span>
+  </a></li></ul>
+
+  <!-- ============ APPLE GRADIENT DIRECTION ============ -->
+  <span class="proj" style="background:linear-gradient(90deg,#ff6b5c,#6a5cff)">Direction C &mdash; Apple gradient cards (all four)</span>
+  <p class="hig">Image-3 style: a gradient per project, one clean white UI element, maximum simplicity. Vibrant on the cream page. The trade-off vs the dark motifs: more marketing-polished and legible, but four hues risks feeling less &ldquo;engineered.&rdquo;</p>
+  <p class="section-label" style="font-size:0.68rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid);padding:0 0 14px;border-bottom:1px solid var(--rule);margin-top:8px">Selected Work</p>
+  <ul class="list">
+
+    <li class="item"><a class="row" href="#">
+      <span class="thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="196" height="122" fill="url(#g-si)"/>
+        <g filter="url(#sh)">
+          <rect x="52" y="18" width="92" height="13" rx="6.5" fill="#ffffff"/>
+          <circle cx="64" cy="24.5" r="2.4" fill="#ff5f57"/><circle cx="74" cy="24.5" r="2.4" fill="#ffb340"/><circle cx="84" cy="24.5" r="2.4" fill="#34c759"/><rect x="92" y="22.5" width="44" height="4" rx="2" fill="#e9e9ee"/>
+        </g>
+        <g filter="url(#sh)">
+          <rect x="40" y="42" width="116" height="62" rx="10" fill="#ffffff"/>
+          <circle cx="54" cy="60" r="3" fill="#ff5f57"/><rect x="62" y="57.5" width="60" height="5" rx="2.5" fill="#efeff3"/>
+          <circle cx="54" cy="74" r="3" fill="#ffb340"/><rect x="62" y="71.5" width="48" height="5" rx="2.5" fill="#efeff3"/>
+          <circle cx="54" cy="88" r="3" fill="#34c759"/><rect x="62" y="85.5" width="40" height="5" rx="2.5" fill="#efeff3"/>
+        </g>
+      </svg></span>
+      <span class="info"><span class="title">Session Indicator</span><div class="desc">Track every running AI agent from the menu bar so you never lose your place.</div><div class="tags">AI Agent UI &middot; Interaction System</div></span>
+      <span class="meta"><span class="yr">2026</span><span class="status">View project &rarr;</span></span>
+    </a></li>
+
+    <li class="item"><a class="row" href="#">
+      <span class="thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="196" height="122" fill="url(#g-pf)"/>
+        <g filter="url(#sh)">
+          <rect x="34" y="20" width="128" height="52" rx="9" fill="#ffffff"/>
+          <circle cx="98" cy="46" r="12" fill="#eaf1ff"/><path d="M94 40 L94 52 L105 46 Z" fill="#2563eb"/>
+        </g>
+        <g filter="url(#sh)">
+          <rect x="46" y="78" width="104" height="15" rx="7.5" fill="#ffffff"/>
+          <circle cx="58" cy="85.5" r="3.4" fill="#2563eb"/><rect x="66" y="83.5" width="58" height="4" rx="2" fill="#e9e9ee"/><path d="M134 82 l4 3.5 -4 3.5" stroke="#2563eb" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <rect x="40" y="102" width="116" height="3" rx="1.5" fill="#ffffff" opacity=".55"/><circle cx="96" cy="103.5" r="3.4" fill="#fff"/>
+      </svg></span>
+      <span class="info"><span class="title">PromptedFind</span><div class="desc">Find the moment you need in a long video by meaning, not keywords.</div><div class="tags">AI Interaction Pattern &middot; Semantic Navigation</div></span>
+      <span class="meta"><span class="yr">2025</span><span class="status">View project &rarr;</span></span>
+    </a></li>
+
+    <li class="item"><a class="row" href="#">
+      <span class="thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="196" height="122" fill="url(#g-xc)"/>
+        <g filter="url(#sh)">
+          <rect x="24" y="24" width="44" height="74" rx="8" fill="#ffffff"/>
+          <rect x="76" y="24" width="44" height="74" rx="8" fill="#ffffff"/>
+          <rect x="128" y="24" width="44" height="74" rx="8" fill="#ffffff"/>
+        </g>
+        <rect x="30" y="32" width="32" height="6" rx="3" fill="#efeff3"/>
+        <rect x="29" y="43" width="34" height="8" rx="4" fill="#ece8ff"/><rect x="32" y="45.5" width="20" height="3" rx="1.5" fill="#6a5cff"/><path d="M57 45.5 l2.6 1.6 -2.6 1.6" stroke="#6a5cff" fill="none" stroke-width="1.2"/>
+        <rect x="30" y="56" width="32" height="6" rx="3" fill="#efeff3"/><rect x="30" y="67" width="32" height="6" rx="3" fill="#efeff3"/>
+        <rect x="82" y="32" width="32" height="6" rx="3" fill="#efeff3"/>
+        <rect x="81" y="43" width="34" height="8" rx="4" fill="#ece8ff"/><rect x="84" y="45.5" width="20" height="3" rx="1.5" fill="#6a5cff"/><path d="M109 45.5 l2.6 1.6 -2.6 1.6" stroke="#6a5cff" fill="none" stroke-width="1.2"/>
+        <rect x="82" y="56" width="32" height="6" rx="3" fill="#efeff3"/>
+        <rect x="133" y="32" width="34" height="8" rx="4" fill="#ece8ff"/><rect x="136" y="34.5" width="24" height="3" rx="1.5" fill="#6a5cff"/>
+        <rect x="134" y="45" width="32" height="6" rx="3" fill="#efeff3"/><rect x="134" y="56" width="32" height="6" rx="3" fill="#efeff3"/>
+      </svg></span>
+      <span class="info"><span class="title">Xcode Symbol Browser</span><div class="desc">Read a codebase&rsquo;s structure at a glance instead of digging through files.</div><div class="tags">Developer Tools &middot; Information Architecture</div></span>
+      <span class="meta"><span class="yr">2024</span><span class="status">Watch demo &#8599;</span></span>
+    </a></li>
+
+    <li class="item"><a class="row" href="#">
+      <span class="thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="196" height="122" fill="url(#g-tr)"/>
+        <path d="M56 44 C 78 40, 88 62, 104 66" stroke="#ffffff" stroke-width="2" fill="none" opacity=".85"/>
+        <path d="M104 66 C 124 70, 134 48, 146 42" stroke="#ffffff" stroke-width="2" fill="none" opacity=".85"/>
+        <path d="M104 66 C 100 84, 118 90, 128 84" stroke="#ffffff" stroke-width="1.6" fill="none" opacity=".6"/>
+        <g filter="url(#sh)">
+          <rect x="40" y="32" width="30" height="24" rx="5" fill="#ffffff"/><rect x="45" y="37" width="18" height="2.6" rx="1.3" fill="#d7f3e8"/><rect x="45" y="42" width="20" height="2.6" rx="1.3" fill="#eef7f3"/><rect x="45" y="47" width="14" height="2.6" rx="1.3" fill="#eef7f3"/>
+          <rect x="132" y="30" width="30" height="24" rx="5" fill="#ffffff"/><rect x="137" y="35" width="16" height="2.6" rx="1.3" fill="#d7f3e8"/><rect x="137" y="40" width="20" height="2.6" rx="1.3" fill="#eef7f3"/>
+          <rect x="116" y="76" width="28" height="22" rx="5" fill="#ffffff"/><rect x="121" y="81" width="14" height="2.4" rx="1.2" fill="#d7f3e8"/><rect x="121" y="86" width="18" height="2.4" rx="1.2" fill="#eef7f3"/>
+          <rect x="88" y="56" width="34" height="26" rx="6" fill="#ffffff" stroke="#10b981" stroke-width="1.4"/><rect x="93" y="62" width="22" height="2.8" rx="1.4" fill="#10b981"/><rect x="93" y="67" width="24" height="2.8" rx="1.4" fill="#cdeee1"/><rect x="93" y="72" width="18" height="2.8" rx="1.4" fill="#cdeee1"/>
+        </g>
+      </svg></span>
+      <span class="info"><span class="title">Trails</span><div class="desc">See everything you&rsquo;ve read as a living graph you can navigate.</div><div class="tags">Knowledge Navigation &middot; Graph Interface</div></span>
+      <span class="meta"><span class="yr">2024</span><span class="status">Watch demo &#8599;</span></span>
+    </a></li>
+
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prompted Find &mdash; OG image options</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#F7F6F3;--ink:#111;--mid:#6B6B6B;--rule:#D4D3CF;--accent:#0066FF;--good:#1B7F3B}
+  html{background:var(--bg)}
+  body{font-family:'Geist',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:140px}
+  .shell{max-width:860px;margin:0 auto;padding:0 28px}
+  .doc-head{padding-top:56px;border-bottom:1px solid var(--rule);padding-bottom:24px}
+  .doc-eyebrow{font-size:0.65rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-bottom:12px}
+  .doc-title{font-size:1.55rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:10px}
+  .doc-sub{font-size:0.85rem;line-height:1.7;color:var(--mid);max-width:660px}
+  .doc-sub b{color:var(--ink);font-weight:600}
+
+  .opt{margin-top:52px}
+  .opt-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+  .opt-letter{font-size:1.05rem;font-weight:700;color:var(--accent)}
+  .opt-name{font-size:1rem;font-weight:700;letter-spacing:-0.02em}
+  .opt-verdict{margin-left:auto;font-size:0.68rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--good)}
+  .opt-desc{font-size:0.8rem;line-height:1.7;color:var(--mid);max-width:660px;margin-bottom:18px}
+
+  /* fake LinkedIn/Slack share card */
+  .card-row{display:flex;gap:28px;flex-wrap:wrap}
+  .share-card{width:400px;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:#fff}
+  .share-img{width:100%;aspect-ratio:1200/630;object-fit:cover;display:block;background:#0a0a0a}
+  .share-meta{padding:12px 14px;border-top:1px solid #eee}
+  .share-domain{font-size:0.62rem;color:#8a8a8a;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:3px}
+  .share-title{font-size:0.82rem;font-weight:600;color:#191919;line-height:1.35}
+  .share-desc{font-size:0.72rem;color:#8a8a8a;margin-top:3px;line-height:1.45}
+  .tiny{width:220px}
+  .tiny .share-meta{padding:9px 11px}
+  .card-cap{font-size:0.68rem;color:var(--mid);margin-top:8px}
+
+  .foot{margin-top:72px;padding-top:18px;border-top:1px solid var(--rule);font-size:0.68rem;color:var(--mid);line-height:1.7}
+  .foot b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="doc-head">
+    <p class="doc-eyebrow">Process &middot; OG image &middot; 2026-07-08</p>
+    <h1 class="doc-title">Prompted Find &mdash; what the shared link looks like</h1>
+    <p class="doc-sub">
+      Each candidate is shown inside a real-size share card (LinkedIn width) and a small one (Slack inline).
+      The test: <b>can you tell what the project is from the card alone, at a glance?</b>
+      UI screenshots fail this at card size; the designed motif passes.
+    </p>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head">
+      <span class="opt-letter">A</span><span class="opt-name">Current OG &mdash; case-study UI screenshot</span>
+    </div>
+    <p class="opt-desc">The full watch-page with Ask panel. Honest, but at card size the text is unreadable and it reads as &ldquo;a YouTube screenshot.&rdquo;</p>
+    <div class="card-row">
+      <div class="share-card">
+        <img class="share-img" src="../assets/og-promptedfind.jpg" alt="" />
+        <div class="share-meta">
+          <p class="share-domain">ladanjohari.com</p>
+          <p class="share-title">Prompted Find &middot; Ladan Johari</p>
+          <p class="share-desc">Semantic video navigation. Ask a question, jump to the exact moment.</p>
+        </div>
+      </div>
+      <div>
+        <div class="share-card tiny">
+          <img class="share-img" src="../assets/og-promptedfind.jpg" alt="" />
+          <div class="share-meta">
+            <p class="share-domain">ladanjohari.com</p>
+            <p class="share-title">Prompted Find &middot; Ladan Johari</p>
+          </div>
+        </div>
+        <p class="card-cap">Slack size</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head">
+      <span class="opt-letter">B</span><span class="opt-name">Hover-clip frame &mdash; homepage preview screenshot</span>
+    </div>
+    <p class="opt-desc">Same problem as A: it&rsquo;s a full UI capture. The blue pill at the bottom is nice but invisible at Slack size.</p>
+    <div class="card-row">
+      <div class="share-card">
+        <img class="share-img" src="../assets/previews/promptedfind-frame.jpg" alt="" />
+        <div class="share-meta">
+          <p class="share-domain">ladanjohari.com</p>
+          <p class="share-title">Prompted Find &middot; Ladan Johari</p>
+          <p class="share-desc">Semantic video navigation. Ask a question, jump to the exact moment.</p>
+        </div>
+      </div>
+      <div>
+        <div class="share-card tiny">
+          <img class="share-img" src="../assets/previews/promptedfind-frame.jpg" alt="" />
+          <div class="share-meta">
+            <p class="share-domain">ladanjohari.com</p>
+            <p class="share-title">Prompted Find &middot; Ladan Johari</p>
+          </div>
+        </div>
+        <p class="card-cap">Slack size</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head">
+      <span class="opt-letter">C</span><span class="opt-name">Thumbnail motif at OG size</span>
+      <span class="opt-verdict">Recommended &middot; applied</span>
+    </div>
+    <p class="opt-desc">
+      Your homepage thumbnail&rsquo;s design language (navy player, segmented timeline, red playhead, moment pills)
+      rebuilt at 1200&times;630 with the wordmark in Geist. Bold shapes stay readable even at Slack size,
+      and the share card now matches the portfolio&rsquo;s visual identity.
+    </p>
+    <div class="card-row">
+      <div class="share-card">
+        <img class="share-img" src="../assets/og-promptedfind-new.jpg" alt="" />
+        <div class="share-meta">
+          <p class="share-domain">ladanjohari.com</p>
+          <p class="share-title">Prompted Find &middot; Ladan Johari</p>
+          <p class="share-desc">Semantic video navigation. Ask a question, jump to the exact moment.</p>
+        </div>
+      </div>
+      <div>
+        <div class="share-card tiny">
+          <img class="share-img" src="../assets/og-promptedfind-new.jpg" alt="" />
+          <div class="share-meta">
+            <p class="share-domain">ladanjohari.com</p>
+            <p class="share-title">Prompted Find &middot; Ladan Johari</p>
+          </div>
+        </div>
+        <p class="card-cap">Slack size</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="foot">
+    <b>Applied:</b> C replaces assets/og-promptedfind.jpg. To revert or tweak (different pill labels, no tagline),
+    the render source is scratchpad og-render.html; say the word and I re-render.<br>
+    Working Document &middot; Not for distribution &middot; process/og-promptedfind-options.html
+  </p>
+</div>
+</body>
+</html>

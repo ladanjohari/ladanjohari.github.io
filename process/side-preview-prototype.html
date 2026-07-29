@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Side Preview — Prototype</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: #F5F4F0;
+  color: #111;
+  min-height: 100vh;
+  padding: 60px 0;
+}
+
+/* ─── Layout shell (mirrors portfolio) ─── */
+.shell {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ─── Section label ─── */
+.section-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 10px;
+}
+.section-rule { border: none; border-top: 1px solid #D4D3CF; margin-bottom: 0; }
+
+/* ─── Work list ─── */
+.work-list { position: relative; }
+
+.work-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  text-decoration: none;
+  color: #111;
+  padding: 20px 0;
+  border-bottom: 1px solid #D4D3CF;
+  position: relative;
+  cursor: pointer;
+}
+
+.work-thumb {
+  width: 120px;
+  height: 75px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid #D4D3CF;
+  background: #111;
+  transition: border-color 0.12s;
+}
+.work-thumb svg { width: 100%; height: 100%; display: block; }
+
+.work-info { flex: 1; min-width: 0; }
+.work-title { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.02em; }
+.work-tags { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: #999; margin-top: 5px; }
+
+.work-year { font-size: 0.82rem; font-weight: 500; color: #D4D3CF; flex-shrink: 0; }
+.work-arrow {
+  font-size: 16px; color: #D4D3CF; flex-shrink: 0;
+  transition: color 0.12s, transform 0.14s cubic-bezier(0.23,1,0.32,1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .work-row:hover .work-arrow { color: #0066FF; transform: translateX(4px); }
+  .work-row:hover .work-thumb { border-color: #1A3A66; }
+}
+
+/* ─── Shared preview panel — fixed, right of shell ─── */
+.work-preview-panel {
+  position: fixed;
+  width: 320px;
+  height: 200px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #D4D3CF;
+  background: #111;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(8px) scale(0.97);
+  transition: opacity 0.22s ease-out, transform 0.22s cubic-bezier(0.23,1,0.32,1);
+  z-index: 100;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+}
+.work-preview-panel.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.work-preview-panel video {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+
+/* Hide on narrow viewports — no room for side panel */
+@media (max-width: 1080px) {
+  .work-preview-panel { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <p class="section-label">Selected Work</p>
+  <hr class="section-rule">
+
+  <div class="work-list" id="workList">
+
+    <!-- Row 1: Session Indicator -->
+    <a class="work-row" href="#" data-preview="si">
+      <div class="work-thumb">
+        <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="160" height="100" fill="#111"/>
+          <rect x="10" y="22" width="90" height="12" rx="3" fill="#1a1a1a"/>
+          <rect x="15" y="25" width="5" height="6" rx="1.5" fill="rgba(255,255,255,0.16)"/>
+          <rect x="24" y="27" width="30" height="2" rx="1" fill="#333"/>
+          <rect x="10" y="37" width="90" height="12" rx="3" fill="#1a1a1a"/>
+          <rect x="15" y="40" width="5" height="6" rx="1.5" fill="#E8952A"/>
+          <rect x="24" y="42" width="40" height="2" rx="1" fill="#444"/>
+          <rect x="10" y="52" width="90" height="12" rx="3" fill="#252528"/>
+          <rect x="15" y="55" width="5" height="6" rx="1.5" fill="#34C759"/>
+          <rect x="24" y="57" width="25" height="2" rx="1" fill="#555"/>
+        </svg>
+      </div>
+      <div class="work-info">
+        <div class="work-title">Session Indicator</div>
+        <div class="work-tags">AI Agent UI · Interaction System · Design Engineering</div>
+      </div>
+      <span class="work-year">2026</span>
+      <span class="work-arrow">→</span>
+    </a>
+
+    <!-- Row 2: PromptedFind -->
+    <a class="work-row" href="#" data-preview="pf">
+      <div class="work-thumb">
+        <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="160" height="100" fill="#0a1628"/>
+          <rect x="12" y="42" width="136" height="3" rx="1.5" fill="#1a2a44"/>
+          <rect x="12" y="42" width="18" height="3" rx="1.5" fill="#2563EB" opacity="0.7"/>
+          <rect x="45" y="42" width="25" height="3" rx="1.5" fill="#2563EB" opacity="0.7"/>
+          <rect x="85" y="42" width="20" height="3" rx="1.5" fill="#2563EB" opacity="0.7"/>
+          <rect x="118" y="42" width="24" height="3" rx="1.5" fill="#2563EB" opacity="0.7"/>
+          <rect x="8" y="52" width="26" height="10" rx="3" fill="#EF4444"/>
+          <text x="21" y="59" text-anchor="middle" fill="#fff" font-family="system-ui,sans-serif" font-size="4.5" font-weight="500">Why h...</text>
+          <rect x="40" y="52" width="32" height="10" rx="3" fill="#2563EB" opacity="0.6"/>
+          <text x="56" y="59" text-anchor="middle" fill="#fff" font-family="system-ui,sans-serif" font-size="4.5" font-weight="500">Mars at...</text>
+          <rect x="80" y="52" width="30" height="10" rx="3" fill="#2563EB" opacity="0.6"/>
+          <text x="95" y="59" text-anchor="middle" fill="#fff" font-family="system-ui,sans-serif" font-size="4.5" font-weight="500">Deploy...</text>
+          <rect x="118" y="52" width="34" height="10" rx="3" fill="#2563EB" opacity="0.6"/>
+          <text x="135" y="59" text-anchor="middle" fill="#fff" font-family="system-ui,sans-serif" font-size="4.5" font-weight="500">Precision</text>
+          <circle cx="21" cy="43.5" r="4" fill="#EF4444"/>
+        </svg>
+      </div>
+      <div class="work-info">
+        <div class="work-title">PromptedFind</div>
+        <div class="work-tags">AI Interaction Pattern · Video Intelligence · 2025</div>
+      </div>
+      <span class="work-year">2025</span>
+      <span class="work-arrow">→</span>
+    </a>
+
+    <!-- Row 3: Xcode (coming soon, no preview) -->
+    <div class="work-row" style="pointer-events:none;">
+      <div class="work-thumb" style="opacity:0.45;">
+        <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="160" height="100" fill="#1c1c1e"/>
+          <rect x="6" y="8" width="45" height="84" rx="4" fill="#252528"/>
+          <rect x="55" y="8" width="48" height="84" rx="4" fill="#252528"/>
+          <rect x="107" y="8" width="47" height="84" rx="4" fill="#252528"/>
+        </svg>
+      </div>
+      <div class="work-info">
+        <div class="work-title" style="opacity:0.45">Xcode Symbol Browser</div>
+        <div class="work-tags" style="opacity:0.45">Developer Tools · Information Architecture · macOS</div>
+      </div>
+      <span style="font-size:0.58rem;font-weight:500;color:#999;border:1px solid #D4D3CF;border-radius:3px;padding:2px 7px;opacity:0.6;">Soon</span>
+    </div>
+
+    <!-- Row 4: Trails (coming soon, no preview) -->
+    <div class="work-row" style="pointer-events:none;">
+      <div class="work-thumb" style="opacity:0.45;">
+        <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="160" height="100" fill="#111"/>
+          <rect x="4" y="6" width="38" height="88" rx="3" fill="#1a1a1a"/>
+          <rect x="46" y="6" width="52" height="72" rx="3" fill="#f5f5f0"/>
+          <rect x="102" y="6" width="52" height="72" rx="3" fill="#f5f5f0"/>
+        </svg>
+      </div>
+      <div class="work-info">
+        <div class="work-title" style="opacity:0.45">Trails</div>
+        <div class="work-tags" style="opacity:0.45">Knowledge Navigation · Graph Interface · Research Tools</div>
+      </div>
+      <span style="font-size:0.58rem;font-weight:500;color:#999;border:1px solid #D4D3CF;border-radius:3px;padding:2px 7px;opacity:0.6;">Soon</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- Shared preview panel — outside .shell, fixed positioned -->
+<div class="work-preview-panel" id="previewPanel">
+  <video id="previewVideo" loop muted playsinline preload="none"
+         style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+</div>
+
+<script>
+  if (
+    window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
+    window.matchMedia('(min-width: 1080px)').matches
+  ) {
+    const panel  = document.getElementById('previewPanel');
+    const video  = document.getElementById('previewVideo');
+
+    const PANEL_H = 200;
+    const GAP     = 28; // gap between shell right edge and panel left edge
+
+    const sources = {
+      si: '../assets/previews/session-indicator-frame.mp4',
+      pf: '../assets/previews/promptedfind-frame.mp4',
+    };
+
+    function placePanel(row) {
+      const shell    = document.querySelector('.shell');
+      const shellR   = shell.getBoundingClientRect().right;
+      const rowRect  = row.getBoundingClientRect();
+      const rowMid   = rowRect.top + rowRect.height / 2;
+
+      // Horizontally: right of shell + gap
+      panel.style.left = (shellR + GAP) + 'px';
+
+      // Vertically: center on row, clamp within viewport
+      const top = rowMid - PANEL_H / 2;
+      const clamped = Math.max(12, Math.min(top, window.innerHeight - PANEL_H - 12));
+      panel.style.top = clamped + 'px';
+    }
+
+    let activeRow = null;
+
+    document.querySelectorAll('.work-row[data-preview]').forEach(row => {
+      const key = row.dataset.preview;
+
+      row.addEventListener('mouseenter', () => {
+        activeRow = row;
+        // Swap source only if different
+        if (sources[key] && video.dataset.loaded !== key) {
+          video.src = sources[key];
+          video.dataset.loaded = key;
+        }
+        placePanel(row);
+        panel.classList.add('visible');
+        if (sources[key]) video.play().catch(() => {});
+      });
+
+      row.addEventListener('mouseleave', () => {
+        activeRow = null;
+        panel.classList.remove('visible');
+        video.pause();
+      });
+    });
+
+    // Re-anchor on scroll
+    window.addEventListener('scroll', () => {
+      if (activeRow && panel.classList.contains('visible')) {
+        placePanel(activeRow);
+      }
+    }, { passive: true });
+  }
+</script>
+
+</body>
+</html>

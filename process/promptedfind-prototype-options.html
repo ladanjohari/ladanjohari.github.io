@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PromptedFind prototype &mdash; Ask &amp; decomposition options</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#F7F6F3;--ink:#111;--mid:#6B6B6B;--rule:#D4D3CF;--hover-row:#F0EFEC;--accent:#0066FF;--accent-dim:#D6E4FF;--good:#1B7F3B;--bad:#B33A3A}
+  html{background:var(--bg)}
+  body{font-family:'Geist',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:120px}
+  .shell{max-width:800px;margin:0 auto;padding:0 28px}
+
+  .doc-head{padding-top:56px;border-bottom:1px solid var(--rule);padding-bottom:26px}
+  .doc-eyebrow{font-size:0.65rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-bottom:12px}
+  .doc-title{font-size:1.55rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:10px}
+  .doc-sub{font-size:0.85rem;line-height:1.7;color:var(--mid);max-width:660px}
+  .doc-sub b{color:var(--ink);font-weight:600}
+
+  .part-label{font-size:0.68rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink);margin-top:72px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+  .part-q{font-size:0.85rem;color:var(--mid);line-height:1.65;margin-top:12px;max-width:660px}
+  .part-q b{color:var(--ink);font-weight:600}
+
+  .optlabel{font-size:0.62rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#fff;background:var(--accent);display:inline-block;padding:4px 10px;border-radius:4px;margin:52px 0 4px}
+  .optlabel.rec::after{content:" · recommended";opacity:.85}
+  .optsub{font-size:0.82rem;line-height:1.65;color:var(--mid);max-width:660px;margin-bottom:20px}
+  .optsub b{color:var(--ink);font-weight:600}
+
+  /* ── schematic YouTube watch frame ── */
+  .yt{border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:#fff;margin-bottom:14px;font-size:11px;color:#0f0f0f}
+  .yt-bar{font-size:0.6rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);background:var(--hover-row);padding:7px 14px;border-bottom:1px solid var(--rule)}
+  .yt-body{display:flex;gap:14px;padding:16px}
+  .yt-main{flex:1;min-width:0}
+  .yt-side{width:200px;flex-shrink:0;display:flex;flex-direction:column;gap:8px}
+  .yt-player{position:relative;aspect-ratio:16/9;background:#1a1a1a;border-radius:8px;overflow:hidden}
+  .yt-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:0;height:0;border-left:16px solid rgba(255,255,255,.5);border-top:10px solid transparent;border-bottom:10px solid transparent}
+  /* native scrubber */
+  .yt-scrub{position:absolute;left:0;right:0;bottom:0;height:14px;padding:0 8px;display:flex;align-items:flex-end}
+  .yt-scrub-track{position:relative;width:100%;height:3px;background:rgba(255,255,255,.25);border-radius:2px;display:flex;gap:2px}
+  .yt-chap{height:100%;background:rgba(255,255,255,.35)}
+  .yt-chap.hot{background:#3ea6ff;height:5px;margin-top:-2px;border-radius:1px}
+  .yt-chap.played{background:#f03}
+  .yt-title{font-size:12.5px;font-weight:600;margin:10px 0 8px;letter-spacing:-0.01em}
+  .yt-actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .yt-pill{font-size:9.5px;font-weight:500;background:#f2f2f2;border-radius:16px;padding:5px 10px;color:#0f0f0f;white-space:nowrap}
+  .yt-pill.ask{background:#0f0f0f;color:#fff}
+  .yt-pill.ask .spark{color:#8ab4f8}
+  .yt-card{background:#f8f8f8;border:1px solid #eee;border-radius:8px;padding:8px 10px;font-size:9.5px;color:#555;line-height:1.5}
+  .yt-thumb{display:flex;gap:8px}
+  .yt-thumb .t{width:74px;height:42px;border-radius:6px;background:linear-gradient(135deg,#4a3b2f,#22303f);flex-shrink:0}
+  .yt-thumb .c{font-size:9px;line-height:1.4;color:#333}
+  .yt-thumb .c b{display:block;font-size:9.5px;color:#0f0f0f;font-weight:600}
+
+  /* ask panel variants */
+  .askp{border:1px solid #e5e5e5;border-radius:10px;overflow:hidden;background:#fff}
+  .askp-head{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-bottom:1px solid #eee;font-size:10px;font-weight:600}
+  .askp-head .x{color:#909090;font-size:11px}
+  .askp-body{padding:10px;display:flex;flex-direction:column;gap:8px;max-height:290px;overflow:hidden}
+  .chip-row{display:flex;flex-wrap:wrap;gap:5px}
+  .chip{font-size:8.5px;border:1px solid #d9d9d9;border-radius:14px;padding:3px 8px;color:#333;background:#fafafa}
+  .msg-user{align-self:flex-end;background:#eef3ff;border-radius:12px 12px 3px 12px;padding:6px 9px;font-size:9.5px;color:#1a1a1a;max-width:85%}
+  .msg-ai{align-self:flex-start;background:#f6f6f6;border-radius:12px 12px 12px 3px;padding:7px 9px;font-size:9.5px;color:#333;line-height:1.55;max-width:95%}
+  .msg-ai b{font-weight:600;color:#0f0f0f}
+  .moment{display:flex;gap:7px;align-items:center;border:1px solid #e2e2e2;border-radius:8px;padding:5px 7px;background:#fff;margin-top:5px}
+  .moment .mt{width:46px;height:26px;border-radius:4px;background:linear-gradient(135deg,#33261c,#1c2b45);flex-shrink:0;position:relative}
+  .moment .mt::after{content:"";position:absolute;right:2px;bottom:2px;background:rgba(0,0,0,.8);color:#fff;font-size:6px;padding:0 2px;border-radius:2px}
+  .moment .mc{font-size:8.5px;line-height:1.35;color:#333}
+  .moment .mc b{display:block;font-size:9px;color:#0f0f0f;font-weight:600}
+  .moment .mc .tm{color:#065fd4;font-weight:600}
+  .conf{display:inline-block;width:26px;height:4px;border-radius:2px;background:linear-gradient(90deg,#1B7F3B 70%,#e0e0e0 70%);vertical-align:middle;margin-left:4px}
+  .askp-input{display:flex;gap:6px;border-top:1px solid #eee;padding:8px 10px}
+  .askp-input .in{flex:1;border:1px solid #d9d9d9;border-radius:16px;padding:5px 10px;font-size:9px;color:#909090;background:#fafafa}
+  .askp-input .snd{width:22px;height:22px;border-radius:50%;background:#065fd4;flex-shrink:0;position:relative}
+  .askp-input .snd::after{content:"\2191";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px}
+
+  /* decomposition strip variants */
+  .strip{margin-top:8px;border:1px solid #e5e5e5;border-radius:8px;padding:8px 10px;background:#fcfcfc}
+  .strip-head{display:flex;justify-content:space-between;font-size:8px;letter-spacing:0.08em;text-transform:uppercase;color:#909090;font-weight:600;margin-bottom:6px}
+  .lane{display:flex;align-items:center;gap:6px;margin-top:3px}
+  .lane .ln{width:52px;font-size:7.5px;text-align:right;color:#707070;letter-spacing:0.04em;text-transform:uppercase;flex-shrink:0}
+  .lane .lt{position:relative;flex:1;height:8px;background:#f0f0f0;border-radius:2px}
+  .lane .sg{position:absolute;top:0;height:100%;border-radius:2px}
+  .lane .sg.dim{opacity:.25}
+  .ph{position:absolute;top:-4px;bottom:-4px;width:1.5px;background:#f03}
+  .single-track{position:relative;height:16px;background:#f0f0f0;border-radius:3px;margin-top:6px}
+  .single-track .sg{position:absolute;top:2px;height:12px;border-radius:2px;background:#a8c7fa;border:1px solid #6d9eeb}
+  .single-track .sg.on{background:#3ea6ff;border-color:#0b57d0}
+
+  /* pros cons */
+  .pc{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px}
+  .pc ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+  .pc li{font-size:0.75rem;line-height:1.55;color:var(--mid);padding-left:16px;position:relative}
+  .pc .pro li::before{content:"+";position:absolute;left:0;color:var(--good);font-weight:700}
+  .pc .con li::before{content:"\2212";position:absolute;left:0;color:var(--bad);font-weight:700}
+  .pc-h{font-size:0.62rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px}
+  .pc .pro .pc-h{color:var(--good)}
+  .pc .con .pc-h{color:var(--bad)}
+  @media(max-width:600px){.pc{grid-template-columns:1fr}.yt-body{flex-direction:column}.yt-side{width:100%}}
+
+  .verdict{border-left:3px solid var(--accent);background:rgba(0,102,255,0.05);border-radius:0 8px 8px 0;padding:16px 20px;margin-top:48px}
+  .verdict p{font-size:0.82rem;line-height:1.7;color:var(--mid)}
+  .verdict b{color:var(--ink);font-weight:600}
+  .verdict .pc-h{color:var(--accent);margin-bottom:6px}
+
+  .foot{margin-top:80px;padding-top:20px;border-top:1px solid var(--rule);font-size:0.68rem;color:var(--mid)}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="doc-head">
+    <p class="doc-eyebrow">Process &middot; Working document</p>
+    <h1 class="doc-title">The prototype itself &mdash; how Ask should function on YouTube</h1>
+    <p class="doc-sub">
+      Companion to the repo review. Two decisions about the PromptedFind mockup, each shown inside a
+      schematic watch page. <b>Part 1</b> &mdash; the Ask interaction: what happens between typing a question
+      and landing in a moment. <b>Part 2</b> &mdash; where the semantic decomposition lives: a second timeline,
+      the native scrubber, or an always-on strip. These choices also feed Option&nbsp;B on the case-study page:
+      the stronger the decomposition reads in the prototype, the stronger &ldquo;Semantic Decomposition&rdquo;
+      reads as a named method.
+    </p>
+  </div>
+
+  <!-- ═══════════════════ PART 1 ═══════════════════ -->
+  <p class="part-label">Part 1 &middot; The Ask interaction</p>
+  <p class="part-q">
+    Today the panel is a one-shot search: the query is erased on submit, results say
+    &ldquo;click a highlighted timeline segment,&rdquo; and the answer lives somewhere else.
+    The case-study page promises <b>&ldquo;the query stays visible while you watch&rdquo;</b> &mdash;
+    the prototype currently breaks that promise. Real YouTube&rsquo;s AI &ldquo;Ask&rdquo; is conversational:
+    starter chips, the question persists as a chat turn, answers carry tappable timestamps.
+  </p>
+
+  <!-- 1A -->
+  <p class="optlabel">Option 1A &middot; Polished search panel (smallest change)</p>
+  <p class="optsub">
+    Keep the search model, fix the behavior: the query stays in the input after submit, results are
+    clickable <b>moment cards</b> right in the panel (not an instruction to go click elsewhere),
+    starter chips replace the keyword hint, and the debug copy (&ldquo;1 track rendered&rdquo;,
+    &ldquo;Mock data only&rdquo;) moves to the console.
+  </p>
+  <div class="yt">
+    <div class="yt-bar">In context &middot; watch page &middot; after asking &ldquo;how do they slow down?&rdquo;</div>
+    <div class="yt-body">
+      <div class="yt-main">
+        <div class="yt-player"><span class="yt-play"></span>
+          <div class="yt-scrub"><div class="yt-scrub-track"><div class="yt-chap played" style="width:12%"></div><div class="yt-chap" style="width:30%"></div><div class="yt-chap" style="width:26%"></div><div class="yt-chap" style="width:32%"></div></div></div>
+        </div>
+        <p class="yt-title">NASA Talk - Mars Entry, Descent and Landing with Humans</p>
+        <div class="yt-actions">
+          <span class="yt-pill">&#128077; 2</span><span class="yt-pill">Share</span>
+          <span class="yt-pill ask"><span class="spark">&#10022;</span> Ask</span>
+          <span class="yt-pill">Save</span>
+        </div>
+        <div class="single-track">
+          <span class="sg" style="left:9.5%;width:6.5%"></span>
+          <span class="sg on" style="left:32%;width:7.5%"></span>
+          <span class="sg on" style="left:55.5%;width:7.5%"></span>
+        </div>
+      </div>
+      <div class="yt-side">
+        <div class="askp">
+          <div class="askp-head"><span>Ask about this video</span><span class="x">&#10005;</span></div>
+          <div class="askp-body">
+            <div class="msg-user">how do they slow down?</div>
+            <div class="msg-ai">3 moments match.
+              <div class="moment"><span class="mt"></span><span class="mc"><b>Deployable decelerators: HIAD and ADEPT</b><span class="tm">24:00</span> &middot; larger drag area without exceeding fairing limits</span></div>
+              <div class="moment"><span class="mt"></span><span class="mc"><b>Supersonic retropropulsion</b><span class="tm">41:30</span> &middot; propulsion takes over past aerodynamic limits</span></div>
+            </div>
+          </div>
+          <div class="askp-input"><span class="in">how do they slow down?</span><span class="snd"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="pro"><p class="pc-h">For</p><ul>
+      <li>Fixes the broken promise (query persists) with minimal rework of app-list.js</li>
+      <li>Answer and action live in one place; timeline highlight becomes a mirror, not the destination</li>
+      <li>Moment cards with thumbnails match YouTube&rsquo;s own search-in-video results</li>
+    </ul></div>
+    <div class="con"><p class="pc-h">Against</p><ul>
+      <li>Still one-shot &mdash; no follow-up (&ldquo;which one is inflatable?&rdquo;) without retyping</li>
+      <li>Less impressive against real YouTube Ask, which is already conversational</li>
+    </ul></div>
+  </div>
+
+  <!-- 1B -->
+  <p class="optlabel rec">Option 1B &middot; Conversational Ask (YouTube parity)</p>
+  <p class="optsub">
+    Match how the real feature behaves: starter chips on open, each question becomes a chat turn, the
+    answer is a short synthesized sentence <b>with inline moment chips</b>, and follow-ups refine within
+    context. The case-study claim &ldquo;the interface is a co-pilot, not a one-shot lookup&rdquo; becomes literally true.
+  </p>
+  <div class="yt">
+    <div class="yt-bar">In context &middot; watch page &middot; a follow-up in the same thread</div>
+    <div class="yt-body">
+      <div class="yt-main">
+        <div class="yt-player"><span class="yt-play"></span>
+          <div class="yt-scrub"><div class="yt-scrub-track"><div class="yt-chap played" style="width:33%"></div><div class="yt-chap" style="width:26%"></div><div class="yt-chap" style="width:41%"></div></div></div>
+        </div>
+        <p class="yt-title">NASA Talk - Mars Entry, Descent and Landing with Humans</p>
+        <div class="yt-actions">
+          <span class="yt-pill">&#128077; 2</span><span class="yt-pill">Share</span>
+          <span class="yt-pill ask"><span class="spark">&#10022;</span> Ask</span>
+          <span class="yt-pill">Save</span>
+        </div>
+        <div class="single-track">
+          <span class="sg on" style="left:32%;width:7.5%"></span>
+        </div>
+      </div>
+      <div class="yt-side">
+        <div class="askp">
+          <div class="askp-head"><span>&#10022; Ask</span><span class="x">&#10005;</span></div>
+          <div class="askp-body">
+            <div class="msg-user">how do they slow down?</div>
+            <div class="msg-ai">Two approaches: <b>deployable decelerators</b> for drag, then <b>retropropulsion</b> for the final phase.
+              <div class="moment"><span class="mt"></span><span class="mc"><b>HIAD and ADEPT concepts</b><span class="tm">24:00&ndash;29:30</span><span class="conf"></span></span></div>
+            </div>
+            <div class="msg-user">which one is inflatable?</div>
+            <div class="msg-ai">HIAD &mdash; the hypersonic <b>inflatable</b> aerodynamic decelerator.
+              <div class="moment"><span class="mt"></span><span class="mc"><b>Deployable decelerators</b> <span class="tm">jump to 24:00 &rarr;</span></span></div>
+            </div>
+          </div>
+          <div class="askp-input"><span class="in">Ask a follow-up&hellip;</span><span class="snd"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="pro"><p class="pc-h">For</p><ul>
+      <li>Platform-accurate &mdash; reviewers who know YouTube&rsquo;s Ask recognize the pattern instantly</li>
+      <li>Follow-ups showcase the &ldquo;context persists&rdquo; decision far better than a static panel</li>
+      <li>Confidence bars on moment chips answer the case study&rsquo;s own &ldquo;What I&rsquo;d Change&rdquo; item</li>
+    </ul></div>
+    <div class="con"><p class="pc-h">Against</p><ul>
+      <li>Most rework: thread state, canned answer synthesis per query pattern, chip routing</li>
+      <li>Canned conversation risks feeling scripted if a reviewer goes off-path &mdash; needs a graceful fallback (&ldquo;try one of these&rdquo;)</li>
+    </ul></div>
+  </div>
+
+  <!-- ═══════════════════ PART 2 ═══════════════════ -->
+  <p class="part-label">Part 2 &middot; Where the decomposition lives</p>
+  <p class="part-q">
+    Today segments render on a <b>second timeline below the player, only after a query</b> &mdash; idle state
+    is an empty strip, and the page ends up with two playheads (native scrubber + custom). The concept
+    says decomposition is a property of the content; the UI says it&rsquo;s a property of the search.
+  </p>
+
+  <!-- 2A -->
+  <p class="optlabel">Option 2A &middot; Native scrubber only (maximum platform fidelity)</p>
+  <p class="optsub">
+    No second timeline. Segments render as <b>chapter marks in the video&rsquo;s own progress bar</b>
+    (the gap-divided scrubber every YouTube user already reads), and query matches glow. Hover shows
+    the segment title exactly like chapter previews.
+  </p>
+  <div class="yt">
+    <div class="yt-bar">In context &middot; matches glow inside the scrubber &middot; no extra chrome</div>
+    <div class="yt-body">
+      <div class="yt-main">
+        <div class="yt-player"><span class="yt-play"></span>
+          <div class="yt-scrub"><div class="yt-scrub-track">
+            <div class="yt-chap played" style="width:10%"></div><div class="yt-chap" style="width:8%"></div><div class="yt-chap hot" style="width:9%"></div><div class="yt-chap" style="width:12%"></div><div class="yt-chap hot" style="width:8%"></div><div class="yt-chap" style="width:14%"></div><div class="yt-chap" style="width:12%"></div><div class="yt-chap hot" style="width:9%"></div><div class="yt-chap" style="width:18%"></div>
+          </div></div>
+        </div>
+        <p class="yt-title">NASA Talk - Mars Entry, Descent and Landing with Humans</p>
+        <div class="yt-actions"><span class="yt-pill">&#128077; 2</span><span class="yt-pill">Share</span><span class="yt-pill ask"><span class="spark">&#10022;</span> Ask</span><span class="yt-pill">Save</span></div>
+      </div>
+      <div class="yt-side"><div class="yt-card">Ask panel as in Part 1 &mdash; unchanged. Matching chapters pulse taller &amp; blue in the scrubber, exactly where chapters already live.</div></div>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="pro"><p class="pc-h">For</p><ul>
+      <li>Zero invented chrome &mdash; borrows YouTube&rsquo;s own chapter vocabulary (&ldquo;borrow, don&rsquo;t invent&rdquo;)</li>
+      <li>One playhead, one timeline, no duplicated state</li>
+    </ul></div>
+    <div class="con"><p class="pc-h">Against</p><ul>
+      <li>Segment <i>labels</i> disappear until hover &mdash; the decomposition itself becomes invisible</li>
+      <li>Weakest expression of the Semantic Decomposition story; looks like &ldquo;chapters, highlighted&rdquo;</li>
+      <li>Hard to fake convincingly over a native <code>&lt;video controls&gt;</code> element &mdash; needs a custom scrubber anyway</li>
+    </ul></div>
+  </div>
+
+  <!-- 2B -->
+  <p class="optlabel rec">Option 2B &middot; Always-on decomposition strip (the concept, visible)</p>
+  <p class="optsub">
+    The strip below the player is <b>always populated</b> &mdash; the talk arrives pre-decomposed into labeled,
+    color-coded category lanes (Problem / Entry systems / Descent &amp; landing / Program), Video-Tape style.
+    Asking doesn&rsquo;t create segments; it <b>dims the ones that don&rsquo;t match</b>. Idle, it&rsquo;s a map of the talk;
+    queried, it&rsquo;s the answer&rsquo;s shape. Gaps between indexed ranges stay visibly unfilled instead of reading as dead space.
+  </p>
+  <div class="yt">
+    <div class="yt-bar">In context &middot; idle = map of the talk &middot; query dims non-matches</div>
+    <div class="yt-body">
+      <div class="yt-main">
+        <div class="yt-player"><span class="yt-play"></span>
+          <div class="yt-scrub"><div class="yt-scrub-track"><div class="yt-chap played" style="width:40%"></div><div class="yt-chap" style="width:60%"></div></div></div>
+        </div>
+        <div class="strip">
+          <div class="strip-head"><span>Semantic decomposition</span><span>29:48 / 1:14:31</span></div>
+          <div style="position:relative">
+            <div class="lane"><span class="ln">Problem</span><span class="lt"><span class="sg dim" style="left:0;width:6%;background:#5a5aa8"></span><span class="sg" style="left:10%;width:6.5%;background:#8f3b3b"></span></span></div>
+            <div class="lane"><span class="ln">Entry</span><span class="lt"><span class="sg dim" style="left:20.8%;width:6.7%;background:#3b6e8f"></span><span class="sg" style="left:32.2%;width:7.4%;background:#3b8f57"></span><span class="sg dim" style="left:44.3%;width:6.7%;background:#3b6e8f"></span></span></div>
+            <div class="lane"><span class="ln">Descent</span><span class="lt"><span class="sg" style="left:55.7%;width:7.4%;background:#3b8f57"></span><span class="sg dim" style="left:67.8%;width:7.4%;background:#a8862f"></span></span></div>
+            <div class="lane"><span class="ln">Program</span><span class="lt"><span class="sg dim" style="left:79.9%;width:7.4%;background:#8f6d3b"></span><span class="sg dim" style="left:91.3%;width:8.7%;background:#8f3b3b"></span></span></div>
+            <span class="ph" style="left:calc(52px + (100% - 58px) * 0.40 + 6px)"></span>
+          </div>
+        </div>
+        <p class="yt-title" style="margin-top:8px">NASA Talk - Mars Entry, Descent and Landing with Humans</p>
+        <div class="yt-actions"><span class="yt-pill">&#128077; 2</span><span class="yt-pill">Share</span><span class="yt-pill ask"><span class="spark">&#10022;</span> Ask</span><span class="yt-pill">Save</span></div>
+      </div>
+      <div class="yt-side"><div class="yt-card">Green = matches &ldquo;how do they slow down?&rdquo;. Everything else dims but stays legible &mdash; the decomposition exists before the question and survives it.</div></div>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="pro"><p class="pc-h">For</p><ul>
+      <li>The concept becomes visible: decomposition is a property of the content, not of the search</li>
+      <li>Directly reuses the lane component vocabulary from Video Tape / view-spec &mdash; one visual language across all three surfaces (feeds Option&nbsp;B&rsquo;s &ldquo;one pattern, three surfaces&rdquo; strip)</li>
+      <li>Idle state stops being an empty band; recruiters see the idea without typing anything</li>
+      <li>Kills the empty-timeline and two-playhead confusion in one move</li>
+    </ul></div>
+    <div class="con"><p class="pc-h">Against</p><ul>
+      <li>Departs from strict YouTube fidelity &mdash; it&rsquo;s clearly an added layer (arguably the point)</li>
+      <li>Needs category labels added to data.js (9 segments &rarr; 9 segments + 4 lanes; small)</li>
+      <li>Vertical space: four lanes cost ~70px under the player</li>
+    </ul></div>
+  </div>
+
+  <div class="verdict">
+    <p class="pc-h">Working recommendation</p>
+    <p>
+      <b>1B + 2B, staged.</b> Do 2B first (always-on lanes; mostly rendering changes against existing data)
+      and the 1A behavior fixes (query persists, moment cards, chips, no debug copy) &mdash; that ships a
+      coherent, honest prototype. Then upgrade the panel to 1B&rsquo;s conversational thread as the second pass;
+      it&rsquo;s also what the Option&nbsp;2 guided tour wants to walk through. Skip 2A: it trades away the one thing
+      the project is named after. Behavior fixes that apply regardless: don&rsquo;t auto-pause at segment end
+      (nothing on YouTube stops playback for you), tooltip delay 1000ms &rarr; ~150ms, one brand spelling
+      (&ldquo;PromptedFind&rdquo;, not &ldquo;PromptFind&rdquo;), remove the &ldquo;Open video file&rdquo; dev link.
+    </p>
+  </div>
+
+  <p class="foot">Working Document &middot; Not for distribution &middot; process/promptedfind-prototype-options.html</p>
+</div>
+</body>
+</html>

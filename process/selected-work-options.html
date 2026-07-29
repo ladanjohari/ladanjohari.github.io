@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="light dark" />
+<title>Selected Work &mdash; layout options</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#F7F6F3;--ink:#111;--mid:#6B6B6B;--rule:#D4D3CF;--hover-row:#F0EFEC;--accent:#0066FF;--accent-dim:#D6E4FF;--soon:#9A9A9A}
+  @media (prefers-color-scheme:dark){:root{--bg:#1A1A1A;--ink:#E8E8E8;--mid:#9A9A9A;--rule:#333;--hover-row:#242424;--accent:#4D94FF;--accent-dim:#1A3A66;--soon:#777}}
+  html{background:var(--bg)}
+  body{font-family:'Geist',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:100px}
+  .shell{max-width:720px;margin:0 auto;padding:0 28px}
+  .optlabel{font-size:0.62rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#fff;background:var(--accent);display:inline-block;padding:4px 10px;border-radius:4px;margin:64px 0 4px}
+  .optsub{font-size:0.82rem;line-height:1.6;color:var(--mid);max-width:600px;margin-bottom:26px}
+  .optsub b{color:var(--ink);font-weight:600}
+  .section-label{font-size:0.68rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid);padding-bottom:14px;border-bottom:1px solid var(--rule);margin-bottom:4px}
+  .divider{height:1px;background:var(--rule);opacity:0.5;margin-top:14px}
+
+  /* status chip (shared vocabulary across all options) */
+  .st{font-size:0.62rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap}
+  .st-live{color:var(--accent)}
+  .st-demo{color:var(--accent)}
+  .st-soon{color:var(--soon);border:1px solid var(--rule);border-radius:20px;padding:3px 9px;text-transform:none;letter-spacing:0;font-weight:500}
+  .yr{font-size:0.8rem;font-weight:500;color:var(--rule)}
+
+  /* thumbnails via symbols */
+  .thumb{border-radius:8px;overflow:hidden;flex-shrink:0;border:1px solid var(--rule);background:#111;display:block}
+  .thumb svg{width:100%;height:100%;display:block}
+
+  /* ============ OPTION A : unified rows ============ */
+  .A-list{list-style:none}
+  .A-item{border-bottom:.5px solid var(--rule)}
+  .A-item:last-child{border-bottom:none}
+  .A-row{display:flex;align-items:center;gap:20px;text-decoration:none;color:var(--ink);padding:18px 0;transition:transform .16s ease-out}
+  .A-row:active{transform:scale(.99)}
+  .A-thumb{width:112px;height:70px}
+  .A-info{flex:1;min-width:0}
+  .A-title{font-size:1.05rem;font-weight:600;letter-spacing:-0.02em}
+  .A-tags{font-size:0.65rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--mid);margin-top:5px}
+  .A-meta{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;min-width:78px}
+  .A-arrow{font-size:15px;color:var(--rule);transition:color .12s,transform .14s cubic-bezier(0.23,1,0.32,1)}
+  .A-item.soon .A-thumb{opacity:.5}
+  .A-item.soon .A-title{color:var(--mid)}
+  @media(hover:hover){.A-row:hover .A-arrow{color:var(--accent);transform:translateX(3px)}.A-row:hover .A-thumb{border-color:var(--accent-dim)}}
+
+  /* ============ OPTION B : card grid ============ */
+  .B-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .B-card{border:.5px solid var(--rule);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;transition:border-color .14s ease-out,transform .16s ease-out}
+  .B-card:active{transform:scale(.99)}
+  .B-thumb{width:100%;aspect-ratio:16/10;border:none;border-bottom:.5px solid var(--rule);border-radius:0}
+  .B-body{padding:14px 16px 15px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .B-title{font-size:1rem;font-weight:600;letter-spacing:-0.02em}
+  .B-tags{font-size:0.62rem;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:var(--mid);line-height:1.5}
+  .B-foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:10px}
+  .B-card.soon{opacity:.72}
+  .B-card.soon .B-thumb{opacity:.55}
+  @media(hover:hover){.B-card:hover{border-color:var(--accent-dim)}}
+
+  /* ============ OPTION C : editorial index (no thumbnails) ============ */
+  .C-list{list-style:none}
+  .C-item{border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:22px;padding:22px 0;text-decoration:none;color:var(--ink);transition:padding-left .18s cubic-bezier(0.23,1,0.32,1)}
+  .C-item:last-child{border-bottom:1px solid var(--rule)}
+  .C-num{font-size:0.72rem;font-weight:500;color:var(--rule);font-variant-numeric:tabular-nums;width:22px;flex-shrink:0}
+  .C-main{flex:1;min-width:0}
+  .C-title{font-size:1.5rem;font-weight:600;letter-spacing:-0.03em;line-height:1.15}
+  .C-desc{font-size:0.82rem;color:var(--mid);margin-top:6px;line-height:1.5}
+  .C-right{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex-shrink:0;text-align:right}
+  .C-item.soon .C-title{color:var(--mid)}
+  @media(hover:hover){.C-item:hover{padding-left:10px}.C-item:hover .C-title{color:var(--accent)}}
+
+  /* ============ OPTION D : compact register/table ============ */
+  .D-table{width:100%;border-collapse:collapse;font-size:0.85rem}
+  .D-table th{text-align:left;font-size:0.6rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);padding:0 0 10px;border-bottom:1px solid var(--rule)}
+  .D-table td{padding:15px 0;border-bottom:.5px solid var(--rule);vertical-align:middle}
+  .D-name{font-weight:600;font-size:0.95rem;letter-spacing:-0.01em}
+  .D-focus{color:var(--mid);font-size:0.72rem}
+  .D-row.soon .D-name{color:var(--mid)}
+  .D-th-r,.D-td-r{text-align:right}
+  @media(hover:hover){.D-row:hover td{background:var(--hover-row)}}
+
+  @media(max-width:560px){
+    .B-grid{grid-template-columns:1fr}
+    .C-title{font-size:1.2rem}
+    .C-item{gap:14px}
+    .A-thumb{width:84px;height:52px}
+  }
+</style>
+</head>
+<body>
+<!-- reusable simplified thumbnails -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="t-si" viewBox="0 0 160 100"><rect width="160" height="100" fill="#111"/><rect x="34" y="30" width="92" height="40" rx="11" fill="#1c1c1c" stroke="#2c2c2c" stroke-width=".5"/><circle cx="52" cy="42" r="3.4" fill="#fff"/><rect x="60" y="39.5" width="26" height="4.5" rx="2" fill="#2a2a2a"/><circle cx="52" cy="54" r="3.4" fill="#E8952A"/><rect x="60" y="51.5" width="34" height="4.5" rx="2" fill="#2a2a2a"/></symbol>
+  <symbol id="t-pf" viewBox="0 0 160 100"><rect width="160" height="100" fill="#0a1628"/><rect x="14" y="44" width="132" height="3" rx="1.5" fill="#1a2a44"/><rect x="10" y="54" width="26" height="10" rx="3" fill="#2563EB" opacity=".85"/><rect x="42" y="54" width="30" height="10" rx="3" fill="#2563EB" opacity=".55"/><rect x="80" y="54" width="28" height="10" rx="3" fill="#2563EB" opacity=".55"/><rect x="116" y="54" width="32" height="10" rx="3" fill="#2563EB" opacity=".55"/><circle cx="23" cy="45.5" r="4" fill="#2563EB"/></symbol>
+  <symbol id="t-xc" viewBox="0 0 160 100"><rect width="160" height="100" fill="#1c1c1e"/><rect x="10" y="14" width="42" height="72" rx="4" fill="#252528"/><rect x="56" y="14" width="46" height="72" rx="4" fill="#252528"/><rect x="106" y="14" width="44" height="72" rx="4" fill="#252528"/><rect x="14" y="40" width="34" height="7" rx="2" fill="#0A84FF" opacity=".2"/><rect x="60" y="30" width="38" height="7" rx="2" fill="#0A84FF" opacity=".2"/><rect x="110" y="22" width="36" height="7" rx="2" fill="#BF5AF2" opacity=".2"/></symbol>
+  <symbol id="t-tr" viewBox="0 0 160 100"><rect width="160" height="100" fill="#111"/><rect x="10" y="14" width="40" height="72" rx="3" fill="#1a1a1a"/><rect x="56" y="14" width="44" height="72" rx="3" fill="#f5f5f0"/><rect x="106" y="14" width="44" height="72" rx="3" fill="#f5f5f0"/><rect x="60" y="34" width="36" height="8" rx="2" fill="#4D94FF" opacity=".18"/><rect x="110" y="30" width="36" height="8" rx="2" fill="#FF6B6B" opacity=".18"/></symbol>
+</svg>
+
+<div class="shell">
+
+  <span class="optlabel" style="background:var(--ink)">Brainstorm &middot; not the live site</span>
+  <p class="optsub" style="margin-top:8px">Four ways to arrange Selected Work, each shown with all <b>4 real projects</b> so you can see how a live project and a &ldquo;coming soon&rdquo; one sit together. The shared rule in every option: <b>same slots for every project, year always shown, status is one consistent trailing state</b> &mdash; so it stays cohesive as you add, remove, or swap projects. Toggle OS dark mode to check both.</p>
+
+  <!-- ============ OPTION A ============ -->
+  <span class="optlabel">Option A &mdash; Unified rows (evolves what you have)</span>
+  <p class="optsub">Your current list, made consistent. Every row = thumbnail &middot; title &middot; tags &middot; year &middot; status. The &ldquo;Soon&rdquo; rows keep their year and their slot; only the trailing <b>state</b> changes (Case study / Watch demo / Coming soon). Lowest risk, most scannable, add/remove = one <code>&lt;li&gt;</code>.</p>
+  <p class="section-label">Selected Work</p>
+  <ul class="A-list">
+    <li class="A-item"><a class="A-row" href="#"><span class="thumb A-thumb"><svg><use href="#t-si"/></svg></span><span class="A-info"><span class="A-title">Session Indicator</span><div class="A-tags">AI Agent UI &middot; Interaction System</div></span><span class="A-meta"><span class="yr">2026</span><span class="st st-live">Case study &rarr;</span></span></a></li>
+    <li class="A-item"><a class="A-row" href="#"><span class="thumb A-thumb"><svg><use href="#t-pf"/></svg></span><span class="A-info"><span class="A-title">PromptedFind</span><div class="A-tags">AI Interaction Pattern &middot; Prototype</div></span><span class="A-meta"><span class="yr">2025</span><span class="st st-live">Case study &rarr;</span></span></a></li>
+    <li class="A-item soon"><a class="A-row" href="#"><span class="thumb A-thumb"><svg><use href="#t-xc"/></svg></span><span class="A-info"><span class="A-title">Xcode Symbol Browser</span><div class="A-tags">Developer Tools &middot; Information Architecture</div></span><span class="A-meta"><span class="yr">2025</span><span class="st st-demo">Watch demo &#8599;</span></span></a></li>
+    <li class="A-item soon"><a class="A-row" href="#"><span class="thumb A-thumb"><svg><use href="#t-tr"/></svg></span><span class="A-info"><span class="A-title">Trails</span><div class="A-tags">Knowledge Navigation &middot; Graph Interface</div></span><span class="A-meta"><span class="yr">2024</span><span class="st st-soon">Coming soon</span></span></a></li>
+  </ul>
+
+  <!-- ============ OPTION B ============ -->
+  <span class="optlabel">Option B &mdash; Card grid (thumbnail-forward)</span>
+  <p class="optsub">Bigger visuals. Each project is a card with a large 16:10 thumbnail, then title, tags, and a footer with year + status. Grid auto-flows, so adding a 5th/6th project just fills the next cell. Best if your thumbnails/previews are strong; a missing preview simply falls back to the SVG.</p>
+  <p class="section-label">Selected Work</p>
+  <div class="B-grid">
+    <a class="B-card" href="#"><span class="thumb B-thumb"><svg><use href="#t-si"/></svg></span><span class="B-body"><span class="B-title">Session Indicator</span><span class="B-tags">AI Agent UI &middot; Interaction System</span><span class="B-foot"><span class="yr">2026</span><span class="st st-live">Case study &rarr;</span></span></span></a>
+    <a class="B-card" href="#"><span class="thumb B-thumb"><svg><use href="#t-pf"/></svg></span><span class="B-body"><span class="B-title">PromptedFind</span><span class="B-tags">AI Interaction Pattern &middot; Prototype</span><span class="B-foot"><span class="yr">2025</span><span class="st st-live">Case study &rarr;</span></span></span></a>
+    <a class="B-card soon" href="#"><span class="thumb B-thumb"><svg><use href="#t-xc"/></svg></span><span class="B-body"><span class="B-title">Xcode Symbol Browser</span><span class="B-tags">Developer Tools &middot; Information Architecture</span><span class="B-foot"><span class="yr">2025</span><span class="st st-demo">Watch demo &#8599;</span></span></span></a>
+    <a class="B-card soon" href="#"><span class="thumb B-thumb"><svg><use href="#t-tr"/></svg></span><span class="B-body"><span class="B-title">Trails</span><span class="B-tags">Knowledge Navigation &middot; Graph Interface</span><span class="B-foot"><span class="yr">2024</span><span class="st st-soon">Coming soon</span></span></span></a>
+  </div>
+
+  <!-- ============ OPTION C ============ -->
+  <span class="optlabel">Option C &mdash; Editorial index (typographic, no thumbnails)</span>
+  <p class="optsub">The most senior / most resilient. Big titles carry it, no images needed, so a project with zero assets still looks intentional. Number + title + one-line description, year + status right-aligned. Hover nudges the row. This is the &ldquo;confident, let the work speak&rdquo; direction.</p>
+  <p class="section-label">Selected Work</p>
+  <ul class="C-list">
+    <li><a class="C-item" href="#"><span class="C-num">01</span><span class="C-main"><span class="C-title">Session Indicator</span><div class="C-desc">Awareness across parallel AI agents, without breaking focus.</div></span><span class="C-right"><span class="yr">2026</span><span class="st st-live">Case study &rarr;</span></span></a></li>
+    <li><a class="C-item" href="#"><span class="C-num">02</span><span class="C-main"><span class="C-title">PromptedFind</span><div class="C-desc">Semantic navigation &mdash; jump through long media by meaning.</div></span><span class="C-right"><span class="yr">2025</span><span class="st st-live">Case study &rarr;</span></span></a></li>
+    <li><a class="C-item soon" href="#"><span class="C-num">03</span><span class="C-main"><span class="C-title">Xcode Symbol Browser</span><div class="C-desc">A faster way to read a codebase&rsquo;s structure.</div></span><span class="C-right"><span class="yr">2025</span><span class="st st-demo">Watch demo &#8599;</span></span></a></li>
+    <li><a class="C-item soon" href="#"><span class="C-num">04</span><span class="C-main"><span class="C-title">Trails</span><div class="C-desc">Knowledge navigation as a living graph of what you&rsquo;ve read.</div></span><span class="C-right"><span class="yr">2024</span><span class="st st-soon">Coming soon</span></span></a></li>
+  </ul>
+
+  <!-- ============ OPTION D ============ -->
+  <span class="optlabel">Option D &mdash; Register / table (densest, most scannable)</span>
+  <p class="optsub">Maximum scannability for a recruiter skimming in seconds. Columns line up, status is a column not a structural change, degrades perfectly. Trade-off: reads more like a CV table, less like a designed portfolio.</p>
+  <p class="section-label">Selected Work</p>
+  <table class="D-table">
+    <thead><tr><th>Project</th><th>Focus</th><th class="D-th-r">Year</th><th class="D-th-r">Status</th></tr></thead>
+    <tbody>
+      <tr class="D-row"><td><span class="D-name">Session Indicator</span></td><td class="D-focus">AI Agent UI</td><td class="D-td-r yr">2026</td><td class="D-td-r"><span class="st st-live">Case study &rarr;</span></td></tr>
+      <tr class="D-row"><td><span class="D-name">PromptedFind</span></td><td class="D-focus">Interaction Pattern</td><td class="D-td-r yr">2025</td><td class="D-td-r"><span class="st st-live">Case study &rarr;</span></td></tr>
+      <tr class="D-row soon"><td><span class="D-name">Xcode Symbol Browser</span></td><td class="D-focus">Developer Tools</td><td class="D-td-r yr">2025</td><td class="D-td-r"><span class="st st-demo">Watch demo &#8599;</span></td></tr>
+      <tr class="D-row soon"><td><span class="D-name">Trails</span></td><td class="D-focus">Knowledge Navigation</td><td class="D-td-r yr">2024</td><td class="D-td-r"><span class="st st-soon">Coming soon</span></td></tr>
+    </tbody>
+  </table>
+
+</div>
+</body>
+</html>
