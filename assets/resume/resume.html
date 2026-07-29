@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ladan Johari — Design Engineer</title>
+<style>
+  @font-face {
+    font-family: 'Geist';
+    src: url('../fonts/geist-latin.woff2') format('woff2');
+    font-weight: 100 900;
+    font-display: swap;
+  }
+  :root {
+    --ink: #111111;
+    --mid: #6B6B6B;
+    --rule: rgba(0,0,0,0.10);
+    --accent: #0066FF;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #fff; }
+  body {
+    font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--ink);
+    font-size: 9.6px;
+    line-height: 1.42;
+    width: 8.5in;
+    margin: 0 auto;
+    padding: 0.52in 0.6in;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  a { color: var(--ink); text-decoration: none; }
+  .accent { color: var(--accent); }
+
+  /* Header */
+  h1 {
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .role {
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--accent);
+    margin-top: 2px;
+  }
+  .contact {
+    margin-top: 5px;
+    font-size: 9px;
+    color: var(--mid);
+  }
+  .contact span.sep { margin: 0 4px; color: var(--rule); }
+  .summary {
+    margin-top: 9px;
+    font-size: 9.9px;
+    line-height: 1.5;
+    max-width: 6.6in;
+  }
+
+  /* Sections */
+  section { margin-top: 13px; }
+  h2 {
+    font-size: 8.2px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mid);
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 8px;
+  }
+
+  /* Work entries */
+  .entry { margin-bottom: 8.5px; }
+  .entry:last-child { margin-bottom: 0; }
+  .entry-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .entry-title { font-size: 10.3px; font-weight: 600; }
+  .entry-title .tagline { font-weight: 400; color: var(--mid); }
+  .entry-meta { font-size: 8.8px; color: var(--mid); white-space: nowrap; }
+  .entry-meta a { color: var(--accent); }
+  .tools {
+    font-size: 8.6px;
+    color: var(--mid);
+    margin-top: 1px;
+  }
+  .entry p { margin-top: 2.5px; }
+  .entry ul { margin-top: 2.5px; padding-left: 13px; }
+  .entry li { margin-bottom: 1.5px; }
+  .entry li::marker { color: var(--mid); }
+
+  /* Skills */
+  .skill-row { display: flex; gap: 10px; margin-bottom: 3.5px; }
+  .skill-label {
+    flex: 0 0 1.35in;
+    font-weight: 600;
+    font-size: 9.2px;
+  }
+  .skill-list { color: var(--ink); }
+
+  /* Education */
+  .edu-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2.5px;
+    gap: 12px;
+  }
+  .edu-main { font-size: 9.6px; }
+  .edu-main b { font-weight: 600; }
+  .edu-detail { font-size: 8.8px; color: var(--mid); white-space: nowrap; }
+
+  @page { size: letter; margin: 0; }
+  @media print {
+    body { width: 100%; }
+  }
+  @media screen {
+    body {
+      margin: 24px auto;
+      box-shadow: 0 1px 24px rgba(0,0,0,0.12);
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Ladan Johari</h1>
+  <div class="role">Design Engineer / Experience Prototyper</div>
+  <div class="contact">
+    Cupertino, CA<span class="sep">·</span><a href="mailto:l.joharizadeh@gmail.com">l.joharizadeh@gmail.com</a><!--PHONE--><span class="sep">·</span><a href="https://ladanjohari.com">ladanjohari.com</a><span class="sep">·</span><a href="https://github.com/ladanjohari">github.com/ladanjohari</a><span class="sep">·</span><a href="https://linkedin.com/in/ladan-johari">linkedin.com/in/ladan-johari</a>
+  </div>
+  <p class="summary">Design engineer focused on AI agent interfaces, developer tools, and interaction systems. I take ambiguous product problems from concept to working code: SwiftUI apps and open-source packages, coded prototypes, and implementation-ready design systems, with an emphasis on state, feedback, and human-in-the-loop control.</p>
+</header>
+
+<section>
+  <h2>Selected Work</h2>
+
+  <div class="entry">
+    <div class="entry-head">
+      <div class="entry-title">Session Indicator <span class="tagline">— AI Agent Interface, macOS</span></div>
+      <div class="entry-meta">2026 · <a href="https://session-indicator.ladanjohari.com">Case Study</a></div>
+    </div>
+    <div class="tools">SwiftUI · Interaction Design · State-Machine Design · Motion Design · Working macOS App</div>
+    <p>Designed and built a macOS menu-bar app that restores awareness when multiple AI agents run in parallel, without breaking focus. Defined a five-state session model where motion signals state and color signals exception, with full Reduce Motion accessibility and Apple HIG conventions throughout. Engineered the SwiftUI app end to end: live detection of running agent sessions, state read from session transcripts, all five states shipped and in daily use on my own machine.</p>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <div class="entry-title">Prompted Find <span class="tagline">— Semantic Video Navigation</span></div>
+      <div class="entry-meta">2025 · <a href="https://ladanjohari.com/projects/promptedfind">Case Study</a></div>
+    </div>
+    <div class="tools">Interaction Design · Semantic Decomposition · Coded Prototype (HTML/JS) · Design Systems</div>
+    <p>Designed a new interaction pattern for long-form video: ask a question in natural language, get a timestamp you can trust. Built the working prototype on a 74-minute lecture, decomposing the timeline into labeled semantic segments, and architected the understanding layer so real embeddings drop in without changing the interaction.</p>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <div class="entry-title">Xcode Symbol Browser <span class="tagline">— Developer Tooling, macOS</span></div>
+      <div class="entry-meta">2024 · <a href="https://ladanjohari.com/projects/xcode-symbol-browser">Case Study</a></div>
+    </div>
+    <div class="tools">SwiftUI · Open Source · Information Architecture · Apple HIG</div>
+    <p>Redesigned how developers read a codebase's structure, replacing the file tree with a Miller-column spatial view. Engineered the column system as open-source SwiftUI packages (MillerKit, MillerJSON) with unit tests and CI, and cut navigation to a symbol by roughly 30% (click-path comparison).</p>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <div class="entry-title">Trails <span class="tagline">— Knowledge Navigation, Safari</span></div>
+      <div class="entry-meta">2024 · <a href="https://ladanjohari.com/projects/trails">Case Study</a></div>
+    </div>
+    <div class="tools">Interaction Design · Graph Interface · Information Architecture · Figma</div>
+    <p>Designed a spatial browsing interface where research becomes a navigable map: pages appear as nodes, navigation leaves a trail, related content clusters automatically. Validated the full interaction model through user testing.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Experience</h2>
+
+  <div class="entry">
+    <div class="entry-head">
+      <div class="entry-title">Design Engineer <span class="tagline">— Independent Practice, Cupertino, CA</span></div>
+      <div class="entry-meta">2024 – Present</div>
+    </div>
+    <ul>
+      <li>Design and build interactive interfaces end to end: interaction models, design systems, working prototypes, and open-source SwiftUI packages (see Selected Work).</li>
+      <li>Refine every project through ongoing collaboration and structured critique with senior designers and engineers in industry.</li>
+      <li>Validate design decisions through hands-on user testing before engineering investment.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <div class="entry-title">Graduate Teaching Assistant <span class="tagline">— Department of Design, University of California, Davis</span></div>
+      <div class="entry-meta">Sep 2022 – Jun 2025</div>
+    </div>
+    <ul>
+      <li>Taught human-centered design, digital modeling, and fabrication to 100+ students across six quarters; led studio critiques grounded in systems thinking.</li>
+      <li>Two-year TA for Narrative Environments, supporting students who designed the City of Davis annual bike scavenger hunt: nine public activity stations engaging rider teams from across the region.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <div class="entry-title">Workshop Facilitator <span class="tagline">— SEGD Experiential Design Workshop, Gensler, Washington, D.C.</span></div>
+      <div class="entry-meta">2024</div>
+    </div>
+    <ul>
+      <li>Moderated multidisciplinary design teams through ideation, rapid prototyping, and presentation in a conference workshop hosted across two Gensler offices.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <div class="entry-title">Studio Manager <span class="tagline">— Parviz Tanavoli Atelier, Tehran</span></div>
+      <div class="entry-meta">2017 – 2021</div>
+    </div>
+    <ul>
+      <li>Managed the studio of one of Iran's most celebrated sculptors: production and finishing of large-scale bronze and ceramic works, logistics, and materials sourcing.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <div class="entry-title">Architectural &amp; Interior Designer <span class="tagline">— Tehran</span></div>
+      <div class="entry-meta">2014 – 2017</div>
+    </div>
+    <ul>
+      <li>Led interior design for commercial and retail spaces; designed modular furniture systems, an early foundation in component-based design.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Skills</h2>
+  <div class="skill-row"><div class="skill-label">AI-Native Workflow</div><div class="skill-list">Claude Code · Agentic Development · AI Agent UX · Prompt-Driven Prototyping</div></div>
+  <div class="skill-row"><div class="skill-label">Design &amp; Interaction</div><div class="skill-list">Interaction Design · Design Systems · Motion Design · Information Architecture · State-Machine Design · Figma · Apple HIG · Accessibility (WCAG, Reduce Motion)</div></div>
+  <div class="skill-row"><div class="skill-label">Engineering</div><div class="skill-list">SwiftUI · Swift · HTML/CSS · JavaScript · React · Git · GitHub Actions (CI) · Motion-Capture Pipeline (Puppeteer, ffmpeg)</div></div>
+</section>
+
+<section>
+  <h2>Education &amp; Recognition</h2>
+  <div class="edu-row"><div class="edu-main"><b>MFA Design</b> — University of California, Davis</div><div class="edu-detail">2024</div></div>
+  <div class="edu-row"><div class="edu-main"><b>M.Arch &amp; B.Arch</b> — Azad University School of Architecture, Tehran</div><div class="edu-detail"></div></div>
+  <div class="edu-row"><div class="edu-main"><b>First Place, TADAGRANT</b> — TADAEX Digital Art Exhibition, Tehran</div><div class="edu-detail"></div></div>
+  <div class="edu-row"><div class="edu-main"><b>SEGD Member</b> — Society for Experiential Graphic Design</div><div class="edu-detail"></div></div>
+</section>
+
+</body>
+</html>
