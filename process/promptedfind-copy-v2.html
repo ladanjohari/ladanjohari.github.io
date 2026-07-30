@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompted Find · Ladan Johari</title>
+  <meta name="description" content="Prompted Find: semantic video navigation. Ask a question, jump to the moment. A new interaction pattern for long-form video." />
+  <meta name="robots" content="index, follow" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#F7F6F3" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#1A1A1A" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+  <meta property="og:title" content="Prompted Find · Ladan Johari" />
+  <meta property="og:description" content="Semantic video navigation. Ask a question, jump to the exact moment. A new interaction pattern for long-form content." />
+  <meta property="og:url" content="https://ladanjohari.com/projects/promptedfind.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://ladanjohari.com/assets/og-promptedfind.jpg" />
+  <link rel="canonical" href="https://ladanjohari.com/projects/promptedfind.html" />
+  <link rel="preload" href="/assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+  <style>
+    @font-face {
+      font-family: 'Geist'; font-style: normal; font-weight: 400 700; font-display: swap;
+      src: url('/assets/fonts/geist-latin.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: 'Geist'; font-style: normal; font-weight: 400 700; font-display: swap;
+      src: url('/assets/fonts/geist-latin-ext.woff2') format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F7F6F3; --ink: #111111; --mid: #6B6B6B;
+      --rule: #D4D3CF; --hover-row: #F0EFEC;
+      --accent: #0066FF; --accent-dim: #D6E4FF;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1A1A1A; --ink: #E8E8E8; --mid: #9A9A9A;
+        --rule: #333333; --hover-row: #242424;
+        --accent: #4D94FF; --accent-dim: #1A3A66;
+      }
+    }
+
+    html { background: var(--bg); }
+    body {
+      font-family: 'Geist', system-ui, -apple-system, sans-serif;
+      background: var(--bg); color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Nav ── */
+    .pf-nav {
+      max-width: 700px; margin: 0 auto;
+      padding: 40px 28px 0;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .pf-wordmark {
+      font-size: 0.875rem; font-weight: 600; letter-spacing: -0.02em;
+      color: var(--ink); text-decoration: none;
+    }
+
+    /* ── Case study header ── */
+    .cs-header { max-width: 700px; margin: 0 auto; padding: 48px 28px 0; }
+    .cs-eyebrow {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--mid); margin-bottom: 16px;
+    }
+    .cs-title {
+      font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700;
+      letter-spacing: -0.04em; line-height: 1.08; margin-bottom: 14px;
+    }
+    .cs-descriptor {
+      font-size: 1rem; color: var(--mid);
+      line-height: 1.65; margin-bottom: 20px; max-width: 520px;
+    }
+    .cs-meta {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 0.78rem; color: var(--mid);
+      padding-bottom: 40px; border-bottom: 1px solid var(--rule);
+      flex-wrap: wrap;
+    }
+    .cs-meta .sep { color: var(--rule); }
+    .cs-meta a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    @media (hover: hover) and (pointer: fine) {
+      .cs-meta a:hover { text-decoration: underline; }
+    }
+
+    /* ── Video hero ── */
+    .video-hero { max-width: 700px; margin: 0 auto; padding: 40px 28px 0; }
+    .video-wrap {
+      width: 100%; aspect-ratio: 16/9;
+      border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--rule); background: #0a0a0a;
+    }
+    .video-wrap video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .video-caption {
+      margin-top: 12px; font-size: 0.75rem;
+      color: var(--mid); text-align: center; letter-spacing: 0.01em;
+    }
+
+    /* ── Case study body ── */
+    .cs-body { max-width: 700px; margin: 0 auto; padding: 0 28px 64px; }
+    .cs-section { margin-top: 56px; }
+    .cs-label {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--mid);
+      padding-bottom: 14px; border-bottom: 1px solid var(--rule);
+      margin-bottom: 24px;
+    }
+
+    .lead-claim {
+      font-size: 1.05rem; font-weight: 600; letter-spacing: -0.015em;
+      color: var(--ink); line-height: 1.5; max-width: 560px; margin-bottom: 10px;
+    }
+    .cs-body-text {
+      font-size: 0.925rem; line-height: 1.8;
+      color: var(--mid); max-width: 560px;
+    }
+    .cs-body-text strong { color: var(--ink); font-weight: 600; }
+
+    /* ── Three frames ── */
+    .frames-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--rule);
+      border: 1px solid var(--rule); border-radius: 8px;
+      overflow: hidden; margin-top: 28px;
+    }
+    .frames-grid.flush { margin-top: 0; }
+    .frame-col { background: var(--bg); padding: 20px 18px 22px; }
+    .frame-num {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em;
+      color: var(--mid); margin-bottom: 6px; text-transform: uppercase;
+    }
+    .frame-title {
+      font-size: 0.875rem; font-weight: 600; letter-spacing: -0.01em;
+      margin-bottom: 6px; line-height: 1.35;
+    }
+    .frame-principle { font-size: 0.75rem; font-style: italic; color: var(--accent); margin-bottom: 10px; }
+    .frame-body { font-size: 0.8rem; color: var(--mid); line-height: 1.65; }
+
+    /* ── Semantic decomposition diagram ── */
+    .decomp { margin-top: 30px; }
+    .decomp-svg { width: 100%; height: auto; display: block; overflow: visible; }
+    .decomp-bar { fill: var(--hover-row); stroke: var(--rule); stroke-width: 1; }
+    .decomp-tag {
+      font-family: 'Geist', system-ui, sans-serif; font-size: 10px; font-weight: 600;
+      letter-spacing: 0.09em; text-transform: uppercase; fill: var(--mid);
+    }
+    .decomp-time { font-family: 'Geist', system-ui, sans-serif; font-size: 10px; fill: var(--mid); }
+    .decomp-time-end { text-anchor: end; }
+    .decomp-seg rect { fill: var(--hover-row); stroke: var(--rule); stroke-width: 1; }
+    .decomp-seg rect.is-match { fill: var(--accent-dim); stroke: var(--accent); }
+    .decomp-seg-label text {
+      font-family: 'Geist', system-ui, sans-serif; font-size: 10px; fill: var(--mid);
+    }
+    .decomp-seg-label text.is-match { fill: var(--accent); font-weight: 600; }
+    .decomp-caption {
+      margin-top: 14px; font-size: 0.75rem; color: var(--mid);
+      text-align: center; letter-spacing: 0.01em;
+    }
+    /* On narrow screens the diagram keeps its real size and scrolls sideways,
+       rather than shrinking the labels past legibility. */
+    .decomp-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    @media (max-width: 640px) {
+      .decomp-svg { min-width: 560px; }
+      .decomp-scroll { margin: 0 -20px; padding: 0 20px; }
+      .decomp-hint { display: block; }
+    }
+    .decomp-hint {
+      display: none; margin-top: 8px; font-size: 0.7rem;
+      color: var(--mid); letter-spacing: 0.04em; text-transform: uppercase;
+    }
+
+    .pattern-note {
+      margin-top: 28px;
+      border: 1px solid var(--accent-dim);
+      background: rgba(0, 102, 204, 0.03);
+      border-radius: 8px; padding: 18px 22px;
+    }
+    .pattern-note p { font-size: 13px; color: var(--mid); line-height: 1.75; }
+    .pattern-note strong { color: var(--ink); font-weight: 600; }
+
+    /* ── Stepper ── */
+    .stepper {
+      margin-top: 0;
+      border: 1px solid var(--rule); border-radius: 10px;
+      overflow: hidden; background: #0a0a0a;
+    }
+    .stepper-frame { position: relative; width: 100%; aspect-ratio: 1280/614; overflow: hidden; }
+    .stepper-frame img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; opacity: 0; transition: opacity 0.25s ease-out;
+    }
+    .stepper-frame img.is-active { opacity: 1; }
+    .stepper-spotlight { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+    .stepper-nav { display: flex; border-top: 1px solid var(--rule); background: var(--bg); }
+    .stepper-tab {
+      flex: 1; padding: 14px 12px;
+      border: none; background: none; cursor: pointer; text-align: left;
+      border-right: 1px solid var(--rule);
+      transition: background 0.15s ease-out, transform 0.16s ease-out;
+    }
+    .stepper-tab:last-child { border-right: none; }
+    /* Match the stepper's outer 10px radius so the active outline isn't clipped in the corners */
+    .stepper-tab:first-child { border-top-left-radius: 9px; border-bottom-left-radius: 9px; }
+    .stepper-tab:last-child { border-top-right-radius: 9px; border-bottom-right-radius: 9px; }
+    .stepper-tab:active { transform: scale(0.97); }
+    .stepper-tab.is-active { background: var(--hover-row); box-shadow: inset 0 0 0 2px var(--accent); }
+    .stepper-tab:focus-visible {
+      outline: none;
+      box-shadow: inset 0 0 0 2px var(--accent);
+      background: var(--hover-row);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .stepper-tab:hover { background: var(--hover-row); }
+    }
+    .stepper-tab-num {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+      color: var(--accent); display: block; margin-bottom: 5px;
+    }
+    .stepper-tab-title {
+      font-size: 13px; font-weight: 600; color: var(--ink);
+      display: block; line-height: 1.35; letter-spacing: -0.01em;
+    }
+    .stepper-tab-desc {
+      font-size: 12px; color: var(--mid); display: block;
+      line-height: 1.5; margin-top: 4px;
+    }
+
+    /* ── Reflection list ── */
+    .reflection-list { margin-top: 20px; list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .reflection-list li {
+      font-size: 13px; color: var(--mid); line-height: 1.7;
+      padding-left: 14px; border-left: 2px solid var(--rule);
+    }
+    .reflection-list li strong { color: var(--ink); font-weight: 600; }
+
+    /* ── Back to work ── */
+    .back-work {
+      max-width: 700px; margin: 0 auto;
+      padding: 0 28px 64px;
+    }
+    .back-work a {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.875rem; font-weight: 500;
+      color: var(--ink); text-decoration: none;
+      transition: color 0.15s ease-out;
+    }
+    .back-work a .arrow { color: var(--accent); transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1); }
+    @media (hover: hover) and (pointer: fine) {
+      .back-work a:hover { color: var(--accent); }
+      .back-work a:hover .arrow { transform: translateX(-3px); }
+    }
+
+    /* ── Footer ── */
+    .pf-footer {
+      max-width: 700px; margin: 0 auto;
+      border-top: 1px solid var(--rule);
+      padding: 26px 28px 52px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .pf-footer-copy { font-size: 0.76rem; color: var(--mid); }
+    .pf-footer-links { display: flex; gap: 22px; list-style: none; }
+    .pf-footer-links a {
+      font-size: 0.76rem; color: var(--mid);
+      text-decoration: none; transition: color 0.15s ease-out;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .pf-footer-links a:hover { color: var(--accent); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .stepper-frame img, .stepper-tab { transition: none; }
+      .back-work a .arrow { transition: none; }
+    }
+
+    @media (max-width: 540px) {
+      .pf-nav, .cs-header, .video-hero, .cs-body, .back-work { padding-left: 20px; padding-right: 20px; }
+      .pf-nav { padding-top: 28px; }
+      .frames-grid { grid-template-columns: 1fr; }
+      .stepper-nav { flex-direction: column; }
+      .stepper-tab { border-right: none; border-bottom: 1px solid var(--rule); }
+      .stepper-tab:first-child { border-top-left-radius: 9px; border-top-right-radius: 9px; border-bottom-left-radius: 0; }
+      .stepper-tab:last-child { border-bottom: none; border-top-right-radius: 0; border-bottom-left-radius: 9px; border-bottom-right-radius: 9px; }
+      .pf-footer { flex-direction: column; gap: 14px; align-items: flex-start; padding-left: 20px; padding-right: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="pf-nav">
+    <a class="pf-wordmark" href="/">Ladan Johari</a>
+  </nav>
+
+  <div class="cs-header">
+    <p class="cs-eyebrow">Semantic Decomposition &middot; Applied to Video &middot; Coded Prototype</p>
+    <h1 class="cs-title">Prompted Find</h1>
+    <p class="cs-descriptor">
+      Ask a question about a video. Land on the moment that answers it.
+    </p>
+    <div class="cs-meta">
+      <span>2025</span>
+      <span class="sep">/</span>
+      <span>Coded prototype &middot; HTML and JS</span>
+      <span class="sep">/</span>
+      <a href="https://github.com/ladanjohari/PromptedFind" target="_blank" rel="noopener">GitHub &rarr;</a>
+    </div>
+  </div>
+
+  <div class="video-hero">
+    <div class="video-wrap">
+      <video controls autoplay muted loop playsinline poster="../assets/video/promptedfind-poster.jpg" preload="metadata">
+        <source src="../assets/video/PromptedFind_web.mp4" type="video/mp4" />
+        Your browser does not support video.
+      </video>
+    </div>
+    <p class="video-caption">Working prototype, running on a 74&nbsp;minute NASA talk.</p>
+  </div>
+
+  <div class="cs-body">
+
+    <div class="cs-section">
+      <p class="cs-label">Why it matters</p>
+      <p class="lead-claim">A document has headings, paragraphs, a table of contents. Video only has time.</p>
+      <p class="cs-body-text">
+        So when the thing you need is somewhere inside 74 minutes, your only tool is the scrubber.
+        You drag, you guess, you overshoot, you drag back. Prompted Find replaces that with a question.
+        <br><br>
+        <strong>It&rsquo;s for anyone who has to pull information out of recorded talks:</strong>
+        students, researchers, and anyone catching up on a meeting they missed.
+      </p>
+    </div>
+
+    <div class="cs-section">
+      <p class="cs-label">The idea</p>
+      <p class="cs-body-text">
+        <strong>Semantic decomposition.</strong> Break long content into labeled units of meaning,
+        so a question can return a location instead of a summary.
+      </p>
+
+      <figure class="decomp">
+        <div class="decomp-scroll">
+        <svg class="decomp-svg" viewBox="0 0 640 168" role="img"
+             aria-label="A single unbroken bar of time above, and the same span below divided into six labeled segments, one of them highlighted.">
+          <text class="decomp-tag" x="0" y="12">One video. One dimension.</text>
+          <rect x="0" y="24" width="640" height="26" rx="4" class="decomp-bar" />
+          <text class="decomp-time" x="0" y="66">0:00</text>
+          <text class="decomp-time decomp-time-end" x="640" y="66">1:14:31</text>
+
+          <text class="decomp-tag" x="0" y="106">Same span, decomposed.</text>
+          <g class="decomp-seg">
+            <rect x="0"   y="118" width="96"  height="26" rx="4" />
+            <rect x="101" y="118" width="132" height="26" rx="4" />
+            <rect x="238" y="118" width="118" height="26" rx="4" class="is-match" />
+            <rect x="361" y="118" width="88"  height="26" rx="4" />
+            <rect x="454" y="118" width="104" height="26" rx="4" />
+            <rect x="563" y="118" width="77"  height="26" rx="4" />
+          </g>
+          <g class="decomp-seg-label">
+            <text x="4"   y="160">Mission</text>
+            <text x="105" y="160">Entry &amp; descent</text>
+            <text x="242" y="160" class="is-match">Heat shields</text>
+            <text x="365" y="160">Landing</text>
+            <text x="458" y="160">Human factors</text>
+            <text x="567" y="160">Q &amp; A</text>
+          </g>
+        </svg>
+        </div>
+        <p class="decomp-hint">Scroll to see the full span &rarr;</p>
+        <figcaption class="decomp-caption">Time on top. Meaning underneath.</figcaption>
+      </figure>
+
+      <p class="cs-body-text" style="margin-top:26px;">
+        A transcript gives you every word and no shape. A summary gives you shape and takes away the source.
+        Labeled segments give you both, and they give you somewhere to point.
+      </p>
+    </div>
+
+    <div class="cs-section">
+      <p class="cs-label">How it works</p>
+      <div class="stepper" id="stepper">
+        <div class="stepper-frame">
+          <img src="../assets/img/pf/step-01.jpg" alt="Ask panel open beside the playing video; the timeline below shows labeled semantic segments" class="is-active" data-step="0" />
+          <img src="../assets/img/pf/step-02.jpg" alt="A timeline segment hovered with its label tooltip; the AI summary for the playing range shown in the panel" data-step="1" />
+          <img src="../assets/img/pf/step-03.jpg" alt="Video jumped to the chosen moment; the AI summary stays open beside it" data-step="2" />
+          <svg class="stepper-spotlight" viewBox="0 0 1280 614" preserveAspectRatio="none">
+            <defs>
+              <mask id="spot-mask">
+                <rect width="1280" height="614" fill="white" />
+                <rect id="spot-window" x="828" y="48" width="285" height="270" rx="16" fill="black" />
+              </mask>
+            </defs>
+            <rect width="1280" height="614" fill="rgba(0,0,0,0.45)" mask="url(#spot-mask)" />
+            <rect id="spot-border" x="828" y="48" width="285" height="270" rx="16"
+              fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="1.5" />
+          </svg>
+        </div>
+        <div class="stepper-nav">
+          <button class="stepper-tab is-active" data-step="0">
+            <span class="stepper-tab-num">01</span>
+            <span class="stepper-tab-title">Ask</span>
+            <span class="stepper-tab-desc">The video keeps playing. The timeline breaks into labeled segments.</span>
+          </button>
+          <button class="stepper-tab" data-step="1">
+            <span class="stepper-tab-num">02</span>
+            <span class="stepper-tab-title">Aim</span>
+            <span class="stepper-tab-desc">Relevant ranges light up. Hover one to see the idea it holds.</span>
+          </button>
+          <button class="stepper-tab" data-step="2">
+            <span class="stepper-tab-num">03</span>
+            <span class="stepper-tab-title">Land</span>
+            <span class="stepper-tab-desc">The video seeks to the moment. The answer stays beside it, so the next question builds on the last.</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-section">
+      <p class="cs-label">Where else it works</p>
+      <p class="cs-body-text">
+        Anything long with no structure: podcasts, recorded meetings, interviews, legal proceedings.
+        The medium changes. The interaction stays the same.
+      </p>
+    </div>
+
+    <div class="cs-section">
+      <p class="cs-label">What&rsquo;s next</p>
+      <ul class="reflection-list">
+        <li><strong>Confidence on the timeline.</strong> Not every match is equally strong, and the timeline should show which are worth your time.</li>
+        <li><strong>Across a whole series.</strong> Ask once, search every video in a lecture series.</li>
+        <li><strong>Real embeddings.</strong> The interface is finished code. The understanding layer is simulated and drops out for real embeddings without changing a single interaction.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="back-work">
+    <a href="../index.html#work">
+      <span class="arrow">&larr;</span>
+      <span>Works</span>
+    </a>
+  </div>
+
+  <footer class="pf-footer">
+    <span class="pf-footer-copy">&copy; 2026 Ladan Johari</span>
+    <ul class="pf-footer-links">
+      <li><a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    (() => {
+      const stepper = document.getElementById('stepper');
+      if (!stepper) return;
+      const imgs = stepper.querySelectorAll('.stepper-frame img');
+      const tabs = stepper.querySelectorAll('.stepper-tab');
+      const spotWindow = document.getElementById('spot-window');
+      const spotBorder = document.getElementById('spot-border');
+      let current = 0;
+      let timer = null;
+      let hovered = false;
+
+      const spots = [
+        { x: 828, y: 48,  w: 285, h: 270, rx: 16 },
+        { x: 165, y: 425, w: 680, h: 92,  rx: 10 },
+        { x: 838, y: 168, w: 268, h: 148, rx: 14 }
+      ];
+
+      let anim = null;
+      let cur = { ...spots[0] };
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      function setSpot(s) {
+        [spotWindow, spotBorder].forEach(el => {
+          el.setAttribute('x', s.x);
+          el.setAttribute('y', s.y);
+          el.setAttribute('width', s.w);
+          el.setAttribute('height', s.h);
+          el.setAttribute('rx', s.rx);
+        });
+      }
+
+      function animateTo(target) {
+        if (anim) cancelAnimationFrame(anim);
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          cur = { ...target }; setSpot(cur); return;
+        }
+        const from = { ...cur };
+        const start = performance.now();
+        const dur = 400;
+        function tick(now) {
+          const t = Math.min((now - start) / dur, 1);
+          const ease = 1 - Math.pow(1 - t, 4);
+          cur = {
+            x: lerp(from.x, target.x, ease),
+            y: lerp(from.y, target.y, ease),
+            w: lerp(from.w, target.w, ease),
+            h: lerp(from.h, target.h, ease),
+            rx: lerp(from.rx, target.rx, ease)
+          };
+          setSpot(cur);
+          if (t < 1) anim = requestAnimationFrame(tick);
+        }
+        anim = requestAnimationFrame(tick);
+      }
+
+      function goTo(i) {
+        current = i;
+        imgs.forEach((img, idx) => img.classList.toggle('is-active', idx === i));
+        tabs.forEach((tab, idx) => tab.classList.toggle('is-active', idx === i));
+        animateTo(spots[i]);
+      }
+
+      function advance() { goTo((current + 1) % imgs.length); }
+      function startTimer() {
+        stopTimer();
+        if (hovered) return;
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          timer = setInterval(advance, 3500);
+        }
+      }
+      function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
+
+      /* Pause while the reader is studying the stepper */
+      stepper.addEventListener('mouseenter', () => { hovered = true; stopTimer(); });
+      stepper.addEventListener('mouseleave', () => { hovered = false; startTimer(); });
+      stepper.addEventListener('focusin', () => { hovered = true; stopTimer(); });
+      stepper.addEventListener('focusout', () => { hovered = false; startTimer(); });
+
+      tabs.forEach((tab, idx) => {
+        tab.addEventListener('click', () => { goTo(idx); startTimer(); });
+      });
+
+      new IntersectionObserver((entries) => {
+        entries.forEach(e => e.isIntersecting ? startTimer() : stopTimer());
+      }, { threshold: 0.3 }).observe(stepper);
+
+      setSpot(spots[0]);
+    })();
+  </script>
+</body>
+</html>
