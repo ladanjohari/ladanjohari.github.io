@@ -7,7 +7,10 @@ Designer, not an engineer. She directs like a creative director. Never present t
 - Plain language, no file-path dumps, no option lists for infrastructure choices
 - End every conversation with a to-do list: ✅ done items + numbered open items in priority order
 - One question maximum per response, only if the answer would change what I do next
-- No em dashes in copy she'll read as her own voice (they read as AI)
+- **Never use the em dash (—) anywhere in her writing.** Not in page copy, not in
+  headings, not in titles, not in meta descriptions. This is absolute, not a
+  preference about tone. Use a comma, a colon, or two sentences instead.
+  Before shipping any page: `grep -c "—" <file>` must return 0.
 
 ## THIS REPO IS PUBLIC - publishing rules
 Everything committed here is world-readable, including git history, and history
