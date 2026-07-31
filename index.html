@@ -145,6 +145,43 @@
     .about-text b { color: var(--ink); font-weight: 600; }
     .about-tease { font-size: 0.875rem; line-height: 1.8; color: var(--mid); max-width: 500px; text-wrap: pretty; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--rule); }
 
+
+    /* ── AboutStrip: the art band ── */
+    .about-strip {
+      display: grid; grid-template-columns: 1fr 200px;
+      gap: 28px; align-items: center;
+      padding: 26px 0; margin-bottom: 80px;
+      border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+    }
+    .about-strip .about-text { max-width: 420px; margin: 0; }
+    .about-strip .about-text a {
+      color: var(--ink); font-weight: 600; text-decoration: none;
+      border-bottom: 1px solid var(--rule); padding-bottom: 1px;
+      transition: color 0.15s ease-out, border-color 0.15s ease-out;
+    }
+    .album-link {
+      position: relative; display: block; width: 100%; aspect-ratio: 4 / 3;
+      border-radius: 8px; overflow: hidden;
+      border: 1px solid var(--rule); background: var(--hover-row);
+      justify-self: end;
+    }
+    .album-img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      opacity: 0; transition: opacity 0.6s ease-in-out;
+    }
+    .album-img.active { opacity: 1; }
+    @media (hover: hover) and (pointer: fine) {
+      .about-strip .about-text a:hover { color: var(--accent); border-color: var(--accent-dim); }
+      .album-link:hover { border-color: var(--mid); }
+    }
+    .album-link:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent); }
+    @media (prefers-reduced-motion: reduce) { .album-img { transition: none; } }
+    @media (max-width: 620px) {
+      .about-strip { grid-template-columns: 1fr; gap: 18px; }
+      .album-link { justify-self: stretch; }
+    }
+
     .elsewhere { padding: 0; margin-bottom: 12px; }
     .elsewhere-text { font-size: 0.925rem; line-height: 1.7; color: var(--mid); text-wrap: pretty; }
     .elsewhere-text a { color: var(--ink); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--rule); transition: color 0.12s, text-decoration-color 0.12s; }
@@ -403,21 +440,18 @@
     </div>
   </section>
 
-  <!-- RESTORE: delete the comment wrapper below to bring this section back -->
-  <!-- HIDDEN UNTIL READY : Art section
-  <section class="about-strip" aria-label="About">
+  <section class="about-strip reveal" aria-label="Art">
     <p class="about-text">
       <strong><a href="/art.html">Before all this, I made physical things &rarr;</a></strong><br><br>
       Architecture, sculpture, light installations. The same instinct, in bronze, ceramic, space, and now code.
     </p>
-    <a class="album-link" href="/art.html" id="albumLink" aria-label="More physical work">
-      <img class="album-img active" src="/assets/album/physical-1.jpg" alt="" loading="lazy">
-      <img class="album-img" src="/assets/album/physical-2.jpg" alt="" loading="lazy">
-      <img class="album-img" src="/assets/album/physical-3.jpg" alt="" loading="lazy">
-      <img class="album-img" src="/assets/album/physical-4.jpg" alt="" loading="lazy">
+    <a class="album-link" href="/art.html" id="albumLink" aria-label="See the art">
+      <img class="album-img active" src="/assets/album/strip-1.jpg" alt="Urban Lion, a glazed ceramic pipe form against a yellow ground" loading="lazy">
+      <img class="album-img" src="/assets/album/strip-2.jpg" alt="Edge, a bronze figure balanced on a stone base" loading="lazy">
+      <img class="album-img" src="/assets/album/strip-3.jpg" alt="Inner Conflict, pink pleated ceramic inside a bronze shell" loading="lazy">
+      <img class="album-img" src="/assets/album/strip-4.jpg" alt="Ladan Johari working on a ceramic form in a casting workshop" loading="lazy">
     </a>
   </section>
-  -->
 
   <section aria-label="About" style="margin-bottom:80px;">
     <h2 class="section-label reveal">About</h2>
@@ -548,5 +582,28 @@
 </script>
 
 
+
+  <script>
+    /* AboutStrip: the art photographs cross-fade while the band is on screen. */
+    (() => {
+      const link = document.getElementById('albumLink');
+      if (!link) return;
+      const imgs = [...link.querySelectorAll('.album-img')];
+      if (imgs.length < 2) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      let i = 0, timer = null;
+      const step = () => {
+        imgs[i].classList.remove('active');
+        i = (i + 1) % imgs.length;
+        imgs[i].classList.add('active');
+      };
+      new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting && !timer) timer = setInterval(step, 2600);
+          else if (!e.isIntersecting && timer) { clearInterval(timer); timer = null; }
+        });
+      }, { threshold: 0.3 }).observe(link);
+    })();
+  </script>
 </body>
 </html>
