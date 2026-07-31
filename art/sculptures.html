@@ -88,6 +88,16 @@
     }
     .piece-grid-jewelry .img-cell { aspect-ratio: 1; }
 
+    /* Masonry columns: photos keep their own proportions, no cropping */
+    .masonry { column-count: 3; column-gap: 8px; margin-top: 8px; }
+    .masonry img {
+      width: 100%; display: block; margin-bottom: 8px;
+      break-inside: avoid; -webkit-column-break-inside: avoid;
+      border-radius: 8px; border: 1px solid var(--rule); background: var(--hover);
+    }
+    .section-head { padding: 64px 0 0; border-top: 1px solid var(--rule); margin-top: 56px; }
+    .section-title { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.03em; text-align: center; margin-bottom: 28px; }
+
     /* Footer */
     .pf-footer { max-width: 700px; margin: 0 auto; border-top: 1px solid var(--rule); padding: 26px 28px 52px; display: flex; align-items: center; justify-content: space-between; }
     .pf-footer-copy { font-size: 0.76rem; color: var(--mid); }
@@ -102,6 +112,7 @@
       .piece-grid-asym { height: auto; grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
       .cell-tall-left, .cell-tall-right { grid-column: auto; grid-row: auto; }
       .piece-grid-3, .piece-grid-jewelry { grid-template-columns: repeat(2, 1fr); }
+      .masonry { column-count: 2; }
       .pf-footer { flex-direction: column; gap: 14px; align-items: flex-start; padding-left: 20px; padding-right: 20px; }
     }
   </style>
@@ -129,24 +140,17 @@
       <div class="piece-hero">
         <div class="piece-meta">
           <h2 class="piece-title">Urban Lion</h2>
-          <div class="piece-details">
-            Ceramic<br>
-            45 × 40 × 60 cm<br>
-            2018
-          </div>
-          <p class="piece-statement">
-            Ceramic pipe structures with <strong>colored circular openings</strong> — industrial infrastructure reimagined as organism. The city's hidden systems made visible and tactile. Color fires only where attention is needed.
-          </p>
+          <div class="piece-details">Ceramic<br>45 &times; 40 &times; 60 cm<br>2018</div>
         </div>
         <div class="img-main">
-          <div class="img-placeholder">urban-lion-hero.jpg</div>
+          <img src="/art/img/urban-lion-03.jpg" alt="Detail of the blue turbine mouth of Urban Lion" loading="lazy" />
         </div>
       </div>
       <div class="piece-grid-asym">
-        <div class="img-cell cell-tall-left"><div class="img-placeholder">01</div></div>
-        <div class="img-cell cell-mid-top"><div class="img-placeholder">02</div></div>
-        <div class="img-cell cell-mid-bot"><div class="img-placeholder">03</div></div>
-        <div class="img-cell cell-tall-right"><div class="img-placeholder">04</div></div>
+        <div class="img-cell cell-tall-left"><img src="/art/img/urban-lion-02.jpg" alt="Urban Lion whole, on a white plinth" loading="lazy" /></div>
+        <div class="img-cell cell-mid-top"><img src="/art/img/urban-lion-01.jpg" alt="Urban Lion against a yellow ground" loading="lazy" /></div>
+        <div class="img-cell cell-mid-bot"><img src="/art/img/urban-lion-04.jpg" alt="Detail of the yellow turbine mouth" loading="lazy" /></div>
+        <div class="img-cell cell-tall-right"><img src="/art/img/urban-lion-05.jpg" alt="Detail of the red turbine mouth" loading="lazy" /></div>
       </div>
     </div>
 
@@ -155,23 +159,16 @@
       <div class="piece-hero">
         <div class="piece-meta">
           <h2 class="piece-title">Edge</h2>
-          <div class="piece-details">
-            Bronze<br>
-            45 × 40 × 60 cm<br>
-            2017
-          </div>
-          <p class="piece-statement">
-            A figure at the limit of balance — <strong>bronze holding a moment of pure tension</strong>. The body as architecture. Every gram of material placed in service of a single instant.
-          </p>
+          <div class="piece-details">Bronze<br>45 &times; 40 &times; 60 cm<br>2017</div>
         </div>
         <div class="img-main">
-          <div class="img-placeholder">edge-hero.jpg</div>
+          <img src="/art/img/edge-02.jpg" alt="Edge: a bronze figure tipping forward on a long black base" loading="lazy" />
         </div>
       </div>
       <div class="piece-grid-3">
-        <div class="img-cell"><div class="img-placeholder">01</div></div>
-        <div class="img-cell"><div class="img-placeholder">02</div></div>
-        <div class="img-cell"><div class="img-placeholder">03</div></div>
+        <div class="img-cell"><img src="/art/img/edge-01.jpg" alt="Edge balanced on a black cube" loading="lazy" /></div>
+        <div class="img-cell"><img src="/art/img/edge-04.jpg" alt="Edge installed on a plinth in a gallery" loading="lazy" /></div>
+        <div class="img-cell"><img src="/art/img/edge-03.jpg" alt="Edge seen from another angle" loading="lazy" /></div>
       </div>
     </div>
 
@@ -180,23 +177,16 @@
       <div class="piece-hero">
         <div class="piece-meta">
           <h2 class="piece-title">Inner Conflict</h2>
-          <div class="piece-details">
-            Bronze and Ceramic<br>
-            15 × 18 × 50 cm<br>
-            2018
-          </div>
-          <p class="piece-statement">
-            <strong>Bronze exterior, ceramic interior</strong> — two materials that don't agree with each other, held together by the form. Structural permanence wrapped around organic softness. The tension is the content.
-          </p>
+          <div class="piece-details">Bronze and ceramic<br>15 &times; 18 &times; 50 cm<br>2018</div>
         </div>
         <div class="img-main">
-          <div class="img-placeholder">inner-conflict-hero.jpg</div>
+          <img src="/art/img/inner-conflict-01.jpg" alt="Detail of the pink pleated ceramic interior of Inner Conflict" loading="lazy" />
         </div>
       </div>
       <div class="piece-grid-3">
-        <div class="img-cell"><div class="img-placeholder">01</div></div>
-        <div class="img-cell"><div class="img-placeholder">02</div></div>
-        <div class="img-cell"><div class="img-placeholder">03</div></div>
+        <div class="img-cell"><img src="/art/img/inner-conflict-04.jpg" alt="Inner Conflict with three pink coils through the shell" loading="lazy" /></div>
+        <div class="img-cell"><img src="/art/img/inner-conflict-03.jpg" alt="Inner Conflict from the front" loading="lazy" /></div>
+        <div class="img-cell"><img src="/art/img/inner-conflict-02.jpg" alt="Inner Conflict from the side, showing the open slot" loading="lazy" /></div>
       </div>
     </div>
 
@@ -205,53 +195,61 @@
       <div class="piece-hero">
         <div class="piece-meta">
           <h2 class="piece-title">Inverted City</h2>
-          <div class="piece-details">
-            Bronze<br>
-            17 × 25 × 19 cm<br>
-            2017
-          </div>
-          <p class="piece-statement">
-            Urban geometry cast in bronze — <strong>a city seen from below, or from above, depending on how you hold it</strong>. Architecture distilled to its structural logic. No facades, no ornament. Just the skeleton of how cities hold themselves together.
-          </p>
+          <div class="piece-details">Bronze<br>17 &times; 25 &times; 19 cm<br>2017</div>
         </div>
         <div class="img-main">
-          <div class="img-placeholder">inverted-city-hero.jpg</div>
+          <img src="/art/img/inverted-city-02.jpg" alt="Inverted City on a plinth in a gallery" loading="lazy" />
         </div>
       </div>
-      <div class="piece-grid-2">
-        <div class="img-cell"><div class="img-placeholder">01</div></div>
-        <div class="img-cell"><div class="img-placeholder">02</div></div>
+      <div class="img-main" style="margin-top:8px;">
+        <img src="/art/img/inverted-city-01.jpg" alt="Inverted City: a dense bronze block of stacked architectural forms on a steel base" loading="lazy" />
       </div>
     </div>
 
-    <!-- ── Contemporary Jewelry ── -->
+    <!-- ── Weightlessness ── -->
     <div class="piece">
       <div class="piece-hero">
         <div class="piece-meta">
-          <h2 class="piece-title">Contemporary Jewelry</h2>
-          <div class="piece-details">
-            Gold<br>
-            Wearable sculpture<br>
-            2018
-          </div>
-          <p class="piece-statement">
-            Minimal gold line forms worn against skin and earth. <strong>The body as the final material</strong> — the jewelry only exists completely when worn. Same question as every other piece: what is the minimum form that holds the most presence?
-          </p>
+          <h2 class="piece-title">Weightlessness</h2>
+          <div class="piece-details">Bronze<br>22 &times; 28 &times; 23 cm<br>2017</div>
         </div>
         <div class="img-main">
-          <div class="img-placeholder">jewelry-hero.jpg</div>
+          <img src="/art/img/weightlessness-01.jpg" alt="Weightlessness: a small bronze form suspended from a thin arm above a black base" loading="lazy" />
         </div>
       </div>
-      <div class="piece-grid-jewelry">
-        <div class="img-cell"><div class="img-placeholder">01</div></div>
-        <div class="img-cell"><div class="img-placeholder">02</div></div>
-        <div class="img-cell"><div class="img-placeholder">03</div></div>
-        <div class="img-cell"><div class="img-placeholder">04</div></div>
-        <div class="img-cell"><div class="img-placeholder">05</div></div>
-        <div class="img-cell"><div class="img-placeholder">06</div></div>
-        <div class="img-cell"><div class="img-placeholder">07</div></div>
-        <div class="img-cell"><div class="img-placeholder">08</div></div>
-        <div class="img-cell"><div class="img-placeholder">09</div></div>
+      <div class="piece-grid-2">
+        <div class="img-cell"><img src="/art/img/weightlessness-02.jpg" alt="Weightlessness seen from the side" loading="lazy" /></div>
+        <div class="img-cell"><img src="/art/img/weightlessness-03.jpg" alt="Weightlessness held in two hands, showing its scale" loading="lazy" /></div>
+      </div>
+    </div>
+
+    <!-- ── Wearable Sculptures ── -->
+    <div class="section-head">
+      <h2 class="section-title">Wearable Sculptures</h2>
+      <div class="masonry">
+        <img src="/art/img/wearable-04.jpg" alt="A gold figure pendant on a long chain, against white" loading="lazy" />
+        <img src="/art/img/wearable-03.jpg" alt="The figure pendant worn against a black dress" loading="lazy" />
+        <img src="/art/img/wearable-05.jpg" alt="Architectural gold rings worn across the fingers" loading="lazy" />
+        <img src="/art/img/wearable-06.jpg" alt="Two gold pieces laid flat, showing their built forms" loading="lazy" />
+        <img src="/art/img/jewelry-07.jpg" alt="A raised hand wearing a slim gold ring" loading="lazy" />
+        <img src="/art/img/wearable-02.jpg" alt="A speckled white cuff worn along the forearm" loading="lazy" />
+        <img src="/art/img/wearable-01.jpg" alt="The cuff worn against a deep red sleeve" loading="lazy" />
+      </div>
+    </div>
+
+    <!-- ── Contemporary Jewelries ── -->
+    <div class="section-head">
+      <h2 class="section-title">Contemporary Jewelries</h2>
+      <div class="masonry">
+        <img src="/art/img/jewelry-03.jpg" alt="A thin gold bangle worn at the wrist, against an earth wall" loading="lazy" />
+        <img src="/art/img/jewelry-06.jpg" alt="Two hands resting on cracked earth, both wearing line rings" loading="lazy" />
+        <img src="/art/img/jewelry-09.jpg" alt="A hand at the pocket wearing a fine gold ring" loading="lazy" />
+        <img src="/art/img/jewelry-08.jpg" alt="An open palm with a bar ring across two fingers" loading="lazy" />
+        <img src="/art/img/jewelry-04.jpg" alt="A hand pressed flat on an earth wall, wearing stacked rings" loading="lazy" />
+        <img src="/art/img/jewelry-05.jpg" alt="A hand at the hip, gold line rings across the fingers" loading="lazy" />
+        <img src="/art/img/jewelry-02.jpg" alt="A hand on a textured earth wall, rings catching the light" loading="lazy" />
+        <img src="/art/img/jewelry-10.jpg" alt="An outstretched arm and hand wearing a single ring" loading="lazy" />
+        <img src="/art/img/jewelry-01.jpg" alt="A hand at the hip wearing a fine gold ring" loading="lazy" />
       </div>
     </div>
 
