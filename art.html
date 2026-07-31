@@ -205,6 +205,40 @@
       text-transform: uppercase; color: var(--rule);
     }
 
+    /* ── Old-site piece layouts (text left, hero right, then the fixed grids) ── */
+    .sc-piece { padding: 48px 0 0; }
+    .sc-piece + .sc-piece { border-top: 1px solid var(--rule); margin-top: 48px; }
+    .sc-hero { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; margin-bottom: 20px; }
+    .sc-meta { padding-top: 6px; }
+    .sc-title { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.025em; color: var(--ink); margin-bottom: 10px; line-height: 1.2; }
+    .sc-details { font-size: 0.78rem; color: var(--mid); line-height: 1.9; }
+    .sc-main { border-radius: 8px; overflow: hidden; border: 1px solid var(--rule); background: var(--hover); }
+    .sc-main img { width: 100%; display: block; }
+
+    .sc-grid-asym {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr;
+      gap: 8px; height: 360px;
+    }
+    .sc-tall-left  { grid-column: 1; grid-row: 1 / 3; }
+    .sc-mid-top    { grid-column: 2; grid-row: 1; }
+    .sc-mid-bot    { grid-column: 2; grid-row: 2; }
+    .sc-tall-right { grid-column: 3; grid-row: 1 / 3; }
+    .sc-cell { border-radius: 8px; overflow: hidden; border: 1px solid var(--rule); background: var(--hover); height: 100%; }
+    .sc-cell img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .sc-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .sc-grid-3 .sc-cell { aspect-ratio: 3/4; }
+    .sc-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .sc-grid-2 .sc-cell { aspect-ratio: 4/3; }
+
+    /* Masonry: every photo keeps its own proportions, nothing is cropped */
+    .sc-masonry { column-count: 3; column-gap: 8px; margin-top: 8px; }
+    .sc-masonry img {
+      width: 100%; display: block; margin-bottom: 8px;
+      break-inside: avoid; -webkit-column-break-inside: avoid;
+      border-radius: 8px; border: 1px solid var(--rule); background: var(--hover);
+    }
+
     /* ── Piece galleries ── */
     .piece { margin-bottom: 72px; scroll-margin-top: 24px; }
     .piece-name {
@@ -344,62 +378,81 @@
     </div>
   </div>
 
-  <!-- ── The pieces ── -->
+  <!-- ── The pieces, in the arrangement from the original site ── -->
   <div class="work-section">
     <p class="work-section-label">Sculptures</p>
     <p class="section-note">I work primarily in bronze and ceramic, combining the permanence of metal with the tactile warmth of clay. My forms draw from architectural geometry, cultural heritage, and personal narratives, balancing bold structure with subtle emotion.</p>
 
-    <article class="piece" id="urban-lion">
-      <h2 class="piece-name">Urban Lion</h2>
-      <p class="piece-spec"><span>Ceramic</span><span>45 &times; 40 &times; 60 cm</span><span>2018</span></p>
-      <div class="piece-hero"><img src="/art/img/urban-lion-01.jpg" alt="Urban Lion against a yellow ground" loading="lazy" /></div>
-      <div class="piece-row">
-        <img src="/art/img/urban-lion-02.jpg" alt="Urban Lion whole, on a white plinth" loading="lazy" />
-        <img src="/art/img/urban-lion-03.jpg" alt="Detail of the blue turbine mouth" loading="lazy" />
-        <img src="/art/img/urban-lion-04.jpg" alt="Detail of the yellow turbine mouth" loading="lazy" />
-        <img src="/art/img/urban-lion-05.jpg" alt="Detail of the red turbine mouth" loading="lazy" />
-        <img src="/art/img/urban-lion-06.jpg" alt="A second view of the blue turbine mouth" loading="lazy" />
+    <article class="sc-piece" id="urban-lion">
+      <div class="sc-hero">
+        <div class="sc-meta">
+          <h2 class="sc-title">Urban Lion</h2>
+          <div class="sc-details">Ceramic<br>45 &times; 40 &times; 60 cm<br>2018</div>
+        </div>
+        <div class="sc-main"><img src="/art/img/urban-lion-03.jpg" alt="Detail of the blue turbine mouth of Urban Lion" loading="lazy" /></div>
+      </div>
+      <div class="sc-grid-asym">
+        <div class="sc-cell sc-tall-left"><img src="/art/img/urban-lion-02.jpg" alt="Urban Lion whole, on a white plinth" loading="lazy" /></div>
+        <div class="sc-cell sc-mid-top"><img src="/art/img/urban-lion-01.jpg" alt="Urban Lion against a yellow ground" loading="lazy" /></div>
+        <div class="sc-cell sc-mid-bot"><img src="/art/img/urban-lion-04.jpg" alt="Detail of the yellow turbine mouth" loading="lazy" /></div>
+        <div class="sc-cell sc-tall-right"><img src="/art/img/urban-lion-05.jpg" alt="Detail of the red turbine mouth" loading="lazy" /></div>
       </div>
     </article>
 
-    <article class="piece" id="edge">
-      <h2 class="piece-name">Edge</h2>
-      <p class="piece-spec"><span>Bronze</span><span>45 &times; 40 &times; 60 cm</span><span>2017</span></p>
-      <div class="piece-hero"><img src="/art/img/edge-01.jpg" alt="Edge, a bronze figure balanced upside down on a stone base" loading="lazy" /></div>
-      <div class="piece-row wide">
-        <img src="/art/img/edge-02.jpg" alt="Edge from the side, tipping forward" loading="lazy" />
-        <img src="/art/img/edge-03.jpg" alt="Edge from another angle" loading="lazy" />
-        <img src="/art/img/edge-04.jpg" alt="Edge installed on a plinth in a gallery" loading="lazy" />
+    <article class="sc-piece" id="edge">
+      <div class="sc-hero">
+        <div class="sc-meta">
+          <h2 class="sc-title">Edge</h2>
+          <div class="sc-details">Bronze<br>45 &times; 40 &times; 60 cm<br>2017</div>
+        </div>
+        <div class="sc-main"><img src="/art/img/edge-02.jpg" alt="Edge: a bronze figure tipping forward on a long black base" loading="lazy" /></div>
+      </div>
+      <div class="sc-grid-3">
+        <div class="sc-cell"><img src="/art/img/edge-01.jpg" alt="Edge balanced on a black cube" loading="lazy" /></div>
+        <div class="sc-cell"><img src="/art/img/edge-04.jpg" alt="Edge installed on a plinth in a gallery" loading="lazy" /></div>
+        <div class="sc-cell"><img src="/art/img/edge-03.jpg" alt="Edge seen from another angle" loading="lazy" /></div>
       </div>
     </article>
 
-    <article class="piece" id="inner-conflict">
-      <h2 class="piece-name">Inner Conflict</h2>
-      <p class="piece-spec"><span>Bronze and ceramic</span><span>15 &times; 18 &times; 50 cm</span><span>2018</span></p>
-      <div class="piece-hero"><img src="/art/img/inner-conflict-01.jpg" alt="A detail of the pink pleated ceramic interior" loading="lazy" /></div>
-      <div class="piece-row">
-        <img src="/art/img/inner-conflict-02.jpg" alt="Inner Conflict standing whole" loading="lazy" />
-        <img src="/art/img/inner-conflict-03.jpg" alt="Inner Conflict from the front" loading="lazy" />
-        <img src="/art/img/inner-conflict-04.jpg" alt="Inner Conflict from a third angle" loading="lazy" />
+    <article class="sc-piece" id="inner-conflict">
+      <div class="sc-hero">
+        <div class="sc-meta">
+          <h2 class="sc-title">Inner Conflict</h2>
+          <div class="sc-details">Bronze and ceramic<br>15 &times; 18 &times; 50 cm<br>2018</div>
+        </div>
+        <div class="sc-main"><img src="/art/img/inner-conflict-01.jpg" alt="Detail of the pink pleated ceramic interior of Inner Conflict" loading="lazy" /></div>
+      </div>
+      <div class="sc-grid-3">
+        <div class="sc-cell"><img src="/art/img/inner-conflict-04.jpg" alt="Inner Conflict with three pink coils through the shell" loading="lazy" /></div>
+        <div class="sc-cell"><img src="/art/img/inner-conflict-03.jpg" alt="Inner Conflict from the front" loading="lazy" /></div>
+        <div class="sc-cell"><img src="/art/img/inner-conflict-02.jpg" alt="Inner Conflict from the side, showing the open slot" loading="lazy" /></div>
       </div>
     </article>
 
-    <article class="piece" id="inverted-city">
-      <h2 class="piece-name">Inverted City</h2>
-      <p class="piece-spec"><span>Bronze</span><span>17 &times; 25 &times; 19 cm</span><span>2017</span></p>
-      <div class="piece-hero"><img src="/art/img/inverted-city-01.jpg" alt="Inverted City, a dense block of stacked bronze architecture" loading="lazy" /></div>
-      <div class="piece-row wide">
-        <img src="/art/img/inverted-city-02.jpg" alt="Inverted City installed on a white plinth" loading="lazy" />
+    <article class="sc-piece" id="inverted-city">
+      <div class="sc-hero">
+        <div class="sc-meta">
+          <h2 class="sc-title">Inverted City</h2>
+          <div class="sc-details">Bronze<br>17 &times; 25 &times; 19 cm<br>2017</div>
+        </div>
+        <div class="sc-main"><img src="/art/img/inverted-city-02.jpg" alt="Inverted City on a plinth in a gallery" loading="lazy" /></div>
+      </div>
+      <div class="sc-main" style="margin-top:8px;">
+        <img src="/art/img/inverted-city-01.jpg" alt="Inverted City: a dense bronze block of stacked architectural forms on a steel base" loading="lazy" />
       </div>
     </article>
 
-    <article class="piece" id="weightlessness">
-      <h2 class="piece-name">Weightlessness</h2>
-      <p class="piece-spec"><span>Bronze</span><span>22 &times; 28 &times; 23 cm</span><span>2017</span></p>
-      <div class="piece-hero"><img src="/art/img/weightlessness-01.jpg" alt="Weightlessness, a small bronze figure suspended from a thin arm" loading="lazy" /></div>
-      <div class="piece-row wide">
-        <img src="/art/img/weightlessness-02.jpg" alt="Weightlessness against a white ground" loading="lazy" />
-        <img src="/art/img/weightlessness-03.jpg" alt="Weightlessness held in two hands, showing its scale" loading="lazy" />
+    <article class="sc-piece" id="weightlessness">
+      <div class="sc-hero">
+        <div class="sc-meta">
+          <h2 class="sc-title">Weightlessness</h2>
+          <div class="sc-details">Bronze<br>22 &times; 28 &times; 23 cm<br>2017</div>
+        </div>
+        <div class="sc-main"><img src="/art/img/weightlessness-01.jpg" alt="Weightlessness: a small bronze form suspended from a thin arm above a black base" loading="lazy" /></div>
+      </div>
+      <div class="sc-grid-2">
+        <div class="sc-cell"><img src="/art/img/weightlessness-02.jpg" alt="Weightlessness seen from the side" loading="lazy" /></div>
+        <div class="sc-cell"><img src="/art/img/weightlessness-03.jpg" alt="Weightlessness held in two hands, showing its scale" loading="lazy" /></div>
       </div>
     </article>
   </div>
@@ -407,28 +460,28 @@
   <div class="work-section" id="jewelry">
     <p class="work-section-label">Wearable sculptures</p>
     <p class="section-note">The same forms, made small enough to be carried on the body.</p>
-    <div class="plate-grid">
-      <img src="/art/img/wearable-01.jpg" alt="A speckled white cuff worn on the wrist" loading="lazy" />
-      <img src="/art/img/wearable-02.jpg" alt="The cuff seen along the forearm" loading="lazy" />
-      <img src="/art/img/wearable-03.jpg" alt="A gold figure pendant on a long chain" loading="lazy" />
-      <img src="/art/img/wearable-04.jpg" alt="The figure pendant against a white ground" loading="lazy" />
+    <div class="sc-masonry">
+      <img src="/art/img/wearable-04.jpg" alt="A gold figure pendant on a long chain, against white" loading="lazy" />
+      <img src="/art/img/wearable-03.jpg" alt="The figure pendant worn against a black dress" loading="lazy" />
       <img src="/art/img/wearable-05.jpg" alt="Architectural gold rings worn across the fingers" loading="lazy" />
       <img src="/art/img/wearable-06.jpg" alt="Two gold pieces laid flat, showing their built forms" loading="lazy" />
+      <img src="/art/img/jewelry-07.jpg" alt="A raised hand wearing a slim gold ring" loading="lazy" />
+      <img src="/art/img/wearable-02.jpg" alt="A speckled white cuff worn along the forearm" loading="lazy" />
+      <img src="/art/img/wearable-01.jpg" alt="The cuff worn against a deep red sleeve" loading="lazy" />
     </div>
 
-    <p class="work-section-label">Contemporary jewelry</p>
+    <p class="work-section-label" style="margin-top:56px;">Contemporary jewelry</p>
     <p class="section-note">Minimal gold line forms, photographed against skin, cloth and earth.</p>
-    <div class="plate-grid">
-      <img src="/art/img/jewelry-01.jpg" alt="A hand at the hip wearing a fine gold ring" loading="lazy" />
-      <img src="/art/img/jewelry-02.jpg" alt="A hand pressed flat against an earth wall, rings catching the light" loading="lazy" />
-      <img src="/art/img/jewelry-03.jpg" alt="A thin gold bangle held against the wrist" loading="lazy" />
-      <img src="/art/img/jewelry-04.jpg" alt="Fingers spread on an earth wall, wearing stacked rings" loading="lazy" />
-      <img src="/art/img/jewelry-05.jpg" alt="A hand in a pocket, gold line rings across the fingers" loading="lazy" />
-      <img src="/art/img/jewelry-06.jpg" alt="Two hands resting on earth, both wearing line rings" loading="lazy" />
-      <img src="/art/img/jewelry-07.jpg" alt="A raised hand wearing a slim gold ring" loading="lazy" />
+    <div class="sc-masonry">
+      <img src="/art/img/jewelry-03.jpg" alt="A thin gold bangle worn at the wrist, against an earth wall" loading="lazy" />
+      <img src="/art/img/jewelry-06.jpg" alt="Two hands resting on cracked earth, both wearing line rings" loading="lazy" />
+      <img src="/art/img/jewelry-09.jpg" alt="A hand at the pocket wearing a fine gold ring" loading="lazy" />
       <img src="/art/img/jewelry-08.jpg" alt="An open palm with a bar ring across two fingers" loading="lazy" />
-      <img src="/art/img/jewelry-09.jpg" alt="A hand at the waist wearing a fine gold ring" loading="lazy" />
+      <img src="/art/img/jewelry-04.jpg" alt="A hand pressed flat on an earth wall, wearing stacked rings" loading="lazy" />
+      <img src="/art/img/jewelry-05.jpg" alt="A hand at the hip, gold line rings across the fingers" loading="lazy" />
+      <img src="/art/img/jewelry-02.jpg" alt="A hand on a textured earth wall, rings catching the light" loading="lazy" />
       <img src="/art/img/jewelry-10.jpg" alt="An outstretched arm and hand wearing a single ring" loading="lazy" />
+      <img src="/art/img/jewelry-01.jpg" alt="A hand at the hip wearing a fine gold ring" loading="lazy" />
     </div>
   </div>
 
