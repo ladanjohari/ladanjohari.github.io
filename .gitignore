@@ -10,3 +10,6 @@ assets/resume/Ladan-Johari-Resume-*.pdf
 # Build + capture artifacts
 node_modules/
 assets/screen recordings/
+
+# Art source files: originals + reference PDF stay local, only optimized art/img is published
+art/images/

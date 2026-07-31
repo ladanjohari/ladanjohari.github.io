@@ -58,6 +58,22 @@ Output sizes:
 - Thumbnail GIF: serve at 360×225, CSS scales to display size (browser scaling is sharper than ffmpeg re-encode)
 - Hover preview MP4: 360×225, h264 crf18, `scale=-2` (h264 needs even dimensions)
 
+## Adding a new project (two steps, nothing else)
+1. **The page.** Copy `projects/_template.html` to `projects/<slug>.html` and fill in
+   every `{{PLACEHOLDER}}`. Put the three interaction stills in `assets/img/<slug>/`.
+   The template's structure is the locked pattern, proven on PromptedFind:
+   claim → the interaction as hero → why it matters + who it's for → the idea
+   (named, then shown as a diagram) → optional where else → what's next.
+   Rules baked in: no keyword eyebrow, never open on a title card, step captions
+   describe only what that still actually shows, "what's next" reads as capability
+   not apology.
+2. **The row.** Copy an existing `<a class="work-row">` block in `index.html`,
+   swap the thumbnail SVG, hover-preview MP4 paths, title, description, tags,
+   year, and href.
+
+Reference implementation: `projects/promptedfind.html`. Archived earlier versions
+live in `process/` and must not be deleted.
+
 ## Project pages
 - PromptedFind: `projects/promptedfind.html`
 - Session Indicator: `projects/session-indicator.html` (redirect stub → session-indicator.ladanjohari.com)
