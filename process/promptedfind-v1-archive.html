@@ -143,56 +143,6 @@
     .frame-principle { font-size: 0.75rem; font-style: italic; color: var(--accent); margin-bottom: 10px; }
     .frame-body { font-size: 0.8rem; color: var(--mid); line-height: 1.65; }
 
-    /* ── Semantic decomposition diagram ── */
-    .decomp { margin-top: 30px; }
-    .decomp-svg { width: 100%; height: auto; display: block; overflow: visible; }
-    /* Line weight carries the hierarchy: hairline ruler, 1px cards,
-       filled pills, heaviest stroke on the playhead. */
-    .decomp-bar { fill: var(--hover-row); stroke: var(--rule); stroke-width: 1; }
-    .decomp-tag {
-      font-family: 'Geist', system-ui, sans-serif; font-size: 9.5px; font-weight: 600;
-      letter-spacing: 0.1em; text-transform: uppercase; fill: var(--mid);
-    }
-    .decomp-time { font-family: 'Geist', system-ui, sans-serif; font-size: 10px; fill: var(--mid); }
-    .decomp-time-end { text-anchor: end; }
-
-    .decomp-ruler text { font-family: 'Geist', system-ui, sans-serif; font-size: 9px; fill: var(--mid); }
-    .decomp-ruler line { stroke: var(--rule); stroke-width: 0.5; }
-
-    .decomp-pill rect { fill: var(--accent-dim); }
-    .decomp-pill rect.is-match { fill: var(--accent); }
-
-    .decomp-card rect { fill: none; stroke: var(--rule); stroke-width: 1; }
-    .decomp-card rect.is-match { fill: var(--hover-row); stroke: var(--accent); }
-    .decomp-card-title text {
-      font-family: 'Geist', system-ui, sans-serif; font-size: 11px;
-      font-weight: 600; fill: var(--ink); letter-spacing: -0.01em;
-    }
-    .decomp-card-title text.is-match { fill: var(--accent); }
-    .decomp-card-range text { font-family: 'Geist', system-ui, sans-serif; font-size: 9.5px; fill: var(--mid); }
-
-    .decomp-playhead line { stroke: var(--ink); stroke-width: 1.75; }
-    .decomp-playhead circle { fill: var(--ink); }
-
-    .decomp-track { fill: var(--rule); }
-    .decomp-progress { fill: var(--accent); }
-    .decomp-caption {
-      margin-top: 14px; font-size: 0.75rem; color: var(--mid);
-      text-align: center; letter-spacing: 0.01em;
-    }
-    /* On narrow screens the diagram keeps its real size and scrolls sideways,
-       rather than shrinking the labels past legibility. */
-    .decomp-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    @media (max-width: 640px) {
-      .decomp-svg { min-width: 560px; }
-      .decomp-scroll { margin: 0 -20px; padding: 0 20px; }
-      .decomp-hint { display: block; }
-    }
-    .decomp-hint {
-      display: none; margin-top: 8px; font-size: 0.7rem;
-      color: var(--mid); letter-spacing: 0.04em; text-transform: uppercase;
-    }
-
     .pattern-note {
       margin-top: 28px;
       border: 1px solid var(--accent-dim);
@@ -315,167 +265,141 @@
   </nav>
 
   <div class="cs-header">
+    <p class="cs-eyebrow">Semantic Decomposition &middot; Applied to Video &middot; Coded Prototype</p>
     <h1 class="cs-title">Prompted Find</h1>
     <p class="cs-descriptor">
-      Ask a question about a video. Land on the moment that answers it.
+      Ask a question about a video. Jump to the exact moment that answers it.
     </p>
     <div class="cs-meta">
       <span>2025</span>
       <span class="sep">/</span>
-      <span>Coded prototype &middot; HTML and JS</span>
-      <span class="sep">/</span>
-      <a href="../assets/video/PromptedFind_web.mp4" target="_blank" rel="noopener">Watch the full demo &rarr;</a>
+      <span>Coded prototype &middot; HTML/JS</span>
       <span class="sep">/</span>
       <a href="https://github.com/ladanjohari/PromptedFind" target="_blank" rel="noopener">GitHub &rarr;</a>
     </div>
   </div>
 
   <div class="video-hero">
-    <div class="stepper" id="stepper">
-      <div class="stepper-frame">
-        <img src="../assets/img/pf/step-01.jpg" alt="Ask panel open beside the playing video; the timeline below shows labeled semantic segments" class="is-active" data-step="0" />
-        <img src="../assets/img/pf/step-02.jpg" alt="A timeline segment hovered with its label tooltip; the AI summary for the playing range shown in the panel" data-step="1" />
-        <img src="../assets/img/pf/step-03.jpg" alt="Video jumped to the chosen moment; the AI summary stays open beside it" data-step="2" />
-        <svg class="stepper-spotlight" viewBox="0 0 1280 614" preserveAspectRatio="none">
-          <defs>
-            <mask id="spot-mask">
-              <rect width="1280" height="614" fill="white" />
-              <rect id="spot-window" x="828" y="48" width="285" height="270" rx="16" fill="black" />
-            </mask>
-          </defs>
-          <rect width="1280" height="614" fill="rgba(0,0,0,0.45)" mask="url(#spot-mask)" />
-          <rect id="spot-border" x="828" y="48" width="285" height="270" rx="16"
-            fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="1.5" />
-        </svg>
-      </div>
-      <div class="stepper-nav">
-        <button class="stepper-tab is-active" data-step="0">
-          <span class="stepper-tab-num">01</span>
-          <span class="stepper-tab-title">Ask</span>
-          <span class="stepper-tab-desc">The video keeps playing. The timeline breaks into labeled segments.</span>
-        </button>
-        <button class="stepper-tab" data-step="1">
-          <span class="stepper-tab-num">02</span>
-          <span class="stepper-tab-title">Aim</span>
-          <span class="stepper-tab-desc">Relevant ranges light up. Hover one to see the idea it holds.</span>
-        </button>
-        <button class="stepper-tab" data-step="2">
-          <span class="stepper-tab-num">03</span>
-          <span class="stepper-tab-title">Land</span>
-          <span class="stepper-tab-desc">The video seeks to the moment. The answer stays beside it, so the next question builds on the last.</span>
-        </button>
-      </div>
+    <div class="video-wrap">
+      <video controls autoplay muted loop playsinline poster="../assets/video/promptedfind-poster.jpg" preload="metadata">
+        <source src="../assets/video/PromptedFind_web.mp4" type="video/mp4" />
+        Your browser does not support video.
+      </video>
     </div>
-    <p class="video-caption">Working prototype, running on a 74&nbsp;minute NASA talk. Click a step.</p>
+    <p class="video-caption">Live prototype on a 74-minute NASA talk.</p>
   </div>
 
   <div class="cs-body">
 
     <div class="cs-section">
-      <p class="cs-label">Why it matters</p>
-      <p class="lead-claim">A document has headings, paragraphs, a table of contents. Video only has time.</p>
+      <p class="cs-label">The Gap</p>
+      <p class="lead-claim">The thing that makes video easy to watch is exactly what makes it hard to navigate.</p>
       <p class="cs-body-text">
-        So when the thing you need is somewhere inside 74 minutes, your only tool is the scrubber.
-        You drag, you guess, you overshoot, you drag back. Prompted Find replaces that with a question.
+        Long-form video has no spatial address. A document has paragraphs, headings, a table of contents.
+        You can navigate it by structure. Video only has time.
         <br><br>
-        <strong>It&rsquo;s for anyone who has to pull information out of recorded talks:</strong>
-        students, researchers, and anyone catching up on a meeting they missed.
+        <strong>Prompted Find makes the timeline navigable by meaning.</strong> You ask what you want to find.
+        The interface segments the video semantically, highlights relevant moments, and jumps you there.
+        The query returns a location, not a transcript, not a summary. A timestamp you can trust.
       </p>
     </div>
 
     <div class="cs-section">
-      <p class="cs-label">The idea</p>
+      <p class="cs-label">The Method</p>
       <p class="cs-body-text">
-        <strong>Semantic decomposition.</strong> Break long content into labeled units of meaning,
+        <strong>Semantic Decomposition:</strong> break long-form content into labeled, navigable semantic units,
         so a question can return a location instead of a summary.
+        <br><br>
+        Prompted Find is this method applied to video. The same decomposition works on any surface that has
+        length but no structure: prose, podcasts, research trails.
       </p>
 
-      <figure class="decomp">
-        <div class="decomp-scroll">
-        <svg class="decomp-svg" viewBox="0 0 640 250" role="img"
-             aria-label="Above, a 74 minute video as one unbroken bar with only a start and end time. Below, the same span decomposed into four labeled segments with time ranges, a playhead resting inside the segment about heat shields.">
+      <div class="pattern-note">
+        <p>
+          <strong>Why this pattern matters beyond video.</strong>
+          The same logic applies to any long-form content without navigable structure:
+          podcasts, recorded meetings, legal documents, research papers.
+          Prompted Find is a prototype of a pattern: <strong>ask a question, get a location.</strong>
+          The medium changes. The interaction stays the same.
+        </p>
+      </div>
+    </div>
 
-          <!-- BEFORE: time only -->
-          <text class="decomp-tag" x="0" y="10">Before &middot; one unbroken span</text>
-          <rect x="0" y="22" width="640" height="22" rx="5" class="decomp-bar" />
-          <text class="decomp-time" x="0" y="60">0:00</text>
-          <text class="decomp-time decomp-time-end" x="640" y="60">1:14:31</text>
-
-          <!-- AFTER: decomposed timeline -->
-          <text class="decomp-tag" x="0" y="104">After &middot; decomposed by meaning</text>
-
-          <!-- hairline ruler -->
-          <g class="decomp-ruler">
-            <text x="0"   y="124">0:00</text>
-            <text x="152" y="124">14:54</text>
-            <text x="314" y="124">29:48</text>
-            <text class="decomp-time-end" x="640" y="124">1:14:31</text>
-            <line x1="0" y1="132" x2="640" y2="132" />
-          </g>
-
-          <!-- segment pills -->
-          <g class="decomp-pill">
-            <rect x="0"   y="142" width="140" height="16" rx="8" />
-            <rect x="152" y="142" width="150" height="16" rx="8" class="is-match" />
-            <rect x="314" y="142" width="140" height="16" rx="8" />
-            <rect x="466" y="142" width="174" height="16" rx="8" />
-          </g>
-
-          <!-- labeled cards -->
-          <g class="decomp-card">
-            <rect x="0"   y="172" width="140" height="44" rx="8" />
-            <rect x="152" y="172" width="150" height="44" rx="8" class="is-match" />
-            <rect x="314" y="172" width="140" height="44" rx="8" />
-            <rect x="466" y="172" width="174" height="44" rx="8" />
-          </g>
-          <g class="decomp-card-title">
-            <text x="12"  y="192">Mission</text>
-            <text x="164" y="192" class="is-match">Heat shields</text>
-            <text x="326" y="192">Landing</text>
-            <text x="478" y="192">Q &amp; A</text>
-          </g>
-          <g class="decomp-card-range">
-            <text x="12"  y="207">0:00 &ndash; 14:54</text>
-            <text x="164" y="207" class="is-match">14:54 &ndash; 29:48</text>
-            <text x="326" y="207">29:48 &ndash; 52:10</text>
-            <text x="478" y="207">52:10 &ndash; 1:14:31</text>
-          </g>
-
-          <!-- playhead, resting inside the matched segment -->
-          <g class="decomp-playhead">
-            <line x1="212" y1="136" x2="212" y2="166" />
-            <circle cx="212" cy="136" r="4" />
-          </g>
-
-          <!-- progress -->
-          <rect x="0" y="234" width="640" height="6" rx="3" class="decomp-track" />
-          <rect x="0" y="234" width="212" height="6" rx="3" class="decomp-progress" />
-        </svg>
+    <div class="cs-section">
+      <p class="cs-label">Decisions</p>
+      <div class="frames-grid flush">
+        <div class="frame-col">
+          <p class="frame-num">01</p>
+          <p class="frame-title">Timestamps instead of&nbsp;text</p>
+          <p class="frame-principle">&ldquo;Search as navigation.&rdquo;</p>
+          <p class="frame-body">
+            The query moves you inside the video, to the moment where the answer lives.
+          </p>
         </div>
-        <p class="decomp-hint">Scroll to see the full span &rarr;</p>
-        <figcaption class="decomp-caption">Same 74 minutes. Now it has addresses.</figcaption>
-      </figure>
-
-      <p class="cs-body-text" style="margin-top:26px;">
-        A transcript gives you every word and no shape. A summary gives you shape and takes away the source.
-        Labeled segments give you both, and they give you somewhere to point.
-      </p>
+        <div class="frame-col">
+          <p class="frame-num">02</p>
+          <p class="frame-title">Segments instead of search&nbsp;results</p>
+          <p class="frame-principle">&ldquo;The timeline is the interface.&rdquo;</p>
+          <p class="frame-body">
+            Labeled segments on the timeline show the shape of the answer before you click.
+          </p>
+        </div>
+        <div class="frame-col">
+          <p class="frame-num">03</p>
+          <p class="frame-title">Follow-ups instead of starting&nbsp;over</p>
+          <p class="frame-principle">&ldquo;Context persists.&rdquo;</p>
+          <p class="frame-body">
+            The question panel stays open beside the video, so you never lose your place.
+          </p>
+        </div>
+      </div>
     </div>
 
     <div class="cs-section">
-      <p class="cs-label">Where else it works</p>
-      <p class="cs-body-text">
-        Anything long with no structure: podcasts, recorded meetings, interviews, legal proceedings.
-        The medium changes. The interaction stays the same.
-      </p>
+      <p class="cs-label">The Interaction</p>
+      <div class="stepper" id="stepper">
+        <div class="stepper-frame">
+          <img src="../assets/img/pf/step-01.jpg" alt="Ask panel open beside the playing video; the timeline below shows labeled semantic segments" class="is-active" data-step="0" />
+          <img src="../assets/img/pf/step-02.jpg" alt="A timeline segment hovered with its label tooltip; the AI summary for the playing range shown in the panel" data-step="1" />
+          <img src="../assets/img/pf/step-03.jpg" alt="Video jumped to the chosen moment; the AI summary stays open beside it" data-step="2" />
+          <svg class="stepper-spotlight" viewBox="0 0 1280 614" preserveAspectRatio="none">
+            <defs>
+              <mask id="spot-mask">
+                <rect width="1280" height="614" fill="white" />
+                <rect id="spot-window" x="828" y="48" width="285" height="270" rx="16" fill="black" />
+              </mask>
+            </defs>
+            <rect width="1280" height="614" fill="rgba(0,0,0,0.45)" mask="url(#spot-mask)" />
+            <rect id="spot-border" x="828" y="48" width="285" height="270" rx="16"
+              fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="1.5" />
+          </svg>
+        </div>
+        <div class="stepper-nav">
+          <button class="stepper-tab is-active" data-step="0">
+            <span class="stepper-tab-num">01</span>
+            <span class="stepper-tab-title">Open the Ask panel</span>
+            <span class="stepper-tab-desc">The video keeps playing. The timeline decomposes into labeled semantic segments.</span>
+          </button>
+          <button class="stepper-tab" data-step="1">
+            <span class="stepper-tab-num">02</span>
+            <span class="stepper-tab-title">Ask, or point at a&nbsp;segment</span>
+            <span class="stepper-tab-desc">Relevant ranges highlight. Hovering previews the idea each range holds.</span>
+          </button>
+          <button class="stepper-tab" data-step="2">
+            <span class="stepper-tab-num">03</span>
+            <span class="stepper-tab-title">Land in the&nbsp;moment</span>
+            <span class="stepper-tab-desc">The video seeks. The AI summary keeps the context beside it for follow-ups.</span>
+          </button>
+        </div>
+      </div>
     </div>
 
     <div class="cs-section">
-      <p class="cs-label">What&rsquo;s next</p>
+      <p class="cs-label">What I'd Change</p>
       <ul class="reflection-list">
-        <li><strong>Confidence on the timeline.</strong> Not every match is equally strong, and the timeline should show which are worth your time.</li>
-        <li><strong>Across a whole series.</strong> Ask once, search every video in a lecture series.</li>
-        <li><strong>Real embeddings.</strong> The interface is finished code. The understanding layer is simulated and drops out for real embeddings without changing a single interaction.</li>
+        <li><strong>Confidence indicators.</strong> Not all matches are equally strong. The timeline should visually encode match confidence so the user can prioritize where to jump.</li>
+        <li><strong>Multi-video support.</strong> The current prototype works with a single video. The real value is cross-video search: "find the part about heat shields" across an entire lecture series.</li>
+        <li><strong>Real embeddings.</strong> The interface is working code; the understanding layer is simulated, swappable for semantic embeddings without changing the interaction.</li>
       </ul>
     </div>
 
