@@ -274,6 +274,28 @@
       max-width: 560px; margin-bottom: 28px;
     }
 
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+    }
+    .page-lead {
+      font-size: 1.05rem; line-height: 1.65; color: var(--ink);
+      max-width: 560px; margin-bottom: 20px; letter-spacing: -0.01em; text-wrap: pretty;
+    }
+
+    /* ── Back to work ── */
+    .back-work { max-width: 700px; margin: 0 auto; padding: 80px 28px 64px; }
+    .back-work a {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.875rem; font-weight: 500;
+      color: var(--ink); text-decoration: none; transition: color 0.15s ease-out;
+    }
+    .back-work a .arrow { color: var(--accent); transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1); }
+    @media (hover: hover) and (pointer: fine) {
+      .back-work a:hover { color: var(--accent); }
+      .back-work a:hover .arrow { transform: translateX(-3px); }
+    }
+
     /* ── Footer ── */
     .pf-footer {
       max-width: 700px; margin: 0 auto;
@@ -311,8 +333,12 @@
   </nav>
 
   <div class="page-header">
-    <p class="page-eyebrow">Before all this</p>
-    <h1 class="page-title">I made<br>physical things.</h1>
+    <h1 class="sr-only">Art</h1>
+    <p class="page-lead">
+      Architecture. Bronze sculpture. Light installations. The materials changed, stone, metal,
+      code, AI, the instinct didn&rsquo;t. Make what surrounds people easier to read, easier to
+      move through, easier to trust.
+    </p>
     <p class="page-desc">
       Bronze and ceramic works exploring architectural form, cultural tension, and the body as site.
       Made in Tehran, 2014&ndash;2018. <em>The same instinct that shapes a bronze, minimum form,
@@ -322,22 +348,11 @@
 
   <!-- Constellation -->
   <div class="constellation-wrap">
-    <p class="constellation-label">Career constellation, click any node</p>
+    <p class="constellation-label">Career constellation</p>
     <canvas id="constellation"></canvas>
     <p class="constellation-hint">Each node is a phase. Each line is the thinking that carried forward.</p>
   </div>
 
-  <!-- Detail panel -->
-  <div class="detail-panel" id="detailPanel">
-    <div class="detail-inner">
-      <div class="detail-text">
-        <p class="detail-phase" id="detailPhase"></p>
-        <h2 class="detail-title" id="detailTitle"></h2>
-        <p class="detail-body" id="detailBody"></p>
-        <div class="detail-connection" id="detailConnection"></div>
-      </div>
-    </div>
-  </div>
   </div>
 
   <div class="work-section" style="padding-top:40px;">
@@ -438,8 +453,6 @@
       <img src="/art/img/wearable-01.jpg" alt="The cuff worn against a deep red sleeve" loading="lazy" />
     </div>
 
-    <p class="work-section-label" style="margin-top:56px;">Contemporary jewelry</p>
-    <p class="section-note">Minimal gold line forms, photographed against skin, cloth and earth.</p>
     <div class="sc-masonry">
       <img src="/art/img/jewelry-03.jpg" alt="A thin gold bangle worn at the wrist, against an earth wall" loading="lazy" />
       <img src="/art/img/jewelry-06.jpg" alt="Two hands resting on cracked earth, both wearing line rings" loading="lazy" />
@@ -451,6 +464,13 @@
       <img src="/art/img/jewelry-10.jpg" alt="An outstretched arm and hand wearing a single ring" loading="lazy" />
       <img src="/art/img/jewelry-01.jpg" alt="A hand at the hip wearing a fine gold ring" loading="lazy" />
     </div>
+  </div>
+
+  <div class="back-work">
+    <a href="/">
+      <span class="arrow">&larr;</span>
+      <span>Works</span>
+    </a>
   </div>
 
   <footer class="pf-footer">
@@ -745,20 +765,9 @@ canvas.addEventListener('touchend', e => {
   }
 });
 
-function updatePanel(node) {
-  const panel = document.getElementById('detailPanel');
-  if (!node) {
-    panel.classList.remove('open');
-    return;
-  }
-  document.getElementById('detailPhase').textContent = node.phase;
-  document.getElementById('detailTitle').textContent = node.title;
-  document.getElementById('detailBody').innerHTML = node.body;
-  document.getElementById('detailConnection').innerHTML = node.connection;  panel.classList.add('open');
-  setTimeout(() => {
-    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }, 100);
-}
+/* The detail panel was removed: the constellation now reads as a diagram,
+   so selecting a node no longer opens a text card. */
+function updatePanel() {}
 
 // Slow idle drift
 let lastTime = 0;
