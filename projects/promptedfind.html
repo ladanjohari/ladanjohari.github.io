@@ -171,7 +171,7 @@
       border: 1px solid var(--rule); border-radius: 10px;
       overflow: hidden; background: #0a0a0a;
     }
-    .stepper-frame { position: relative; width: 100%; aspect-ratio: 1280/614; overflow: hidden; }
+    .stepper-frame { position: relative; width: 100%; aspect-ratio: 1424/880; overflow: hidden; }
     .stepper-frame img {
       position: absolute; inset: 0; width: 100%; height: 100%;
       object-fit: cover; opacity: 0; transition: opacity 0.25s ease-out;
@@ -286,7 +286,7 @@
       <span class="sep">/</span>
       <span>Coded prototype &middot; HTML and JS</span>
       <span class="sep">/</span>
-      <a href="../assets/video/PromptedFind_web.mp4" target="_blank" rel="noopener">Watch the full demo &rarr;</a>
+      <a href="https://youtu.be/EwIPnpXuITw" target="_blank" rel="noopener">Watch the demo &rarr;</a>
       <span class="sep">/</span>
       <a href="https://github.com/ladanjohari/PromptedFind" target="_blank" rel="noopener">GitHub &rarr;</a>
     </div>
@@ -298,33 +298,33 @@
         <img src="../assets/img/pf/step-01.jpg" alt="Ask panel open beside the playing video; the timeline below shows labeled semantic segments" class="is-active" data-step="0" />
         <img src="../assets/img/pf/step-02.jpg" alt="A timeline segment hovered with its label tooltip; the AI summary for the playing range shown in the panel" data-step="1" />
         <img src="../assets/img/pf/step-03.jpg" alt="Video jumped to the chosen moment; the AI summary stays open beside it" data-step="2" />
-        <svg class="stepper-spotlight" viewBox="0 0 1280 614" preserveAspectRatio="none">
+        <svg class="stepper-spotlight" viewBox="0 0 1424 880" preserveAspectRatio="none">
           <defs>
             <mask id="spot-mask">
-              <rect width="1280" height="614" fill="white" />
-              <rect id="spot-window" x="828" y="48" width="285" height="270" rx="16" fill="black" />
+              <rect width="1424" height="880" fill="white" />
+              <rect id="spot-window" x="1006" y="4" width="414" height="180" rx="14" fill="black" />
             </mask>
           </defs>
-          <rect width="1280" height="614" fill="rgba(0,0,0,0.45)" mask="url(#spot-mask)" />
-          <rect id="spot-border" x="828" y="48" width="285" height="270" rx="16"
-            fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="1.5" />
+          <rect width="1424" height="880" fill="rgba(0,0,0,0.45)" mask="url(#spot-mask)" />
+          <rect id="spot-border" x="1006" y="4" width="414" height="180" rx="14"
+            fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" />
         </svg>
       </div>
       <div class="stepper-nav">
         <button class="stepper-tab is-active" data-step="0">
           <span class="stepper-tab-num">01</span>
           <span class="stepper-tab-title">Ask</span>
-          <span class="stepper-tab-desc">The video keeps playing. The timeline breaks into labeled segments.</span>
+          <span class="stepper-tab-desc">The panel opens beside the video. The video keeps playing.</span>
         </button>
         <button class="stepper-tab" data-step="1">
           <span class="stepper-tab-num">02</span>
           <span class="stepper-tab-title">Aim</span>
-          <span class="stepper-tab-desc">Relevant ranges light up. Hover one to see the idea it holds.</span>
+          <span class="stepper-tab-desc">Ask, and the ranges holding the answer light up as labeled segments.</span>
         </button>
         <button class="stepper-tab" data-step="2">
           <span class="stepper-tab-num">03</span>
           <span class="stepper-tab-title">Land</span>
-          <span class="stepper-tab-desc">The video seeks to the moment. The answer stays beside it, so the next question builds on the last.</span>
+          <span class="stepper-tab-desc">Click one. The video jumps there and the summary stays beside it.</span>
         </button>
       </div>
     </div>
@@ -470,10 +470,12 @@
       let timer = null;
       let hovered = false;
 
+      /* Measured from the live prototype at capture time, in the
+         stills' own 1424x880 space, so each frame lands on its subject. */
       const spots = [
-        { x: 828, y: 48,  w: 285, h: 270, rx: 16 },
-        { x: 165, y: 425, w: 680, h: 92,  rx: 10 },
-        { x: 838, y: 168, w: 268, h: 148, rx: 14 }
+        { x: 1006, y: 4,   w: 414,  h: 180, rx: 14 },
+        { x: 0,    y: 566, w: 1000, h: 112, rx: 12 },
+        { x: 1006, y: 4,   w: 414,  h: 430, rx: 14 }
       ];
 
       let anim = null;
