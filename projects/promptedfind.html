@@ -119,7 +119,7 @@
     .decomp-svg { width: 100%; height: auto; display: block; overflow: visible; }
     /* Line weight carries the hierarchy: hairline ruler, 1px cards,
        filled pills, heaviest stroke on the playhead. */
-    .decomp-bar { fill: var(--hover-row); stroke: var(--rule); stroke-width: 1; }
+    .decomp-knob { fill: var(--ink); }
     .decomp-tag {
       font-family: 'Geist', system-ui, sans-serif; font-size: 9.5px; font-weight: 600;
       letter-spacing: 0.1em; text-transform: uppercase; fill: var(--mid);
@@ -180,15 +180,20 @@
     .stepper-spotlight { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
     .stepper-nav { display: flex; border-top: 1px solid var(--rule); background: var(--bg); }
     .stepper-tab {
-      flex: 1; padding: 14px 12px;
+      flex: 1; padding: 16px 14px;
       border: none; background: none; cursor: pointer; text-align: left;
       border-right: 1px solid var(--rule);
+      /* Buttons centre their content by default, which pushed the taller card's
+         number out of line with its neighbours. Top-align all three. */
+      display: flex; flex-direction: column; align-items: flex-start;
+      justify-content: flex-start;
       transition: background 0.15s ease-out, transform 0.16s ease-out;
     }
     .stepper-tab:last-child { border-right: none; }
-    /* Match the stepper's outer 10px radius so the active outline isn't clipped in the corners */
-    .stepper-tab:first-child { border-top-left-radius: 9px; border-bottom-left-radius: 9px; }
-    .stepper-tab:last-child { border-top-right-radius: 9px; border-bottom-right-radius: 9px; }
+    /* The nav sits flush under the frame, so only the bottom corners follow
+       the stepper's outer 10px radius. */
+    .stepper-tab:first-child { border-bottom-left-radius: 9px; }
+    .stepper-tab:last-child { border-bottom-right-radius: 9px; }
     .stepper-tab:active { transform: scale(0.97); }
     .stepper-tab.is-active { background: var(--hover-row); box-shadow: inset 0 0 0 2px var(--accent); }
     .stepper-tab:focus-visible {
@@ -200,16 +205,18 @@
       .stepper-tab:hover { background: var(--hover-row); }
     }
     .stepper-tab-num {
-      font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
-      color: var(--accent); display: block; margin-bottom: 5px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+      color: var(--accent); display: block; line-height: 1;
+      margin-bottom: 8px;
     }
     .stepper-tab-title {
       font-size: 13px; font-weight: 600; color: var(--ink);
-      display: block; line-height: 1.35; letter-spacing: -0.01em;
+      display: block; line-height: 1; letter-spacing: -0.01em;
+      margin-bottom: 7px;
     }
     .stepper-tab-desc {
       font-size: 12px; color: var(--mid); display: block;
-      line-height: 1.5; margin-top: 4px;
+      line-height: 1.5; text-wrap: pretty;
     }
 
     /* ── Reflection list ── */
@@ -264,8 +271,8 @@
       .pf-nav { padding-top: 28px; }
         .stepper-nav { flex-direction: column; }
       .stepper-tab { border-right: none; border-bottom: 1px solid var(--rule); }
-      .stepper-tab:first-child { border-top-left-radius: 9px; border-top-right-radius: 9px; border-bottom-left-radius: 0; }
-      .stepper-tab:last-child { border-bottom: none; border-top-right-radius: 0; border-bottom-left-radius: 9px; border-bottom-right-radius: 9px; }
+      .stepper-tab:first-child { border-radius: 0; }
+      .stepper-tab:last-child { border-bottom: none; border-bottom-left-radius: 9px; border-bottom-right-radius: 9px; }
       .pf-footer { flex-direction: column; gap: 14px; align-items: flex-start; padding-left: 20px; padding-right: 20px; }
     }
   </style>
@@ -355,13 +362,17 @@
       <figure class="decomp">
         <div class="decomp-scroll">
         <svg class="decomp-svg" viewBox="0 0 640 250" role="img"
-             aria-label="Above, a 74 minute video as one unbroken bar with only a start and end time. Below, the same span decomposed into four labeled segments with time ranges, a playhead resting inside the segment about heat shields.">
+             aria-label="Above, a 74 minute video as one unbroken scrubber with a playhead and only a start and end time. Below, the same span decomposed into four labeled segments with time ranges, a playhead resting inside the segment about heat shields.">
 
           <!-- BEFORE: time only -->
           <text class="decomp-tag" x="0" y="10">Before &middot; one unbroken span</text>
-          <rect x="0" y="22" width="640" height="22" rx="5" class="decomp-bar" />
-          <text class="decomp-time" x="0" y="60">0:00</text>
-          <text class="decomp-time decomp-time-end" x="640" y="60">1:14:31</text>
+          <!-- Same scrubber, same playhead position as the decomposed timeline
+               below, so the only difference the reader sees is the structure. -->
+          <rect x="0" y="26" width="640" height="6" rx="3" class="decomp-track" />
+          <rect x="0" y="26" width="212" height="6" rx="3" class="decomp-progress" />
+          <circle class="decomp-knob" cx="212" cy="29" r="5" />
+          <text class="decomp-time" x="0" y="56">0:00</text>
+          <text class="decomp-time decomp-time-end" x="640" y="56">1:14:31</text>
 
           <!-- AFTER: decomposed timeline -->
           <text class="decomp-tag" x="0" y="104">After &middot; decomposed by meaning</text>
