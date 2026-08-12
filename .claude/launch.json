@@ -4,7 +4,7 @@
     {
       "name": "portfolio",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8000"],
+      "runtimeArgs": ["-m", "http.server", "8000", "--directory", "/Users/ladanjohari/projects/Portfolio-Website"],
       "port": 8000
     },
     {
@@ -48,6 +48,18 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8003", "--directory", "/Users/ladanjohari/projects/experiments"],
       "port": 8003
+    },
+    {
+      "name": "agent-state-ui",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "/Users/ladanjohari/projects/agent-state-ui", "run", "dev"],
+      "port": 5173
+    },
+    {
+      "name": "agent-state-ui-docs",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "/Users/ladanjohari/projects/agent-state-ui", "run", "dev:docs"],
+      "port": 5174
     },
     {
       "name": "react-practice",

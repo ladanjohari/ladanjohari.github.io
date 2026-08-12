@@ -21,10 +21,20 @@ survives deleting the file. Before pushing:
   public-facing page.
 - **Never push on your own initiative.** Committing locally is fine. Pushing is
   publishing, so it needs her go-ahead.
+- **`process/` is design process only.** It holds brainstorms, prototypes and archived
+  page versions, nothing else. Anything about Ladan herself rather than about the work
+  is out: skills assessments, career strategy, job search, résumé material, interview
+  notes, visa or immigration, money. Those go to `~/projects/career-path`, a plain local
+  folder with no git repo and no remote. This rule exists because `process/` became a
+  general scratch folder and a private self-assessment ended up world-readable.
+  `~/projects/gray-area` is NOT the place for these. It is the Gray Area exhibition
+  project, its deadline has passed, and career material does not belong in it.
 - A `pre-push` hook blocks known-private filename patterns (`.githooks/pre-push`,
   copy it to `.git/hooks/` on a fresh clone). Add new patterns as private work appears.
-- Private material currently lives in: `~/projects/gray-area` (private GitHub repo
-  `ladanjohari/gray-area`), `~/.claude/skills/clear-glass`.
+- Private material currently lives in: `~/projects/career-path` (career, job search,
+  money, the company-of-one plan; local only, no repo), `~/projects/gray-area` (the
+  Gray Area exhibition project, private GitHub repo `ladanjohari/gray-area`),
+  `~/.claude/skills/clear-glass`.
 
 ## The site
 - Live at ladanjohari.com

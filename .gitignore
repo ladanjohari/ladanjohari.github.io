@@ -13,3 +13,19 @@ assets/screen recordings/
 
 # Art source files: originals + reference PDF stay local, only optimized art/img is published
 art/images/
+
+# Light Cube + poster source exports: 42MB of Figma SVG and the images pulled out
+# of them. The rebuilt page publishes optimized copies, these stay local.
+process/light-cube-export/
+
+# Résumé PDF dropped into art/ for the exhibitions list. It carries a phone number,
+# so it does not get published from here.
+art/LadanJoharizadehResume.pdf
+
+# capture pipeline: symlinked deps and frame dumps
+assets/previews/*/node_modules
+assets/previews/*/frames-*
+
+# Project brief with career reasoning in it: design process, but not for a public repo
+process/AGENT-UI-KIT-BRIEF.md
+process/OPEN-SOURCE-CONTRIBUTION-BRIEF.md

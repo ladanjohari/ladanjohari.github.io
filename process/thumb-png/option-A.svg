@@ -1,0 +1,21 @@
+<svg width="784" height="488" viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="196" height="122" fill="#0f1115"/>
+          <!-- compressed ordinary line -->
+          <rect x="14" y="18" width="168" height="22" rx="7" fill="#171a20" stroke="#242830" stroke-width=".6"/>
+          <circle cx="26" cy="29" r="3" fill="#3f8f5e"/>
+          <circle cx="35" cy="29" r="3" fill="#3f8f5e"/>
+          <circle cx="44" cy="29" r="3" fill="#3f6f9f"/>
+          <circle cx="53" cy="29" r="3" fill="#4a4f58"/>
+          <circle cx="62" cy="29" r="3" fill="#4a4f58"/>
+          <text x="76" y="32" fill="#7c828e" font-family="Geist,sans-serif" font-size="7.6">5 running</text>
+          <!-- the exception, expanded -->
+          <rect x="14" y="50" width="168" height="54" rx="9" fill="#1c1710" stroke="#57430f" stroke-width=".8"/>
+          <circle cx="27" cy="65" r="4.2" fill="#d99b1c"/>
+          <text x="38" y="68" fill="#f0e2c4" font-family="Geist,sans-serif" font-size="8.4" font-weight="600">needs you</text>
+          <rect x="18" y="76" width="120" height="5" rx="2.5" fill="#3a3020"/>
+          <rect x="18" y="85" width="86" height="5" rx="2.5" fill="#332b1c"/>
+          <rect x="120" y="82" width="28" height="14" rx="4.5" fill="#d99b1c"/>
+          <text x="134" y="91.6" fill="#1c1710" font-family="Geist,sans-serif" font-size="6.6" font-weight="700" text-anchor="middle">Allow</text>
+          <rect x="152" y="82" width="26" height="14" rx="4.5" fill="none" stroke="#57430f" stroke-width=".8"/>
+          <text x="165" y="91.6" font-family="Geist,sans-serif" font-size="6.6" font-weight="600" text-anchor="middle" fill="#a08a5c">Deny</text>
+        </svg>

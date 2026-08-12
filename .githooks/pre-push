@@ -5,7 +5,7 @@
 
 [ -n "$SKIP_PRIVACY_CHECK" ] && exit 0
 
-PATTERNS='grayarea|gray-area|clear-glass|substrate|yc-application|Resume-Google|Resume-UXDesigner|resume-anthropic\.pdf'
+PATTERNS='grayarea|gray-area|clear-glass|substrate|yc-application|Resume-Google|Resume-UXDesigner|resume-anthropic\.pdf|skills-map|skills.?assessment|self.?assessment|career|job-search|interview|visa|eb1|eb-1|niw|o-1|immigration|CONTRIBUTION-BRIEF|salary|offer-letter'
 
 remote_sha=$(git rev-parse origin/main 2>/dev/null)
 if [ -z "$remote_sha" ]; then

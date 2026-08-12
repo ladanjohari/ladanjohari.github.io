@@ -51,7 +51,7 @@
     /* ── Page header ── */
     .page-header {
       max-width: 700px; margin: 0 auto;
-      padding: 56px 28px 0;
+      padding: 72px 28px 0;
     }
     /* Same header shape as the project pages: title, descriptor, meta row. */
     .page-title {
@@ -60,8 +60,15 @@
       color: var(--ink); margin-bottom: 14px;
     }
     .page-descriptor {
-      font-size: 1rem; color: var(--mid); line-height: 1.65;
-      max-width: 520px; margin-bottom: 20px; text-wrap: pretty;
+      font-size: 1.28rem; color: var(--ink); line-height: 1.55;
+      letter-spacing: -0.017em; font-weight: 500;
+      max-width: 46ch; margin-bottom: 0;
+      text-wrap: balance;
+    }
+    @media (max-width: 620px) {
+      .page-header { padding-top: 48px; }
+      .page-descriptor { font-size: 1.12rem; max-width: none; text-wrap: pretty; }
+      .photo-caption { font-size: 0.8rem; }
     }
     .page-meta {
       display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
@@ -180,8 +187,6 @@
       margin-bottom: 80px;
     }
     .work-card {
-      background: var(--hover);
-      border: 1px solid var(--rule);
       border-radius: 8px;
       aspect-ratio: 4/3;
       overflow: hidden;
@@ -191,9 +196,9 @@
       text-decoration: none;
       display: block;
     }
-    .work-card:hover { border-color: var(--mid); }
+    .work-card:hover { opacity: 0.92; }
     .work-card img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
+      width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 8px;
     }
     .work-card-label {
       position: absolute; bottom: 12px; left: 12px;
@@ -217,10 +222,13 @@
     .sc-meta { padding-top: 6px; }
     .sc-title { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.025em; color: var(--ink); margin-bottom: 10px; line-height: 1.2; }
     .sc-details { font-size: 0.78rem; color: var(--mid); line-height: 1.9; }
-    /* Concentric corners: the frame is 8px, the photograph inside it is 7px,
-       which is the 8px minus the 1px hairline. Anything else reads as a gap. */
-    .sc-main { border-radius: 8px; overflow: hidden; border: 1px solid var(--rule); background: var(--hover); }
-    .sc-main img { width: 100%; height: auto; display: block; border-radius: 7px; }
+    /* No frame around any photograph anywhere on this page. A rounded box with a
+       hairline and a pale background sits BEHIND the photograph, and the browser
+       antialiases the two curves separately, so the background glows through at
+       every corner. The photograph now carries the 8px radius itself and there is
+       nothing behind it to leak. */
+    .sc-main { border-radius: 8px; }
+    .sc-main img { width: 100%; height: auto; display: block; border-radius: 8px; }
 
     .sc-grid-asym {
       display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr;
@@ -230,8 +238,8 @@
     .sc-mid-top    { grid-column: 2; grid-row: 1; }
     .sc-mid-bot    { grid-column: 2; grid-row: 2; }
     .sc-tall-right { grid-column: 3; grid-row: 1 / 3; }
-    .sc-cell { border-radius: 8px; overflow: hidden; border: 1px solid var(--rule); background: var(--hover); height: 100%; }
-    .sc-cell img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 7px; }
+    .sc-cell { border-radius: 8px; height: 100%; }
+    .sc-cell img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 8px; }
 
     /* Cell ratios match the photographs themselves, so the crop is nil */
     .sc-pair { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
@@ -251,7 +259,7 @@
     .sc-masonry { margin-top: 8px; }
     .sc-masonry img {
       width: 100%; height: auto; display: block;
-      border-radius: 8px; border: 1px solid var(--rule);
+      border-radius: 8px;
     }
     .sc-masonry:not(.is-columns) img { margin-bottom: 8px; }
     .sc-masonry.is-columns { display: flex; align-items: flex-start; gap: 8px; }
@@ -266,11 +274,19 @@
     .piece-spec { font-size: 0.78rem; color: var(--mid); margin-bottom: 18px; }
     .piece-spec span::after { content: ' · '; color: var(--rule); }
     .piece-spec span:last-child::after { content: ''; }
-    .piece-hero {
-      border: 1px solid var(--rule); border-radius: 8px;
-      overflow: hidden; background: var(--hover); display: block;
+    .piece-hero { border-radius: 8px; display: block; }
+    /* Caption under a photograph: the role first, the show and the museum under it. */
+    .photo-caption {
+      font-size: 0.82rem; line-height: 1.6; color: var(--mid);
+      max-width: none; margin-top: 16px; text-wrap: pretty;
     }
-    .piece-hero img { width: 100%; height: auto; display: block; border-radius: 7px; }
+    .photo-caption strong {
+      display: block; color: var(--ink); font-weight: 500;
+      font-size: 0.86rem; margin-bottom: 4px;
+    }
+    .photo-caption em { font-style: italic; }
+    .photo-caption span { display: block; }
+    .piece-hero img { width: 100%; height: auto; display: block; border-radius: 8px; }
     .piece-row {
       display: grid; gap: 12px; margin-top: 12px;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -278,15 +294,31 @@
     .piece-row img, .plate-grid img {
       width: 100%; height: 100%; object-fit: cover; display: block;
       aspect-ratio: 4/5;
-      border: 1px solid var(--rule); border-radius: 8px; background: var(--hover);
-      transition: border-color 0.15s;
+      border-radius: 8px;
+      transition: opacity 0.15s;
     }
     .piece-row.wide img { aspect-ratio: 4/3; }
-    .piece-row img:hover, .plate-grid img:hover { border-color: var(--mid); }
+    .piece-row img:hover, .plate-grid img:hover { opacity: 0.92; }
     .plate-grid {
       display: grid; gap: 12px; margin-bottom: 72px;
       grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
     }
+    /* ── Exhibitions ── */
+    .ex-list { list-style: none; margin-top: -8px; }
+    .ex-row {
+      display: grid; grid-template-columns: 1fr auto; gap: 12px 24px;
+      align-items: baseline;
+      padding: 16px 0; border-bottom: 1px solid var(--rule);
+    }
+    .ex-title { font-size: 0.94rem; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
+    .ex-venue { font-size: 0.82rem; color: var(--mid); margin-top: 3px; }
+    .ex-date { font-size: 0.78rem; color: var(--mid); white-space: nowrap; }
+    .ex-award { font-size: 0.78rem; color: var(--accent); margin-top: 5px; font-weight: 500; }
+    @media (max-width: 540px) {
+      .ex-row { grid-template-columns: 1fr; gap: 4px; }
+      .ex-date { order: -1; }
+    }
+
     .section-note {
       font-size: 0.875rem; line-height: 1.75; color: var(--mid);
       max-width: 560px; margin-bottom: 28px;
@@ -325,6 +357,21 @@
     }
     .pf-footer-links a:hover { color: var(--accent); }
 
+    /* ── Phone ──
+       The piece layouts are two columns by design. On a narrow screen the text
+       column and the photograph both become unreadable, so each piece stacks:
+       words first, then the photographs at full width. */
+    @media (max-width: 620px) {
+      .sc-hero { grid-template-columns: 1fr; gap: 16px; }
+      .sc-meta { padding-top: 0; }
+      .sc-piece { padding-top: 36px; }
+      .sc-piece + .sc-piece { margin-top: 36px; }
+      .sc-grid-3 { grid-template-columns: 1fr 1fr; }
+      .sc-pair, .sc-grid-2 { grid-template-columns: 1fr; }
+      .sc-trio { grid-template-columns: 1fr 1fr; }
+      .sc-trio .sc-cell:last-child { grid-column: 1 / -1; aspect-ratio: 1.6; }
+    }
+
     @media (max-width: 540px) {
       .pf-nav, .page-header, .constellation-wrap,
       .detail-panel, .work-section { padding-left: 20px; padding-right: 20px; }
@@ -347,27 +394,16 @@
   </nav>
 
   <div class="page-header">
-    <h1 class="page-title">Art</h1>
     <p class="page-descriptor">
-      Architecture, bronze sculpture, light installations. The materials changed: stone,
-      metal, code, AI. The instinct never did. Make what surrounds people easier to read,
-      easier to move through, easier to trust.
-    </p>
-    <div class="page-meta">
-      <span>2014 to 2018</span>
-      <span class="sep">/</span>
-      <span>Bronze, ceramic, gold</span>
-      <span class="sep">/</span>
-      <span>Tehran</span>
-    </div>
-    <p class="page-note">
-      Minimum form, maximum presence. The rule that shapes a bronze still runs through
-      every interface I design.
+      I work primarily with bronze and ceramic, combining the permanence of metal with the
+      tactile warmth of clay. My forms are inspired by architectural geometry, cultural
+      heritage, and personal narratives, balancing bold structures with subtle feelings.
     </p>
   </div>
 
-  <!-- Constellation -->
-  <div class="constellation-wrap">
+  <!-- Constellation. Hidden for now, kept in place so it can be switched back on:
+       delete the `hidden` attribute and the display:none to bring it back. -->
+  <div class="constellation-wrap" hidden style="display:none;">
     <p class="constellation-label">Career constellation</p>
     <canvas id="constellation"></canvas>
     <p class="constellation-hint">Each node is a phase. Each line is the thinking that carried forward.</p>
@@ -375,16 +411,19 @@
 
   </div>
 
-  <div class="work-section" style="padding-top:40px;">
-    <div class="piece-hero">
+  <div class="work-section" style="padding-top:64px;">
+    <figure class="piece-hero">
       <img width="1500" height="843" src="/art/img/studio-casting.jpg" alt="Ladan Johari working on a large ceramic form in a casting workshop alongside two colleagues" loading="lazy" />
-    </div>
+      <figcaption class="photo-caption">
+        <strong>Assisting Parviz Tanavoli in his studio.</strong>
+        <span><em>Parviz Tanavoli and the Lions of Iran</em>, 2017, Tehran Museum of Contemporary Art.</span>
+      </figcaption>
+    </figure>
   </div>
 
   <!-- ── The pieces, in the arrangement from the original site ── -->
   <div class="work-section">
     <p class="work-section-label">Sculptures</p>
-    <p class="section-note">I work primarily in bronze and ceramic, combining the permanence of metal with the tactile warmth of clay. My forms draw from architectural geometry, cultural heritage, and personal narratives, balancing bold structure with subtle emotion.</p>
 
     <article class="sc-piece" id="urban-lion">
       <div class="sc-hero">
@@ -464,7 +503,6 @@
 
   <div class="work-section" id="jewelry">
     <p class="work-section-label">Wearable sculptures</p>
-    <p class="section-note">The same forms, made small enough to be carried on the body.</p>
     <div class="sc-masonry">
       <img width="1325" height="1500" src="/art/img/wearable-04.jpg" alt="A gold figure pendant on a long chain, against white" loading="lazy" />
       <img width="1500" height="1487" src="/art/img/wearable-03.jpg" alt="The figure pendant worn against a black dress" loading="lazy" />
@@ -476,7 +514,6 @@
     </div>
 
     <p class="work-section-label" style="margin-top:64px;">Contemporary jewelry</p>
-    <p class="section-note">Minimal gold line forms, photographed against skin, cloth and earth.</p>
     <div class="sc-masonry">
       <img width="1500" height="1500" src="/art/img/jewelry-03.jpg" alt="A thin gold bangle worn at the wrist, against an earth wall" loading="lazy" />
       <img width="1328" height="1500" src="/art/img/jewelry-06.jpg" alt="Two hands resting on cracked earth, both wearing line rings" loading="lazy" />
@@ -488,6 +525,61 @@
       <img width="1500" height="1297" src="/art/img/jewelry-10.jpg" alt="An outstretched arm and hand wearing a single ring" loading="lazy" />
       <img width="1500" height="1041" src="/art/img/jewelry-01.jpg" alt="A hand at the hip wearing a fine gold ring" loading="lazy" />
     </div>
+  </div>
+
+  <div class="work-section">
+    <p class="work-section-label">Selected exhibitions</p>
+    <ul class="ex-list">
+      <li class="ex-row">
+        <div>
+          <div class="ex-title">Arts and Humanities Graduate Exhibition</div>
+          <div class="ex-venue">Manetti Shrem Museum, Davis, California</div>
+        </div>
+        <div class="ex-date">2024</div>
+      </li>
+      <li class="ex-row">
+        <div>
+          <div class="ex-title">Parviz Tanavoli&rsquo;s Students Ceramic Exhibition</div>
+          <div class="ex-venue">Maahe-Mehr Gallery, Tehran</div>
+        </div>
+        <div class="ex-date">2019</div>
+      </li>
+      <li class="ex-row">
+        <div>
+          <div class="ex-title">TADAEX 8th, Tehran Annual Digital Art Exhibition</div>
+          <div class="ex-venue">Mohsen Gallery, Tehran</div>
+        </div>
+        <div class="ex-date">2018</div>
+      </li>
+      <li class="ex-row">
+        <div>
+          <div class="ex-title">Nothing and Everything</div>
+          <div class="ex-venue">Tehran Art Space, Tehran</div>
+        </div>
+        <div class="ex-date">2018</div>
+      </li>
+      <li class="ex-row">
+        <div>
+          <div class="ex-title">Tehran&rsquo;s Second Contemporary Artistic Jewelry Exhibition</div>
+          <div class="ex-venue">Aria Gallery, Tehran</div>
+        </div>
+        <div class="ex-date">2018</div>
+      </li>
+      <li class="ex-row">
+        <div>
+          <div class="ex-title">Metal Condition</div>
+          <div class="ex-venue">Tehran Art Space, Tehran</div>
+        </div>
+        <div class="ex-date">2017</div>
+      </li>
+      <li class="ex-row">
+        <div>
+          <div class="ex-title">Tehran&rsquo;s First Contemporary Artistic Jewelry Exhibition</div>
+          <div class="ex-venue">Aria Gallery, Tehran</div>
+        </div>
+        <div class="ex-date">2017</div>
+      </li>
+    </ul>
   </div>
 
   <div class="back-work">
@@ -623,7 +715,7 @@ const NODES = [
     sub: 'UC Davis · 2022–2024',
     phase: 'Phase 03',
     title: 'MFA in Design, UC Davis',
-    body: '<strong>Light Cube</strong>, a certified human-subject study comparing emotional responses to white, red, and blue light across physical and virtual rooms. 23 participants, controlled light lab at the California Lighting Technology Center. IESSF Scholarship for excellence in lighting design. The question: can VR carry the feeling of a Turrell space?',
+    body: '<strong>Light Cube</strong>, a certified human-subject study comparing emotional responses to white, red, and blue light across physical and virtual rooms. 23 participants, controlled light lab at the California Lighting Technology Center. The question: can VR carry the feeling of a Turrell space?',
     connection: '<strong>What carried forward →</strong> Space is not neutral. Every surface carries emotion. The minimum condition that produces the maximum feeling. That became the principle behind every interface I\'ve built since.',
     img: '/art/mfa-thesis.jpg',
     imgAlt: 'MFA thesis light installation',

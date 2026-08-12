@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homepage strip picker</title>
+<style>
+  :root { --bg:#F7F6F3; --ink:#111; --mid:#6B6B6B; --rule:rgba(0,0,0,0.10); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1A1A1A; --ink:#E8E8E8; --mid:#9A9A9A; --rule:#333; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Geist","Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:1100px; margin:0 auto; padding:56px 28px 120px; }
+  h1 { font-size:1.55rem; font-weight:650; letter-spacing:-0.02em; margin:0 0 8px; }
+  h2 { font-size:0.74rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--mid); margin:48px 0 16px; padding-top:22px; border-top:1px solid var(--rule); }
+  p.lede { color:var(--mid); font-size:0.94rem; line-height:1.55; margin:0 0 8px; max-width:620px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:20px; }
+  figure { margin:0; }
+  figure img { width:100%; aspect-ratio:1/1; object-fit:cover; display:block;
+    border-radius:8px; border:1px solid var(--rule); background:#eee; }
+  figcaption { font-family:ui-monospace,Menlo,monospace; font-size:0.72rem; color:var(--mid);
+    margin-top:7px; word-break:break-all; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Homepage strip picker</h1>
+  <p class="lede">The homepage art strip shows four photographs. Tell me four filenames from the
+  sheet below and which slot each goes in, left to right, and I will cut them to size and put
+  them in.</p>
+
+  <h2>In the strip right now</h2>
+  <div class="grid">
+  <figure><img src="/assets/album/strip-1.jpg" alt="" loading="lazy"><figcaption>strip-1.jpg &nbsp;(slot 1)</figcaption></figure>
+  <figure><img src="/assets/album/strip-2.jpg" alt="" loading="lazy"><figcaption>strip-2.jpg &nbsp;(slot 2)</figcaption></figure>
+  <figure><img src="/assets/album/strip-3.jpg" alt="" loading="lazy"><figcaption>strip-3.jpg &nbsp;(slot 3)</figcaption></figure>
+  <figure><img src="/assets/album/strip-4.jpg" alt="" loading="lazy"><figcaption>strip-4.jpg &nbsp;(slot 4)</figcaption></figure>
+  </div>
+
+  <h2>Everything available, 36 photographs</h2>
+  <div class="grid">
+  <figure><img src="/art/img/edge-01.jpg" alt="" loading="lazy"><figcaption>edge-01.jpg</figcaption></figure>
+  <figure><img src="/art/img/edge-02.jpg" alt="" loading="lazy"><figcaption>edge-02.jpg</figcaption></figure>
+  <figure><img src="/art/img/edge-03.jpg" alt="" loading="lazy"><figcaption>edge-03.jpg</figcaption></figure>
+  <figure><img src="/art/img/edge-04.jpg" alt="" loading="lazy"><figcaption>edge-04.jpg</figcaption></figure>
+  <figure><img src="/art/img/inner-conflict-01.jpg" alt="" loading="lazy"><figcaption>inner-conflict-01.jpg</figcaption></figure>
+  <figure><img src="/art/img/inner-conflict-02.jpg" alt="" loading="lazy"><figcaption>inner-conflict-02.jpg</figcaption></figure>
+  <figure><img src="/art/img/inner-conflict-03.jpg" alt="" loading="lazy"><figcaption>inner-conflict-03.jpg</figcaption></figure>
+  <figure><img src="/art/img/inner-conflict-04.jpg" alt="" loading="lazy"><figcaption>inner-conflict-04.jpg</figcaption></figure>
+  <figure><img src="/art/img/inverted-city-01.jpg" alt="" loading="lazy"><figcaption>inverted-city-01.jpg</figcaption></figure>
+  <figure><img src="/art/img/inverted-city-02.jpg" alt="" loading="lazy"><figcaption>inverted-city-02.jpg</figcaption></figure>
+  <figure><img src="/art/img/jewelry-01.jpg" alt="" loading="lazy"><figcaption>jewelry-01.jpg</figcaption></figure>
+  <figure><img src="/art/img/jewelry-02.jpg" alt="" loading="lazy"><figcaption>jewelry-02.jpg</figcaption></figure>
+  <figure><img src="/art/img/jewelry-03.jpg" alt="" loading="lazy"><figcaption>jewelry-03.jpg</figcaption></figure>
+  <figure><img src="/art/img/jewelry-04.jpg" alt="" loading="lazy"><figcaption>jewelry-04.jpg</figcaption></figure>
+  <figure><img src="/art/img/jewelry-05.jpg" alt="" loading="lazy"><figcaption>jewelry-05.jpg</figcaption></figure>
+  <figure><img src="/art/img/jewelry-06.jpg" alt="" loading="lazy"><figcaption>jewelry-06.jpg</figcaption></figure>
+  <figure><img src="/art/img/jewelry-07.jpg" alt="" loading="lazy"><figcaption>jewelry-07.jpg</figcaption></figure>
+  <figure><img src="/art/img/jewelry-08.jpg" alt="" loading="lazy"><figcaption>jewelry-08.jpg</figcaption></figure>
+  <figure><img src="/art/img/jewelry-09.jpg" alt="" loading="lazy"><figcaption>jewelry-09.jpg</figcaption></figure>
+  <figure><img src="/art/img/jewelry-10.jpg" alt="" loading="lazy"><figcaption>jewelry-10.jpg</figcaption></figure>
+  <figure><img src="/art/img/studio-casting.jpg" alt="" loading="lazy"><figcaption>studio-casting.jpg</figcaption></figure>
+  <figure><img src="/art/img/urban-lion-01.jpg" alt="" loading="lazy"><figcaption>urban-lion-01.jpg</figcaption></figure>
+  <figure><img src="/art/img/urban-lion-02.jpg" alt="" loading="lazy"><figcaption>urban-lion-02.jpg</figcaption></figure>
+  <figure><img src="/art/img/urban-lion-03.jpg" alt="" loading="lazy"><figcaption>urban-lion-03.jpg</figcaption></figure>
+  <figure><img src="/art/img/urban-lion-04.jpg" alt="" loading="lazy"><figcaption>urban-lion-04.jpg</figcaption></figure>
+  <figure><img src="/art/img/urban-lion-05.jpg" alt="" loading="lazy"><figcaption>urban-lion-05.jpg</figcaption></figure>
+  <figure><img src="/art/img/urban-lion-06.jpg" alt="" loading="lazy"><figcaption>urban-lion-06.jpg</figcaption></figure>
+  <figure><img src="/art/img/wearable-01.jpg" alt="" loading="lazy"><figcaption>wearable-01.jpg</figcaption></figure>
+  <figure><img src="/art/img/wearable-02.jpg" alt="" loading="lazy"><figcaption>wearable-02.jpg</figcaption></figure>
+  <figure><img src="/art/img/wearable-03.jpg" alt="" loading="lazy"><figcaption>wearable-03.jpg</figcaption></figure>
+  <figure><img src="/art/img/wearable-04.jpg" alt="" loading="lazy"><figcaption>wearable-04.jpg</figcaption></figure>
+  <figure><img src="/art/img/wearable-05.jpg" alt="" loading="lazy"><figcaption>wearable-05.jpg</figcaption></figure>
+  <figure><img src="/art/img/wearable-06.jpg" alt="" loading="lazy"><figcaption>wearable-06.jpg</figcaption></figure>
+  <figure><img src="/art/img/weightlessness-01.jpg" alt="" loading="lazy"><figcaption>weightlessness-01.jpg</figcaption></figure>
+  <figure><img src="/art/img/weightlessness-02.jpg" alt="" loading="lazy"><figcaption>weightlessness-02.jpg</figcaption></figure>
+  <figure><img src="/art/img/weightlessness-03.jpg" alt="" loading="lazy"><figcaption>weightlessness-03.jpg</figcaption></figure>
+  </div>
+</div>
+</body>
+</html>

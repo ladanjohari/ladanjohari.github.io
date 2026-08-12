@@ -146,18 +146,45 @@
     .about-tease { font-size: 0.875rem; line-height: 1.8; color: var(--mid); max-width: 500px; text-wrap: pretty; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--rule); }
 
 
+    /* ── Studies: research and writing that is not a product ── */
+    .study-list { list-style: none; margin-top: 6px; }
+    .study-row {
+      display: grid; grid-template-columns: 1fr auto; gap: 8px 24px;
+      align-items: baseline; padding: 18px 0;
+      border-bottom: 1px solid var(--rule);
+      text-decoration: none; color: inherit;
+      transition: opacity 0.15s ease-out;
+    }
+    .study-kind {
+      font-size: 0.66rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--mid); margin-bottom: 7px;
+    }
+    .study-title { font-size: 1rem; font-weight: 600; letter-spacing: -0.015em; color: var(--ink); }
+    .study-desc { font-size: 0.86rem; color: var(--mid); line-height: 1.5; margin-top: 4px; max-width: 46ch; }
+    .study-meta { font-size: 0.78rem; color: var(--mid); white-space: nowrap; }
+    .study-arrow { display: inline-block; transition: transform 0.15s ease-out; }
+    @media (hover: hover) and (pointer: fine) {
+      .study-row:hover .study-title { color: var(--accent); }
+      .study-row:hover .study-arrow { transform: translateX(3px); }
+    }
+    @media (max-width: 540px) {
+      .study-row { grid-template-columns: 1fr; }
+      .study-meta { order: -1; }
+    }
+
     /* ── AboutStrip: the art band ── */
     .about-strip {
-      display: grid; grid-template-columns: 1fr 200px;
+      display: grid; grid-template-columns: 1fr 180px;
       gap: 28px; align-items: center;
-      padding: 26px 0; margin-bottom: 80px;
-      border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+      margin-top: 26px;
     }
-    .about-strip .about-text { max-width: 420px; margin: 0; }
-    .about-strip .about-text a {
+    .about-strip .about-tease {
+      margin: 0; padding: 0; border: 0; max-width: 400px;
+    }
+    .about-strip .about-tease a {
       color: var(--ink); font-weight: 600; text-decoration: none;
       border-bottom: 1px solid var(--rule); padding-bottom: 1px;
-      transition: color 0.15s ease-out, border-color 0.15s ease-out;
+      transition: color 0.15s ease-out, text-decoration-color 0.15s ease-out;
     }
     .album-link {
       position: relative; display: block; width: 100%; aspect-ratio: 4 / 3;
@@ -168,11 +195,11 @@
     .album-img {
       position: absolute; inset: 0; width: 100%; height: 100%;
       object-fit: cover; display: block;
-      opacity: 0; transition: opacity 0.6s ease-in-out;
+      opacity: 0; transition: opacity 0.22s ease-out;
     }
     .album-img.active { opacity: 1; }
     @media (hover: hover) and (pointer: fine) {
-      .about-strip .about-text a:hover { color: var(--accent); border-color: var(--accent-dim); }
+      .about-strip .about-tease a:hover { color: var(--accent); border-color: var(--accent-dim); }
       .album-link:hover { border-color: var(--mid); }
     }
     .album-link:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent); }
@@ -249,6 +276,43 @@
   <section id="work" aria-label="Selected work" style="margin-bottom:0;">
     <h2 class="section-label reveal">Selected Work</h2>
     <ul class="work-list">
+
+      <li class="work-item reveal">
+        <a class="work-row" href="https://ladanjohari.com/agent-state-ui/" target="_blank" rel="noopener">
+          <div class="work-thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+  <rect width="196" height="122" fill="#0b0c0e"/>
+  <!-- terminal window -->
+  <rect x="10" y="12" width="176" height="98" rx="8" fill="#131519" stroke="#23262c" stroke-width=".7"/>
+  <!-- title bar -->
+  <path d="M10 20 a8 8 0 0 1 8 -8 h160 a8 8 0 0 1 8 8 v2 H10 Z" fill="#1a1d22"/>
+  <circle cx="19" cy="17.5" r="2.1" fill="#3a3e46"/>
+  <circle cx="26" cy="17.5" r="2.1" fill="#3a3e46"/>
+  <circle cx="33" cy="17.5" r="2.1" fill="#3a3e46"/>
+  <line x1="10" y1="23" x2="186" y2="23" stroke="#23262c" stroke-width=".7"/>
+  <!-- the command, mid-type -->
+  <text x="18" y="42" fill="#4d5560" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="8.4">$</text>
+  <text x="26" y="42" fill="#e6eaf0" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="8.4">npm i agent-state-ui</text>
+  <rect x="128.5" y="35.4" width="5" height="8.6" fill="#e6eaf0"/>
+  <!-- install output -->
+  <text x="18" y="58" fill="#4d5560" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="6.6">added 1 package in 1s</text>
+  <text x="18" y="72" fill="#3f8f5e" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="6.6">&#8226;</text>
+  <text x="24" y="72" fill="#5a6270" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="6.6">StatusIndicator  ApprovalGate</text>
+  <text x="24" y="82" fill="#5a6270" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="6.6">SessionStrip     ActivityTrail</text>
+  <!-- next prompt -->
+  <text x="18" y="98" fill="#4d5560" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="8.4">$</text>
+</svg>
+<video class="thumb-video" src="/assets/previews/agent-state-ui-frame.mp4" data-src-light="/assets/previews/agent-state-ui-frame.mp4" data-src-dark="/assets/previews/agent-state-ui-frame.mp4" loop muted playsinline preload="metadata"></video></div>
+          <div class="work-info">
+            <h3 class="work-title">agent-state-ui</h3>
+            <div class="work-desc">Open-source React components for agent state. Compress the ordinary, never compress the exception.</div>
+            <div class="work-tags">React &middot; TypeScript &middot; Published on npm</div>
+          </div>
+          <div class="work-meta">
+            <span class="work-year">2026</span>
+            <span class="work-status">View docs <span class="work-arrow">&rarr;</span></span>
+          </div>
+        </a>
+      </li>
 
       <li class="work-item reveal">
         <a class="work-row" href="/projects/session-indicator.html">
@@ -440,23 +504,35 @@
     </div>
   </section>
 
-  <section class="about-strip reveal" aria-label="Art">
-    <p class="about-text">
-      <strong><a href="/art.html">Before all this, I made physical things &rarr;</a></strong><br><br>
-      Architecture, sculpture, light installations. The same instinct, in bronze, ceramic, space, and now code.
-    </p>
-    <a class="album-link" href="/art.html" id="albumLink" aria-label="See the art">
-      <img class="album-img active" src="/assets/album/strip-1.jpg" alt="Urban Lion, a glazed ceramic pipe form against a yellow ground" loading="lazy">
-      <img class="album-img" src="/assets/album/strip-2.jpg" alt="Edge, a bronze figure balanced on a stone base" loading="lazy">
-      <img class="album-img" src="/assets/album/strip-3.jpg" alt="Inner Conflict, pink pleated ceramic inside a bronze shell" loading="lazy">
-      <img class="album-img" src="/assets/album/strip-4.jpg" alt="Ladan Johari working on a ceramic form in a casting workshop" loading="lazy">
-    </a>
+  <!-- Studies: parked. The Light Cube page is built and lives at /studies/light-cube.html.
+       To bring this back, delete `hidden` and the display:none below. -->
+  <section aria-label="Studies" hidden style="display:none; margin-bottom:80px;">
+    <h2 class="section-label reveal">Studies</h2>
+    <ul class="study-list reveal">
+      <li>
+        <a class="study-row" href="/studies/light-cube.html">
+          <div>
+            <div class="study-kind">Thesis research</div>
+            <div class="study-title">Light Cube</div>
+            <div class="study-desc">Whether a virtual room can carry the same emotional weight as a lit physical one. 23 participants, three colours, two rooms.</div>
+          </div>
+          <div class="study-meta">2024 <span class="study-arrow">&rarr;</span></div>
+        </a>
+      </li>
+    </ul>
   </section>
 
   <section aria-label="About" style="margin-bottom:80px;">
     <h2 class="section-label reveal">About</h2>
-    <p class="about-text reveal" style="margin-top:20px;">I&rsquo;m a creative technologist with an MFA in Design from UC Davis and a master&rsquo;s in Architecture. Now, as a design engineer, I build high-fidelity prototypes and interactions for the web and in SwiftUI. With AI tools in the loop, I direct the work like a studio of one: getting prototypes ready for early testing, collecting feedback, and moving quickly without losing quality.</p>
-    <p class="about-tease reveal">Before software I made physical things. Bronze and ceramic sculpture, wearable objects, contemporary jewelry. <a href="/art.html" style="color:var(--ink); font-weight:500; text-decoration:underline; text-underline-offset:3px; text-decoration-color:var(--rule);">See the art &rarr;</a></p>
+    <p class="about-text reveal" style="margin-top:20px;">I&rsquo;m a creative technologist with an MFA in Design from UC Davis and a master&rsquo;s in Architecture. Now, as a design engineer, and with AI tools in the loop, I direct the work like a studio of one: getting prototypes ready for early testing, collecting feedback, and moving quickly without losing quality.</p>
+    <div class="about-strip reveal">
+      <p class="about-tease"><strong><a href="/art.html">Before all this, I made physical things &rarr;</a></strong><span style="display:block; margin-top:8px;">Minimum form, maximum presence. The rule that shapes my art still runs through everything I design.</span></p>
+      <a class="album-link" href="/art.html" id="albumLink" aria-label="See the art">
+        <img class="album-img active" src="/assets/album/frame-1.jpg" alt="Edge, a bronze figure tipping forward on a long black base" loading="lazy">
+        <img class="album-img" src="/assets/album/frame-2.jpg" alt="Architectural gold rings worn across the fingers" loading="lazy">
+        <img class="album-img" src="/assets/album/frame-3.jpg" alt="Urban Lion, a glazed ceramic pipe form" loading="lazy">
+      </a>
+    </div>
   </section>
 
   <section class="elsewhere" aria-label="Elsewhere" style="margin-bottom:80px;">
@@ -584,25 +660,27 @@
 
 
   <script>
-    /* AboutStrip: the art photographs cross-fade while the band is on screen. */
+    /* AboutStrip: the frame rests on the first photograph and cycles through the
+       rest while the cursor is anywhere in the band, the same rule the work rows
+       follow. Leaving the band returns it to the first photograph. */
     (() => {
+      const band = document.querySelector('.about-strip');
       const link = document.getElementById('albumLink');
-      if (!link) return;
+      if (!band || !link) return;
       const imgs = [...link.querySelectorAll('.album-img')];
       if (imgs.length < 2) return;
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
       let i = 0, timer = null;
-      const step = () => {
-        imgs[i].classList.remove('active');
-        i = (i + 1) % imgs.length;
-        imgs[i].classList.add('active');
-      };
-      new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting && !timer) timer = setInterval(step, 2600);
-          else if (!e.isIntersecting && timer) { clearInterval(timer); timer = null; }
-        });
-      }, { threshold: 0.3 }).observe(link);
+      const show = (n) => { imgs[i].classList.remove('active'); i = n; imgs[i].classList.add('active'); };
+      const step  = () => show((i + 1) % imgs.length);
+      const start = () => { if (!timer) { step(); timer = setInterval(step, 1100); } };
+      const stop  = () => { clearInterval(timer); timer = null; show(0); };
+
+      band.addEventListener('pointerenter', start);
+      band.addEventListener('pointerleave', stop);
+      link.addEventListener('focus', start);
+      link.addEventListener('blur', stop);
     })();
   </script>
 </body>
