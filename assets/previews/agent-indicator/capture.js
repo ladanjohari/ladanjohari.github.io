@@ -14,8 +14,8 @@ const WIDTH = 360, HEIGHT = 225;
 
 const HTML_PATH = path.resolve(__dirname, 'animation.html');
 const FRAMES_DIR = path.resolve(__dirname, `frames-${MODE}`);
-const OUT = path.resolve(__dirname, `agent-state-ui-${MODE}.mp4`);
-const OUT_GIF = path.resolve(__dirname, `agent-state-ui-${MODE}.gif`);
+const OUT = path.resolve(__dirname, `agent-indicator-${MODE}.mp4`);
+const OUT_GIF = path.resolve(__dirname, `agent-indicator-${MODE}.gif`);
 
 if (fs.existsSync(FRAMES_DIR)) fs.rmSync(FRAMES_DIR, { recursive: true });
 fs.mkdirSync(FRAMES_DIR);

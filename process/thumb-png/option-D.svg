@@ -10,7 +10,7 @@
   <line x1="10" y1="23" x2="186" y2="23" stroke="#23262c" stroke-width=".7"/>
   <!-- the command, mid-type -->
   <text x="18" y="42" fill="#4d5560" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="8.4">$</text>
-  <text x="26" y="42" fill="#e6eaf0" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="8.4">npm i agent-state-ui</text>
+  <text x="26" y="42" fill="#e6eaf0" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="8.4">npm i agent-indicator</text>
   <rect x="128.5" y="35.4" width="5" height="8.6" fill="#e6eaf0"/>
   <!-- install output -->
   <text x="18" y="58" fill="#4d5560" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="6.6">added 1 package in 1s</text>

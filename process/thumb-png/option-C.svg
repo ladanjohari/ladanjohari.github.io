@@ -3,7 +3,7 @@
           <!-- install line -->
           <rect x="14" y="16" width="168" height="24" rx="6" fill="#15181d" stroke="#242830" stroke-width=".6"/>
           <text x="23" y="31.4" fill="#4a4f58" font-family="ui-monospace,Menlo,monospace" font-size="8">$</text>
-          <text x="32" y="31.4" fill="#c9cfd8" font-family="ui-monospace,Menlo,monospace" font-size="8">npm i agent-state-ui</text>
+          <text x="32" y="31.4" fill="#c9cfd8" font-family="ui-monospace,Menlo,monospace" font-size="8">npm i agent-indicator</text>
           <!-- rendered result -->
           <text x="14" y="56" fill="#4a4f58" font-family="Geist,sans-serif" font-size="5.6" letter-spacing=".4">RENDERS</text>
           <rect x="14" y="62" width="168" height="42" rx="9" fill="#171a20" stroke="#242830" stroke-width=".6"/>
