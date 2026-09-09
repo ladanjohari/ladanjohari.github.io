@@ -50,15 +50,15 @@
       "port": 8003
     },
     {
-      "name": "agent-indicator",
+      "name": "agent-approvals",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["--prefix", "/Users/ladanjohari/projects/agent-indicator", "run", "dev"],
+      "runtimeArgs": ["--prefix", "/Users/ladanjohari/projects/agent-approvals", "run", "dev"],
       "port": 5173
     },
     {
-      "name": "agent-indicator-docs",
+      "name": "agent-approvals-docs",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["--prefix", "/Users/ladanjohari/projects/agent-indicator", "run", "dev:docs"],
+      "runtimeArgs": ["--prefix", "/Users/ladanjohari/projects/agent-approvals", "run", "dev:docs"],
       "port": 5174
     },
     {
