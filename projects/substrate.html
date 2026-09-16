@@ -112,56 +112,147 @@
     }
     .cs-body-text strong { color: var(--ink); font-weight: 600; }
 
-    /* ── Stepper: the interaction, as the hero ──
-       Three stills of the real product, one focus frame per step.
-       Replace the images and the `spots` array in the script below. */
-    .stepper {
-      margin-top: 0;
-      border: 1px solid var(--rule); border-radius: 10px;
-      overflow: hidden; background: #0a0a0a;
+    /* ── The tour: the app, drawn, driven by the diagram below it ──
+       The panel and the window are rebuilt in HTML so they can change as you
+       step through. Every task, check and piece of evidence in them came out
+       of one record that ran start to finish. */
+    .mac {
+      border: 1px solid var(--rule); border-radius: 10px; overflow: hidden;
+      background: linear-gradient(160deg, #1b2430 0%, #121821 46%, #0c0f14 100%);
     }
-    /* Set this to your stills' real aspect ratio (width/height in px). */
-    .stepper-frame { position: relative; width: 100%; aspect-ratio: 1424/1000; overflow: hidden; }
-    .stepper-frame img {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover; opacity: 0; transition: opacity 0.25s ease-out;
+    .menubar {
+      height: 25px; display: flex; align-items: center; gap: 15px;
+      padding: 0 10px; background: rgba(0,0,0,0.34);
+      border-bottom: 0.5px solid rgba(255,255,255,0.07);
+      font-size: 11px; color: rgba(255,255,255,0.72);
     }
-    .stepper-frame img.is-active { opacity: 1; }
-    .stepper-spotlight { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
-    .stepper-nav { display: flex; border-top: 1px solid var(--rule); background: var(--bg); }
-    .stepper-tab {
-      flex: 1; padding: 14px 12px;
-      border: none; background: none; cursor: pointer; text-align: left;
-      border-right: 1px solid var(--rule);
-      transition: background 0.15s ease-out, transform 0.16s ease-out;
+    .mb-bold { font-weight: 600; }
+    .mb-gap { margin-left: auto; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 9px; border-radius: 20px;
+      background: rgba(255,255,255,0.12);
+      border: 0.5px solid rgba(255,255,255,0.14);
+      transition: background 0.2s ease, box-shadow 0.2s ease;
     }
-    .stepper-tab:last-child { border-right: none; }
-    .stepper-tab:first-child { border-top-left-radius: 9px; border-bottom-left-radius: 9px; }
-    .stepper-tab:last-child { border-top-right-radius: 9px; border-bottom-right-radius: 9px; }
-    .stepper-tab:active { transform: scale(0.97); }
-    .stepper-tab.is-active { background: var(--hover-row); box-shadow: inset 0 0 0 2px var(--accent); }
-    .stepper-tab:focus-visible {
-      outline: none; box-shadow: inset 0 0 0 2px var(--accent); background: var(--hover-row);
-    }
-    @media (hover: hover) and (pointer: fine) {
-      .stepper-tab:hover { background: var(--hover-row); }
-    }
-    .stepper-tab-num {
-      font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
-      color: var(--accent); display: block; margin-bottom: 5px;
-    }
-    .stepper-tab-title {
-      font-size: 13px; font-weight: 600; color: var(--ink);
-      display: block; line-height: 1.35; letter-spacing: -0.01em;
-    }
-    .stepper-tab-desc {
-      font-size: 12px; color: var(--mid); display: block;
-      line-height: 1.5; margin-top: 4px;
-    }
+    .pill.lit { background: rgba(232,149,42,0.22); box-shadow: 0 0 0 2px rgba(232,149,42,0.28); }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.45); }
+    .dot.working { background: #fff; }
+    .dot.needs { background: #E8952A; }
+    .dot.done { background: #34C759; }
+    .pill .plus { font-size: 10px; color: rgba(255,255,255,0.55); }
+    .desk { position: relative; height: 396px; }
+    @media (max-width: 620px) { .desk { height: 340px; } }
 
-    /* A button centres its content, so a tab with a shorter description sat
-       lower than its neighbours. Hold every tab's text at the top. */
-    .stepper-tab { display: flex; flex-direction: column; justify-content: flex-start; }
+    .panel {
+      position: absolute; top: 9px; right: 12px; width: 344px;
+      max-height: calc(100% - 18px); overflow: hidden;
+      border-radius: 10px; background: #ECECEC; color: #111;
+      border: 0.5px solid rgba(0,0,0,0.18);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.55);
+      font-size: 12.5px; animation: popIn 0.2s cubic-bezier(0.2,0.9,0.3,1.1);
+    }
+    @media (max-width: 620px) { .panel { width: calc(100% - 24px); right: 12px; } }
+    @keyframes popIn { from { opacity: 0; transform: translateY(-5px) scale(0.97); } }
+    .p-head { display: flex; align-items: baseline; gap: 8px; padding: 10px 12px 8px;
+      border-bottom: 0.5px solid rgba(0,0,0,0.10); }
+    .p-head h3 { font-size: 12.5px; font-weight: 600; flex: 1; letter-spacing: -0.01em;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .p-head .count { font-size: 11px; color: #6a6a72; }
+    .p-note { padding: 6px 12px 7px; color: #6a6a72; font-size: 11.5px; }
+    .p-row { display: flex; align-items: center; gap: 8px; padding: 5px 12px; }
+    .p-row .t { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .p-row .r { font-size: 11px; color: #6a6a72; font-variant-numeric: tabular-nums; }
+    .p-group { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
+      color: rgba(0,0,0,0.34); padding: 8px 12px 3px; }
+    .p-task { display: flex; gap: 8px; padding: 5px 12px; align-items: flex-start; }
+    .p-task .n { flex: 1; line-height: 1.35; }
+    .p-task .after { display: block; font-size: 10.5px; color: rgba(0,0,0,0.35); }
+    .p-task .c { font-size: 10.5px; color: rgba(0,0,0,0.38); white-space: nowrap; }
+    .answers { display: flex; gap: 7px; justify-content: flex-end; padding: 9px 12px 4px; }
+    .btn { font-size: 11px; padding: 4px 10px; border-radius: 6px;
+      border: 0.5px solid rgba(0,0,0,0.18); background: rgba(255,255,255,0.85); }
+    .btn.primary { background: #0A84FF; border-color: transparent; color: #fff; font-weight: 600; }
+    .card { margin: 6px; padding: 10px; border-radius: 9px;
+      background: rgba(232,149,42,0.13); border: 0.5px solid rgba(232,149,42,0.4); }
+    .card.shut { background: rgba(52,199,89,0.12); border-color: rgba(52,199,89,0.4); }
+    .card .ch { display: flex; align-items: center; gap: 7px; margin-bottom: 5px; }
+    .card .ch h4 { flex: 1; font-size: 12.5px; font-weight: 600; color: #9a6a10; }
+    .card.shut .ch h4 { color: #1c7a3c; }
+    .card .ch .m { font-size: 10.5px; color: #9a6a10; font-variant-numeric: tabular-nums; }
+    .card.shut .ch .m { color: #1c7a3c; }
+    .check { display: flex; gap: 7px; align-items: flex-start; padding: 3px 0;
+      color: #6a6a72; font-size: 11.5px; line-height: 1.45; }
+    .check .box { width: 10px; height: 10px; border: 1px solid rgba(0,0,0,0.35);
+      border-radius: 3px; margin-top: 3px; flex: none; }
+    .check.met .box { background: #34C759; border-color: #34C759; }
+    .did { font-size: 11px; color: #0A84FF; padding-left: 17px; }
+    .card .links { display: flex; gap: 10px; font-size: 11px; color: #0A84FF; margin-top: 6px; }
+    .p-foot { display: flex; gap: 12px; align-items: center; padding: 7px 12px;
+      border-top: 0.5px solid rgba(0,0,0,0.10); font-size: 11px; color: #6a6a72; }
+    .p-foot .a { color: #0A84FF; }
+    .p-foot .sp { flex: 1; }
+    .field { display: flex; gap: 6px; padding: 8px 12px 10px; }
+    .field span { flex: 1; padding: 4px 8px; border-radius: 5px; background: #fff;
+      border: 0.5px solid rgba(0,0,0,0.22); color: rgba(0,0,0,0.38); font-size: 11.5px; }
+    .field b { font-size: 11px; padding: 4px 10px; border-radius: 6px; font-weight: 600;
+      background: #0A84FF; color: #fff; }
+
+    .window {
+      position: absolute; left: 14px; right: 14px; top: 30px;
+      max-height: calc(100% - 52px); overflow: hidden;
+      border-radius: 9px; background: #ECECEC; color: #111;
+      border: 0.5px solid rgba(0,0,0,0.2); box-shadow: 0 22px 54px rgba(0,0,0,0.6);
+      animation: popIn 0.22s cubic-bezier(0.2,0.9,0.3,1.1);
+    }
+    .w-bar { display: flex; align-items: center; gap: 9px; padding: 7px 9px;
+      border-bottom: 0.5px solid rgba(0,0,0,0.10); }
+    .lights { display: flex; gap: 5px; }
+    .lights i { width: 9px; height: 9px; border-radius: 50%; display: block; }
+    .seg { display: flex; background: rgba(0,0,0,0.08); border-radius: 6px; padding: 2px; }
+    .seg span { font-size: 11px; padding: 2px 10px; border-radius: 4px; color: #6a6a72; }
+    .seg span.on { background: #fff; color: #111; font-weight: 600; }
+    .w-note { font-size: 11px; color: #6a6a72; overflow: hidden;
+      text-overflow: ellipsis; white-space: nowrap; }
+    .cols { display: grid; grid-template-columns: 0.95fr 1.1fr 1.2fr; min-height: 230px; }
+    @media (max-width: 620px) { .cols { grid-template-columns: 1fr 1.2fr; }
+      .cols .col:nth-child(3) { display: none; } }
+    .col { border-right: 0.5px solid rgba(0,0,0,0.10); padding: 5px; }
+    .col:last-child { border-right: none; }
+    .node { display: flex; gap: 6px; align-items: flex-start; padding: 5px 6px;
+      border-radius: 5px; font-size: 11.5px; line-height: 1.35; }
+    .node.sel { background: rgba(10,132,255,0.14); }
+    .node .nd { width: 6px; height: 6px; border-radius: 50%; margin-top: 4px; flex: none;
+      background: rgba(0,0,0,0.3); }
+    .node .nd.done { background: #34C759; }
+    .node .nd.needs { background: #E8952A; }
+    .node .nt { flex: 1; }
+    .node .nc { font-size: 10.5px; color: rgba(0,0,0,0.36); font-variant-numeric: tabular-nums; }
+    .detail { padding: 9px 11px; font-size: 11.5px; }
+    .detail h5 { font-size: 12.5px; font-weight: 600; margin-bottom: 2px; }
+    .detail .id { font: 10px ui-monospace, Menlo, monospace; color: rgba(0,0,0,0.32); margin-bottom: 7px; }
+    .detail .lab { font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: rgba(0,0,0,0.34); margin-top: 9px; }
+    .detail p { color: #6a6a72; font-size: 11.5px; }
+
+    /* ── The diagram is the navigation: each step is a control ── */
+    .flow-nav { margin-top: 14px; }
+    .fstep { cursor: pointer; }
+    .fstep .fbox { fill: none; stroke: var(--rule); stroke-width: 1;
+      transition: fill 0.15s ease-out, stroke 0.15s ease-out; }
+    .fstep text { fill: var(--mid); font-size: 12px; text-anchor: middle;
+      transition: fill 0.15s ease-out; }
+    @media (hover: hover) and (pointer: fine) {
+      .fstep:hover .fbox { stroke: var(--ink); }
+      .fstep:hover text { fill: var(--ink); }
+    }
+    .flow-nav .fstep { opacity: 0.45; transition: opacity 0.18s ease-out; }
+    .flow-nav .fstep.on { opacity: 1; }
+    .fstep.on .fbox { fill: var(--accent-dim); stroke: var(--accent); }
+    .fstep.on text { fill: var(--ink); font-weight: 600; }
+    .fstep:focus-visible { outline: none; }
+    .fstep:focus-visible .fbox, .fstep:focus-visible .flow-gate,
+    .fstep:focus-visible .flow-proof { stroke: var(--accent); stroke-width: 2.5; }
 
     /* ── The idea: the gate, drawn ──
        Hairline for the flow, 1px for ordinary steps, a solid fill for the gate
@@ -221,17 +312,14 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .stepper-frame img, .stepper-tab { transition: none; }
+      .panel, .window { animation: none; }
+      .fstep .fbox, .fstep text { transition: none; }
       .back-work a .arrow { transition: none; }
     }
 
     @media (max-width: 540px) {
       .pf-nav, .cs-header, .video-hero, .cs-body, .back-work { padding-left: 20px; padding-right: 20px; }
       .pf-nav { padding-top: 28px; }
-      .stepper-nav { flex-direction: column; }
-      .stepper-tab { border-right: none; border-bottom: 1px solid var(--rule); }
-      .stepper-tab:first-child { border-top-left-radius: 9px; border-top-right-radius: 9px; border-bottom-left-radius: 0; }
-      .stepper-tab:last-child { border-bottom: none; border-top-right-radius: 0; border-bottom-left-radius: 9px; border-bottom-right-radius: 9px; }
       .pf-footer { flex-direction: column; gap: 14px; align-items: flex-start; padding-left: 20px; padding-right: 20px; }
     }
   </style>
@@ -254,55 +342,65 @@
       <span>macOS app &middot; Swift and Python</span>
       <span class="sep">/</span>
       <a href="https://github.com/ladanjohari/substrate" target="_blank" rel="noopener">GitHub &rarr;</a>
-      <span class="sep">/</span>
-      <a href="/substrate/">Take the tour &rarr;</a>
     </div>
   </div>
 
-  <!-- ── Hero: the interaction itself, big and legible. Never a title card. ── -->
   <div class="video-hero">
-    <div class="stepper" id="stepper">
-      <div class="stepper-frame">
-        <img src="/assets/img/substrate/step-01.jpg" alt="The menu bar panel showing a six task plan for a client kickoff brief, not yet approved, with Reject, Ask for changes and Approve" class="is-active" data-step="0" />
-        <img src="/assets/img/substrate/step-02.jpg" alt="The same panel after approval, with an agent working on the first task and how long it has been on it" data-step="1" />
-        <img src="/assets/img/substrate/step-03.jpg" alt="The panel asking for a person: a task an agent could not prove, with its open checks listed" data-step="2" />
-        <img src="/assets/img/substrate/step-04.jpg" alt="The window in three columns: the goal, its six tasks with what each waits on, and the four checks that close the selected task" data-step="3" />
-        <svg class="stepper-spotlight" viewBox="0 0 1424 1000" preserveAspectRatio="none">
-          <defs>
-            <mask id="spot-mask">
-              <rect width="1424" height="1000" fill="white" />
-              <rect id="spot-window" x="0" y="0" width="100" height="100" rx="14" fill="black" />
-            </mask>
-          </defs>
-          <rect width="1424" height="1000" fill="rgba(0,0,0,0.45)" mask="url(#spot-mask)" />
-          <rect id="spot-border" x="0" y="0" width="100" height="100" rx="14"
-            fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" />
-        </svg>
+    <div class="mac">
+      <div class="menubar">
+        <span class="mb-bold">Substrate</span><span>File</span><span>View</span><span>Window</span>
+        <span class="mb-gap"></span>
+        <span id="pill" class="pill"><span class="dot"></span></span>
+        <span>100%</span><span>9:41</span>
       </div>
-      <div class="stepper-nav">
-        <button class="stepper-tab is-active" data-step="0">
-          <span class="stepper-tab-num">01</span>
-          <span class="stepper-tab-title">Read the plan</span>
-          <span class="stepper-tab-desc">The goal comes back as tasks, each with the checks that close it. Nothing has run.</span>
-        </button>
-        <button class="stepper-tab" data-step="1">
-          <span class="stepper-tab-num">02</span>
-          <span class="stepper-tab-title">Watch it work</span>
-          <span class="stepper-tab-desc">An agent takes the first task. The panel shows which agent is on it, and for how long.</span>
-        </button>
-        <button class="stepper-tab" data-step="2">
-          <span class="stepper-tab-num">03</span>
-          <span class="stepper-tab-title">Answer what it cannot prove</span>
-          <span class="stepper-tab-desc">An agent stops at checks it cannot evidence, and the panel asks you.</span>
-        </button>
-        <button class="stepper-tab" data-step="3">
-          <span class="stepper-tab-num">04</span>
-          <span class="stepper-tab-title">See the whole shape</span>
-          <span class="stepper-tab-desc">The window holds every goal, the tasks it broke into, what each one waits on, and the checks that close it.</span>
-        </button>
-      </div>
+      <div class="desk" id="desk"></div>
     </div>
-    <p class="video-caption">The real panel and the real window, both rendered from a live record. Click a step.</p>
+
+    <figure class="flow flow-nav">
+      <div class="flow-scroll">
+      <svg class="flow-svg" viewBox="0 0 640 104" role="group"
+           aria-label="The six steps. Choose one to see it in the app above.">
+        <defs>
+          <marker id="flow-arrow" viewBox="0 0 6 6" refX="5.5" refY="3" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0,0 L6,3 L0,6 z" class="flow-arrowhead" />
+          </marker>
+        </defs>
+        <g class="flow-line">
+          <line x1="79" y1="40" x2="102" y2="40" marker-end="url(#flow-arrow)" />
+          <line x1="183" y1="40" x2="206" y2="40" marker-end="url(#flow-arrow)" />
+          <line x1="323" y1="40" x2="346" y2="40" marker-end="url(#flow-arrow)" />
+          <line x1="427" y1="40" x2="450" y2="40" marker-end="url(#flow-arrow)" />
+          <line x1="549" y1="40" x2="572" y2="40" marker-end="url(#flow-arrow)" />
+        </g>
+        <g class="fstep" data-step="0" role="button" tabindex="0" aria-label="Goal: type a sentence">
+          <rect class="fbox" x="0" y="22" width="78" height="36" rx="18" /><text x="39" y="44.5">Goal</text>
+        </g>
+        <g class="fstep" data-step="1" role="button" tabindex="0" aria-label="Plan: the tasks and their checks">
+          <rect class="fbox" x="104" y="22" width="78" height="36" rx="18" /><text x="143" y="44.5">Plan</text>
+        </g>
+        <g class="fstep gate" data-step="2" role="button" tabindex="0" aria-label="You approve: nothing runs before this">
+          <rect class="flow-gate" x="208" y="16" width="114" height="48" rx="24" />
+          <text class="flow-gate-t" x="265" y="44.5">You approve</text>
+        </g>
+        <g class="fstep" data-step="3" role="button" tabindex="0" aria-label="Agents: an agent takes the first task">
+          <rect class="fbox" x="348" y="22" width="78" height="36" rx="18" /><text x="387" y="44.5">Agents</text>
+        </g>
+        <g class="fstep proof" data-step="4" role="button" tabindex="0" aria-label="Evidence: it asks what it cannot prove">
+          <rect class="flow-proof" x="452" y="22" width="96" height="36" rx="18" />
+          <text class="flow-proof-t" x="500" y="44.5">Evidence</text>
+        </g>
+        <g class="fstep" data-step="5" role="button" tabindex="0" aria-label="Done: closed, with its evidence">
+          <rect class="fbox" x="574" y="22" width="66" height="36" rx="18" /><text x="607" y="44.5">Done</text>
+        </g>
+        <line class="flow-tick" x1="265" y1="66" x2="265" y2="76" />
+        <text class="flow-note" x="265" y="92">nothing runs before this</text>
+        <line class="flow-tick" x1="500" y1="60" x2="500" y2="76" />
+        <text class="flow-note" x="500" y="92">nothing closes without it</text>
+      </svg>
+      </div>
+    </figure>
+
+    <p class="video-caption" id="tour-cap">Click a step. The app above is drawn from one record that ran start to finish.</p>
   </div>
 
   <div class="cs-body">
@@ -327,39 +425,6 @@
         <strong>Two rules, kept by the record itself.</strong> Nothing runs until a person approves the plan. Nothing closes until each of its checks has evidence. Everything else in the product follows from those two.
       </p>
 
-      <figure class="flow">
-        <div class="flow-scroll">
-        <svg class="flow-svg" viewBox="0 0 640 104" role="img"
-             aria-label="A goal becomes a plan. The plan waits at a gate where you approve it. Only then do agents work, and a task closes only when its evidence is written down.">
-          <defs>
-            <marker id="flow-arrow" viewBox="0 0 6 6" refX="5.5" refY="3" markerWidth="6" markerHeight="6" orient="auto">
-              <path d="M0,0 L6,3 L0,6 z" class="flow-arrowhead" />
-            </marker>
-          </defs>
-          <g class="flow-line">
-            <line x1="79" y1="40" x2="102" y2="40" marker-end="url(#flow-arrow)" />
-            <line x1="183" y1="40" x2="206" y2="40" marker-end="url(#flow-arrow)" />
-            <line x1="323" y1="40" x2="346" y2="40" marker-end="url(#flow-arrow)" />
-            <line x1="427" y1="40" x2="450" y2="40" marker-end="url(#flow-arrow)" />
-            <line x1="549" y1="40" x2="572" y2="40" marker-end="url(#flow-arrow)" />
-          </g>
-          <g class="flow-node">
-            <rect x="0" y="22" width="78" height="36" rx="18" /><text x="39" y="44.5">Goal</text>
-            <rect x="104" y="22" width="78" height="36" rx="18" /><text x="143" y="44.5">Plan</text>
-            <rect x="348" y="22" width="78" height="36" rx="18" /><text x="387" y="44.5">Agents</text>
-            <rect x="574" y="22" width="66" height="36" rx="18" /><text x="607" y="44.5">Done</text>
-          </g>
-          <rect class="flow-gate" x="208" y="16" width="114" height="48" rx="24" />
-          <text class="flow-gate-t" x="265" y="44.5">You approve</text>
-          <rect class="flow-proof" x="452" y="22" width="96" height="36" rx="18" />
-          <text class="flow-proof-t" x="500" y="44.5">Evidence</text>
-          <line class="flow-tick" x1="265" y1="66" x2="265" y2="76" />
-          <text class="flow-note" x="265" y="92">nothing runs before this</text>
-          <line class="flow-tick" x1="500" y1="60" x2="500" y2="76" />
-          <text class="flow-note" x="500" y="92">nothing closes without it</text>
-        </svg>
-        </div>
-      </figure>
 
       <p class="cs-body-text" style="margin-top:26px;">
         Most agent tools trust the agent to say it is done. Here the record refuses to close a task until the proof is written down.
@@ -406,88 +471,132 @@
     </ul>
   </footer>
 
+  <script id="record" type="application/json">{"plan": {"title": "Write a release checklist for Substrate 0.1", "tasks": [{"title": "Write down every item that must be verified before release", "checks": 6, "after": []}, {"title": "Assemble and write the release checklist document", "checks": 5, "after": ["collect-checks"]}]}, "working": {"title": "Write down every item that must be verified before release", "owner": "agent 1", "elapsed": "1m 32s"}, "asking": {"title": "Assemble and write the release checklist document", "met": 3, "total": 5, "open": ["The checklist covers all four categories from the collected list: scope, technical, content and privacy, publishing.", "No item is left open-ended: each one has a concrete, file-based way to know it is done."]}, "tree": [{"id": "release-checklist-substrate-01", "title": "Write a release checklist for Substrate 0.1", "parent": null, "state": "working", "met": 0, "total": 1, "intent": "Create a written document that lists every step needed before shipping Substrate 0.1 to the public, so nothing is forgotten and the process can be repeated.", "criteria": [{"text": "A checklist document exists that Ladan has read through and confirmed covers every step she would need to take to ship Substrate 0.1.", "state": "unmet", "evidence": ""}]}, {"id": "release-checklist-substrate-01/collect-checks", "title": "Write down every item that must be verified before release", "parent": "release-checklist-substrate-01", "state": "done", "met": 6, "total": 6, "intent": "Produce a raw list of every pre-release item, organized by category, where each item describes a file-readable fact rather than a person's judgment.", "criteria": [{"text": "A file exists at a known path containing the list.", "state": "met", "evidence": "The file exists at /Users/ladanjohari/projects/substrate/store/outputs/release-checklist-substrate-01__collect-checks.md and its content is the pre-release checklist described."}, {"text": "The file has a section for scope: it names exactly what is included in Substrate 0.1 as a written statement.", "state": "met", "evidence": "Section '## 0. Scope of Substrate 0.1' contains subsection '### Included in 0.1' which is a written statement naming exactly what is included: store/*.py (listing each file), app/mac/, prototypes/canv"}, {"text": "The file has a section for technical checks: each item names a file, a command output, or a directory state that can be read.", "state": "met", "evidence": "Sections 3\u201312 (Store, Decomposer, Runner, AI worker, Front door, Database, Mac app, Python dependencies, Skills) each name a specific file, command to run, or directory state. For example: 'python3 st"}, {"text": "The file has a section for content and privacy checks: each item names a file or folder to inspect for private data or paths.", "state": "met", "evidence": "Section 1 ('Private content scrubbed from release files') names specific grep commands against the release folder and specific files: 'grep -r \"ladanjohari\" ~/projects/substrate-release/', 'find ~/pro"}, {"text": "The file has a section for publishing steps: each item is a concrete command or file operation, not a decision.", "state": "met", "evidence": "Section '## 7. Publishing steps' contains six subsections (7a\u20137f), each consisting of shell commands or file operations: rsync and cp commands in 7a, git add/status/commit in 7c, git tag in 7d, git pu"}, {"text": "No item in the file contains words like 'confirm with,' 'get approval from,' or 'review with' a person's name.", "state": "met", "evidence": "A full scan of the deliverable finds no instance of 'confirm with', 'get approval from', 'review with', or any person's name attached to a decision gate. Every item is a mechanical check (grep, find, "}]}, {"id": "release-checklist-substrate-01/draft-checklist", "title": "Assemble and write the release checklist document", "parent": "release-checklist-substrate-01", "state": "done", "met": 5, "total": 5, "intent": "Turn the collected items into a single formatted checklist that a stranger could use to ship Substrate 0.1 without asking anyone a question.", "criteria": [{"text": "A checklist file exists and is readable at a path noted in the repo.", "state": "met", "evidence": "The file is at store/outputs/release-checklist-substrate-01__draft-checklist.md, 232 lines, and opens and reads."}, {"text": "Every item is formatted with a checkbox marker.", "state": "met", "evidence": "Every actionable item throughout sections 1\u201310 uses the '- [ ]' checkbox marker. Section 0 uses plain bullets for scope documentation (not checklist items). All 60+ items that are meant to be checked "}, {"text": "Every item describes a file state, a command result, or a directory condition, not a person's opinion or sign-off.", "state": "met", "evidence": "Every '- [ ]' item resolves to a command result (e.g., 'grep -r \"ladanjohari\" ... returns zero lines'), a file state ('test -f ... exits 0'), or a directory condition ('find ... returns no paths'). No"}, {"text": "The checklist covers all four categories from the collected list: scope, technical, content and privacy, publishing.", "state": "met", "evidence": "Scope: Section 0 lists exactly what is and is not copied. Technical: Sections 2\u20138 cover file copy correctness, documentation, store/server, CLI, runner/worker, Mac build, and skills. Content and priva"}, {"text": "No item is left open-ended: each one has a concrete, file-based way to know it is done.", "state": "met", "evidence": "70 checkbox items. 69 name a command or a file path to check against. The one that does not, The rsync and cp commands above complete with no error output, refers to the commands printed directly abov"}]}], "finished": [{"id": "release-checklist-substrate-01", "title": "Write a release checklist for Substrate 0.1", "parent": null, "state": "working", "met": 0, "total": 1, "criteria": [{"text": "A checklist document exists that Ladan has read through and confirmed covers every step she would need to take to ship Substrate 0.1.", "state": "unmet", "evidence": ""}]}, {"id": "release-checklist-substrate-01/collect-checks", "title": "Write down every item that must be verified before release", "parent": "release-checklist-substrate-01", "state": "done", "met": 6, "total": 6, "criteria": [{"text": "A file exists at a known path containing the list.", "state": "met", "evidence": "The file exists at /Users/ladanjohari/projects/substrate/store/outputs/release-checklist-substrate-01__collect-checks.md and its content is the pre-release checklist described."}, {"text": "The file has a section for scope: it names exactly what is included in Substrate 0.1 as a written statement.", "state": "met", "evidence": "Section '## 0. Scope of Substrate 0.1' contains subsection '### Included in 0.1' which is a written statement naming exactly what is included: store/*.py (listing each file), app/mac/, prototypes/canv"}, {"text": "The file has a section for technical checks: each item names a file, a command output, or a directory state that can be read.", "state": "met", "evidence": "Sections 3\u201312 (Store, Decomposer, Runner, AI worker, Front door, Database, Mac app, Python dependencies, Skills) each name a specific file, command to run, or directory state. For example: 'python3 st"}, {"text": "The file has a section for content and privacy checks: each item names a file or folder to inspect for private data or paths.", "state": "met", "evidence": "Section 1 ('Private content scrubbed from release files') names specific grep commands against the release folder and specific files: 'grep -r \"ladanjohari\" ~/projects/substrate-release/', 'find ~/pro"}, {"text": "The file has a section for publishing steps: each item is a concrete command or file operation, not a decision.", "state": "met", "evidence": "Section '## 7. Publishing steps' contains six subsections (7a\u20137f), each consisting of shell commands or file operations: rsync and cp commands in 7a, git add/status/commit in 7c, git tag in 7d, git pu"}, {"text": "No item in the file contains words like 'confirm with,' 'get approval from,' or 'review with' a person's name.", "state": "met", "evidence": "A full scan of the deliverable finds no instance of 'confirm with', 'get approval from', 'review with', or any person's name attached to a decision gate. Every item is a mechanical check (grep, find, "}]}, {"id": "release-checklist-substrate-01/draft-checklist", "title": "Assemble and write the release checklist document", "parent": "release-checklist-substrate-01", "state": "done", "met": 5, "total": 5, "criteria": [{"text": "A checklist file exists and is readable at a path noted in the repo.", "state": "met", "evidence": "The file is at store/outputs/release-checklist-substrate-01__draft-checklist.md, 232 lines, and opens and reads."}, {"text": "Every item is formatted with a checkbox marker.", "state": "met", "evidence": "Every actionable item throughout sections 1\u201310 uses the '- [ ]' checkbox marker. Section 0 uses plain bullets for scope documentation (not checklist items). All 60+ items that are meant to be checked "}, {"text": "Every item describes a file state, a command result, or a directory condition, not a person's opinion or sign-off.", "state": "met", "evidence": "Every '- [ ]' item resolves to a command result (e.g., 'grep -r \"ladanjohari\" ... returns zero lines'), a file state ('test -f ... exits 0'), or a directory condition ('find ... returns no paths'). No"}, {"text": "The checklist covers all four categories from the collected list: scope, technical, content and privacy, publishing.", "state": "met", "evidence": "Scope: Section 0 lists exactly what is and is not copied. Technical: Sections 2\u20138 cover file copy correctness, documentation, store/server, CLI, runner/worker, Mac build, and skills. Content and priva"}, {"text": "No item is left open-ended: each one has a concrete, file-based way to know it is done.", "state": "met", "evidence": "70 checkbox items. 69 name a command or a file path to check against. The one that does not, The rsync and cp commands above complete with no error output, refers to the commands printed directly abov"}]}]}</script>
   <script>
-    (() => {
-      const stepper = document.getElementById('stepper');
-      if (!stepper) return;
-      const imgs = stepper.querySelectorAll('.stepper-frame img');
-      const tabs = stepper.querySelectorAll('.stepper-tab');
-      const spotWindow = document.getElementById('spot-window');
-      const spotBorder = document.getElementById('spot-border');
-      let current = 0, timer = null, hovered = false;
+    (function () {
+      const D = JSON.parse(document.getElementById('record').textContent);
+      const desk = document.getElementById('desk');
+      const pill = document.getElementById('pill');
+      const cap = document.getElementById('tour-cap');
+      const steps = [...document.querySelectorAll('.fstep')];
+      const esc = t => String(t).replace(/[&<>"]/g, c =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-      /* One focus frame per step, in the stills' own pixel space (1424 x 1000).
-         Measure these from the real UI while capturing, do not eyeball them. */
-      const spots = [
-        { x: 338, y: 227, w: 748, h: 558, rx: 18 },
-        { x: 338, y: 435, w: 748, h: 142, rx: 18 },
-        { x: 348, y: 239, w: 728, h: 486, rx: 18 },
-        { x: 463, y: 302, w: 651, h: 426, rx: 18 }
+      function panel(inner, head, count) {
+        return '<div class="panel"><div class="p-head"><h3>' + esc(head) + '</h3>' +
+          '<span class="count">' + esc(count) + '</span></div>' + inner +
+          '<div class="p-foot"><span class="a">New goal</span>' +
+          '<span class="a">Open the full tree</span><span class="sp"></span>' +
+          '<span>&hellip;</span><span>Quit</span></div></div>';
+      }
+      const planRows = () => '<div class="p-note">Nothing runs until you approve this.</div>' +
+        D.plan.tasks.map(t => '<div class="p-task"><span class="n">' + esc(t.title) +
+          (t.after.length ? '<span class="after">after ' + esc(t.after.join(', ')) + '</span>' : '') +
+          '</span><span class="c">' + t.checks + ' checks</span></div>').join('') +
+        '<div class="answers"><span class="btn">Reject</span>' +
+        '<span class="btn">Ask for changes</span><span class="btn primary">Approve</span></div>';
+
+      const views = [
+        () => panel('<div class="p-note">Describe something you want done and it becomes a plan you can approve.</div>' +
+              '<div class="field"><span>What do you want done?</span><b>Plan it</b></div>',
+              'Substrate', 'nothing on the go'),
+        () => windowView(),
+        () => panel(planRows(), D.plan.title, 'not approved yet'),
+        () => panel('<div class="p-group">Running now</div><div class="p-row">' +
+              '<span class="dot working" style="background:#111"></span><span class="t">' +
+              esc(D.working.title) + '</span><span class="r">' + esc(D.working.owner) +
+              ' &middot; ' + esc(D.working.elapsed) + '</span></div>' +
+              '<div class="p-note">1 running, 1 waiting on something</div>',
+              D.plan.title, '1 running'),
+        () => panel('<div class="card"><div class="ch"><span class="dot needs"></span><h4>' +
+              esc(D.asking.title) + '</h4><span class="m">' + D.asking.met + ' of ' +
+              D.asking.total + '</span></div>' +
+              D.asking.open.map(c => '<div class="check"><span class="box"></span><span>' +
+                esc(c) + '</span></div><div class="did">I did this</div>').join('') +
+              '<div class="links"><span>Read what the agent wrote</span>' +
+              '<span>Ask for changes</span></div></div>', D.plan.title, '1 needs you'),
+        () => {
+          const g = D.finished.filter(n => !n.parent)[0];
+          return panel('<div class="p-group">Done</div>' +
+            D.finished.filter(n => n.parent).map(t => '<div class="p-row">' +
+              '<span class="dot done"></span><span class="t">' + esc(t.title) +
+              '</span><span class="r">' + t.met + ' of ' + t.total + '</span></div>').join('') +
+            '<div class="card shut"><div class="ch"><span class="dot done"></span><h4>' +
+            esc(g.title) + '</h4><span class="m">closed</span></div>' +
+            (g.criteria[0] ? '<div class="check met"><span class="box"></span><span>' +
+              esc(g.criteria[0].text) + '</span></div>' : '') + '</div>', g.title, 'done');
+        }
       ];
 
-      let anim = null;
-      let cur = { ...spots[0] };
-      const lerp = (a, b, t) => a + (b - a) * t;
-
-      function setSpot(s) {
-        [spotWindow, spotBorder].forEach(el => {
-          el.setAttribute('x', s.x); el.setAttribute('y', s.y);
-          el.setAttribute('width', s.w); el.setAttribute('height', s.h);
-          el.setAttribute('rx', s.rx);
-        });
+      function windowView() {
+        const roots = D.tree.filter(n => !n.parent), tasks = D.tree.filter(n => n.parent);
+        const sel = tasks[0];
+        const dotOf = n => n.state === 'done' ? 'done' : n.state === 'waiting' ? 'needs' : '';
+        return '<div class="window"><div class="w-bar">' +
+          '<span class="lights"><i style="background:#FF5F57"></i>' +
+          '<i style="background:#FEBC2E"></i><i style="background:#28C840"></i></span>' +
+          '<span class="seg"><span class="on">Columns</span><span>Outline</span></span>' +
+          '<span class="w-note">Every choice opens the next column.</span></div><div class="cols">' +
+          '<div class="col">' + roots.map(n => '<div class="node sel"><span class="nd"></span>' +
+            '<span class="nt">' + esc(n.title) + '</span><span class="nc">' + n.met + '/' +
+            n.total + '</span></div>').join('') + '</div>' +
+          '<div class="col">' + tasks.map((n, i) => '<div class="node' + (i === 0 ? ' sel' : '') +
+            '"><span class="nd ' + dotOf(n) + '"></span><span class="nt">' + esc(n.title) +
+            '</span><span class="nc">' + n.met + '/' + n.total + '</span></div>').join('') + '</div>' +
+          '<div class="col"><div class="detail"><h5>' + esc(sel.title) + '</h5>' +
+          '<div class="id">' + esc(sel.id) + '</div>' +
+          (sel.intent ? '<div class="lab">Why</div><p>' + esc(sel.intent) + '</p>' : '') +
+          '<div class="lab">Checks ' + sel.met + ' of ' + sel.total + ' met</div>' +
+          sel.criteria.slice(0, 2).map(c => '<div class="check' + (c.state === 'met' ? ' met' : '') +
+            '"><span class="box"></span><span>' + esc(c.text) + '</span></div>').join('') +
+          (sel.criteria.length > 2 ? '<div class="check"><span style="padding-left:17px">and ' +
+            (sel.criteria.length - 2) + ' more</span></div>' : '') +
+          '</div></div></div></div>';
       }
 
-      function animateTo(target) {
-        if (anim) cancelAnimationFrame(anim);
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          cur = { ...target }; setSpot(cur); return;
-        }
-        const from = { ...cur }, start = performance.now(), dur = 400;
-        function tick(now) {
-          const t = Math.min((now - start) / dur, 1);
-          const ease = 1 - Math.pow(1 - t, 4);
-          cur = {
-            x: lerp(from.x, target.x, ease), y: lerp(from.y, target.y, ease),
-            w: lerp(from.w, target.w, ease), h: lerp(from.h, target.h, ease),
-            rx: lerp(from.rx, target.rx, ease)
-          };
-          setSpot(cur);
-          if (t < 1) anim = requestAnimationFrame(tick);
-        }
-        anim = requestAnimationFrame(tick);
-      }
+      const dots = [['idle'], ['needs'], ['needs'], ['working', 'working'], ['needs', 'working'], ['done', 'done']];
+      const lit = [false, false, true, false, true, false];
+      const caps = [
+        'Type one sentence into the menu bar. That is the whole input.',
+        'It comes back as tasks, each with the checks that will close it. The window holds the shape.',
+        'Three answers, and no agent moves until you give one.',
+        'An agent takes the first task the plan allows, and says how long it has had it.',
+        'It closed what it could evidence and stopped at the rest. Those two are yours.',
+        'Both tasks closed with proof, and the goal closed when its own check was answered.'
+      ];
 
-      function goTo(i) {
-        current = i;
-        imgs.forEach((img, idx) => img.classList.toggle('is-active', idx === i));
-        tabs.forEach((tab, idx) => tab.classList.toggle('is-active', idx === i));
-        animateTo(spots[i]);
+      let at = -1, timer = null;
+      function show(i) {
+        at = (i + views.length) % views.length;
+        desk.innerHTML = views[at]();
+        cap.textContent = caps[at];
+        pill.className = 'pill' + (lit[at] ? ' lit' : '');
+        pill.innerHTML = dots[at].map(d => '<span class="dot ' + d + '"></span>').join('');
+        steps.forEach((el, idx) => el.classList.toggle('on', idx === at));
       }
-
-      function advance() { goTo((current + 1) % imgs.length); }
-      function startTimer() {
-        stopTimer();
-        if (hovered) return;
+      function play() {
+        stop();
         if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          timer = setInterval(advance, 3500);
+          timer = setInterval(() => show(at + 1), 6000);
         }
       }
-      function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
+      function stop() { if (timer) { clearInterval(timer); timer = null; } }
 
-      stepper.addEventListener('mouseenter', () => { hovered = true; stopTimer(); });
-      stepper.addEventListener('mouseleave', () => { hovered = false; startTimer(); });
-      stepper.addEventListener('focusin',   () => { hovered = true; stopTimer(); });
-      stepper.addEventListener('focusout',  () => { hovered = false; startTimer(); });
-
-      tabs.forEach((tab, idx) => {
-        tab.addEventListener('click', () => { goTo(idx); startTimer(); });
+      steps.forEach((el, i) => {
+        el.addEventListener('click', () => { show(i); play(); });
+        el.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(i); play(); }
+        });
       });
+      const hero = document.querySelector('.video-hero');
+      hero.addEventListener('mouseenter', stop);
+      hero.addEventListener('mouseleave', play);
+      hero.addEventListener('focusin', stop);
 
-      new IntersectionObserver((entries) => {
-        entries.forEach(e => e.isIntersecting ? startTimer() : stopTimer());
-      }, { threshold: 0.3 }).observe(stepper);
-
-      setSpot(spots[0]);
+      show(0);
+      // Only run while it is on screen, so it is not animating out of sight.
+      new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? play() : stop()),
+        { threshold: 0.25 }).observe(hero);
     })();
   </script>
 </body>
