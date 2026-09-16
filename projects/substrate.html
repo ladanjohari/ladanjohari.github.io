@@ -116,9 +116,21 @@
        The panel and the window are rebuilt in HTML so they can change as you
        step through. Every task, check and piece of evidence in them came out
        of one record that ran start to finish. */
+    /* The hero steps outside the reading column: the app needs room, and a
+       344px panel inside a 644px "screen" made the whole thing look like a toy.
+       The panel is now near its real size against a believable desktop. */
+    .video-hero { width: min(900px, calc(100vw - 32px)); max-width: none;
+      margin-left: 50%; transform: translateX(-50%); padding: 40px 0 0; }
     .mac {
-      border: 1px solid var(--rule); border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--rule); border-radius: 12px; overflow: hidden;
       background: linear-gradient(160deg, #1b2430 0%, #121821 46%, #0c0f14 100%);
+      box-shadow: 0 18px 46px rgba(0, 0, 0, 0.16);
+    }
+    /* In dark mode the frame and the page are the same value, so without an
+       edge the hero reads as a hole cut in the page. */
+    @media (prefers-color-scheme: dark) {
+      .mac { border-color: #3a3a3a; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06); }
     }
     .menubar {
       height: 25px; display: flex; align-items: center; gap: 15px;
@@ -141,18 +153,17 @@
     .dot.needs { background: #E8952A; }
     .dot.done { background: #34C759; }
     .pill .plus { font-size: 10px; color: rgba(255,255,255,0.55); }
-    .desk { position: relative; height: 396px; }
-    @media (max-width: 620px) { .desk { height: 340px; } }
+    .desk { position: relative; height: 232px; transition: height 0.32s cubic-bezier(0.2, 0.7, 0.3, 1); }
+    @media (prefers-reduced-motion: reduce) { .desk { transition: none; } }
 
     .panel {
-      position: absolute; top: 9px; right: 12px; width: 344px;
-      max-height: calc(100% - 18px); overflow: hidden;
+      position: absolute; top: 12px; right: 18px; width: 352px;
       border-radius: 10px; background: #ECECEC; color: #111;
       border: 0.5px solid rgba(0,0,0,0.18);
       box-shadow: 0 18px 50px rgba(0,0,0,0.55);
       font-size: 12.5px; animation: popIn 0.2s cubic-bezier(0.2,0.9,0.3,1.1);
     }
-    @media (max-width: 620px) { .panel { width: calc(100% - 24px); right: 12px; } }
+    @media (max-width: 620px) { .panel { width: calc(100% - 20px); right: 10px; top: 8px; } }
     @keyframes popIn { from { opacity: 0; transform: translateY(-5px) scale(0.97); } }
     .p-head { display: flex; align-items: baseline; gap: 8px; padding: 10px 12px 8px;
       border-bottom: 0.5px solid rgba(0,0,0,0.10); }
@@ -199,8 +210,7 @@
       background: #0A84FF; color: #fff; }
 
     .window {
-      position: absolute; left: 14px; right: 14px; top: 30px;
-      max-height: calc(100% - 52px); overflow: hidden;
+      position: absolute; left: 22px; right: 22px; top: 22px;
       border-radius: 9px; background: #ECECEC; color: #111;
       border: 0.5px solid rgba(0,0,0,0.2); box-shadow: 0 22px 54px rgba(0,0,0,0.6);
       animation: popIn 0.22s cubic-bezier(0.2,0.9,0.3,1.1);
@@ -214,13 +224,13 @@
     .seg span.on { background: #fff; color: #111; font-weight: 600; }
     .w-note { font-size: 11px; color: #6a6a72; overflow: hidden;
       text-overflow: ellipsis; white-space: nowrap; }
-    .cols { display: grid; grid-template-columns: 0.95fr 1.1fr 1.2fr; min-height: 230px; }
+    .cols { display: grid; grid-template-columns: 0.9fr 1fr 1.25fr; min-height: 248px; }
     @media (max-width: 620px) { .cols { grid-template-columns: 1fr 1.2fr; }
       .cols .col:nth-child(3) { display: none; } }
     .col { border-right: 0.5px solid rgba(0,0,0,0.10); padding: 5px; }
     .col:last-child { border-right: none; }
-    .node { display: flex; gap: 6px; align-items: flex-start; padding: 5px 6px;
-      border-radius: 5px; font-size: 11.5px; line-height: 1.35; }
+    .node { display: flex; gap: 7px; align-items: flex-start; padding: 6px 8px;
+      border-radius: 6px; font-size: 12px; line-height: 1.4; }
     .node.sel { background: rgba(10,132,255,0.14); }
     .node .nd { width: 6px; height: 6px; border-radius: 50%; margin-top: 4px; flex: none;
       background: rgba(0,0,0,0.3); }
@@ -228,15 +238,56 @@
     .node .nd.needs { background: #E8952A; }
     .node .nt { flex: 1; }
     .node .nc { font-size: 10.5px; color: rgba(0,0,0,0.36); font-variant-numeric: tabular-nums; }
-    .detail { padding: 9px 11px; font-size: 11.5px; }
+    .detail { padding: 10px 13px; font-size: 12px; }
     .detail h5 { font-size: 12.5px; font-weight: 600; margin-bottom: 2px; }
     .detail .id { font: 10px ui-monospace, Menlo, monospace; color: rgba(0,0,0,0.32); margin-bottom: 7px; }
     .detail .lab { font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
       text-transform: uppercase; color: rgba(0,0,0,0.34); margin-top: 9px; }
     .detail p { color: #6a6a72; font-size: 11.5px; }
+    /* The evidence is the point of the whole product, so it is shown, not
+       summarised: this is the sentence a person wrote to close a check. */
+    .ev { font-size: 11px; color: rgba(0,0,0,0.42); padding-left: 17px;
+      line-height: 1.5; margin: 1px 0 5px; }
+
+    .get-code {
+      margin-top: 14px; padding: 13px 15px; border-radius: 9px;
+      background: var(--hover-row); border: 1px solid var(--rule);
+      font: 12.5px/1.7 ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: var(--ink); overflow-x: auto; white-space: pre;
+    }
+    .get-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 18px; }
+    a.get-btn {
+      display: inline-block; padding: 11px 20px; border-radius: 22px;
+      background: var(--ink); color: var(--bg); text-decoration: none;
+      font-size: 0.875rem; font-weight: 600; letter-spacing: -0.01em;
+      transition: opacity 0.15s ease-out;
+    }
+    a.get-btn:hover { opacity: 0.85; }
+    a.get-plain { font-size: 0.875rem; color: var(--mid); text-decoration: none;
+      border-bottom: 1px solid var(--rule); }
+    a.get-plain:hover { color: var(--ink); }
+    .cs-body-text em { font-style: normal; color: var(--ink); font-weight: 500; }
 
     /* ── The diagram is the navigation: each step is a control ── */
-    .flow-nav { margin-top: 14px; }
+    .flow-nav { margin-top: 18px; }
+    .tour-hint {
+      display: flex; align-items: baseline; gap: 8px; justify-content: center;
+      font-size: 12px; color: var(--mid); margin-top: 16px;
+    }
+    .tour-hint b { font-weight: 600; color: var(--ink); font-size: 12px; }
+    .tour-hint .n { font-variant-numeric: tabular-nums; }
+    /* Phone: six steps cannot fit on one line, and a diagram that scrolls
+       sideways with no sign of it hid the last two steps completely. */
+    .chips { display: none; }
+    @media (max-width: 660px) {
+      .flow-nav { display: none; }
+      .chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 16px; }
+      .chip {
+        font: inherit; font-size: 12px; padding: 6px 12px; border-radius: 20px;
+        border: 1px solid var(--rule); background: none; color: var(--mid); cursor: pointer;
+      }
+      .chip.on { border-color: var(--accent); background: var(--accent-dim); color: var(--ink); font-weight: 600; }
+    }
     .fstep { cursor: pointer; }
     .fstep .fbox { fill: none; stroke: var(--rule); stroke-width: 1;
       transition: fill 0.15s ease-out, stroke 0.15s ease-out; }
@@ -339,6 +390,8 @@
     <div class="cs-meta">
       <span>2026</span>
       <span class="sep">/</span>
+      <span>Design and build, solo</span>
+      <span class="sep">/</span>
       <span>macOS app &middot; Swift and Python</span>
       <span class="sep">/</span>
       <a href="https://github.com/ladanjohari/substrate" target="_blank" rel="noopener">GitHub &rarr;</a>
@@ -348,12 +401,18 @@
   <div class="video-hero">
     <div class="mac">
       <div class="menubar">
-        <span class="mb-bold">Substrate</span><span>File</span><span>View</span><span>Window</span>
+        <span class="mb-bold">Finder</span><span>File</span><span>Edit</span><span>View</span><span>Go</span>
         <span class="mb-gap"></span>
         <span id="pill" class="pill"><span class="dot"></span></span>
         <span>100%</span><span>9:41</span>
       </div>
-      <div class="desk" id="desk"></div>
+      <div class="desk" id="desk"><div class="panel">
+        <div class="p-head"><h3>Substrate</h3><span class="count">nothing on the go</span></div>
+        <div class="p-note">Describe something you want done and it becomes a plan you can approve.</div>
+        <div class="field"><span>What do you want done?</span><b>Plan it</b></div>
+        <div class="p-foot"><span class="a">New goal</span><span class="a">Open the full tree</span>
+          <span class="sp"></span><span>&hellip;</span><span>Quit</span></div>
+      </div></div>
     </div>
 
     <figure class="flow flow-nav">
@@ -400,7 +459,10 @@
       </div>
     </figure>
 
-    <p class="video-caption" id="tour-cap">Click a step. The app above is drawn from one record that ran start to finish.</p>
+    <div class="chips" id="chips"></div>
+
+    <p class="tour-hint"><b>Click a step</b> <span class="n" id="tour-pos">1 of 6</span></p>
+    <p class="video-caption" id="tour-cap">Every task, check and piece of evidence below came from one record that ran start to finish.</p>
   </div>
 
   <div class="cs-body">
@@ -436,11 +498,36 @@
       </p>
     </div>
 
-    <!-- ── Optional: where else the idea applies. One line, not a paragraph. ── -->
+    <!-- ── The decisions, with what each one cost. A case study is the
+             judgement, not the feature list. ── -->
     <div class="cs-section">
-      <p class="cs-label">Where else it works</p>
+      <p class="cs-label">What I decided, and what it cost</p>
+
       <p class="cs-body-text">
-        Any work an agent does for you: code, research, writing. The gate stays the same.
+        <strong>The menu bar, not a window.</strong> Supervision is something you do between other things,
+        so it had to be somewhere you already look, not an app you remember to open.
+        <em>What it cost:</em> 368 points is no place for a task tree, so the structure needed a second
+        surface, and I had to decide what belongs in each.
+      </p>
+
+      <p class="cs-body-text" style="margin-top:18px;">
+        <strong>The record refuses, rather than the interface warning.</strong> A task cannot reach done
+        while a check is open, and a check cannot be met without evidence. The rules live in the store,
+        so the app and the command line cannot disagree about what is allowed.
+        <em>What it cost:</em> you cannot close something by insisting. You write what makes it true,
+        which is slower, and is the point.
+      </p>
+
+      <p class="cs-body-text" style="margin-top:18px;">
+        <strong>Python first, then Swift.</strong> The store and the command line were quicker to think in
+        Python, but a Mac app should ship as one download.
+        <em>What it cost:</em> two implementations at once. They are kept honest by a comparison that runs
+        both against a single record and fails if they answer differently.
+      </p>
+
+      <p class="cs-body-text" style="margin-top:18px;">
+        The gate does not care what the work is. Code, research, writing: an agent does it, and the
+        same two rules decide when it is finished.
       </p>
     </div>
 
@@ -454,6 +541,29 @@
       </ul>
     </div>
 
+    <!-- ── Somewhere to go. A case study that ends at a full stop wastes
+             the two minutes it just earned. ── -->
+    <div class="cs-section">
+      <p class="cs-label">Try it</p>
+      <p class="cs-body-text">
+        It runs on macOS 14 or newer. Two steps, and the second one is a double click.
+      </p>
+      <pre class="get-code">git clone https://github.com/ladanjohari/substrate.git
+cd substrate &amp;&amp; open "Open Substrate.command"</pre>
+      <p class="cs-body-text" style="margin-top:14px;">
+        The build is not signed yet, so the first open asks whether you meant it. Right click the file,
+        choose Open, then Open again.
+      </p>
+      <div class="get-row">
+        <a class="get-btn" href="https://github.com/ladanjohari/substrate">Get Substrate on GitHub &rarr;</a>
+        <a class="get-plain" href="https://github.com/ladanjohari/substrate/blob/main/DATA-MODEL.md">Read the data model</a>
+      </div>
+      <p class="cs-body-text" style="margin-top:20px; font-size: 0.86rem;">
+        Solo build. The store and command line in Python, the app in Swift, the rules in the store so both
+        obey them. A check runs all 25 command forms and fails loudly; a second one runs the Python and the
+        Swift against one record and compares all 15 answers.
+      </p>
+    </div>
   </div>
 
   <div class="back-work">
@@ -461,6 +571,7 @@
       <span class="arrow">&larr;</span>
       <span>Works</span>
     </a>
+
   </div>
 
   <footer class="pf-footer">
@@ -524,7 +635,9 @@
             '<div class="card shut"><div class="ch"><span class="dot done"></span><h4>' +
             esc(g.title) + '</h4><span class="m">closed</span></div>' +
             (g.criteria[0] ? '<div class="check met"><span class="box"></span><span>' +
-              esc(g.criteria[0].text) + '</span></div>' : '') + '</div>', g.title, 'done');
+              esc(g.criteria[0].text) + '</span></div>' +
+              (g.criteria[0].evidence ? '<div class="ev">' + esc(g.criteria[0].evidence) + '</div>' : '')
+              : '') + '</div>', g.title, 'done');
         }
       ];
 
@@ -548,7 +661,9 @@
           (sel.intent ? '<div class="lab">Why</div><p>' + esc(sel.intent) + '</p>' : '') +
           '<div class="lab">Checks ' + sel.met + ' of ' + sel.total + ' met</div>' +
           sel.criteria.slice(0, 2).map(c => '<div class="check' + (c.state === 'met' ? ' met' : '') +
-            '"><span class="box"></span><span>' + esc(c.text) + '</span></div>').join('') +
+            '"><span class="box"></span><span>' + esc(c.text) + '</span></div>' +
+            (c.evidence ? '<div class="ev">' + esc(c.evidence.slice(0, 120)) +
+              (c.evidence.length > 120 ? '&hellip;' : '') + '</div>' : '')).join('') +
           (sel.criteria.length > 2 ? '<div class="check"><span style="padding-left:17px">and ' +
             (sel.criteria.length - 2) + ' more</span></div>' : '') +
           '</div></div></div></div>';
@@ -565,14 +680,30 @@
         'Both tasks closed with proof, and the goal closed when its own check was answered.'
       ];
 
+      const labels = ['Goal', 'Plan', 'You approve', 'Agents', 'Evidence', 'Done'];
+      const chips = document.getElementById('chips');
+      const pos = document.getElementById('tour-pos');
+      chips.innerHTML = labels.map((l, i) =>
+        '<button class="chip" data-step="' + i + '">' + l + '</button>').join('');
+      const chipEls = [...chips.children];
+
       let at = -1, timer = null;
       function show(i) {
         at = (i + views.length) % views.length;
         desk.innerHTML = views[at]();
         cap.textContent = caps[at];
+        pos.textContent = (at + 1) + ' of ' + views.length;
         pill.className = 'pill' + (lit[at] ? ' lit' : '');
         pill.innerHTML = dots[at].map(d => '<span class="dot ' + d + '"></span>').join('');
         steps.forEach((el, idx) => el.classList.toggle('on', idx === at));
+        chipEls.forEach((el, idx) => el.classList.toggle('on', idx === at));
+        // The desk is as tall as what it holds. Fixed height left two thirds of
+        // the hero as empty dark on four of the six steps.
+        const ui = desk.firstElementChild;
+        if (ui) {
+          const pad = ui.classList.contains('window') ? 44 : 24;
+          desk.style.height = Math.round(ui.getBoundingClientRect().height + pad) + 'px';
+        }
       }
       function play() {
         stop();
@@ -582,10 +713,11 @@
       }
       function stop() { if (timer) { clearInterval(timer); timer = null; } }
 
+      chipEls.forEach((el, i) => el.addEventListener('click', () => { show(i); stop(); }));
       steps.forEach((el, i) => {
-        el.addEventListener('click', () => { show(i); play(); });
+        el.addEventListener('click', () => { show(i); stop(); });
         el.addEventListener('keydown', e => {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(i); play(); }
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(i); stop(); }
         });
       });
       const hero = document.querySelector('.video-hero');
@@ -595,7 +727,9 @@
 
       show(0);
       // Only run while it is on screen, so it is not animating out of sight.
-      new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? play() : stop()),
+      let taken = false;
+      [...chipEls, ...steps].forEach(el => el.addEventListener('click', () => { taken = true; }));
+      new IntersectionObserver(es => es.forEach(e => (e.isIntersecting && !taken) ? play() : stop()),
         { threshold: 0.25 }).observe(hero);
     })();
   </script>
