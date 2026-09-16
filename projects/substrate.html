@@ -246,7 +246,7 @@
   <div class="cs-header">
     <h1 class="cs-title">Substrate</h1>
     <p class="cs-descriptor">
-      Hand a goal to AI agents and supervise them from the menu bar. Nothing runs until you approve the plan.
+      Hand a goal to AI agents. It comes back as a plan with checks. You approve it, agents work it, and nothing closes until the proof is written down.
     </p>
     <div class="cs-meta">
       <span>2026</span>
@@ -264,6 +264,7 @@
         <img src="/assets/img/substrate/step-01.jpg" alt="The menu bar panel showing a six task plan for a client kickoff brief, not yet approved, with Reject, Ask for changes and Approve" class="is-active" data-step="0" />
         <img src="/assets/img/substrate/step-02.jpg" alt="The same panel after approval, with an agent working on the first task and how long it has been on it" data-step="1" />
         <img src="/assets/img/substrate/step-03.jpg" alt="The panel asking for a person: a task an agent could not prove, with its open checks listed" data-step="2" />
+        <img src="/assets/img/substrate/step-04.jpg" alt="The window in three columns: the goal, its six tasks with what each waits on, and the four checks that close the selected task" data-step="3" />
         <svg class="stepper-spotlight" viewBox="0 0 1424 1000" preserveAspectRatio="none">
           <defs>
             <mask id="spot-mask">
@@ -292,9 +293,14 @@
           <span class="stepper-tab-title">Answer what it cannot prove</span>
           <span class="stepper-tab-desc">An agent stops at checks it cannot evidence, and the panel asks you.</span>
         </button>
+        <button class="stepper-tab" data-step="3">
+          <span class="stepper-tab-num">04</span>
+          <span class="stepper-tab-title">See the whole shape</span>
+          <span class="stepper-tab-desc">The window holds every goal, the tasks it broke into, what each one waits on, and the checks that close it.</span>
+        </button>
       </div>
     </div>
-    <p class="video-caption">The real panel, rendered from a live record. Click a step.</p>
+    <p class="video-caption">The real panel and the real window, both rendered from a live record. Click a step.</p>
   </div>
 
   <div class="cs-body">
@@ -316,7 +322,7 @@
     <div class="cs-section">
       <p class="cs-label">The idea</p>
       <p class="cs-body-text">
-        <strong>The approval gate.</strong> A person approves the plan before any agent starts, and a task only closes when each of its checks has evidence.
+        <strong>Two rules, kept by the record itself.</strong> Nothing runs until a person approves the plan. Nothing closes until each of its checks has evidence. Everything else in the product follows from those two.
       </p>
 
       <figure class="flow">
@@ -355,6 +361,11 @@
 
       <p class="cs-body-text" style="margin-top:26px;">
         Most agent tools trust the agent to say it is done. Here the record refuses to close a task until the proof is written down.
+      </p>
+
+      <p class="cs-body-text" style="margin-top:20px;">
+        <strong>That takes two surfaces.</strong> The menu bar is for attention: one goal at a time, what needs you, and nothing else.
+        The window is for structure: every goal, the tasks it broke into, what each one waits on, and the checks that close it.
       </p>
     </div>
 
@@ -408,7 +419,8 @@
       const spots = [
         { x: 338, y: 227, w: 748, h: 558, rx: 18 },
         { x: 338, y: 435, w: 748, h: 142, rx: 18 },
-        { x: 348, y: 239, w: 728, h: 486, rx: 18 }
+        { x: 348, y: 239, w: 728, h: 486, rx: 18 },
+        { x: 463, y: 302, w: 651, h: 426, rx: 18 }
       ];
 
       let anim = null;
