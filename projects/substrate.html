@@ -283,6 +283,19 @@
     .step-btn:hover { background: var(--hover-row); border-color: var(--mid); }
     .step-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
+    /* Phones: the app menus push the status items off the right edge, and the
+       pill is the product. Keep Finder, drop the rest, and give the screen a
+       squarer shape so it is a desktop rather than a stamp. */
+    @media (max-width: 620px) {
+      .screen { aspect-ratio: 1 / 1; }
+      .mb-item:not(.bold) { display: none; }
+      .mb-icon { display: none; }
+      .menubar { gap: 0; padding: 0 7px; }
+      .mb-clock { padding-left: 6px; font-size: 11px; }
+      .apple { padding: 0 6px 0 0; }
+    }
+    @media (max-width: 430px) { .mb-clock { display: none; } }
+
     /* Under the screen: what this step is, and the button that runs them all. */
     .caption-row { display: flex; align-items: center; justify-content: center;
       gap: 14px; margin-top: 18px; flex-wrap: wrap; }
