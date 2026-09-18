@@ -257,6 +257,32 @@
       text-transform: uppercase; color: var(--mk-dim); margin-top: 9px; }
     .detail p { color: var(--mk-mid); font-size: 11.5px; }
 
+    /* The step changes what the panel says. This changes where the eye lands
+       inside it: everything but the subject of the step falls back, and the
+       desktop goes behind a scrim so the panel carries the frame. */
+    .scrim { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.34);
+      opacity: 0; transition: opacity 0.3s ease-out; pointer-events: none; z-index: 2; }
+    .screen.focused .scrim { opacity: 1; }
+    .faded { opacity: 0.42; transition: opacity 0.28s ease-out; }
+    .is-focus { position: relative; z-index: 1; }
+    .is-focus::after {
+      content: ''; position: absolute; inset: -6px -8px; border-radius: 10px;
+      box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.40), 0 0 26px rgba(255, 255, 255, 0.10);
+      pointer-events: none;
+    }
+    @media (prefers-reduced-motion: reduce) { .faded, .scrim { transition: none; } }
+
+    /* Back and Next, so a reader walks it rather than watches it. */
+    .stepper-controls { display: inline-flex; align-items: center; gap: 6px; }
+    .step-btn {
+      width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--rule);
+      background: none; color: var(--ink); font: inherit; font-size: 13px; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: background 0.15s ease-out, border-color 0.15s ease-out;
+    }
+    .step-btn:hover { background: var(--hover-row); border-color: var(--mid); }
+    .step-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
     /* Under the screen: what this step is, and the button that runs them all. */
     .caption-row { display: flex; align-items: center; justify-content: center;
       gap: 14px; margin-top: 18px; flex-wrap: wrap; }
@@ -427,6 +453,7 @@
   <div class="video-hero">
     <div class="screen">
       <div class="wallpaper"></div>
+      <div class="scrim"></div>
       <div class="menubar">
         <span class="apple"><svg width="12" height="14" viewBox="0 0 14 17" aria-hidden="true">
           <path fill="rgba(255,255,255,0.9)" d="M11.3 9c0-1.9 1.5-2.8 1.6-2.9-.9-1.3-2.2-1.5-2.7-1.5-1.2-.1-2.3.7-2.8.7-.6 0-1.5-.7-2.4-.7-1.3 0-2.4.7-3 1.9-1.3 2.2-.3 5.5.9 7.3.6.9 1.4 1.9 2.3 1.8.9 0 1.2-.6 2.3-.6s1.4.6 2.4.6c1 0 1.6-.9 2.2-1.8.7-1 1-2 1-2.1 0 0-1.9-.7-1.8-2.7zM9.6 3.2c.5-.6.8-1.4.7-2.2-.7 0-1.6.5-2.1 1.1-.5.5-.9 1.4-.7 2.2.8.1 1.6-.4 2.1-1.1z"/>
@@ -503,8 +530,12 @@
     <div class="chips" id="chips"></div>
 
     <div class="caption-row">
-      <p class="cap"><span id="tour-cap" aria-live="polite">Type one sentence into the menu bar. That is the whole input.</span>
-        <span class="n" id="tour-pos">1 of 6</span></p>
+      <p class="cap"><span id="tour-cap" aria-live="polite">Type one sentence into the menu bar. That is the whole input.</span></p>
+      <span class="stepper-controls">
+        <button class="step-btn" id="step-back" type="button" aria-label="Previous step">&#8249;</button>
+        <span class="n" id="tour-pos">1 of 6</span>
+        <button class="step-btn" id="step-next" type="button" aria-label="Next step">&#8250;</button>
+      </span>
       <button class="tour-btn" id="tour-btn" type="button">&#9654; Take a tour</button>
     </div>
     <p class="video-caption">Every task, check and piece of evidence above came from one record that ran start to finish.</p>
@@ -733,6 +764,27 @@ cd substrate &amp;&amp; open "Open Substrate.command"</pre>
         '<button class="chip" data-step="' + i + '">' + l + '</button>').join('');
       const chipEls = [...chips.children];
 
+      // What the step is actually about, inside the panel or the window.
+      const focus = ['.field', '.cols .col:nth-child(2)', '.answers', '.p-row', '.card', '.card'];
+      const screen = document.querySelector('.screen');
+
+      function lookAt(sel) {
+        const root = desk.firstElementChild;
+        screen.classList.remove('focused');
+        if (!root || !sel) return;
+        const target = root.querySelector(sel);
+        if (!target) return;
+        screen.classList.add('focused');
+        target.classList.add('is-focus');
+        // Only the window fades its other parts: its columns are large enough
+        // to stay readable at half strength, and a popover is not.
+        if (root.classList.contains('window')) {
+          root.querySelectorAll(':scope > .cols > .col').forEach(col => {
+            if (col !== target && !col.contains(target) && !target.contains(col)) col.classList.add('faded');
+          });
+        }
+      }
+
       let at = -1, timer = null, taken = false;
       function show(i) {
         at = (i + views.length) % views.length;
@@ -743,7 +795,11 @@ cd substrate &amp;&amp; open "Open Substrate.command"</pre>
         pill.innerHTML = dots[at].map(d => '<span class="dot ' + d + '"></span>').join('');
         steps.forEach((el, idx) => el.classList.toggle('on', idx === at));
         chipEls.forEach((el, idx) => el.classList.toggle('on', idx === at));
+        lookAt(focus[at]);
       }
+      document.getElementById('step-back').addEventListener('click', () => { taken = true; show(at - 1); stop(); });
+      document.getElementById('step-next').addEventListener('click', () => { taken = true; show(at + 1); stop(); });
+
       const btn = document.getElementById('tour-btn');
       function label() { btn.innerHTML = timer ? '&#9632; Stop the tour' : '&#9654; Take a tour'; }
       btn.addEventListener('click', () => {
