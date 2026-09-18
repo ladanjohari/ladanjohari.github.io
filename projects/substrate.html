@@ -177,8 +177,9 @@
     .p-group { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
       color: var(--mk-dim); padding: 8px 12px 3px; }
     .p-task { display: flex; gap: 8px; padding: 5px 12px; align-items: flex-start; }
-    .p-task .n { flex: 1; line-height: 1.35; }
-    .p-task .after { display: block; font-size: 10.5px; color: var(--mk-dim); }
+    .p-task .n { flex: 1; line-height: 1.45; }
+    .p-task .after { display: block; font-size: 10.5px; color: var(--mk-dim);
+      line-height: 1.5; margin-top: 3px; }
     .p-task .c { font-size: 10.5px; color: var(--mk-dim); white-space: nowrap; }
     .answers { display: flex; gap: 7px; justify-content: flex-end; padding: 9px 12px 4px; }
     .btn { font-size: 11px; padding: 4px 11px; border-radius: 6px; color: var(--mk-ink);
@@ -260,11 +261,11 @@
       opacity: 0; transition: opacity 0.3s ease-out; pointer-events: none; z-index: 2; }
     .screen.focused .scrim { opacity: 1; }
     .faded { opacity: 0.42; transition: opacity 0.28s ease-out; }
-    .is-focus { position: relative; z-index: 1; }
-    .is-focus::after {
-      content: ''; position: absolute; inset: -6px -8px; border-radius: 10px;
-      box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.40), 0 0 26px rgba(255, 255, 255, 0.10);
-      pointer-events: none;
+    .is-focus {
+      position: relative; z-index: 1; border-radius: 8px;
+      background: rgba(255, 255, 255, 0.10);
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08);
+      transition: background 0.25s ease-out, box-shadow 0.25s ease-out;
     }
     @media (prefers-reduced-motion: reduce) { .faded, .scrim { transition: none; } }
 
@@ -283,14 +284,17 @@
        pill is the product. Keep Finder, drop the rest, and give the screen a
        squarer shape so it is a desktop rather than a stamp. */
     @media (max-width: 620px) {
-      .screen { aspect-ratio: 1 / 1; }
+      .screen { aspect-ratio: 4 / 5; }
       .mb-item:not(.bold) { display: none; }
       .mb-icon { display: none; }
       .menubar { gap: 0; padding: 0 7px; }
       .mb-clock { padding-left: 6px; font-size: 11px; }
       .apple { padding: 0 6px 0 0; }
     }
-    @media (max-width: 430px) { .mb-clock { display: none; } }
+    @media (max-width: 430px) { .mb-clock { display: none; }
+      .screen { aspect-ratio: 3 / 4; }
+      .panel { font-size: 12px; }
+    }
 
     /* Under the screen: a bar that does not move.
        It used to centre three things of changing width, so the button walked
@@ -771,8 +775,8 @@ cd substrate &amp;&amp; open "Open Substrate.command"</pre>
           '<div class="lab">Checks ' + sel.met + ' of ' + sel.total + ' met</div>' +
           sel.criteria.slice(0, 2).map(c => '<div class="check' + (c.state === 'met' ? ' met' : '') +
             '"><span class="box"></span><span>' + esc(c.text) + '</span></div>' +
-            (c.evidence ? '<div class="ev">' + esc(c.evidence.slice(0, 120)) +
-              (c.evidence.length > 120 ? '&hellip;' : '') + '</div>' : '')).join('') +
+            (c.evidence ? '<div class="ev">' + esc(c.evidence.slice(0, 88)) +
+              (c.evidence.length > 88 ? '&hellip;' : '') + '</div>' : '')).join('') +
           (sel.criteria.length > 2 ? '<div class="check"><span style="padding-left:17px">and ' +
             (sel.criteria.length - 2) + ' more</span></div>' : '') +
           '</div></div></div></div>';
@@ -817,7 +821,7 @@ cd substrate &amp;&amp; open "Open Substrate.command"</pre>
         }
       }
 
-      let at = -1, timer = null, taken = false;
+      let at = -1;
       function show(i) {
         at = (i + views.length) % views.length;
         desk.innerHTML = views[at]();
@@ -829,35 +833,23 @@ cd substrate &amp;&amp; open "Open Substrate.command"</pre>
         chipEls.forEach((el, idx) => el.classList.toggle('on', idx === at));
         lookAt(focus[at]);
       }
-      document.getElementById('step-back').addEventListener('click', () => { taken = true; show(at - 1); stop(); });
-      document.getElementById('step-next').addEventListener('click', () => { taken = true; show(at + 1); stop(); });
+      document.getElementById('step-back').addEventListener('click', () => show(at - 1));
+      document.getElementById('step-next').addEventListener('click', () => show(at + 1));
 
+      chipEls.forEach((el, i) => el.addEventListener('click', () => show(i)));
+      // Clicking should not leave a focus ring behind. Keyboard users still
+      // get one, because they never fire this.
+      [...steps, ...chipEls].forEach(el =>
+        el.addEventListener('mousedown', e => e.preventDefault()));
 
-      function play() {
-        stop();
-        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          timer = setInterval(() => show(at + 1), 6000);
-        }
-      }
-      function stop() { if (timer) { clearInterval(timer); timer = null; } }
-
-      chipEls.forEach((el, i) => el.addEventListener('click', () => { show(i); stop(); }));
       steps.forEach((el, i) => {
-        el.addEventListener('click', () => { show(i); stop(); });
+        el.addEventListener('click', () => show(i));
         el.addEventListener('keydown', e => {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(i); stop(); }
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(i); }
         });
       });
-      const hero = document.querySelector('.video-hero');
-      hero.addEventListener('mouseenter', stop);
-      hero.addEventListener('mouseleave', play);
-      hero.addEventListener('focusin', stop);
 
       show(0);
-      // Only run while it is on screen, so it is not animating out of sight.
-      [...chipEls, ...steps].forEach(el => el.addEventListener('click', () => { taken = true; }));
-      new IntersectionObserver(es => es.forEach(e => (e.isIntersecting && !taken) ? play() : stop()),
-        { threshold: 0.25 }).observe(hero);
     })();
   </script>
 </body>
