@@ -88,10 +88,6 @@
 
     /* ── Hero media ── */
     .video-hero { max-width: 700px; margin: 0 auto; padding: 40px 28px 0; }
-    .video-caption {
-      margin-top: 12px; font-size: 0.75rem;
-      color: var(--mid); text-align: center; letter-spacing: 0.01em;
-    }
 
     /* ── Body ── */
     .cs-body { max-width: 700px; margin: 0 auto; padding: 0 28px 64px; }
@@ -302,16 +298,15 @@
        sentence was long. Three fixed zones instead: walk, read, play. */
     .caption-row {
       display: flex; flex-direction: column; align-items: center;
-      gap: 14px; margin-top: 20px;
+      gap: 12px; margin-top: 8px;
     }
     .caption-row .cap {
-      order: -1; text-align: center; margin: 0; width: 100%; max-width: 46ch;
+      text-align: center; margin: 0; width: 100%; max-width: 60ch;
       font-size: 13px; line-height: 1.5; color: var(--ink);
-      min-height: 39px;            /* two lines, so nothing below ever jumps */
+      min-height: 20px;            /* one line at every step, by writing them that way */
       display: flex; align-items: center; justify-content: center;
     }
     .stepper-controls { display: inline-flex; align-items: center; gap: 8px; }
-    .tour-cluster { display: inline-flex; align-items: center; gap: 22px; }
     .caption-row .n {
       font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
       color: var(--mid); font-variant-numeric: tabular-nums; min-width: 42px; text-align: center;
@@ -324,26 +319,12 @@
     }
     .step-btn:hover { background: var(--hover-row); border-color: var(--mid); }
     .step-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    .tour-btn {
-      display: inline-flex; align-items: center; gap: 7px; font: inherit;
-      font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 20px;
-      background: #1A6FE8; border: none; color: #fff; cursor: pointer; white-space: nowrap;
-      transition: opacity 0.15s ease-out;
-    }
-    .tour-btn:hover { opacity: 0.88; }
-    .tour-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
     /* Provenance is a footnote, not a second caption. It read at the same size
        and the same grey as the sentence above it, so neither led. */
-    .video-caption {
-      margin-top: 16px; text-align: center; font-size: 11.5px; line-height: 1.6;
-      color: rgba(255, 255, 255, 0.48); letter-spacing: 0.01em;
-    }
     @media (max-width: 760px) {
       .caption-row .cap { min-height: 0; }
-      .tour-cluster { flex-wrap: wrap; justify-content: center; gap: 14px; }
       .step-btn { width: 44px; height: 44px; }   /* HIG's touch target */
-      .tour-btn { min-height: 44px; padding: 0 20px; }
-      a.get-btn { min-height: 44px; display: inline-flex; align-items: center; }
+    a.get-btn { min-height: 44px; display: inline-flex; align-items: center; }
     }
 
     /* The ending: the command, the button, and the one line of proof.
@@ -368,8 +349,34 @@
     a.get-plain:hover { color: var(--ink); }
     .cs-body-text em { font-style: normal; color: var(--ink); font-weight: 500; }
 
-    /* ── The diagram is the navigation: each step is a control ── */
-    .flow-nav { margin-top: 18px; }
+    /* ── The diagram is the navigation: each step is a control ──
+       One geometry and one type size for all six. The gate used to be a filled
+       pill 48 tall and the evidence step a heavy white outline, so at rest the
+       eye went to those two rather than to the step you were on. What makes
+       those two special is written underneath them, which is enough. */
+    .flow-nav { margin-top: 20px; }
+    .fstep { cursor: pointer; }
+    .fstep .fbox {
+      fill: none; stroke: rgba(255, 255, 255, 0.18); stroke-width: 1;
+      transition: fill 0.18s ease-out, stroke 0.18s ease-out;
+    }
+    .fstep text {
+      fill: var(--mid); font-size: 12px; font-weight: 500; text-anchor: middle;
+      transition: fill 0.18s ease-out;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .fstep:hover .fbox { stroke: rgba(255, 255, 255, 0.45); }
+      .fstep:hover text { fill: var(--ink); }
+    }
+    .fstep.on .fbox { fill: #1A6FE8; stroke: #1A6FE8; }
+    .fstep.on text { fill: #fff; font-weight: 600; }
+    .fstep:focus-visible { outline: none; }
+    .fstep:focus-visible .fbox { stroke: #ffffff; stroke-width: 2; }
+    .flow-line line { stroke: rgba(255, 255, 255, 0.18); }
+    .flow-arrowhead { fill: rgba(255, 255, 255, 0.28); }
+    .flow-tick { stroke: rgba(255, 255, 255, 0.16); }
+    .flow-note { fill: var(--mid); font-size: 11px; text-anchor: middle; }
+
     .tour-hint {
       display: flex; align-items: baseline; gap: 8px; justify-content: center;
       font-size: 12px; color: var(--mid); margin-top: 16px;
@@ -387,34 +394,8 @@
         border: 1px solid var(--rule); background: none; color: var(--mid); cursor: pointer;
         display: inline-flex; align-items: center;   /* 44 is the touch target HIG asks for */
       }
-      .chip.on { border-color: var(--accent); background: var(--accent-dim); color: var(--ink); font-weight: 600; }
+      .chip.on { border-color: #1A6FE8; background: #1A6FE8; color: #fff; font-weight: 600; }
     }
-    .fstep { cursor: pointer; }
-    .fstep .fbox { fill: none; stroke: var(--rule); stroke-width: 1;
-      transition: fill 0.15s ease-out, stroke 0.15s ease-out; }
-    .fstep text { fill: var(--mid); font-size: 12px; text-anchor: middle;
-      transition: fill 0.15s ease-out; }
-    @media (hover: hover) and (pointer: fine) {
-      .fstep:hover .fbox { stroke: var(--ink); }
-      .fstep:hover text { fill: var(--ink); }
-    }
-    .flow-nav .fstep { opacity: 0.55; transition: opacity 0.18s ease-out; }
-    .flow-nav .fstep.on { opacity: 1; }
-    /* The gate is a filled shape with white text. At 55% the fill and the text
-       faded together and the label came out brown. Fade the fill, keep the
-       label legible. */
-    .flow-nav .fstep.gate:not(.on) { opacity: 1; }
-    .flow-nav .fstep.gate:not(.on) .flow-gate { fill: rgba(77, 148, 255, 0.28); }
-    .flow-nav .fstep.gate:not(.on) .flow-gate-t { fill: rgba(255, 255, 255, 0.55); }
-    .flow-nav .fstep.proof:not(.on) { opacity: 1; }
-    .flow-nav .fstep.proof:not(.on) .flow-proof { stroke: rgba(255, 255, 255, 0.28); }
-    .flow-nav .fstep.proof:not(.on) .flow-proof-t { fill: rgba(255, 255, 255, 0.55); }
-    .flow-nav .flow-note, .flow-nav .flow-tick { opacity: 0.62; }
-    .fstep.on .fbox { fill: var(--accent-dim); stroke: var(--accent); }
-    .fstep.on text { fill: var(--ink); font-weight: 600; }
-    .fstep:focus-visible { outline: none; }
-    .fstep:focus-visible .fbox, .fstep:focus-visible .flow-gate,
-    .fstep:focus-visible .flow-proof { stroke: var(--accent); stroke-width: 2.5; }
 
     /* ── The idea: the gate, drawn ──
        Hairline for the flow, 1px for ordinary steps, a solid fill for the gate
@@ -427,10 +408,6 @@
     .flow-arrowhead { fill: var(--mid); }
     .flow-node rect { fill: none; stroke: var(--rule); stroke-width: 1; }
     .flow-node text { fill: var(--mid); font-size: 12px; text-anchor: middle; }
-    .flow-gate { fill: var(--accent); }
-    .flow-gate-t { fill: #fff; font-size: 12.5px; font-weight: 600; text-anchor: middle; }
-    .flow-proof { fill: none; stroke: var(--ink); stroke-width: 2; }
-    .flow-proof-t { fill: var(--ink); font-size: 12px; font-weight: 600; text-anchor: middle; }
     .flow-note { fill: var(--mid); font-size: 11px; text-anchor: middle; }
     .flow-tick { stroke: var(--rule); stroke-width: 1; }
 
@@ -544,7 +521,7 @@
 
     <figure class="flow flow-nav">
       <div class="flow-scroll">
-      <svg class="flow-svg" viewBox="0 0 640 104" role="group"
+      <svg class="flow-svg" viewBox="0 0 640 96" role="group"
            aria-label="The six steps. Choose one to see it in the app above.">
         <defs>
           <marker id="flow-arrow" viewBox="0 0 6 6" refX="5.5" refY="3" markerWidth="6" markerHeight="6" orient="auto">
@@ -552,36 +529,34 @@
           </marker>
         </defs>
         <g class="flow-line">
-          <line x1="79" y1="40" x2="102" y2="40" marker-end="url(#flow-arrow)" />
-          <line x1="183" y1="40" x2="206" y2="40" marker-end="url(#flow-arrow)" />
-          <line x1="323" y1="40" x2="346" y2="40" marker-end="url(#flow-arrow)" />
-          <line x1="427" y1="40" x2="450" y2="40" marker-end="url(#flow-arrow)" />
-          <line x1="549" y1="40" x2="572" y2="40" marker-end="url(#flow-arrow)" />
+          <line x1="79" y1="34" x2="102" y2="34" marker-end="url(#flow-arrow)" />
+          <line x1="183" y1="34" x2="206" y2="34" marker-end="url(#flow-arrow)" />
+          <line x1="323" y1="34" x2="346" y2="34" marker-end="url(#flow-arrow)" />
+          <line x1="427" y1="34" x2="450" y2="34" marker-end="url(#flow-arrow)" />
+          <line x1="549" y1="34" x2="572" y2="34" marker-end="url(#flow-arrow)" />
         </g>
         <g class="fstep" data-step="0" role="button" tabindex="0" aria-label="Goal: type a sentence">
-          <rect class="fbox" x="0" y="22" width="78" height="36" rx="18" /><text x="39" y="44.5">Goal</text>
+          <rect class="fbox" x="0" y="16" width="78" height="36" rx="18" /><text x="39" y="38.5">Goal</text>
         </g>
         <g class="fstep" data-step="1" role="button" tabindex="0" aria-label="Plan: the tasks and their checks">
-          <rect class="fbox" x="104" y="22" width="78" height="36" rx="18" /><text x="143" y="44.5">Plan</text>
+          <rect class="fbox" x="104" y="16" width="78" height="36" rx="18" /><text x="143" y="38.5">Plan</text>
         </g>
-        <g class="fstep gate" data-step="2" role="button" tabindex="0" aria-label="You approve: nothing runs before this">
-          <rect class="flow-gate" x="208" y="16" width="114" height="48" rx="24" />
-          <text class="flow-gate-t" x="265" y="44.5">You approve</text>
+        <g class="fstep" data-step="2" role="button" tabindex="0" aria-label="You approve: nothing runs before this">
+          <rect class="fbox" x="208" y="16" width="114" height="36" rx="18" /><text x="265" y="38.5">You approve</text>
         </g>
         <g class="fstep" data-step="3" role="button" tabindex="0" aria-label="Agents: an agent takes the first task">
-          <rect class="fbox" x="348" y="22" width="78" height="36" rx="18" /><text x="387" y="44.5">Agents</text>
+          <rect class="fbox" x="348" y="16" width="78" height="36" rx="18" /><text x="387" y="38.5">Agents</text>
         </g>
-        <g class="fstep proof" data-step="4" role="button" tabindex="0" aria-label="Evidence: it asks what it cannot prove">
-          <rect class="flow-proof" x="452" y="22" width="96" height="36" rx="18" />
-          <text class="flow-proof-t" x="500" y="44.5">Evidence</text>
+        <g class="fstep" data-step="4" role="button" tabindex="0" aria-label="Evidence: it asks what it cannot prove">
+          <rect class="fbox" x="452" y="16" width="96" height="36" rx="18" /><text x="500" y="38.5">Evidence</text>
         </g>
         <g class="fstep" data-step="5" role="button" tabindex="0" aria-label="Done: closed, with its evidence">
-          <rect class="fbox" x="574" y="22" width="66" height="36" rx="18" /><text x="607" y="44.5">Done</text>
+          <rect class="fbox" x="574" y="16" width="66" height="36" rx="18" /><text x="607" y="38.5">Done</text>
         </g>
-        <line class="flow-tick" x1="265" y1="66" x2="265" y2="76" />
-        <text class="flow-note" x="265" y="92">nothing runs before this</text>
-        <line class="flow-tick" x1="500" y1="60" x2="500" y2="76" />
-        <text class="flow-note" x="500" y="92">nothing closes without it</text>
+        <line class="flow-tick" x1="265" y1="56" x2="265" y2="68" />
+        <text class="flow-note" x="265" y="84">nothing runs before this</text>
+        <line class="flow-tick" x1="500" y1="56" x2="500" y2="68" />
+        <text class="flow-note" x="500" y="84">nothing closes without it</text>
       </svg>
       </div>
     </figure>
@@ -589,17 +564,13 @@
     <div class="chips" id="chips"></div>
 
     <div class="caption-row">
-      <p class="cap"><span id="tour-cap" aria-live="polite">Type one sentence into the menu bar. That is the whole input.</span></p>
-      <span class="tour-cluster">
-        <span class="stepper-controls">
-          <button class="step-btn" id="step-back" type="button" aria-label="Previous step">&#8249;</button>
-          <span class="n" id="tour-pos">1 of 6</span>
-          <button class="step-btn" id="step-next" type="button" aria-label="Next step">&#8250;</button>
-        </span>
-        <button class="tour-btn" id="tour-btn" type="button">&#9654; Take a tour</button>
+      <span class="stepper-controls">
+        <button class="step-btn" id="step-back" type="button" aria-label="Previous step">&#8249;</button>
+        <span class="n" id="tour-pos">1 of 6</span>
+        <button class="step-btn" id="step-next" type="button" aria-label="Next step">&#8250;</button>
       </span>
+      <p class="cap"><span id="tour-cap" aria-live="polite">Type one sentence. That is the whole input.</span></p>
     </div>
-    <p class="video-caption">Every task, check and piece of evidence above came from one record that ran start to finish.</p>
   </div>
 
   <div class="cs-body">
@@ -810,12 +781,12 @@ cd substrate &amp;&amp; open "Open Substrate.command"</pre>
       const dots = [['idle'], ['needs'], ['needs'], ['working', 'working'], ['needs', 'working'], ['needs', 'done']];
       const lit = [false, false, true, false, true, true];
       const caps = [
-        'Type one sentence into the menu bar. That is the whole input.',
-        'It comes back as tasks, each with the checks that will close it. The window holds the shape.',
+        'Type one sentence. That is the whole input.',
+        'It comes back as tasks, each with the checks that close it.',
         'Three answers, and no agent moves until you give one.',
-        'An agent takes the first task the plan allows, and says how long it has had it.',
-        'It closed what it could evidence and stopped at the rest. Those two are yours.',
-        'Both tasks closed with their proof. The goal\'s own check names a person, so it is yours.'
+        'An agent takes the first task the plan allows.',
+        'It closed what it could prove and stopped at the rest.',
+        'Both tasks closed with proof. The last check is yours.'
       ];
 
       const labels = ['Goal', 'Plan', 'You approve', 'Agents', 'Evidence', 'Done'];
@@ -861,12 +832,6 @@ cd substrate &amp;&amp; open "Open Substrate.command"</pre>
       document.getElementById('step-back').addEventListener('click', () => { taken = true; show(at - 1); stop(); });
       document.getElementById('step-next').addEventListener('click', () => { taken = true; show(at + 1); stop(); });
 
-      const btn = document.getElementById('tour-btn');
-      function label() { btn.innerHTML = timer ? '&#9632; Stop the tour' : '&#9654; Take a tour'; }
-      btn.addEventListener('click', () => {
-        if (timer) { stop(); label(); return; }
-        taken = false; show(0); play(); label();
-      });
 
       function play() {
         stop();
@@ -874,7 +839,7 @@ cd substrate &amp;&amp; open "Open Substrate.command"</pre>
           timer = setInterval(() => show(at + 1), 6000);
         }
       }
-      function stop() { if (timer) { clearInterval(timer); timer = null; } if (btn) label(); }
+      function stop() { if (timer) { clearInterval(timer); timer = null; } }
 
       chipEls.forEach((el, i) => el.addEventListener('click', () => { show(i); stop(); }));
       steps.forEach((el, i) => {
