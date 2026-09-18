@@ -599,7 +599,8 @@
     <div class="cs-section">
       <p class="cs-label">The idea</p>
       <p class="cs-body-text no-orphan">
-        <strong>The menu bar</strong> is for attention: one goal at a time, what needs you, and nothing&nbsp;else.
+        Supervision is something you do between other things, so it had to be somewhere you already look,
+        not an app you remember to&nbsp;open. <strong>The menu bar</strong> is for&nbsp;attention.
       </p>
       <p class="cs-body-text no-orphan" style="margin-top:14px;">
         <strong>The window</strong> is for structure: every goal, the tasks it broke into, what each one waits on,
@@ -613,49 +614,6 @@
       <ul class="why-list">
         <li>When agents work on their own, it is hard to tell what they did and what is waiting on you.</li>
         <li>People who run several at once have to stand behind what the agents produced.</li>
-      </ul>
-    </div>
-
-    <!-- ── The decisions, with what each one cost. A case study is the
-             judgement, not the feature list. ── -->
-    <div class="cs-section">
-      <p class="cs-label">What I decided, and what it cost</p>
-
-      <p class="cs-body-text">
-        <strong>The menu bar, not a window.</strong> Supervision is something you do between other things,
-        so it had to be somewhere you already look, not an app you remember to open.
-        <em>What it cost:</em> 368 points is no place for a task tree, so the structure needed a second
-        surface, and I had to decide what belongs in each.
-      </p>
-
-      <p class="cs-body-text" style="margin-top:18px;">
-        <strong>The record refuses, rather than the interface warning.</strong> A task cannot reach done
-        while a check is open, and a check cannot be met without evidence. The rules live in the store,
-        so the app and the command line cannot disagree about what is allowed.
-        <em>What it cost:</em> you cannot close something by insisting. You write what makes it true,
-        which is slower, and is the point.
-      </p>
-
-      <p class="cs-body-text" style="margin-top:18px;">
-        <strong>Python first, then Swift.</strong> The store and the command line were quicker to think in
-        Python, but a Mac app should ship as one download.
-        <em>What it cost:</em> two implementations at once. They are kept honest by a comparison that runs
-        both against a single record and fails if they answer differently.
-      </p>
-
-      <p class="cs-body-text" style="margin-top:18px;">
-        The gate does not care what the work is. Code, research, writing: an agent does it, and the
-        same two rules decide when it is finished.
-      </p>
-    </div>
-
-    <!-- ── What's next: capabilities, not apologies. ── -->
-    <div class="cs-section">
-      <p class="cs-label">What&rsquo;s next</p>
-      <ul class="reflection-list">
-        <li><strong>One Swift app.</strong> The rules already run in Swift and match the original answer for answer, so it can ship as a single download.</li>
-        <li><strong>A signed release.</strong> So it opens like any other Mac app, without a warning.</li>
-        <li><strong>Agents in Claude Code.</strong> The plugin already installs, so agents can work against the same record from any session.</li>
       </ul>
     </div>
 
@@ -676,11 +634,6 @@ cd substrate &amp;&amp; open "Open Substrate.command"</pre>
         <a class="get-btn" href="https://github.com/ladanjohari/substrate">Get Substrate on GitHub &rarr;</a>
         <a class="get-plain" href="https://github.com/ladanjohari/substrate/blob/main/DATA-MODEL.md">Read the data model</a>
       </div>
-      <p class="cs-body-text" style="margin-top:20px; font-size: 13px;">
-        Solo build. The store and command line in Python, the app in Swift, the rules in the store so both
-        obey them. A check runs all 25 command forms and fails loudly; a second one runs the Python and the
-        Swift against one record and compares all 15 answers.
-      </p>
     </div>
   </div>
 
