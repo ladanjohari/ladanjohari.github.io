@@ -334,6 +334,17 @@
     /* The ending: the command, the button, and the one line of proof.
        These rules were lost in a rewrite of the block above them, so the code
        block was unstyled text and the button was a plain underlined link. */
+    .why-list { list-style: none; max-width: 560px; margin-top: 4px; }
+    .why-list li {
+      position: relative; padding-left: 20px; margin-bottom: 12px;
+      font-size: 0.925rem; line-height: 1.8; color: var(--mid);
+    }
+    .why-list li:last-child { margin-bottom: 0; }
+    .why-list li::before {
+      content: ''; position: absolute; left: 2px; top: 12px;
+      width: 5px; height: 5px; border-radius: 50%; background: var(--mid); opacity: 0.55;
+    }
+
     .get-code {
       margin-top: 14px; padding: 14px 16px; border-radius: 9px;
       background: var(--hover-row); border: 1px solid var(--rule);
@@ -579,35 +590,23 @@
 
   <div class="cs-body">
 
-    <!-- ── Why it matters: the problem in words a stranger has felt. Then who it's for. ── -->
-    <div class="cs-section">
-      <p class="cs-label">Why it matters</p>
-      <p class="lead-claim">When agents work on their own, it is hard to tell what they did and what is waiting on you.</p>
-      <p class="cs-body-text">
-        The plan sits in a chat history. An agent decides for itself when it is finished.
-        When one needs a decision, nothing tells you.
-        <br><br>
-        <strong>It&rsquo;s for people who run agents:</strong> engineers running several at once,
-        and anyone who has to stand behind what the agents produced.
-      </p>
-    </div>
-
-    <!-- ── The idea: name the concept, then SHOW it. A diagram beats four paragraphs. ── -->
+    <!-- ── The idea: what the two surfaces are for. ── -->
     <div class="cs-section">
       <p class="cs-label">The idea</p>
       <p class="cs-body-text">
-        <strong>Two rules, kept by the record itself.</strong> Nothing runs until a person approves the plan. Nothing closes until each of its checks has evidence. Everything else in the product follows from those two.
+        <strong>The menu bar</strong> is for attention: one goal at a time, what needs you, and nothing else.
+        <strong>The window</strong> is for structure: every goal, the tasks it broke into, what each one waits
+        on, and the checks that close it.
       </p>
+    </div>
 
-
-      <p class="cs-body-text" style="margin-top:26px;">
-        Most agent tools trust the agent to say it is done. Here the record refuses to close a task until the proof is written down.
-      </p>
-
-      <p class="cs-body-text" style="margin-top:20px;">
-        <strong>That takes two surfaces.</strong> The menu bar is for attention: one goal at a time, what needs you, and nothing else.
-        The window is for structure: every goal, the tasks it broke into, what each one waits on, and the checks that close it.
-      </p>
+    <!-- ── Why it matters: two lines, not paragraphs. ── -->
+    <div class="cs-section">
+      <p class="cs-label">Why it matters</p>
+      <ul class="why-list">
+        <li>When agents work on their own, it is hard to tell what they did and what is waiting on you.</li>
+        <li>People who run several at once have to stand behind what the agents produced.</li>
+      </ul>
     </div>
 
     <!-- ── The decisions, with what each one cost. A case study is the
