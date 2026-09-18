@@ -33,17 +33,17 @@
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* This page is dark whatever the system says. The subject is a desktop at
+       night with one lit panel on it, and a light page fought that. */
     :root {
-      --bg: #F7F6F3; --ink: #111111; --mid: #6B6B6B;
-      --rule: #D4D3CF; --hover-row: #F0EFEC;
-      --accent: #0066FF; --accent-dim: #D6E4FF;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #1A1A1A; --ink: #E8E8E8; --mid: #9A9A9A;
-        --rule: #333333; --hover-row: #242424;
-        --accent: #4D94FF; --accent-dim: #1A3A66;
-      }
+      --bg: #141416; --ink: #ECECEA; --mid: #9A9A97;
+      --rule: #2E2E31; --hover-row: #1E1E21;
+      --accent: #4D94FF; --accent-dim: #16305C;
+      /* the app's own surfaces, so the mock and the page never disagree */
+      --mk-glass: rgba(46, 46, 48, 0.72); --mk-edge: rgba(255, 255, 255, 0.14);
+      --mk-ink: rgba(255, 255, 255, 0.92); --mk-mid: rgba(255, 255, 255, 0.52);
+      --mk-dim: rgba(255, 255, 255, 0.34); --mk-line: rgba(255, 255, 255, 0.09);
+      --mk-sel: rgba(10, 132, 255, 0.28);
     }
 
     html { background: var(--bg); }
@@ -112,142 +112,167 @@
     }
     .cs-body-text strong { color: var(--ink); font-weight: 600; }
 
-    /* ── The tour: the app, drawn, driven by the diagram below it ──
-       The panel and the window are rebuilt in HTML so they can change as you
-       step through. Every task, check and piece of evidence in them came out
-       of one record that ran start to finish. */
-    /* The hero steps outside the reading column: the app needs room, and a
-       344px panel inside a 644px "screen" made the whole thing look like a toy.
-       The panel is now near its real size against a believable desktop. */
-    .video-hero { width: min(900px, calc(100vw - 32px)); max-width: none;
+    /* ── The tour: a Mac, at rest, with the app on it ──
+       Same shape as the Session Indicator page: a 16 by 10 screen, the real
+       menu bar, and a popover hanging off the status item. The panel and the
+       window are rebuilt in HTML so they can change as you step through, and
+       every task, check and piece of evidence in them came out of one record
+       that ran start to finish. */
+    .video-hero { width: min(920px, calc(100vw - 32px)); max-width: none;
       margin-left: 50%; transform: translateX(-50%); padding: 40px 0 0; }
-    .mac {
-      border: 1px solid var(--rule); border-radius: 12px; overflow: hidden;
-      background: linear-gradient(160deg, #1b2430 0%, #121821 46%, #0c0f14 100%);
-      box-shadow: 0 18px 46px rgba(0, 0, 0, 0.16);
+    .screen {
+      position: relative; width: 100%; aspect-ratio: 16 / 10;
+      border-radius: 14px; overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.62), 0 0 0 0.5px rgba(255, 255, 255, 0.10);
     }
-    /* In dark mode the frame and the page are the same value, so without an
-       edge the hero reads as a hole cut in the page. */
-    @media (prefers-color-scheme: dark) {
-      .mac { border-color: #3a3a3a; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55),
-        inset 0 1px 0 rgba(255, 255, 255, 0.06); }
+    .wallpaper {
+      position: absolute; inset: 0;
+      background: #21243c url('/assets/img/substrate/desktop.jpg') center / cover no-repeat;
     }
     .menubar {
-      height: 25px; display: flex; align-items: center; gap: 15px;
-      padding: 0 10px; background: rgba(0,0,0,0.34);
-      border-bottom: 0.5px solid rgba(255,255,255,0.07);
-      font-size: 11px; color: rgba(255,255,255,0.72);
+      position: relative; z-index: 3; height: 26px;
+      display: flex; align-items: center; gap: 2px; padding: 0 9px;
+      background: rgba(20, 20, 22, 0.55);
+      backdrop-filter: blur(28px) saturate(180%); -webkit-backdrop-filter: blur(28px) saturate(180%);
+      font-size: 12px; color: rgba(255, 255, 255, 0.88);
     }
-    .mb-bold { font-weight: 600; }
+    .mb-item { padding: 0 7px; opacity: 0.62; white-space: nowrap; }
+    .mb-item.bold { font-weight: 600; opacity: 0.92; }
     .mb-gap { margin-left: auto; }
+    .mb-icon { opacity: 0.7; display: flex; align-items: center; padding: 0 5px; }
+    .mb-clock { padding-left: 7px; opacity: 0.85; font-variant-numeric: tabular-nums; }
+    .apple { padding: 0 8px 0 2px; opacity: 0.9; display: flex; align-items: center; }
+
     .pill {
-      display: inline-flex; align-items: center; gap: 5px;
+      display: inline-flex; align-items: center; gap: 5px; margin-right: 4px;
       padding: 3px 9px; border-radius: 20px;
-      background: rgba(255,255,255,0.12);
-      border: 0.5px solid rgba(255,255,255,0.14);
+      background: rgba(255, 255, 255, 0.14); border: 0.5px solid rgba(255, 255, 255, 0.16);
       transition: background 0.2s ease, box-shadow 0.2s ease;
     }
-    .pill.lit { background: rgba(232,149,42,0.22); box-shadow: 0 0 0 2px rgba(232,149,42,0.28); }
-    .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.45); }
+    .pill.lit { background: rgba(232, 149, 42, 0.26); box-shadow: 0 0 0 2px rgba(232, 149, 42, 0.3); }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255, 255, 255, 0.45); }
     .dot.working { background: #fff; }
     .dot.needs { background: #E8952A; }
     .dot.done { background: #34C759; }
-    .pill .plus { font-size: 10px; color: rgba(255,255,255,0.55); }
-    .desk { position: relative; height: 232px; transition: height 0.32s cubic-bezier(0.2, 0.7, 0.3, 1); }
-    @media (prefers-reduced-motion: reduce) { .desk { transition: none; } }
+    .pill .plus { font-size: 10px; color: rgba(255, 255, 255, 0.6); }
+    .desk { position: absolute; inset: 26px 0 0 0; }
 
+    /* The popover, the way macOS draws one: vibrancy, hairline, deep shadow. */
     .panel {
-      position: absolute; top: 12px; right: 18px; width: 352px;
-      border-radius: 10px; background: #ECECEC; color: #111;
-      border: 0.5px solid rgba(0,0,0,0.18);
-      box-shadow: 0 18px 50px rgba(0,0,0,0.55);
-      font-size: 12.5px; animation: popIn 0.2s cubic-bezier(0.2,0.9,0.3,1.1);
+      position: absolute; top: 8px; right: 14px; width: 352px;
+      border-radius: 11px; overflow: hidden;
+      background: var(--mk-glass); color: var(--mk-ink);
+      backdrop-filter: blur(26px) saturate(180%); -webkit-backdrop-filter: blur(26px) saturate(180%);
+      border: 0.5px solid var(--mk-edge);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      font-size: 12.5px; animation: popIn 0.18s ease-out;
     }
-    @media (max-width: 620px) { .panel { width: calc(100% - 20px); right: 10px; top: 8px; } }
+    @media (max-width: 620px) { .panel { width: calc(100% - 20px); right: 10px; } }
     @keyframes popIn { from { opacity: 0; transform: translateY(-5px) scale(0.97); } }
     .p-head { display: flex; align-items: baseline; gap: 8px; padding: 10px 12px 8px;
-      border-bottom: 0.5px solid rgba(0,0,0,0.10); }
+      border-bottom: 0.5px solid var(--mk-line); }
     .p-head h3 { font-size: 12.5px; font-weight: 600; flex: 1; letter-spacing: -0.01em;
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .p-head .count { font-size: 11px; color: #6a6a72; }
-    .p-note { padding: 6px 12px 7px; color: #6a6a72; font-size: 11.5px; }
+    .p-head .count { font-size: 11px; color: var(--mk-mid); }
+    .p-note { padding: 6px 12px 7px; color: var(--mk-mid); font-size: 11.5px; }
     .p-row { display: flex; align-items: center; gap: 8px; padding: 5px 12px; }
     .p-row .t { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .p-row .r { font-size: 11px; color: #6a6a72; font-variant-numeric: tabular-nums; }
+    .p-row .r { font-size: 11px; color: var(--mk-mid); font-variant-numeric: tabular-nums; }
     .p-group { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
-      color: rgba(0,0,0,0.34); padding: 8px 12px 3px; }
+      color: var(--mk-dim); padding: 8px 12px 3px; }
     .p-task { display: flex; gap: 8px; padding: 5px 12px; align-items: flex-start; }
     .p-task .n { flex: 1; line-height: 1.35; }
-    .p-task .after { display: block; font-size: 10.5px; color: rgba(0,0,0,0.35); }
-    .p-task .c { font-size: 10.5px; color: rgba(0,0,0,0.38); white-space: nowrap; }
+    .p-task .after { display: block; font-size: 10.5px; color: var(--mk-dim); }
+    .p-task .c { font-size: 10.5px; color: var(--mk-dim); white-space: nowrap; }
     .answers { display: flex; gap: 7px; justify-content: flex-end; padding: 9px 12px 4px; }
-    .btn { font-size: 11px; padding: 4px 10px; border-radius: 6px;
-      border: 0.5px solid rgba(0,0,0,0.18); background: rgba(255,255,255,0.85); }
+    .btn { font-size: 11px; padding: 4px 11px; border-radius: 6px; color: var(--mk-ink);
+      border: 0.5px solid rgba(255, 255, 255, 0.22); background: rgba(255, 255, 255, 0.10); }
     .btn.primary { background: #0A84FF; border-color: transparent; color: #fff; font-weight: 600; }
     .card { margin: 6px; padding: 10px; border-radius: 9px;
-      background: rgba(232,149,42,0.13); border: 0.5px solid rgba(232,149,42,0.4); }
-    .card.shut { background: rgba(52,199,89,0.12); border-color: rgba(52,199,89,0.4); }
+      background: rgba(232, 149, 42, 0.16); border: 0.5px solid rgba(232, 149, 42, 0.42); }
+    .card.shut { background: rgba(52, 199, 89, 0.15); border-color: rgba(52, 199, 89, 0.42); }
     .card .ch { display: flex; align-items: center; gap: 7px; margin-bottom: 5px; }
-    .card .ch h4 { flex: 1; font-size: 12.5px; font-weight: 600; color: #9a6a10; }
-    .card.shut .ch h4 { color: #1c7a3c; }
-    .card .ch .m { font-size: 10.5px; color: #9a6a10; font-variant-numeric: tabular-nums; }
-    .card.shut .ch .m { color: #1c7a3c; }
+    .card p { font-size: 11.5px; color: var(--mk-mid); line-height: 1.5; margin-bottom: 5px; }
+    .card .ch h4 { flex: 1; font-size: 12.5px; font-weight: 600; color: #F0B355; }
+    .card.shut .ch h4 { color: #5FD08A; }
+    .card .ch .m { font-size: 10.5px; color: #F0B355; font-variant-numeric: tabular-nums; }
+    .card.shut .ch .m { color: #5FD08A; }
     .check { display: flex; gap: 7px; align-items: flex-start; padding: 3px 0;
-      color: #6a6a72; font-size: 11.5px; line-height: 1.45; }
-    .check .box { width: 10px; height: 10px; border: 1px solid rgba(0,0,0,0.35);
+      color: var(--mk-mid); font-size: 11.5px; line-height: 1.45; }
+    .check .box { width: 10px; height: 10px; border: 1px solid rgba(255, 255, 255, 0.4);
       border-radius: 3px; margin-top: 3px; flex: none; }
     .check.met .box { background: #34C759; border-color: #34C759; }
-    .did { font-size: 11px; color: #0A84FF; padding-left: 17px; }
-    .card .links { display: flex; gap: 10px; font-size: 11px; color: #0A84FF; margin-top: 6px; }
+    .did { font-size: 11px; color: #4D94FF; padding-left: 17px; }
+    .card .links { display: flex; gap: 10px; font-size: 11px; color: #4D94FF; margin-top: 6px; }
     .p-foot { display: flex; gap: 12px; align-items: center; padding: 7px 12px;
-      border-top: 0.5px solid rgba(0,0,0,0.10); font-size: 11px; color: #6a6a72; }
-    .p-foot .a { color: #0A84FF; }
+      border-top: 0.5px solid var(--mk-line); font-size: 11px; color: var(--mk-mid); }
+    .p-foot .a { color: #4D94FF; }
     .p-foot .sp { flex: 1; }
     .field { display: flex; gap: 6px; padding: 8px 12px 10px; }
-    .field span { flex: 1; padding: 4px 8px; border-radius: 5px; background: #fff;
-      border: 0.5px solid rgba(0,0,0,0.22); color: rgba(0,0,0,0.38); font-size: 11.5px; }
+    .field span { flex: 1; padding: 4px 8px; border-radius: 5px; color: var(--mk-dim);
+      background: rgba(255, 255, 255, 0.10); border: 0.5px solid rgba(255, 255, 255, 0.16);
+      font-size: 11.5px; }
     .field b { font-size: 11px; padding: 4px 10px; border-radius: 6px; font-weight: 600;
       background: #0A84FF; color: #fff; }
+    .ev { font-size: 11px; color: var(--mk-dim); padding-left: 17px;
+      line-height: 1.5; margin: 1px 0 5px; }
 
+    /* The window: a real one, with its own chrome, sitting on the desktop. */
     .window {
-      position: absolute; left: 22px; right: 22px; top: 22px;
-      border-radius: 9px; background: #ECECEC; color: #111;
-      border: 0.5px solid rgba(0,0,0,0.2); box-shadow: 0 22px 54px rgba(0,0,0,0.6);
-      animation: popIn 0.22s cubic-bezier(0.2,0.9,0.3,1.1);
+      position: absolute; left: 34px; top: 26px; width: calc(100% - 96px);
+      border-radius: 10px; overflow: hidden;
+      background: rgba(32, 32, 34, 0.94); color: var(--mk-ink);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border: 0.5px solid var(--mk-edge);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.6); animation: popIn 0.2s ease-out;
     }
-    .w-bar { display: flex; align-items: center; gap: 9px; padding: 7px 9px;
-      border-bottom: 0.5px solid rgba(0,0,0,0.10); }
-    .lights { display: flex; gap: 5px; }
-    .lights i { width: 9px; height: 9px; border-radius: 50%; display: block; }
-    .seg { display: flex; background: rgba(0,0,0,0.08); border-radius: 6px; padding: 2px; }
-    .seg span { font-size: 11px; padding: 2px 10px; border-radius: 4px; color: #6a6a72; }
-    .seg span.on { background: #fff; color: #111; font-weight: 600; }
-    .w-note { font-size: 11px; color: #6a6a72; overflow: hidden;
+    @media (max-width: 620px) { .window { left: 10px; width: calc(100% - 20px); } }
+    .w-bar { display: flex; align-items: center; gap: 9px; padding: 8px 10px;
+      border-bottom: 0.5px solid var(--mk-line); }
+    .lights { display: flex; gap: 6px; }
+    .lights i { width: 10px; height: 10px; border-radius: 50%; display: block; }
+    .seg { display: flex; background: rgba(255, 255, 255, 0.10); border-radius: 6px; padding: 2px; }
+    .seg span { font-size: 11px; padding: 2px 10px; border-radius: 4px; color: var(--mk-mid); }
+    .seg span.on { background: rgba(255, 255, 255, 0.22); color: var(--mk-ink); font-weight: 600; }
+    .w-note { font-size: 11px; color: var(--mk-dim); overflow: hidden;
       text-overflow: ellipsis; white-space: nowrap; }
-    .cols { display: grid; grid-template-columns: 0.9fr 1fr 1.25fr; min-height: 248px; }
+    .cols { display: grid; grid-template-columns: 0.9fr 1fr 1.25fr; min-height: 236px; }
     @media (max-width: 620px) { .cols { grid-template-columns: 1fr 1.2fr; }
       .cols .col:nth-child(3) { display: none; } }
-    .col { border-right: 0.5px solid rgba(0,0,0,0.10); padding: 5px; }
+    .col { border-right: 0.5px solid var(--mk-line); padding: 5px; }
     .col:last-child { border-right: none; }
     .node { display: flex; gap: 7px; align-items: flex-start; padding: 6px 8px;
       border-radius: 6px; font-size: 12px; line-height: 1.4; }
-    .node.sel { background: rgba(10,132,255,0.14); }
-    .node .nd { width: 6px; height: 6px; border-radius: 50%; margin-top: 4px; flex: none;
-      background: rgba(0,0,0,0.3); }
+    .node.sel { background: var(--mk-sel); }
+    .node .nd { width: 6px; height: 6px; border-radius: 50%; margin-top: 5px; flex: none;
+      background: rgba(255, 255, 255, 0.34); }
     .node .nd.done { background: #34C759; }
     .node .nd.needs { background: #E8952A; }
     .node .nt { flex: 1; }
-    .node .nc { font-size: 10.5px; color: rgba(0,0,0,0.36); font-variant-numeric: tabular-nums; }
+    .node .nc { font-size: 10.5px; color: var(--mk-dim); font-variant-numeric: tabular-nums; }
     .detail { padding: 10px 13px; font-size: 12px; }
     .detail h5 { font-size: 12.5px; font-weight: 600; margin-bottom: 2px; }
-    .detail .id { font: 10px ui-monospace, Menlo, monospace; color: rgba(0,0,0,0.32); margin-bottom: 7px; }
+    .detail .id { font: 10px ui-monospace, Menlo, monospace; color: var(--mk-dim); margin-bottom: 7px; }
     .detail .lab { font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
-      text-transform: uppercase; color: rgba(0,0,0,0.34); margin-top: 9px; }
-    .detail p { color: #6a6a72; font-size: 11.5px; }
-    /* The evidence is the point of the whole product, so it is shown, not
-       summarised: this is the sentence a person wrote to close a check. */
-    .ev { font-size: 11px; color: rgba(0,0,0,0.42); padding-left: 17px;
-      line-height: 1.5; margin: 1px 0 5px; }
+      text-transform: uppercase; color: var(--mk-dim); margin-top: 9px; }
+    .detail p { color: var(--mk-mid); font-size: 11.5px; }
+
+    /* Under the screen: what this step is, and the button that runs them all. */
+    .caption-row { display: flex; align-items: center; justify-content: center;
+      gap: 14px; margin-top: 18px; flex-wrap: wrap; }
+    .caption-row .cap { font-size: 12.5px; color: var(--mid); }
+    .caption-row .n { margin-left: 10px; padding: 2px 8px; border-radius: 20px;
+      background: var(--hover-row); color: var(--mid); font-size: 11.5px;
+      font-variant-numeric: tabular-nums; }
+    .tour-btn {
+      display: inline-flex; align-items: center; gap: 6px; font: inherit;
+      font-size: 12.5px; font-weight: 600; padding: 7px 16px; border-radius: 20px;
+      background: #0A84FF; border: none; color: #fff; cursor: pointer; white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(10, 132, 255, 0.35);
+      transition: opacity 0.15s ease-out, box-shadow 0.15s ease-out;
+    }
+    .tour-btn:hover { opacity: 0.9; box-shadow: 0 4px 14px rgba(10, 132, 255, 0.45); }
+    .tour-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
     .get-code {
       margin-top: 14px; padding: 13px 15px; border-radius: 9px;
@@ -297,8 +322,9 @@
       .fstep:hover .fbox { stroke: var(--ink); }
       .fstep:hover text { fill: var(--ink); }
     }
-    .flow-nav .fstep { opacity: 0.45; transition: opacity 0.18s ease-out; }
+    .flow-nav .fstep { opacity: 0.55; transition: opacity 0.18s ease-out; }
     .flow-nav .fstep.on { opacity: 1; }
+    .flow-nav .flow-note, .flow-nav .flow-tick { opacity: 0.62; }
     .fstep.on .fbox { fill: var(--accent-dim); stroke: var(--accent); }
     .fstep.on text { fill: var(--ink); font-weight: 600; }
     .fstep:focus-visible { outline: none; }
@@ -385,29 +411,44 @@
   <div class="cs-header">
     <h1 class="cs-title">Substrate</h1>
     <p class="cs-descriptor">
-      Hand a goal to AI agents. It comes back as a plan with checks. You approve it, agents work it, and nothing closes until the proof is written down.
+      A macOS app where you hand exit criteria to AI agents. It comes back as a plan with checks.
+      You approve it, the agents work, and you watch a swarm of them take on the task tree from the
+      menu bar. If anything needs your attention, it asks.
     </p>
     <div class="cs-meta">
       <span>2026</span>
       <span class="sep">/</span>
-      <span>Design and build, solo</span>
-      <span class="sep">/</span>
-      <span>macOS app &middot; Swift and Python</span>
+      <span>Swift and Python</span>
       <span class="sep">/</span>
       <a href="https://github.com/ladanjohari/substrate" target="_blank" rel="noopener">GitHub &rarr;</a>
     </div>
   </div>
 
   <div class="video-hero">
-    <div class="mac">
+    <div class="screen">
+      <div class="wallpaper"></div>
       <div class="menubar">
-        <span class="mb-bold">Finder</span><span>File</span><span>Edit</span><span>View</span><span>Go</span>
+        <span class="apple"><svg width="12" height="14" viewBox="0 0 14 17" aria-hidden="true">
+          <path fill="rgba(255,255,255,0.9)" d="M11.3 9c0-1.9 1.5-2.8 1.6-2.9-.9-1.3-2.2-1.5-2.7-1.5-1.2-.1-2.3.7-2.8.7-.6 0-1.5-.7-2.4-.7-1.3 0-2.4.7-3 1.9-1.3 2.2-.3 5.5.9 7.3.6.9 1.4 1.9 2.3 1.8.9 0 1.2-.6 2.3-.6s1.4.6 2.4.6c1 0 1.6-.9 2.2-1.8.7-1 1-2 1-2.1 0 0-1.9-.7-1.8-2.7zM9.6 3.2c.5-.6.8-1.4.7-2.2-.7 0-1.6.5-2.1 1.1-.5.5-.9 1.4-.7 2.2.8.1 1.6-.4 2.1-1.1z"/>
+        </svg></span>
+        <span class="mb-item bold">Finder</span>
+        <span class="mb-item">File</span><span class="mb-item">Edit</span><span class="mb-item">View</span>
+        <span class="mb-item">Go</span><span class="mb-item">Window</span><span class="mb-item">Help</span>
         <span class="mb-gap"></span>
         <span id="pill" class="pill"><span class="dot"></span></span>
-        <span>100%</span><span>9:41</span>
+        <span class="mb-icon"><svg width="15" height="11" viewBox="0 0 15 11" aria-hidden="true" fill="none"
+          stroke="rgba(255,255,255,0.8)" stroke-width="1.2" stroke-linecap="round">
+          <path d="M1 3.6a9 9 0 0 1 13 0M3.4 6a5.7 5.7 0 0 1 8.2 0"/><circle cx="7.5" cy="8.9" r="0.9" fill="rgba(255,255,255,0.8)" stroke="none"/>
+        </svg></span>
+        <span class="mb-icon"><svg width="22" height="11" viewBox="0 0 22 11" aria-hidden="true">
+          <rect x="0.5" y="0.5" width="18" height="10" rx="3" fill="none" stroke="rgba(255,255,255,0.55)"/>
+          <rect x="2" y="2" width="12" height="7" rx="1.6" fill="rgba(255,255,255,0.85)"/>
+          <path d="M20 4v3c.8-.3 1.2-.8 1.2-1.5S20.8 4.3 20 4z" fill="rgba(255,255,255,0.55)"/>
+        </svg></span>
+        <span class="mb-clock">Thu Sep 17&nbsp; 5:09 PM</span>
       </div>
       <div class="desk" id="desk"><div class="panel">
-        <div class="p-head"><h3>Substrate</h3><span class="count">nothing on the go</span></div>
+        <div class="p-head"><h3>Substrate</h3><span class="count">0 ready</span></div>
         <div class="p-note">Describe something you want done and it becomes a plan you can approve.</div>
         <div class="field"><span>What do you want done?</span><b>Plan it</b></div>
         <div class="p-foot"><span class="a">New goal</span><span class="a">Open the full tree</span>
@@ -461,8 +502,12 @@
 
     <div class="chips" id="chips"></div>
 
-    <p class="tour-hint"><b>Click a step</b> <span class="n" id="tour-pos">1 of 6</span></p>
-    <p class="video-caption" id="tour-cap">Every task, check and piece of evidence below came from one record that ran start to finish.</p>
+    <div class="caption-row">
+      <p class="cap"><span id="tour-cap" aria-live="polite">Type one sentence into the menu bar. That is the whole input.</span>
+        <span class="n" id="tour-pos">1 of 6</span></p>
+      <button class="tour-btn" id="tour-btn" type="button">&#9654; Take a tour</button>
+    </div>
+    <p class="video-caption">Every task, check and piece of evidence above came from one record that ran start to finish.</p>
   </div>
 
   <div class="cs-body">
@@ -582,7 +627,7 @@ cd substrate &amp;&amp; open "Open Substrate.command"</pre>
     </ul>
   </footer>
 
-  <script id="record" type="application/json">{"plan": {"title": "Write a release checklist for Substrate 0.1", "tasks": [{"title": "Write down every item that must be verified before release", "checks": 6, "after": []}, {"title": "Assemble and write the release checklist document", "checks": 5, "after": ["collect-checks"]}]}, "working": {"title": "Write down every item that must be verified before release", "owner": "agent 1", "elapsed": "1m 32s"}, "asking": {"title": "Assemble and write the release checklist document", "met": 3, "total": 5, "open": ["The checklist covers all four categories from the collected list: scope, technical, content and privacy, publishing.", "No item is left open-ended: each one has a concrete, file-based way to know it is done."]}, "tree": [{"id": "release-checklist-substrate-01", "title": "Write a release checklist for Substrate 0.1", "parent": null, "state": "working", "met": 0, "total": 1, "intent": "Create a written document that lists every step needed before shipping Substrate 0.1 to the public, so nothing is forgotten and the process can be repeated.", "criteria": [{"text": "A checklist document exists that Ladan has read through and confirmed covers every step she would need to take to ship Substrate 0.1.", "state": "unmet", "evidence": ""}]}, {"id": "release-checklist-substrate-01/collect-checks", "title": "Write down every item that must be verified before release", "parent": "release-checklist-substrate-01", "state": "done", "met": 6, "total": 6, "intent": "Produce a raw list of every pre-release item, organized by category, where each item describes a file-readable fact rather than a person's judgment.", "criteria": [{"text": "A file exists at a known path containing the list.", "state": "met", "evidence": "The file exists at /Users/ladanjohari/projects/substrate/store/outputs/release-checklist-substrate-01__collect-checks.md and its content is the pre-release checklist described."}, {"text": "The file has a section for scope: it names exactly what is included in Substrate 0.1 as a written statement.", "state": "met", "evidence": "Section '## 0. Scope of Substrate 0.1' contains subsection '### Included in 0.1' which is a written statement naming exactly what is included: store/*.py (listing each file), app/mac/, prototypes/canv"}, {"text": "The file has a section for technical checks: each item names a file, a command output, or a directory state that can be read.", "state": "met", "evidence": "Sections 3\u201312 (Store, Decomposer, Runner, AI worker, Front door, Database, Mac app, Python dependencies, Skills) each name a specific file, command to run, or directory state. For example: 'python3 st"}, {"text": "The file has a section for content and privacy checks: each item names a file or folder to inspect for private data or paths.", "state": "met", "evidence": "Section 1 ('Private content scrubbed from release files') names specific grep commands against the release folder and specific files: 'grep -r \"ladanjohari\" ~/projects/substrate-release/', 'find ~/pro"}, {"text": "The file has a section for publishing steps: each item is a concrete command or file operation, not a decision.", "state": "met", "evidence": "Section '## 7. Publishing steps' contains six subsections (7a\u20137f), each consisting of shell commands or file operations: rsync and cp commands in 7a, git add/status/commit in 7c, git tag in 7d, git pu"}, {"text": "No item in the file contains words like 'confirm with,' 'get approval from,' or 'review with' a person's name.", "state": "met", "evidence": "A full scan of the deliverable finds no instance of 'confirm with', 'get approval from', 'review with', or any person's name attached to a decision gate. Every item is a mechanical check (grep, find, "}]}, {"id": "release-checklist-substrate-01/draft-checklist", "title": "Assemble and write the release checklist document", "parent": "release-checklist-substrate-01", "state": "done", "met": 5, "total": 5, "intent": "Turn the collected items into a single formatted checklist that a stranger could use to ship Substrate 0.1 without asking anyone a question.", "criteria": [{"text": "A checklist file exists and is readable at a path noted in the repo.", "state": "met", "evidence": "The file is at store/outputs/release-checklist-substrate-01__draft-checklist.md, 232 lines, and opens and reads."}, {"text": "Every item is formatted with a checkbox marker.", "state": "met", "evidence": "Every actionable item throughout sections 1\u201310 uses the '- [ ]' checkbox marker. Section 0 uses plain bullets for scope documentation (not checklist items). All 60+ items that are meant to be checked "}, {"text": "Every item describes a file state, a command result, or a directory condition, not a person's opinion or sign-off.", "state": "met", "evidence": "Every '- [ ]' item resolves to a command result (e.g., 'grep -r \"ladanjohari\" ... returns zero lines'), a file state ('test -f ... exits 0'), or a directory condition ('find ... returns no paths'). No"}, {"text": "The checklist covers all four categories from the collected list: scope, technical, content and privacy, publishing.", "state": "met", "evidence": "Scope: Section 0 lists exactly what is and is not copied. Technical: Sections 2\u20138 cover file copy correctness, documentation, store/server, CLI, runner/worker, Mac build, and skills. Content and priva"}, {"text": "No item is left open-ended: each one has a concrete, file-based way to know it is done.", "state": "met", "evidence": "70 checkbox items. 69 name a command or a file path to check against. The one that does not, The rsync and cp commands above complete with no error output, refers to the commands printed directly abov"}]}], "finished": [{"id": "release-checklist-substrate-01", "title": "Write a release checklist for Substrate 0.1", "parent": null, "state": "working", "met": 0, "total": 1, "criteria": [{"text": "A checklist document exists that Ladan has read through and confirmed covers every step she would need to take to ship Substrate 0.1.", "state": "unmet", "evidence": ""}]}, {"id": "release-checklist-substrate-01/collect-checks", "title": "Write down every item that must be verified before release", "parent": "release-checklist-substrate-01", "state": "done", "met": 6, "total": 6, "criteria": [{"text": "A file exists at a known path containing the list.", "state": "met", "evidence": "The file exists at /Users/ladanjohari/projects/substrate/store/outputs/release-checklist-substrate-01__collect-checks.md and its content is the pre-release checklist described."}, {"text": "The file has a section for scope: it names exactly what is included in Substrate 0.1 as a written statement.", "state": "met", "evidence": "Section '## 0. Scope of Substrate 0.1' contains subsection '### Included in 0.1' which is a written statement naming exactly what is included: store/*.py (listing each file), app/mac/, prototypes/canv"}, {"text": "The file has a section for technical checks: each item names a file, a command output, or a directory state that can be read.", "state": "met", "evidence": "Sections 3\u201312 (Store, Decomposer, Runner, AI worker, Front door, Database, Mac app, Python dependencies, Skills) each name a specific file, command to run, or directory state. For example: 'python3 st"}, {"text": "The file has a section for content and privacy checks: each item names a file or folder to inspect for private data or paths.", "state": "met", "evidence": "Section 1 ('Private content scrubbed from release files') names specific grep commands against the release folder and specific files: 'grep -r \"ladanjohari\" ~/projects/substrate-release/', 'find ~/pro"}, {"text": "The file has a section for publishing steps: each item is a concrete command or file operation, not a decision.", "state": "met", "evidence": "Section '## 7. Publishing steps' contains six subsections (7a\u20137f), each consisting of shell commands or file operations: rsync and cp commands in 7a, git add/status/commit in 7c, git tag in 7d, git pu"}, {"text": "No item in the file contains words like 'confirm with,' 'get approval from,' or 'review with' a person's name.", "state": "met", "evidence": "A full scan of the deliverable finds no instance of 'confirm with', 'get approval from', 'review with', or any person's name attached to a decision gate. Every item is a mechanical check (grep, find, "}]}, {"id": "release-checklist-substrate-01/draft-checklist", "title": "Assemble and write the release checklist document", "parent": "release-checklist-substrate-01", "state": "done", "met": 5, "total": 5, "criteria": [{"text": "A checklist file exists and is readable at a path noted in the repo.", "state": "met", "evidence": "The file is at store/outputs/release-checklist-substrate-01__draft-checklist.md, 232 lines, and opens and reads."}, {"text": "Every item is formatted with a checkbox marker.", "state": "met", "evidence": "Every actionable item throughout sections 1\u201310 uses the '- [ ]' checkbox marker. Section 0 uses plain bullets for scope documentation (not checklist items). All 60+ items that are meant to be checked "}, {"text": "Every item describes a file state, a command result, or a directory condition, not a person's opinion or sign-off.", "state": "met", "evidence": "Every '- [ ]' item resolves to a command result (e.g., 'grep -r \"ladanjohari\" ... returns zero lines'), a file state ('test -f ... exits 0'), or a directory condition ('find ... returns no paths'). No"}, {"text": "The checklist covers all four categories from the collected list: scope, technical, content and privacy, publishing.", "state": "met", "evidence": "Scope: Section 0 lists exactly what is and is not copied. Technical: Sections 2\u20138 cover file copy correctness, documentation, store/server, CLI, runner/worker, Mac build, and skills. Content and priva"}, {"text": "No item is left open-ended: each one has a concrete, file-based way to know it is done.", "state": "met", "evidence": "70 checkbox items. 69 name a command or a file path to check against. The one that does not, The rsync and cp commands above complete with no error output, refers to the commands printed directly abov"}]}]}</script>
+  <script id="record" type="application/json">{"plan": {"title": "Write a release checklist for Substrate 0.1", "tasks": [{"title": "Write down every item that must be verified before release", "checks": 6, "after": []}, {"title": "Assemble and write the release checklist document", "checks": 5, "after": ["collect-checks"]}]}, "working": {"title": "Write down every item that must be verified before release", "owner": "agent 1", "elapsed": "1m 32s"}, "asking": {"title": "Assemble and write the release checklist document", "met": 3, "total": 5, "open": ["The checklist covers all four categories from the collected list: scope, technical, content and privacy, publishing.", "No item is left open-ended: each one has a concrete, file-based way to know it is done."]}, "tree": [{"id": "release-checklist-substrate-01", "title": "Write a release checklist for Substrate 0.1", "parent": null, "state": "working", "met": 0, "total": 1, "intent": "Create a written document that lists every step needed before shipping Substrate 0.1 to the public, so nothing is forgotten and the process can be repeated.", "criteria": [{"text": "A checklist document exists that Ladan has read through and confirmed covers every step she would need to take to ship Substrate 0.1.", "state": "unmet", "evidence": ""}]}, {"id": "release-checklist-substrate-01/collect-checks", "title": "Write down every item that must be verified before release", "parent": "release-checklist-substrate-01", "state": "done", "met": 6, "total": 6, "intent": "Produce a raw list of every pre-release item, organized by category, where each item describes a file-readable fact rather than a person's judgment.", "criteria": [{"text": "A file exists at a known path containing the list.", "state": "met", "evidence": "The file exists at store/outputs/release-checklist-substrate-01__collect-checks.md and its content is the pre-release checklist described."}, {"text": "The file has a section for scope: it names exactly what is included in Substrate 0.1 as a written statement.", "state": "met", "evidence": "Section '## 0. Scope of Substrate 0.1' contains subsection '### Included in 0.1' which is a written statement naming exactly what is included: store/*.py (listing each file), app/mac/, prototypes/canv"}, {"text": "The file has a section for technical checks: each item names a file, a command output, or a directory state that can be read.", "state": "met", "evidence": "Sections 3\u201312 (Store, Decomposer, Runner, AI worker, Front door, Database, Mac app, Python dependencies, Skills) each name a specific file, command to run, or directory state. For example: 'python3 st"}, {"text": "The file has a section for content and privacy checks: each item names a file or folder to inspect for private data or paths.", "state": "met", "evidence": "Section 1 ('Private content scrubbed from release files') names specific grep commands against the release folder and specific files: 'grep -r \"ladanjohari\" ~/projects/substrate-release/', 'find ~/pro"}, {"text": "The file has a section for publishing steps: each item is a concrete command or file operation, not a decision.", "state": "met", "evidence": "Section '## 7. Publishing steps' contains six subsections (7a\u20137f), each consisting of shell commands or file operations: rsync and cp commands in 7a, git add/status/commit in 7c, git tag in 7d, git pu"}, {"text": "No item in the file contains words like 'confirm with,' 'get approval from,' or 'review with' a person's name.", "state": "met", "evidence": "A full scan of the deliverable finds no instance of 'confirm with', 'get approval from', 'review with', or any person's name attached to a decision gate. Every item is a mechanical check (grep, find, "}]}, {"id": "release-checklist-substrate-01/draft-checklist", "title": "Assemble and write the release checklist document", "parent": "release-checklist-substrate-01", "state": "done", "met": 5, "total": 5, "intent": "Turn the collected items into a single formatted checklist that a stranger could use to ship Substrate 0.1 without asking anyone a question.", "criteria": [{"text": "A checklist file exists and is readable at a path noted in the repo.", "state": "met", "evidence": "The file is at store/outputs/release-checklist-substrate-01__draft-checklist.md, 232 lines, and opens and reads."}, {"text": "Every item is formatted with a checkbox marker.", "state": "met", "evidence": "Every actionable item throughout sections 1\u201310 uses the '- [ ]' checkbox marker. Section 0 uses plain bullets for scope documentation (not checklist items). All 60+ items that are meant to be checked "}, {"text": "Every item describes a file state, a command result, or a directory condition, not a person's opinion or sign-off.", "state": "met", "evidence": "Every '- [ ]' item resolves to a command result (e.g., 'grep -r \"ladanjohari\" ... returns zero lines'), a file state ('test -f ... exits 0'), or a directory condition ('find ... returns no paths'). No"}, {"text": "The checklist covers all four categories from the collected list: scope, technical, content and privacy, publishing.", "state": "met", "evidence": "Scope: Section 0 lists exactly what is and is not copied. Technical: Sections 2\u20138 cover file copy correctness, documentation, store/server, CLI, runner/worker, Mac build, and skills. Content and priva"}, {"text": "No item is left open-ended: each one has a concrete, file-based way to know it is done.", "state": "met", "evidence": "70 checkbox items. 69 name a command or a file path to check against. The one that does not, The rsync and cp commands above complete with no error output, refers to the commands printed directly abov"}]}], "finished": [{"id": "release-checklist-substrate-01", "title": "Write a release checklist for Substrate 0.1", "parent": null, "state": "working", "met": 0, "total": 1, "criteria": [{"text": "A checklist document exists that Ladan has read through and confirmed covers every step she would need to take to ship Substrate 0.1.", "state": "unmet", "evidence": ""}]}, {"id": "release-checklist-substrate-01/collect-checks", "title": "Write down every item that must be verified before release", "parent": "release-checklist-substrate-01", "state": "done", "met": 6, "total": 6, "criteria": [{"text": "A file exists at a known path containing the list.", "state": "met", "evidence": "The file exists at store/outputs/release-checklist-substrate-01__collect-checks.md and its content is the pre-release checklist described."}, {"text": "The file has a section for scope: it names exactly what is included in Substrate 0.1 as a written statement.", "state": "met", "evidence": "Section '## 0. Scope of Substrate 0.1' contains subsection '### Included in 0.1' which is a written statement naming exactly what is included: store/*.py (listing each file), app/mac/, prototypes/canv"}, {"text": "The file has a section for technical checks: each item names a file, a command output, or a directory state that can be read.", "state": "met", "evidence": "Sections 3\u201312 (Store, Decomposer, Runner, AI worker, Front door, Database, Mac app, Python dependencies, Skills) each name a specific file, command to run, or directory state. For example: 'python3 st"}, {"text": "The file has a section for content and privacy checks: each item names a file or folder to inspect for private data or paths.", "state": "met", "evidence": "Section 1 ('Private content scrubbed from release files') names specific grep commands against the release folder and specific files: 'grep -r \"ladanjohari\" ~/projects/substrate-release/', 'find ~/pro"}, {"text": "The file has a section for publishing steps: each item is a concrete command or file operation, not a decision.", "state": "met", "evidence": "Section '## 7. Publishing steps' contains six subsections (7a\u20137f), each consisting of shell commands or file operations: rsync and cp commands in 7a, git add/status/commit in 7c, git tag in 7d, git pu"}, {"text": "No item in the file contains words like 'confirm with,' 'get approval from,' or 'review with' a person's name.", "state": "met", "evidence": "A full scan of the deliverable finds no instance of 'confirm with', 'get approval from', 'review with', or any person's name attached to a decision gate. Every item is a mechanical check (grep, find, "}]}, {"id": "release-checklist-substrate-01/draft-checklist", "title": "Assemble and write the release checklist document", "parent": "release-checklist-substrate-01", "state": "done", "met": 5, "total": 5, "criteria": [{"text": "A checklist file exists and is readable at a path noted in the repo.", "state": "met", "evidence": "The file is at store/outputs/release-checklist-substrate-01__draft-checklist.md, 232 lines, and opens and reads."}, {"text": "Every item is formatted with a checkbox marker.", "state": "met", "evidence": "Every actionable item throughout sections 1\u201310 uses the '- [ ]' checkbox marker. Section 0 uses plain bullets for scope documentation (not checklist items). All 60+ items that are meant to be checked "}, {"text": "Every item describes a file state, a command result, or a directory condition, not a person's opinion or sign-off.", "state": "met", "evidence": "Every '- [ ]' item resolves to a command result (e.g., 'grep -r \"ladanjohari\" ... returns zero lines'), a file state ('test -f ... exits 0'), or a directory condition ('find ... returns no paths'). No"}, {"text": "The checklist covers all four categories from the collected list: scope, technical, content and privacy, publishing.", "state": "met", "evidence": "Scope: Section 0 lists exactly what is and is not copied. Technical: Sections 2\u20138 cover file copy correctness, documentation, store/server, CLI, runner/worker, Mac build, and skills. Content and priva"}, {"text": "No item is left open-ended: each one has a concrete, file-based way to know it is done.", "state": "met", "evidence": "70 checkbox items. 69 name a command or a file path to check against. The one that does not, The rsync and cp commands above complete with no error output, refers to the commands printed directly abov"}]}]}</script>
   <script>
     (function () {
       const D = JSON.parse(document.getElementById('record').textContent);
@@ -610,7 +655,7 @@ cd substrate &amp;&amp; open "Open Substrate.command"</pre>
       const views = [
         () => panel('<div class="p-note">Describe something you want done and it becomes a plan you can approve.</div>' +
               '<div class="field"><span>What do you want done?</span><b>Plan it</b></div>',
-              'Substrate', 'nothing on the go'),
+              'Substrate', '0 ready'),
         () => windowView(),
         () => panel(planRows(), D.plan.title, 'not approved yet'),
         () => panel('<div class="p-group">Running now</div><div class="p-row">' +
@@ -628,16 +673,17 @@ cd substrate &amp;&amp; open "Open Substrate.command"</pre>
               '<span>Ask for changes</span></div></div>', D.plan.title, '1 needs you'),
         () => {
           const g = D.finished.filter(n => !n.parent)[0];
+          const open = (g.criteria || []).filter(c => c.state !== 'met');
           return panel('<div class="p-group">Done</div>' +
             D.finished.filter(n => n.parent).map(t => '<div class="p-row">' +
               '<span class="dot done"></span><span class="t">' + esc(t.title) +
               '</span><span class="r">' + t.met + ' of ' + t.total + '</span></div>').join('') +
-            '<div class="card shut"><div class="ch"><span class="dot done"></span><h4>' +
-            esc(g.title) + '</h4><span class="m">closed</span></div>' +
-            (g.criteria[0] ? '<div class="check met"><span class="box"></span><span>' +
-              esc(g.criteria[0].text) + '</span></div>' +
-              (g.criteria[0].evidence ? '<div class="ev">' + esc(g.criteria[0].evidence) + '</div>' : '')
-              : '') + '</div>', g.title, 'done');
+            '<div class="card"><div class="ch"><span class="dot needs"></span><h4>' +
+            esc(g.title) + '</h4><span class="m">' + g.met + ' of ' + g.total + '</span></div>' +
+            '<p>Every task is done. This is what the goal itself asks.</p>' +
+            open.map(c => '<div class="check"><span class="box"></span><span>' + esc(c.text) +
+              '</span></div><div class="did">I did this</div>').join('') + '</div>',
+            g.title, '1 needs you');
         }
       ];
 
@@ -669,15 +715,15 @@ cd substrate &amp;&amp; open "Open Substrate.command"</pre>
           '</div></div></div></div>';
       }
 
-      const dots = [['idle'], ['needs'], ['needs'], ['working', 'working'], ['needs', 'working'], ['done', 'done']];
-      const lit = [false, false, true, false, true, false];
+      const dots = [['idle'], ['needs'], ['needs'], ['working', 'working'], ['needs', 'working'], ['needs', 'done']];
+      const lit = [false, false, true, false, true, true];
       const caps = [
         'Type one sentence into the menu bar. That is the whole input.',
         'It comes back as tasks, each with the checks that will close it. The window holds the shape.',
         'Three answers, and no agent moves until you give one.',
         'An agent takes the first task the plan allows, and says how long it has had it.',
         'It closed what it could evidence and stopped at the rest. Those two are yours.',
-        'Both tasks closed with proof, and the goal closed when its own check was answered.'
+        'Both tasks closed with their proof. The goal\'s own check names a person, so it is yours.'
       ];
 
       const labels = ['Goal', 'Plan', 'You approve', 'Agents', 'Evidence', 'Done'];
@@ -687,7 +733,7 @@ cd substrate &amp;&amp; open "Open Substrate.command"</pre>
         '<button class="chip" data-step="' + i + '">' + l + '</button>').join('');
       const chipEls = [...chips.children];
 
-      let at = -1, timer = null;
+      let at = -1, timer = null, taken = false;
       function show(i) {
         at = (i + views.length) % views.length;
         desk.innerHTML = views[at]();
@@ -697,21 +743,21 @@ cd substrate &amp;&amp; open "Open Substrate.command"</pre>
         pill.innerHTML = dots[at].map(d => '<span class="dot ' + d + '"></span>').join('');
         steps.forEach((el, idx) => el.classList.toggle('on', idx === at));
         chipEls.forEach((el, idx) => el.classList.toggle('on', idx === at));
-        // The desk is as tall as what it holds. Fixed height left two thirds of
-        // the hero as empty dark on four of the six steps.
-        const ui = desk.firstElementChild;
-        if (ui) {
-          const pad = ui.classList.contains('window') ? 44 : 24;
-          desk.style.height = Math.round(ui.getBoundingClientRect().height + pad) + 'px';
-        }
       }
+      const btn = document.getElementById('tour-btn');
+      function label() { btn.innerHTML = timer ? '&#9632; Stop the tour' : '&#9654; Take a tour'; }
+      btn.addEventListener('click', () => {
+        if (timer) { stop(); label(); return; }
+        taken = false; show(0); play(); label();
+      });
+
       function play() {
         stop();
         if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
           timer = setInterval(() => show(at + 1), 6000);
         }
       }
-      function stop() { if (timer) { clearInterval(timer); timer = null; } }
+      function stop() { if (timer) { clearInterval(timer); timer = null; } if (btn) label(); }
 
       chipEls.forEach((el, i) => el.addEventListener('click', () => { show(i); stop(); }));
       steps.forEach((el, i) => {
@@ -727,7 +773,6 @@ cd substrate &amp;&amp; open "Open Substrate.command"</pre>
 
       show(0);
       // Only run while it is on screen, so it is not animating out of sight.
-      let taken = false;
       [...chipEls, ...steps].forEach(el => el.addEventListener('click', () => { taken = true; }));
       new IntersectionObserver(es => es.forEach(e => (e.isIntersecting && !taken) ? play() : stop()),
         { threshold: 0.25 }).observe(hero);
