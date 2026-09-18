@@ -76,11 +76,11 @@
     }
     .cs-meta {
       display: flex; align-items: center; gap: 14px;
-      font-size: 0.78rem; color: var(--mid);
+      font-size: 12px; color: var(--mid);
       padding-bottom: 40px; border-bottom: 1px solid var(--rule);
       flex-wrap: wrap;
     }
-    .cs-meta .sep { color: var(--rule); }
+    .cs-meta .sep { color: rgba(255, 255, 255, 0.22); }
     .cs-meta a { color: var(--accent); text-decoration: none; font-weight: 500; }
     @media (hover: hover) and (pointer: fine) {
       .cs-meta a:hover { text-decoration: underline; }
@@ -97,7 +97,7 @@
     .cs-body { max-width: 700px; margin: 0 auto; padding: 0 28px 64px; }
     .cs-section { margin-top: 56px; }
     .cs-label {
-      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
       text-transform: uppercase; color: var(--mid);
       padding-bottom: 14px; border-bottom: 1px solid var(--rule);
       margin-bottom: 24px;
@@ -209,7 +209,7 @@
     .p-foot .a { color: #4D94FF; }
     .p-foot .sp { flex: 1; }
     .field { display: flex; gap: 6px; padding: 8px 12px 10px; }
-    .field span { flex: 1; padding: 4px 8px; border-radius: 5px; color: var(--mk-dim);
+    .field span { flex: 1; padding: 4px 8px; border-radius: 5px; color: rgba(255, 255, 255, 0.45);
       background: rgba(255, 255, 255, 0.10); border: 0.5px solid rgba(255, 255, 255, 0.16);
       font-size: 11.5px; }
     .field b { font-size: 11px; padding: 4px 10px; border-radius: 6px; font-weight: 600;
@@ -296,37 +296,73 @@
     }
     @media (max-width: 430px) { .mb-clock { display: none; } }
 
-    /* Under the screen: what this step is, and the button that runs them all. */
-    .caption-row { display: flex; align-items: center; justify-content: center;
-      gap: 14px; margin-top: 18px; flex-wrap: wrap; }
-    .caption-row .cap { font-size: 12.5px; color: var(--mid); }
-    .caption-row .n { margin-left: 10px; padding: 2px 8px; border-radius: 20px;
-      background: var(--hover-row); color: var(--mid); font-size: 11.5px;
-      font-variant-numeric: tabular-nums; }
-    .tour-btn {
-      display: inline-flex; align-items: center; gap: 6px; font: inherit;
-      font-size: 12.5px; font-weight: 600; padding: 7px 16px; border-radius: 20px;
-      background: #0A84FF; border: none; color: #fff; cursor: pointer; white-space: nowrap;
-      box-shadow: 0 2px 8px rgba(10, 132, 255, 0.35);
-      transition: opacity 0.15s ease-out, box-shadow 0.15s ease-out;
+    /* Under the screen: a bar that does not move.
+       It used to centre three things of changing width, so the button walked
+       left and right with every step and the row grew a second line when the
+       sentence was long. Three fixed zones instead: walk, read, play. */
+    .caption-row {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 14px; margin-top: 20px;
     }
-    .tour-btn:hover { opacity: 0.9; box-shadow: 0 4px 14px rgba(10, 132, 255, 0.45); }
+    .caption-row .cap {
+      order: -1; text-align: center; margin: 0; width: 100%; max-width: 46ch;
+      font-size: 13px; line-height: 1.5; color: var(--ink);
+      min-height: 39px;            /* two lines, so nothing below ever jumps */
+      display: flex; align-items: center; justify-content: center;
+    }
+    .stepper-controls { display: inline-flex; align-items: center; gap: 8px; }
+    .tour-cluster { display: inline-flex; align-items: center; gap: 22px; }
+    .caption-row .n {
+      font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--mid); font-variant-numeric: tabular-nums; min-width: 42px; text-align: center;
+    }
+    .step-btn {
+      width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--rule);
+      background: none; color: var(--ink); font: inherit; font-size: 15px; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: background 0.15s ease-out, border-color 0.15s ease-out;
+    }
+    .step-btn:hover { background: var(--hover-row); border-color: var(--mid); }
+    .step-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .tour-btn {
+      display: inline-flex; align-items: center; gap: 7px; font: inherit;
+      font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 20px;
+      background: #1A6FE8; border: none; color: #fff; cursor: pointer; white-space: nowrap;
+      transition: opacity 0.15s ease-out;
+    }
+    .tour-btn:hover { opacity: 0.88; }
     .tour-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    /* Provenance is a footnote, not a second caption. It read at the same size
+       and the same grey as the sentence above it, so neither led. */
+    .video-caption {
+      margin-top: 16px; text-align: center; font-size: 11.5px; line-height: 1.6;
+      color: rgba(255, 255, 255, 0.48); letter-spacing: 0.01em;
+    }
+    @media (max-width: 760px) {
+      .caption-row .cap { min-height: 0; }
+      .tour-cluster { flex-wrap: wrap; justify-content: center; gap: 14px; }
+      .step-btn { width: 44px; height: 44px; }   /* HIG's touch target */
+      .tour-btn { min-height: 44px; padding: 0 20px; }
+      a.get-btn { min-height: 44px; display: inline-flex; align-items: center; }
+    }
 
+    /* The ending: the command, the button, and the one line of proof.
+       These rules were lost in a rewrite of the block above them, so the code
+       block was unstyled text and the button was a plain underlined link. */
     .get-code {
-      margin-top: 14px; padding: 13px 15px; border-radius: 9px;
+      margin-top: 14px; padding: 14px 16px; border-radius: 9px;
       background: var(--hover-row); border: 1px solid var(--rule);
-      font: 12.5px/1.7 ui-monospace, SFMono-Regular, Menlo, monospace;
+      font: 12.5px/1.75 ui-monospace, SFMono-Regular, Menlo, monospace;
       color: var(--ink); overflow-x: auto; white-space: pre;
     }
-    .get-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 18px; }
+    .get-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
     a.get-btn {
       display: inline-block; padding: 11px 20px; border-radius: 22px;
       background: var(--ink); color: var(--bg); text-decoration: none;
       font-size: 0.875rem; font-weight: 600; letter-spacing: -0.01em;
       transition: opacity 0.15s ease-out;
     }
-    a.get-btn:hover { opacity: 0.85; }
+    a.get-btn:hover { opacity: 0.86; }
     a.get-plain { font-size: 0.875rem; color: var(--mid); text-decoration: none;
       border-bottom: 1px solid var(--rule); }
     a.get-plain:hover { color: var(--ink); }
@@ -347,8 +383,9 @@
       .flow-nav { display: none; }
       .chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 16px; }
       .chip {
-        font: inherit; font-size: 12px; padding: 6px 12px; border-radius: 20px;
+        font: inherit; font-size: 12.5px; padding: 0 16px; min-height: 44px; border-radius: 22px;
         border: 1px solid var(--rule); background: none; color: var(--mid); cursor: pointer;
+        display: inline-flex; align-items: center;   /* 44 is the touch target HIG asks for */
       }
       .chip.on { border-color: var(--accent); background: var(--accent-dim); color: var(--ink); font-weight: 600; }
     }
@@ -363,6 +400,15 @@
     }
     .flow-nav .fstep { opacity: 0.55; transition: opacity 0.18s ease-out; }
     .flow-nav .fstep.on { opacity: 1; }
+    /* The gate is a filled shape with white text. At 55% the fill and the text
+       faded together and the label came out brown. Fade the fill, keep the
+       label legible. */
+    .flow-nav .fstep.gate:not(.on) { opacity: 1; }
+    .flow-nav .fstep.gate:not(.on) .flow-gate { fill: rgba(77, 148, 255, 0.28); }
+    .flow-nav .fstep.gate:not(.on) .flow-gate-t { fill: rgba(255, 255, 255, 0.55); }
+    .flow-nav .fstep.proof:not(.on) { opacity: 1; }
+    .flow-nav .fstep.proof:not(.on) .flow-proof { stroke: rgba(255, 255, 255, 0.28); }
+    .flow-nav .fstep.proof:not(.on) .flow-proof-t { fill: rgba(255, 255, 255, 0.55); }
     .flow-nav .flow-note, .flow-nav .flow-tick { opacity: 0.62; }
     .fstep.on .fbox { fill: var(--accent-dim); stroke: var(--accent); }
     .fstep.on text { fill: var(--ink); font-weight: 600; }
@@ -417,10 +463,10 @@
       padding: 26px 28px 52px;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .pf-footer-copy { font-size: 0.76rem; color: var(--mid); }
+    .pf-footer-copy { font-size: 12px; color: var(--mid); }
     .pf-footer-links { display: flex; gap: 22px; list-style: none; }
     .pf-footer-links a {
-      font-size: 0.76rem; color: var(--mid);
+      font-size: 12px; color: var(--mid);
       text-decoration: none; transition: color 0.15s ease-out;
     }
     @media (hover: hover) and (pointer: fine) {
@@ -544,12 +590,14 @@
 
     <div class="caption-row">
       <p class="cap"><span id="tour-cap" aria-live="polite">Type one sentence into the menu bar. That is the whole input.</span></p>
-      <span class="stepper-controls">
-        <button class="step-btn" id="step-back" type="button" aria-label="Previous step">&#8249;</button>
-        <span class="n" id="tour-pos">1 of 6</span>
-        <button class="step-btn" id="step-next" type="button" aria-label="Next step">&#8250;</button>
+      <span class="tour-cluster">
+        <span class="stepper-controls">
+          <button class="step-btn" id="step-back" type="button" aria-label="Previous step">&#8249;</button>
+          <span class="n" id="tour-pos">1 of 6</span>
+          <button class="step-btn" id="step-next" type="button" aria-label="Next step">&#8250;</button>
+        </span>
+        <button class="tour-btn" id="tour-btn" type="button">&#9654; Take a tour</button>
       </span>
-      <button class="tour-btn" id="tour-btn" type="button">&#9654; Take a tour</button>
     </div>
     <p class="video-caption">Every task, check and piece of evidence above came from one record that ran start to finish.</p>
   </div>
@@ -647,7 +695,7 @@ cd substrate &amp;&amp; open "Open Substrate.command"</pre>
         <a class="get-btn" href="https://github.com/ladanjohari/substrate">Get Substrate on GitHub &rarr;</a>
         <a class="get-plain" href="https://github.com/ladanjohari/substrate/blob/main/DATA-MODEL.md">Read the data model</a>
       </div>
-      <p class="cs-body-text" style="margin-top:20px; font-size: 0.86rem;">
+      <p class="cs-body-text" style="margin-top:20px; font-size: 13px;">
         Solo build. The store and command line in Python, the app in Swift, the rules in the store so both
         obey them. A check runs all 25 command forms and fails loudly; a second one runs the Python and the
         Swift against one record and compares all 15 answers.
