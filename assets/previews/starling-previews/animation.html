@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Starling preview</title>
+<!--
+  Starling homepage clip. 392x245 scene, captured at 2x by capture.js.
+  An abstract browser: loose tabs in the sidebar, a cursor presses Organize,
+  the tabs slide into three named groups, then a tab is opened. 8 s loop.
+  Every motion is a CSS animation on one shared 8 s clock, so capture.js can
+  scrub it frame by frame.
+-->
+<style>
+  @font-face {
+    font-family: 'Geist'; font-weight: 400 700;
+    src: url('../../fonts/geist-latin.woff2') format('woff2');
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 392px; height: 245px; background: #101114; overflow: hidden; font-family: 'Geist', system-ui, sans-serif; }
+
+  .window {
+    position: absolute; left: 14px; top: 12px; width: 364px; height: 221px;
+    background: #17181c; border: 1px solid #26272d; border-radius: 10px; overflow: hidden;
+  }
+  .titlebar { position: absolute; left: 0; top: 0; width: 100%; height: 22px; border-bottom: 1px solid #222329; }
+  .dot { position: absolute; top: 8px; width: 6px; height: 6px; border-radius: 50%; background: #34363d; }
+  .address { position: absolute; left: 160px; top: 6px; width: 150px; height: 10px; border-radius: 5px; background: #222329; }
+
+  .sidebar { position: absolute; left: 0; top: 22px; width: 150px; height: 199px; background: #141519; border-right: 1px solid #222329; }
+
+  /* Rows: --y0 is the unsorted spot, --y1 the grouped spot, --c the group color. */
+  .row { position: absolute; left: 10px; top: 0; width: 132px; height: 13px; border-radius: 4px;
+         transform: translateY(var(--y0)); animation: rowMove 8s infinite; }
+  .row .fav { position: absolute; left: 4px; top: 3px; width: 7px; height: 7px; border-radius: 2px;
+              background: #3a3c44; animation: tint 8s infinite; }
+  .row .bar { position: absolute; left: 16px; top: 4px; height: 5px; border-radius: 2.5px; background: #3a3c44; }
+  .row.picked { animation: rowMove 8s infinite, pick 8s infinite; }
+
+  /* Organizing is the one move; the reset is a quiet fade, so rows never cross. */
+  @keyframes rowMove {
+    0%, 24% { transform: translateY(var(--y0)); opacity: 1; animation-timing-function: cubic-bezier(.22,.9,.24,1); }
+    36%, 80% { transform: translateY(var(--y1)); opacity: 1; }
+    84% { transform: translateY(var(--y1)); opacity: 0; }
+    85% { transform: translateY(var(--y0)); opacity: 0; }
+    91%, 100% { transform: translateY(var(--y0)); opacity: 1; }
+  }
+  @keyframes tint {
+    0%, 27% { background: #3a3c44; }
+    36%, 84% { background: var(--c); }
+    85%, 100% { background: #3a3c44; }
+  }
+  @keyframes pick {
+    0%, 51% { background: transparent; }
+    53%, 84% { background: #2a2c33; }
+    85%, 100% { background: transparent; }
+  }
+
+  /* Group headers fade in once the rows have moved. */
+  .head { position: absolute; left: 12px; height: 10px; width: 128px; opacity: 0; animation: headIn 8s infinite; }
+  .head i { position: absolute; left: 1px; top: 2px; width: 6px; height: 6px; border-radius: 50%; }
+  .head span { position: absolute; left: 12px; top: -1px; font-size: 7.5px; font-weight: 600; color: #8b8d95; letter-spacing: 0.01em; }
+  .head b { position: absolute; right: 0; top: -1px; font-size: 7px; font-weight: 500; color: #55575f; }
+  @keyframes headIn {
+    0%, 30% { opacity: 0; transform: translateY(2px); }
+    38%, 80% { opacity: 1; transform: translateY(0); }
+    84%, 100% { opacity: 0; transform: translateY(0); }
+  }
+
+  /* The Organize pill. */
+  .pill { position: absolute; left: 27px; top: 172px; width: 96px; height: 17px; border-radius: 8.5px;
+          background: #26272d; animation: press 8s infinite; }
+  .pill span { position: absolute; left: 34px; top: 3px; font-size: 8px; font-weight: 600; color: #e8e8e8; }
+  .pill svg { position: absolute; left: 21px; top: 4.5px; width: 8px; height: 8px; animation: spin 8s infinite; }
+  @keyframes press {
+    0%, 19% { background: #26272d; transform: scale(1); }
+    20.5% { background: #34363e; transform: scale(0.95); }
+    23%, 33% { background: #30323a; transform: scale(1); }
+    38%, 100% { background: #26272d; transform: scale(1); }
+  }
+  @keyframes spin {
+    0%, 21% { transform: rotate(0deg); }
+    34%, 100% { transform: rotate(180deg); }
+  }
+
+  /* The page on the right; a second page fades in when a tab is opened. */
+  .page { position: absolute; left: 151px; top: 22px; width: 213px; height: 199px; }
+  .page .h { position: absolute; left: 16px; top: 18px; height: 9px; border-radius: 4.5px; background: #2c2e35; }
+  .page .l { position: absolute; left: 16px; height: 5px; border-radius: 2.5px; background: #222329; }
+  .page .img { position: absolute; left: 16px; top: 74px; width: 182px; height: 66px; border-radius: 6px; }
+  .page-b { opacity: 0; animation: pageB 8s infinite; background: #17181c; }
+  @keyframes pageB {
+    0%, 52% { opacity: 0; }
+    56%, 79% { opacity: 1; }
+    85%, 100% { opacity: 0; }
+  }
+
+  /* Cursor. */
+  .cursor { position: absolute; left: 0; top: 0; width: 13px; height: 18px; animation: cursorMove 8s infinite; }
+  .cursor svg { width: 13px; height: 18px; display: block; animation: click 8s infinite; transform-origin: 2px 2px; }
+  @keyframes cursorMove {
+    0% { transform: translate(330px, 214px); opacity: 0; animation-timing-function: ease-out; }
+    4% { transform: translate(310px, 206px); opacity: 1; animation-timing-function: cubic-bezier(.45,0,.25,1); }
+    18%, 40% { transform: translate(86px, 197px); opacity: 1; animation-timing-function: cubic-bezier(.45,0,.25,1); }
+    50%, 78% { transform: translate(78px, 70px); opacity: 1; animation-timing-function: cubic-bezier(.45,0,.25,1); }
+    90% { transform: translate(310px, 206px); opacity: 1; }
+    96%, 100% { transform: translate(330px, 214px); opacity: 0; }
+  }
+  @keyframes click {
+    0%, 19% { transform: scale(1); }
+    20.5% { transform: scale(0.82); }
+    22%, 50.5% { transform: scale(1); }
+    52% { transform: scale(0.82); }
+    53.5%, 100% { transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <div class="dot" style="left:10px"></div><div class="dot" style="left:20px"></div><div class="dot" style="left:30px"></div>
+      <div class="address"></div>
+    </div>
+
+    <div class="sidebar">
+      <!-- Group headers (grouped layout: header, then its rows). -->
+      <div class="head" style="top:7px"><i style="background:#34C759"></i><span>Lisbon travel</span><b>3</b></div>
+      <div class="head" style="top:63px"><i style="background:#FF9500"></i><span>Sourdough baking</span><b>2</b></div>
+      <div class="head" style="top:105px"><i style="background:#0A84FF"></i><span>Typography</span><b>2</b></div>
+
+      <!-- Seven tabs, unsorted order top to bottom. -->
+      <div class="row" style="--y0:8px;  --y1:19px;  --c:#34C759"><div class="fav"></div><div class="bar" style="width:92px"></div></div>
+      <div class="row" style="--y0:25px; --y1:75px;  --c:#FF9500"><div class="fav"></div><div class="bar" style="width:70px"></div></div>
+      <div class="row" style="--y0:42px; --y1:117px; --c:#0A84FF"><div class="fav"></div><div class="bar" style="width:84px"></div></div>
+      <div class="row picked" style="--y0:59px; --y1:33px; --c:#34C759"><div class="fav"></div><div class="bar" style="width:64px"></div></div>
+      <div class="row" style="--y0:76px; --y1:89px;  --c:#FF9500"><div class="fav"></div><div class="bar" style="width:78px"></div></div>
+      <div class="row" style="--y0:93px; --y1:47px;  --c:#34C759"><div class="fav"></div><div class="bar" style="width:88px"></div></div>
+      <div class="row" style="--y0:110px; --y1:131px; --c:#0A84FF"><div class="fav"></div><div class="bar" style="width:60px"></div></div>
+
+      <div class="pill">
+        <svg viewBox="0 0 10 10"><path d="M5 0 L6.2 3.8 L10 5 L6.2 6.2 L5 10 L3.8 6.2 L0 5 L3.8 3.8 Z" fill="#e8e8e8"/></svg>
+        <span>Organize</span>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="h" style="width:110px"></div>
+      <div class="l" style="top:38px; width:170px"></div>
+      <div class="l" style="top:48px; width:150px"></div>
+      <div class="l" style="top:58px; width:160px"></div>
+      <div class="img" style="background:#1f2128"></div>
+      <div class="l" style="top:152px; width:176px"></div>
+      <div class="l" style="top:162px; width:132px"></div>
+    </div>
+    <div class="page page-b">
+      <div class="h" style="width:76px; background:#34C759; opacity:.55"></div>
+      <div class="l" style="top:38px; width:150px"></div>
+      <div class="l" style="top:48px; width:172px"></div>
+      <div class="l" style="top:58px; width:120px"></div>
+      <div class="img" style="background:#1c2a22"></div>
+      <div class="l" style="top:152px; width:160px"></div>
+      <div class="l" style="top:162px; width:146px"></div>
+    </div>
+  </div>
+
+  <div class="cursor">
+    <svg viewBox="0 0 13 18"><path d="M1 1 L1 15 L4.6 11.6 L7 17 L9.4 16 L7 10.6 L12 10.6 Z" fill="#ffffff" stroke="#101114" stroke-width="1.1" stroke-linejoin="round"/></svg>
+  </div>
+</body>
+</html>
