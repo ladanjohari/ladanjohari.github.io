@@ -224,6 +224,74 @@
       .stepper-tab:last-child { border-bottom: none; border-top-right-radius: 0; border-bottom-left-radius: 9px; border-bottom-right-radius: 9px; }
       .pf-footer { flex-direction: column; gap: 14px; align-items: flex-start; padding-left: 20px; padding-right: 20px; }
     }
+
+    /* ── Try it: a working mini Starling ──
+       Same groups as the real app made for these 16 tabs. Rows are absolutely
+       placed; moving them between slots is the animation. */
+    .try { --win: #FFFFFF; --side: #F7F6F3; --line: #E6E5E1; --pick: #E4E3DF; --hov: #ECEBE7; --btn: #E8E7E3; --btn-h: #DFDED9; --lane: #EEEDE9; }
+    @media (prefers-color-scheme: dark) {
+      .try { --win: #1F1F1F; --side: #1A1A1A; --line: #2E2E2E; --pick: #2E2E30; --hov: #262628; --btn: #2A2A2C; --btn-h: #333336; --lane: #2A2A2A; }
+    }
+    .try-win { border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; background: var(--win); }
+    .try-bar { height: 40px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-bottom: 1px solid var(--line); background: var(--side); }
+    .try-lights { display: flex; gap: 6px; }
+    .try-lights i { width: 10px; height: 10px; border-radius: 50%; display: block; }
+    .try-url { flex: 1; min-width: 0; height: 24px; border-radius: 12px; background: var(--win); border: 1px solid var(--line);
+               display: flex; align-items: center; padding: 0 12px; font-size: 12px; color: var(--mid);
+               white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .try-body { display: flex; height: 500px; }
+    .try-side { width: 268px; flex-shrink: 0; background: var(--side); border-right: 1px solid var(--line); display: flex; flex-direction: column; }
+    .try-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; }
+    .try-list { position: relative; transition: height .5s ease; }
+    .try-row, .try-head { position: absolute; left: 8px; right: 8px; transition: top .5s cubic-bezier(.22,.9,.24,1), opacity .3s ease, background .15s ease; }
+    .try-row { height: 28px; border-radius: 7px; }
+    .try-row.is-picked { background: var(--pick); }
+    @media (hover: hover) and (pointer: fine) { .try-row:not(.is-picked):hover { background: var(--hov); } }
+    .try-rowmain { all: unset; box-sizing: border-box; position: absolute; inset: 0; padding: 0 28px 0 8px; display: flex; align-items: center; gap: 8px; cursor: pointer; border-radius: 7px; }
+    .try-fav { width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 9.5px; font-weight: 700; box-shadow: inset 0 0 0 1px var(--rule); }
+    .try-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13px; color: var(--ink); }
+    .try-x { all: unset; position: absolute; right: 4px; top: 4px; width: 20px; height: 20px; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: var(--mid); opacity: 0; cursor: pointer; }
+    .try-row:hover .try-x, .try-x:focus-visible { opacity: 1; }
+    @media (hover: none) { .try-row.is-picked .try-x { opacity: 1; } }
+    .try-x:hover { background: var(--btn-h); color: var(--ink); }
+    .try-head { height: 24px; }
+    .try-headbtn { all: unset; box-sizing: border-box; width: 100%; height: 24px; padding: 0 8px; display: flex; align-items: center; gap: 6px; cursor: pointer; border-radius: 6px; }
+    .try-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .try-name { font-size: 11.5px; font-weight: 600; color: var(--mid); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .try-count { margin-left: auto; font-size: 11px; color: var(--mid); font-variant-numeric: tabular-nums; }
+    .try-chev { transition: transform .2s ease; color: var(--mid); }
+    .try-foot { border-top: 1px solid var(--line); padding: 10px 10px 8px; display: flex; flex-direction: column; gap: 8px; }
+    .try-actions { display: flex; gap: 8px; }
+    .try-organize, .try-say { all: unset; box-sizing: border-box; height: 32px; border-radius: 16px; background: var(--btn); display: flex; align-items: center; justify-content: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--ink); cursor: pointer; transition: transform .12s ease-out, background .15s ease-out; }
+    .try-organize { flex: 1; }
+    .try-say { padding: 0 12px; font-size: 12px; font-weight: 500; }
+    @media (hover: hover) and (pointer: fine) { .try-organize:hover, .try-say:hover { background: var(--btn-h); } }
+    .try-organize:active, .try-say:active { transform: scale(0.97); }
+    .try-prompt { height: 32px; border-radius: 16px; background: var(--win); border: 1.5px solid var(--accent); display: flex; align-items: center; gap: 8px; padding: 0 12px; box-sizing: border-box; }
+    .try-input { all: unset; flex: 1; min-width: 0; font-size: 13px; color: var(--ink); }
+    .try-input::placeholder { color: var(--mid); }
+    .try-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .try-chip { all: unset; box-sizing: border-box; height: 24px; padding: 0 10px; border-radius: 12px; border: 1px solid var(--rule); font-size: 12px; color: var(--ink); display: inline-flex; align-items: center; cursor: pointer; background: var(--win); }
+    @media (hover: hover) and (pointer: fine) { .try-chip:hover { border-color: var(--accent); color: var(--accent); } }
+    .try-status { font-size: 11px; line-height: 1.45; color: var(--mid); padding: 0 4px; min-height: 16px; }
+    .try-page { flex: 1; min-width: 0; background: var(--win); padding: 28px 28px 0; display: flex; flex-direction: column; gap: 14px; overflow: hidden; }
+    .try-host { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--mid); }
+    .try-ptitle { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; color: var(--ink); }
+    .try-hero { height: 150px; border-radius: 10px; display: flex; align-items: flex-end; padding: 14px; font-size: 44px; font-weight: 600; letter-spacing: -0.03em; }
+    .try-lines { display: flex; flex-direction: column; gap: 9px; padding-top: 4px; }
+    .try-lines i { display: block; height: 8px; border-radius: 4px; background: var(--lane); }
+    .try-caption { display: flex; flex-wrap: wrap; gap: 6px 14px; justify-content: space-between; margin-top: 12px; font-size: 0.75rem; line-height: 1.6; color: var(--mid); }
+    .try-reset { all: unset; cursor: pointer; color: var(--accent); font-weight: 500; }
+    @media (hover: hover) and (pointer: fine) { .try-reset:hover { text-decoration: underline; } }
+    .try button:focus-visible, .try-input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .try-spin { animation: try-spin .9s linear infinite; }
+    @keyframes try-spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { .try-row, .try-head, .try-list { transition: none; } }
+    @media (max-width: 640px) {
+      .try-page { display: none; }
+      .try-side { width: 100%; border-right: none; }
+      .try-body { height: 460px; }
+    }
   </style>
 </head>
 <body>
@@ -248,6 +316,30 @@
   </div>
 
   <!-- ── Hero: the interaction itself, big and legible. Never a title card. ── -->
+  <!-- ── Try it: the interaction itself, working. ── -->
+  <div class="video-hero try" id="try">
+    <div class="try-win">
+      <div class="try-bar">
+        <div class="try-lights" aria-hidden="true"><i style="background:#FF5F57"></i><i style="background:#FEBC2E"></i><i style="background:#28C840"></i></div>
+        <div class="try-url" id="try-url"></div>
+      </div>
+      <div class="try-body">
+        <div class="try-side">
+          <div class="try-scroll"><div class="try-list" id="try-list"></div></div>
+          <div class="try-foot">
+            <div id="try-controls"></div>
+            <div class="try-status" id="try-status" aria-live="polite"></div>
+          </div>
+        </div>
+        <div class="try-page" id="try-page" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div class="try-caption">
+      <span>Try it: press Organize. Shift-click it, or press Say how, to sort your own way. The groups come from the real app; page previews are illustrations.</span>
+      <button class="try-reset" id="try-reset">Start over</button>
+    </div>
+  </div>
+
   <div class="video-hero">
     <div class="stepper" id="stepper">
       <div class="stepper-frame">
@@ -371,6 +463,282 @@
       <li><a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a></li>
     </ul>
   </footer>
+
+  <script>
+    /* Try it: a working mini Starling. The groups are the ones the real app
+       made for these 16 tabs; typed group names use a simple word match. */
+    (() => {
+      const root = document.getElementById('try');
+      if (!root) return;
+      const COLORS = ['#0A84FF', '#FF9500', '#34C759', '#FF2D55', '#AF52DE', '#30B0C7', '#FFCC00', '#FF3B30'];
+      const W = { fav: 'W', bg: '#FFFFFF', fg: '#111111', font: 'Georgia, serif' };
+      const f = (fav, bg, fg = '#FFFFFF') => ({ fav, bg, fg, font: 'inherit' });
+      const T = (id, title, url, site, topic, concepts, icon, hero, heroFg, glyph = '') =>
+        ({ id, title, url, site, topic, concepts, icon, hero, heroFg, glyph });
+      const TABS = [
+        T('leica', 'Leica M6 - Wikipedia', 'en.wikipedia.org/wiki/Leica_M6', 'wikipedia.org', 'Photography', ['photography', 'fun'], W, '#2E2E30', '#E8E8E8'),
+        T('loaf', "Beginner's Sourdough Bread | The Perfect Loaf", 'theperfectloaf.com/beginners-sourdough-bread', 'theperfectloaf.com', 'Sourdough baking', ['cooking', 'fun'], f('P', '#2B2B2B'), '#E7D3B1', '#7A5B2E'),
+        T('lisbon', 'Lisbon - Wikipedia', 'en.wikipedia.org/wiki/Lisbon', 'wikipedia.org', 'Lisbon travel', ['travel', 'reading'], W, '#B9D3E6', '#2F5872'),
+        T('butterick', 'Butterick’s Practical Typography', 'practicaltypography.com', 'practicaltypography.com', 'Typography', ['design', 'work', 'reading'], f('PT', '#FFFFFF', '#111111'), '#EFECE4', '#111111', 'Aa'),
+        T('nata', 'Pastel de nata - Wikipedia', 'en.wikipedia.org/wiki/Pastel_de_nata', 'wikipedia.org', 'Lisbon travel', ['cooking', 'travel', 'fun'], W, '#F1D69C', '#8A5A12'),
+        T('ixd', 'Interaction design - Wikipedia', 'en.wikipedia.org/wiki/Interaction_design', 'wikipedia.org', 'Interaction design', ['design', 'work', 'reading'], W, '#DCE5F3', '#28466E'),
+        T('starter', 'Sourdough Starter Recipe | King Arthur Baking', 'kingarthurbaking.com/recipes/sourdough-starter-recipe', 'kingarthurbaking.com', 'Sourdough baking', ['cooking'], f('K', '#C8102E'), '#EAD9BF', '#7A5B2E'),
+        T('inter', 'Inter - Google Fonts', 'fonts.google.com/specimen/Inter', 'google.com', 'Typography', ['design', 'work'], f('G', '#1A73E8'), '#F3F3F1', '#111111', 'Inter'),
+        T('portra', 'Kodak Portra - Wikipedia', 'en.wikipedia.org/wiki/Kodak_Portra', 'wikipedia.org', 'Photography', ['photography', 'fun'], W, '#E2B04A', '#5A3B00'),
+        T('lp', 'Lisbon Travel 2026 - Lonely Planet', 'lonelyplanet.com/portugal/lisbon', 'lonelyplanet.com', 'Lisbon travel', ['travel', 'fun'], f('lp', '#2F6FD6'), '#9CC3DE', '#1D4E73'),
+        T('sourwiki', 'Sourdough - Wikipedia', 'en.wikipedia.org/wiki/Sourdough', 'wikipedia.org', 'Sourdough baking', ['cooking', 'reading'], W, '#DCC6A0', '#6B4E22'),
+        T('typowiki', 'Typography - Wikipedia', 'en.wikipedia.org/wiki/Typography', 'wikipedia.org', 'Typography', ['design', 'reading'], W, '#E9E6DF', '#111111', 'Ag'),
+        T('belem', 'Belém Tower - Wikipedia', 'en.wikipedia.org/wiki/Belém_Tower', 'wikipedia.org', 'Lisbon travel', ['travel', 'reading'], W, '#D7CBB4', '#4E4330'),
+        T('filmwiki', 'Photographic film - Wikipedia', 'en.wikipedia.org/wiki/Photographic_film', 'wikipedia.org', 'Photography', ['photography', 'reading'], W, '#3B3A36', '#E8E8E8'),
+        T('nng', '10 Usability Heuristics for User Interface Design', 'nngroup.com/articles/ten-usability-heuristics', 'nngroup.com', 'Interaction design', ['design', 'work', 'reading'], f('N', '#111111'), '#E4E9F1', '#28466E'),
+        T('hig', 'Human Interface Guidelines | Apple Developer', 'developer.apple.com/design/human-interface-guidelines', 'apple.com', 'Interaction design', ['design', 'work'], f('', '#E6E6E8', '#111111'), '#CFE9D6', '#1F5A33')
+      ];
+      const TOPICS = ['Lisbon travel', 'Photography', 'Sourdough baking', 'Typography', 'Interaction design'];
+      const SYN = {
+        cooking: ['cooking', 'cook', 'food', 'baking', 'bake', 'bread', 'recipe', 'recipes', 'kitchen', 'eat', 'eating'],
+        travel: ['travel', 'trip', 'trips', 'vacation', 'holiday', 'holidays', 'lisbon', 'portugal', 'city', 'places'],
+        design: ['design', 'ux', 'ui', 'typography', 'type', 'font', 'fonts', 'interaction', 'interface', 'interfaces'],
+        photography: ['photography', 'photo', 'photos', 'camera', 'cameras', 'film', 'analog'],
+        reading: ['reading', 'read', 'articles', 'learn', 'learning', 'wikipedia', 'research'],
+        work: ['work', 'job', 'professional'],
+        fun: ['fun', 'hobby', 'hobbies', 'weekend', 'leisure', 'personal', 'life']
+      };
+      const SPARK = '<path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/>';
+
+      const fresh = () => ({ mode: 'none', labels: [], selected: 'hig', closed: {}, collapsed: {}, organizing: false, prompt: false, notice: '' });
+      let st = fresh();
+      let timer = null;
+
+      const list = document.getElementById('try-list');
+      const controls = document.getElementById('try-controls');
+      const status = document.getElementById('try-status');
+      const page = document.getElementById('try-page');
+      const url = document.getElementById('try-url');
+
+      // One element per tab and up to eight headers, created once; renders only move them.
+      const rows = {};
+      TABS.forEach(t => {
+        const row = document.createElement('div');
+        row.className = 'try-row';
+        const main = document.createElement('button');
+        main.className = 'try-rowmain';
+        main.title = t.title;
+        const fav = document.createElement('span');
+        fav.className = 'try-fav';
+        Object.assign(fav.style, { background: t.icon.bg, color: t.icon.fg, fontFamily: t.icon.font });
+        fav.textContent = t.icon.fav;
+        const title = document.createElement('span');
+        title.className = 'try-title';
+        title.textContent = t.title;
+        main.append(fav, title);
+        main.addEventListener('click', () => set({ selected: t.id }));
+        const x = document.createElement('button');
+        x.className = 'try-x';
+        x.setAttribute('aria-label', 'Close ' + t.title);
+        x.innerHTML = '<svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 2l6 6M8 2 2 8"/></svg>';
+        x.addEventListener('click', e => { e.stopPropagation(); set({ closed: { ...st.closed, [t.id]: true } }); });
+        row.append(main, x);
+        list.append(row);
+        rows[t.id] = row;
+      });
+      const heads = Array.from({ length: 8 }, () => {
+        const head = document.createElement('div');
+        head.className = 'try-head';
+        head.style.opacity = 0;
+        const btn = document.createElement('button');
+        btn.className = 'try-headbtn';
+        btn.innerHTML = '<span class="try-dot"></span><span class="try-name"></span>' +
+          '<svg class="try-spark" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" style="color:var(--mid);opacity:.6">' + SPARK + '</svg>' +
+          '<span class="try-count"></span>' +
+          '<svg class="try-chev" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 3.8 5 6.3l2.5-2.5"/></svg>';
+        head.append(btn);
+        list.append(head);
+        return head;
+      });
+      const lastTop = {};
+
+      function conceptFor(label) {
+        const words = label.toLowerCase().split(/[^a-z]+/).filter(Boolean);
+        for (const key in SYN) if (words.some(w => SYN[key].includes(w))) return key;
+        return null;
+      }
+
+      function parse(raw) {
+        let text = raw.trim().toLowerCase();
+        if (!text) return { mode: 'topic', labels: [] };
+        if (/\b(site|sites|website|websites|domain|domains)\b/.test(text)) return { mode: 'site', labels: [] };
+        if (/\b(topic|topics|subject|subjects|theme|themes)\b/.test(text) || text === 'organize') return { mode: 'topic', labels: [] };
+        text = text.replace(/^(split|sort|group|organize|separate)( them)? into /, '').replace(/^into /, '');
+        const labels = text.split(/,|;|\/| vs\.? | versus | or | and | & /).map(s => s.trim()).filter(Boolean);
+        if (!labels.length || labels.some(l => l.split(' ').length > 3)) {
+          return { notice: 'In the app, a language model reads requests like that. This demo knows by site, by topic, and lists like cooking, travel, design.' };
+        }
+        return { mode: 'labels', labels: labels.map(l => l[0].toUpperCase() + l.slice(1)) };
+      }
+
+      function groups(open) {
+        if (st.mode === 'topic') return TOPICS.map(name => ({ name, ids: open.filter(t => t.topic === name).map(t => t.id) }));
+        if (st.mode === 'site') {
+          const by = new Map();
+          open.forEach(t => by.set(t.site, [...(by.get(t.site) || []), t.id]));
+          return [...by].filter(([, ids]) => ids.length >= 2).map(([name, ids]) => ({ name, ids }));
+        }
+        if (st.mode === 'labels') {
+          const taken = new Set();
+          return st.labels.map(label => {
+            const concept = conceptFor(label);
+            const word = label.toLowerCase();
+            const ids = open.filter(t => !taken.has(t.id) && ((concept && t.concepts.includes(concept)) || t.title.toLowerCase().includes(word)))
+              .map(t => (taken.add(t.id), t.id));
+            return { name: label, ids };
+          });
+        }
+        return [];
+      }
+
+      function set(patch) { st = { ...st, ...patch }; render(); }
+
+      function run(next) {
+        clearTimeout(timer);
+        set({ organizing: true, prompt: false, notice: '' });
+        timer = setTimeout(() => set({ ...next, organizing: false, collapsed: {} }), 700);
+      }
+
+      function submit(raw) {
+        const parsed = parse(raw);
+        if (parsed.notice) return set({ prompt: false, notice: parsed.notice });
+        run(parsed);
+      }
+
+      let controlsKey = '';
+      function renderControls() {
+        // Rebuild only when the controls change, so typing and focus survive other updates.
+        const key = st.prompt ? 'prompt' : (st.organizing ? 'busy' : 'idle');
+        if (key === controlsKey) return;
+        controlsKey = key;
+        if (st.prompt) {
+          controls.innerHTML = '<label class="try-prompt"><svg width="12" height="12" viewBox="0 0 10 10" aria-hidden="true" style="color:var(--mid);flex-shrink:0">' + SPARK + '</svg>' +
+            '<input class="try-input" aria-label="How to organize" placeholder="by site, or cooking, travel, design"></label>' +
+            '<div class="try-chips" style="margin-top:8px"></div>';
+          const input = controls.querySelector('input');
+          input.addEventListener('keydown', e => {
+            if (e.key === 'Enter') { e.preventDefault(); submit(input.value); }
+            if (e.key === 'Escape') set({ prompt: false });
+          });
+          const chips = controls.querySelector('.try-chips');
+          ['by site', 'cooking, travel, design', 'work vs fun', 'by topic'].forEach(text => {
+            const chip = document.createElement('button');
+            chip.className = 'try-chip';
+            chip.textContent = text;
+            chip.addEventListener('click', () => submit(text));
+            chips.append(chip);
+          });
+          input.focus({ preventScroll: true });
+          return;
+        }
+        controls.innerHTML = '<div class="try-actions"><button class="try-organize" title="Shift-click to say how">' +
+          (st.organizing
+            ? '<svg class="try-spin" width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M7 1.5a5.5 5.5 0 1 1-5.5 5.5"/></svg><span>Organizing…</span>'
+            : '<svg width="13" height="13" viewBox="0 0 10 10" aria-hidden="true">' + SPARK + '</svg><span>Organize</span>') +
+          '</button><button class="try-say">Say how</button></div>';
+        controls.querySelector('.try-organize').addEventListener('click', e => {
+          if (st.organizing) return;
+          if (e.shiftKey) return set({ prompt: true, notice: '' });
+          run({ mode: 'topic', labels: [] });
+        });
+        controls.querySelector('.try-say').addEventListener('click', () => set({ prompt: true, notice: '' }));
+      }
+
+      function render() {
+        let open = TABS.filter(t => !st.closed[t.id]);
+        if (!open.length) { st = fresh(); open = TABS.slice(); }
+        const selected = st.closed[st.selected] ? open[0].id : st.selected;
+
+        const sections = [];
+        if (st.mode === 'none') {
+          sections.push({ name: 'Tabs', plain: true, ids: open.map(t => t.id) });
+        } else {
+          const gs = groups(open).filter(g => g.ids.length);
+          const grouped = new Set(gs.flatMap(g => g.ids));
+          const loose = open.filter(t => !grouped.has(t.id)).map(t => t.id);
+          if (loose.length) sections.push({ name: 'Unsorted', plain: true, ids: loose });
+          gs.forEach((g, i) => sections.push({ ...g, color: COLORS[i % COLORS.length] }));
+        }
+
+        const tops = {};
+        let y = 8;
+        heads.forEach(h => { h.style.opacity = 0; h.style.pointerEvents = 'none'; });
+        sections.forEach((s, i) => {
+          const collapsed = !s.plain && st.collapsed[s.name];
+          const head = heads[i];
+          head.style.top = y + 'px';
+          head.style.opacity = 1;
+          head.style.pointerEvents = 'auto';
+          head.querySelector('.try-dot').style.background = s.color || 'transparent';
+          head.querySelector('.try-dot').style.display = s.plain ? 'none' : 'block';
+          head.querySelector('.try-spark').style.display = s.plain ? 'none' : 'block';
+          head.querySelector('.try-chev').style.display = s.plain ? 'none' : 'block';
+          head.querySelector('.try-chev').style.transform = collapsed ? 'rotate(-90deg)' : 'none';
+          head.querySelector('.try-name').textContent = s.name;
+          head.querySelector('.try-count').textContent = s.plain ? '' : s.ids.length;
+          const btn = head.querySelector('button');
+          btn.setAttribute('aria-label', s.plain ? s.name : (collapsed ? 'Show ' : 'Hide ') + s.name);
+          btn.onclick = s.plain ? null : () => set({ collapsed: { ...st.collapsed, [s.name]: !collapsed } });
+          const headTop = y;
+          y += 26;
+          s.ids.forEach(id => {
+            tops[id] = collapsed ? { top: headTop, visible: false } : { top: y, visible: true };
+            if (!collapsed) y += 30;
+          });
+          y += 10;
+        });
+        heads.slice(sections.length).forEach(h => { h.style.top = y + 'px'; });
+        list.style.height = (y + 8) + 'px';
+
+        TABS.forEach(t => {
+          const row = rows[t.id];
+          const slot = tops[t.id];
+          if (slot && slot.visible) lastTop[t.id] = slot.top;
+          row.style.top = (slot ? slot.top : (lastTop[t.id] || 0)) + 'px';
+          row.style.opacity = slot && slot.visible ? 1 : 0;
+          row.style.pointerEvents = slot && slot.visible ? 'auto' : 'none';
+          row.classList.toggle('is-picked', t.id === selected);
+        });
+
+        const groupCount = sections.filter(s => !s.plain).length;
+        status.textContent = st.notice || (open.length + ' tabs' + (groupCount ? ' in ' + groupCount + (groupCount === 1 ? ' group' : ' groups') : ', nothing sorted yet'));
+
+        const tab = TABS.find(t => t.id === selected);
+        url.textContent = 'https://' + tab.url;
+        page.innerHTML = '';
+        const host = document.createElement('div');
+        host.className = 'try-host';
+        const fav = document.createElement('span');
+        fav.className = 'try-fav';
+        Object.assign(fav.style, { background: tab.icon.bg, color: tab.icon.fg, fontFamily: tab.icon.font });
+        fav.textContent = tab.icon.fav;
+        const site = document.createElement('span');
+        site.textContent = tab.url.split('/')[0];
+        host.append(fav, site);
+        const title = document.createElement('div');
+        title.className = 'try-ptitle';
+        title.textContent = tab.title;
+        const hero = document.createElement('div');
+        hero.className = 'try-hero';
+        Object.assign(hero.style, { background: tab.hero, color: tab.heroFg });
+        hero.textContent = tab.glyph;
+        const lines = document.createElement('div');
+        lines.className = 'try-lines';
+        lines.innerHTML = ['92%', '86%', '95%', '60%', '88%', '78%'].map((w, i) => '<i style="width:' + w + (i === 4 ? ';margin-top:10px' : '') + '"></i>').join('');
+        page.append(host, title, hero, lines);
+
+        renderControls();
+      }
+
+      document.getElementById('try-reset').addEventListener('click', () => { clearTimeout(timer); st = fresh(); controlsKey = ''; render(); });
+      render();
+    })();
+  </script>
 
   <script>
     (() => {
