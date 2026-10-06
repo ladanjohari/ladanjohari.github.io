@@ -112,53 +112,8 @@
       color: var(--mid); max-width: 560px;
     }
     .cs-body-text strong { color: var(--ink); font-weight: 600; }
-
-    /* ── Stepper: the interaction, as the hero ──
-       Three stills of the real product, one focus frame per step.
-       Replace the images and the `spots` array in the script below. */
-    .stepper {
-      margin-top: 0;
-      border: 1px solid var(--rule); border-radius: 10px;
-      overflow: hidden; background: #0a0a0a;
-    }
-    /* Set this to your stills' real aspect ratio (width/height in px). */
-    .stepper-frame { position: relative; width: 100%; aspect-ratio: 1600/1004; overflow: hidden; }
-    .stepper-frame img {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover; opacity: 0; transition: opacity 0.25s ease-out;
-    }
-    .stepper-frame img.is-active { opacity: 1; }
-    .stepper-spotlight { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
-    .stepper-nav { display: flex; border-top: 1px solid var(--rule); background: var(--bg); }
-    .stepper-tab {
-      flex: 1; padding: 14px 12px;
-      border: none; background: none; cursor: pointer; text-align: left;
-      border-right: 1px solid var(--rule);
-      transition: background 0.15s ease-out, transform 0.16s ease-out;
-    }
-    .stepper-tab:last-child { border-right: none; }
-    .stepper-tab:first-child { border-top-left-radius: 9px; border-bottom-left-radius: 9px; }
-    .stepper-tab:last-child { border-top-right-radius: 9px; border-bottom-right-radius: 9px; }
-    .stepper-tab:active { transform: scale(0.97); }
-    .stepper-tab.is-active { background: var(--hover-row); box-shadow: inset 0 0 0 2px var(--accent); }
-    .stepper-tab:focus-visible {
-      outline: none; box-shadow: inset 0 0 0 2px var(--accent); background: var(--hover-row);
-    }
-    @media (hover: hover) and (pointer: fine) {
-      .stepper-tab:hover { background: var(--hover-row); }
-    }
-    .stepper-tab-num {
-      font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
-      color: var(--accent); display: block; margin-bottom: 5px;
-    }
-    .stepper-tab-title {
-      font-size: 13px; font-weight: 600; color: var(--ink);
-      display: block; line-height: 1.35; letter-spacing: -0.01em;
-    }
-    .stepper-tab-desc {
-      font-size: 12px; color: var(--mid); display: block;
-      line-height: 1.5; margin-top: 4px;
-    }
+    .lead-claim a { color: var(--accent); text-decoration: none; }
+    @media (hover: hover) and (pointer: fine) { .lead-claim a:hover { text-decoration: underline; } }
 
     /* ── Idea diagram ── */
     .idea-flow { display: block; width: 100%; height: auto; margin-top: 26px; overflow: visible; }
@@ -211,17 +166,12 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .stepper-frame img, .stepper-tab { transition: none; }
       .back-work a .arrow { transition: none; }
     }
 
     @media (max-width: 540px) {
       .pf-nav, .cs-header, .video-hero, .cs-body, .back-work { padding-left: 20px; padding-right: 20px; }
       .pf-nav { padding-top: 28px; }
-      .stepper-nav { flex-direction: column; }
-      .stepper-tab { border-right: none; border-bottom: 1px solid var(--rule); }
-      .stepper-tab:first-child { border-top-left-radius: 9px; border-top-right-radius: 9px; border-bottom-left-radius: 0; }
-      .stepper-tab:last-child { border-bottom: none; border-top-right-radius: 0; border-bottom-left-radius: 9px; border-bottom-right-radius: 9px; }
       .pf-footer { flex-direction: column; gap: 14px; align-items: flex-start; padding-left: 20px; padding-right: 20px; }
     }
 
@@ -341,55 +291,14 @@
     </div>
   </div>
 
-  <div class="video-hero">
-    <div class="stepper" id="stepper">
-      <div class="stepper-frame">
-        <img src="/assets/img/starling/step-01.jpg" alt="Starling with 16 open tabs in one unsorted list" class="is-active" data-step="0" />
-        <img src="/assets/img/starling/step-02.jpg" alt="The same tabs sorted into named groups: Lisbon travel, Photography, Sourdough baking, Typography and Interaction design" data-step="1" />
-        <img src="/assets/img/starling/step-03.jpg" alt="The Organize button turned into a text box with the words by site typed in" data-step="2" />
-        <svg class="stepper-spotlight" viewBox="0 0 1600 1004" preserveAspectRatio="none">
-          <defs>
-            <mask id="spot-mask">
-              <rect width="1600" height="1004" fill="white" />
-              <rect id="spot-window" x="0" y="0" width="100" height="100" rx="14" fill="black" />
-            </mask>
-          </defs>
-          <rect width="1600" height="1004" fill="rgba(0,0,0,0.45)" mask="url(#spot-mask)" />
-          <rect id="spot-border" x="0" y="0" width="100" height="100" rx="14"
-            fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" />
-        </svg>
-      </div>
-      <div class="stepper-nav">
-        <button class="stepper-tab is-active" data-step="0">
-          <span class="stepper-tab-num">01</span>
-          <span class="stepper-tab-title">Pile up</span>
-          <span class="stepper-tab-desc">16 tabs from a day of browsing, in one long list.</span>
-        </button>
-        <button class="stepper-tab" data-step="1">
-          <span class="stepper-tab-num">02</span>
-          <span class="stepper-tab-title">Organize</span>
-          <span class="stepper-tab-desc">One press. Similar pages gather into groups, and each group gets a name.</span>
-        </button>
-        <button class="stepper-tab" data-step="2">
-          <span class="stepper-tab-num">03</span>
-          <span class="stepper-tab-title">Say how</span>
-          <span class="stepper-tab-desc">Shift-click Organize and type how you want them sorted, like &ldquo;by site&rdquo;.</span>
-        </button>
-      </div>
-    </div>
-    <p class="video-caption">Working prototype, running on 16 real tabs. Click a step.</p>
-  </div>
-
   <div class="cs-body">
 
-    <!-- ── Why it matters: the problem in words a stranger has felt. Then who it's for. ── -->
+    <!-- ── Why it matters: the problem in words a stranger has felt. ── -->
     <div class="cs-section">
       <p class="cs-label">Why it matters</p>
-      <p class="lead-claim">Every browser lets tabs pile up. None of them puts them away for you.</p>
+      <p class="lead-claim">Too many tabs is so common that it has its own name, tab hoarding, and <a href="https://en.wikipedia.org/wiki/Tab_(interface)#Tab_hoarding" target="_blank" rel="noopener">its own section on Wikipedia</a>.</p>
       <p class="cs-body-text">
-        After a day of research there are forty tabs open, and finding one means reading tiny titles one by one. Sorting them by hand takes longer than the research did, so nobody does it.
-        <br><br>
-        <strong>It&rsquo;s for people who think in the browser:</strong> designers collecting references, developers reading documentation, anyone planning a trip.
+        Finding one tab means reading tiny titles one by one, and sorting them by hand takes longer than it is worth. So nobody does it.
       </p>
     </div>
 
@@ -765,90 +674,6 @@
       }
       // Safety net: some environments never run the observer at all.
       setTimeout(() => { if (!observerWorks) autoplay(); }, 4000);
-    })();
-  </script>
-
-  <script>
-    (() => {
-      const stepper = document.getElementById('stepper');
-      if (!stepper) return;
-      const imgs = stepper.querySelectorAll('.stepper-frame img');
-      const tabs = stepper.querySelectorAll('.stepper-tab');
-      const spotWindow = document.getElementById('spot-window');
-      const spotBorder = document.getElementById('spot-border');
-      let current = 0, timer = null, hovered = false;
-
-      /* One focus frame per step, in the stills' own pixel space (1600 x 1004).
-         Measure these from the real UI while capturing, do not eyeball them. */
-      const spots = [
-        { x: 14, y: 56, w: 378, h: 830, rx: 14 },
-        { x: 14, y: 56, w: 378, h: 935, rx: 14 },
-        { x: 18, y: 896, w: 292, h: 60, rx: 30 }
-      ];
-
-      let anim = null;
-      let cur = { ...spots[0] };
-      const lerp = (a, b, t) => a + (b - a) * t;
-
-      function setSpot(s) {
-        [spotWindow, spotBorder].forEach(el => {
-          el.setAttribute('x', s.x); el.setAttribute('y', s.y);
-          el.setAttribute('width', s.w); el.setAttribute('height', s.h);
-          el.setAttribute('rx', s.rx);
-        });
-      }
-
-      function animateTo(target) {
-        if (anim) cancelAnimationFrame(anim);
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          cur = { ...target }; setSpot(cur); return;
-        }
-        const from = { ...cur }, start = performance.now(), dur = 400;
-        function tick(now) {
-          const t = Math.min((now - start) / dur, 1);
-          const ease = 1 - Math.pow(1 - t, 4);
-          cur = {
-            x: lerp(from.x, target.x, ease), y: lerp(from.y, target.y, ease),
-            w: lerp(from.w, target.w, ease), h: lerp(from.h, target.h, ease),
-            rx: lerp(from.rx, target.rx, ease)
-          };
-          setSpot(cur);
-          if (t < 1) anim = requestAnimationFrame(tick);
-        }
-        anim = requestAnimationFrame(tick);
-      }
-
-      function goTo(i) {
-        current = i;
-        imgs.forEach((img, idx) => img.classList.toggle('is-active', idx === i));
-        tabs.forEach((tab, idx) => tab.classList.toggle('is-active', idx === i));
-        animateTo(spots[i]);
-      }
-
-      function advance() { goTo((current + 1) % imgs.length); }
-      function startTimer() {
-        stopTimer();
-        if (hovered) return;
-        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          timer = setInterval(advance, 3500);
-        }
-      }
-      function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
-
-      stepper.addEventListener('mouseenter', () => { hovered = true; stopTimer(); });
-      stepper.addEventListener('mouseleave', () => { hovered = false; startTimer(); });
-      stepper.addEventListener('focusin',   () => { hovered = true; stopTimer(); });
-      stepper.addEventListener('focusout',  () => { hovered = false; startTimer(); });
-
-      tabs.forEach((tab, idx) => {
-        tab.addEventListener('click', () => { goTo(idx); startTimer(); });
-      });
-
-      new IntersectionObserver((entries) => {
-        entries.forEach(e => e.isIntersecting ? startTimer() : stopTimer());
-      }, { threshold: 0.3 }).observe(stepper);
-
-      setSpot(spots[0]);
     })();
   </script>
 </body>
