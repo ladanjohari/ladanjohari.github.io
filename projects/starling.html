@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Starling &middot; Ladan Johari</title>
-  <meta name="description" content="A Mac browser that sorts your open tabs into named groups with one button, using small AI models that run on your own computer." />
+  <meta name="description" content="A browser that sorts your open tabs into named groups with one press." />
   <meta name="robots" content="index, follow" />
   <meta name="color-scheme" content="light dark" />
   <meta name="theme-color" content="#F7F6F3" media="(prefers-color-scheme: light)" />
@@ -14,7 +14,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
   <meta property="og:title" content="Starling &middot; Ladan Johari" />
-  <meta property="og:description" content="A Mac browser that sorts your open tabs into named groups with one button, using small AI models that run on your own computer." />
+  <meta property="og:description" content="A browser that sorts your open tabs into named groups with one press." />
   <meta property="og:url" content="https://ladanjohari.com/projects/starling.html" />
   <meta property="og:type" content="article" />
   <meta property="og:image" content="https://ladanjohari.com/assets/og-starling.jpg" />
@@ -264,7 +264,8 @@
     .try-actions { display: flex; gap: 8px; }
     .try-organize, .try-say { all: unset; box-sizing: border-box; height: 32px; border-radius: 16px; background: var(--btn); display: flex; align-items: center; justify-content: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--ink); cursor: pointer; transition: transform .12s ease-out, background .15s ease-out; }
     .try-organize { flex: 1; }
-    .try-say { padding: 0 12px; font-size: 12px; font-weight: 500; }
+    .try-say { padding: 0 12px; font-size: 12px; font-weight: 500; display: none; }
+    @media (hover: none) { .try-say { display: flex; } }
     @media (hover: hover) and (pointer: fine) { .try-organize:hover, .try-say:hover { background: var(--btn-h); } }
     .try-organize:active, .try-say:active { transform: scale(0.97); }
     .try-prompt { height: 32px; border-radius: 16px; background: var(--win); border: 1.5px solid var(--accent); display: flex; align-items: center; gap: 8px; padding: 0 12px; box-sizing: border-box; }
@@ -304,7 +305,7 @@
   <div class="cs-header">
     <h1 class="cs-title">Starling</h1>
     <p class="cs-descriptor">
-      Press Organize and your tabs sort themselves into named groups. Everything runs on your own Mac.
+      One press, and your tabs sort themselves into named groups.
     </p>
     <div class="cs-meta">
       <span>2026</span>
@@ -335,7 +336,7 @@
       </div>
     </div>
     <div class="try-caption">
-      <span>Try it: press Organize. Shift-click it, or press Say how, to sort your own way. The groups come from the real app; page previews are illustrations.</span>
+      <span id="try-hint">Try it. Shift-click Organize to say how.</span>
       <button class="try-reset" id="try-reset">Start over</button>
     </div>
   </div>
@@ -425,7 +426,7 @@
 
 
       <p class="cs-body-text" style="margin-top:26px;">
-        Letting one big language model do all of it was slower and no better: on a test of 43 tabs it took 18.6 seconds, against 2.5 for this split. Each model does the part it is good at, so Organize is fast enough to press without thinking. Nothing you have open leaves your Mac.
+        Letting one big language model do all of it was slower and no better: on a test of 43 tabs it took 18.6 seconds, against 2.5 for this split. Each model does the part it is good at, so Organize is fast enough to press without thinking.
       </p>
     </div>
 
@@ -737,6 +738,33 @@
 
       document.getElementById('try-reset').addEventListener('click', () => { clearTimeout(timer); st = fresh(); controlsKey = ''; render(); });
       render();
+
+      /* Tidy once on arrival, so the result is seen before anything is read.
+         The Organize button presses itself; any touch from the visitor cancels it. */
+      let autoplayed = false;
+      const autoplay = () => {
+        if (autoplayed || st.mode !== 'none' || st.organizing || st.prompt) return;
+        autoplayed = true;
+        const button = controls.querySelector('.try-organize');
+        if (button) { button.style.transform = 'scale(0.97)'; setTimeout(() => { button.style.transform = ''; }, 160); }
+        run({ mode: 'topic', labels: [] });
+      };
+      const cancelAutoplay = () => { autoplayed = true; };
+      root.addEventListener('pointerdown', cancelAutoplay, { once: true });
+      root.addEventListener('keydown', cancelAutoplay, { once: true });
+      if (window.matchMedia('(hover: none)').matches) {
+        document.getElementById('try-hint').textContent = 'Try it. Press Say how to sort your own way.';
+      }
+      let observerWorks = false;
+      if ('IntersectionObserver' in window) {
+        const seen = new IntersectionObserver(entries => {
+          observerWorks = true;
+          if (entries.some(e => e.isIntersecting)) { seen.disconnect(); setTimeout(autoplay, 900); }
+        }, { threshold: 0.5 });
+        seen.observe(root.querySelector('.try-win'));
+      }
+      // Safety net: some environments never run the observer at all.
+      setTimeout(() => { if (!observerWorks) autoplay(); }, 4000);
     })();
   </script>
 
