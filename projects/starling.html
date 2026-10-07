@@ -405,48 +405,38 @@
       </div>
     </div>
 
-    <!-- ── The idea: name the concept, then SHOW it. A diagram beats four paragraphs. ── -->
+    <!-- ── How it works: the two steps, drawn, then how the approach was chosen. ── -->
     <div class="cs-section">
-      <p class="cs-label">The idea</p>
+      <p class="cs-label">How it works</p>
       <p class="cs-body-text">
-        <strong>Sort by meaning, name in words.</strong> A small model reads each page and places it by what it is about, so similar pages land together. A second small model then gives each group a short name.
+        <strong>Group by meaning, then name in words.</strong> Starling reads what each page is about and puts similar pages together. Then Apple Intelligence gives each group a short name.
       </p>
 
-
-      <svg class="idea-flow" viewBox="0 0 640 150" role="img" aria-label="Open tabs go to MiniLM-L6, which finds which pages belong together, then to Qwen3 1.7B, which names each group.">
+      <svg class="idea-flow" viewBox="0 0 640 150" role="img" aria-label="Open tabs are grouped by meaning, so similar pages land together. Then each group gets a short name.">
         <g class="idea-tabs">
           <rect x="0" y="22" width="120" height="14" rx="3"/><rect x="0" y="44" width="120" height="14" rx="3"/>
           <rect x="0" y="66" width="120" height="14" rx="3"/><rect x="0" y="88" width="120" height="14" rx="3"/>
           <rect x="0" y="110" width="120" height="14" rx="3"/>
         </g>
         <text class="idea-cap" x="60" y="146" text-anchor="middle">Open tabs</text>
-        <path class="idea-line" d="M128 73 H170"/>
-        <rect class="idea-box" x="178" y="44" width="168" height="58" rx="10"/>
-        <text class="idea-name" x="262" y="68" text-anchor="middle">MiniLM-L6</text>
-        <text class="idea-cap" x="262" y="86" text-anchor="middle">finds what belongs together</text>
-        <path class="idea-line" d="M354 73 H394"/>
-        <rect class="idea-box idea-focus" x="402" y="44" width="110" height="58" rx="10"/>
-        <text class="idea-name" x="457" y="68" text-anchor="middle">Qwen3 1.7B</text>
-        <text class="idea-cap" x="457" y="86" text-anchor="middle">names each group</text>
-        <path class="idea-line" d="M520 73 H540"/>
+        <path class="idea-line" d="M128 73 H162"/>
+        <rect class="idea-box" x="170" y="44" width="172" height="58" rx="10"/>
+        <text class="idea-name" x="256" y="68" text-anchor="middle">Group by meaning</text>
+        <text class="idea-cap" x="256" y="86" text-anchor="middle">similar pages land together</text>
+        <path class="idea-line" d="M350 73 H384"/>
+        <rect class="idea-box idea-focus" x="392" y="44" width="132" height="58" rx="10"/>
+        <text class="idea-name" x="458" y="68" text-anchor="middle">Name in words</text>
+        <text class="idea-cap" x="458" y="86" text-anchor="middle">one name per group</text>
+        <path class="idea-line" d="M532 73 H548"/>
         <g class="idea-groups">
-          <circle cx="552" cy="40" r="4" class="g1"/><text class="idea-cap idea-left" x="562" y="44">Typography</text>
-          <circle cx="552" cy="66" r="4" class="g2"/><text class="idea-cap idea-left" x="562" y="70">Sourdough</text>
-          <circle cx="552" cy="92" r="4" class="g3"/><text class="idea-cap idea-left" x="562" y="96">Lisbon trip</text>
+          <circle cx="560" cy="40" r="4" class="g1"/><text class="idea-cap idea-left" x="570" y="44">Typography</text>
+          <circle cx="560" cy="66" r="4" class="g2"/><text class="idea-cap idea-left" x="570" y="70">Sourdough</text>
+          <circle cx="560" cy="92" r="4" class="g3"/><text class="idea-cap idea-left" x="570" y="96">Lisbon trip</text>
         </g>
       </svg>
 
-
       <p class="cs-body-text" style="margin-top:26px;">
-        Letting one big language model do all of it was slower and no better: on a test of 43 tabs it took 18.6 seconds, against 2.5 for this split. Each model does the part it is good at, so Organize is fast enough to press without thinking.
-      </p>
-    </div>
-
-    <!-- ── Optional: where else the idea applies. One line, not a paragraph. ── -->
-    <div class="cs-section">
-      <p class="cs-label">Where else it works</p>
-      <p class="cs-body-text">
-        Anything that piles up and never gets sorted: downloads, screenshots, saved links.
+        The split was chosen by testing, on 43 tabs with a known right answer. Letting one language model do the whole job took 8 to 19 seconds and grouped no better. Splitting it takes about one second. For the grouping step, seven models were compared, Apple&rsquo;s built-in one among them. The smallest stayed, because models five times its size grouped no better.
       </p>
     </div>
 
@@ -455,8 +445,8 @@
       <p class="cs-label">What&rsquo;s next</p>
       <ul class="reflection-list">
         <li><strong>Organize while you browse.</strong> New tabs find their group as they open, so the list never piles up.</li>
-        <li><strong>Search every tab by meaning.</strong> The same model that groups pages can find &ldquo;that article about bread hydration&rdquo; across hundreds of tabs.</li>
-        <li><strong>Prompts that need taste.</strong> &ldquo;By site&rdquo; and named lists already work. Requests like &ldquo;work vs fun&rdquo; are next.</li>
+        <li><strong>Find any tab by meaning.</strong> Type what you remember, like &ldquo;that article about bread hydration&rdquo;, and Starling finds the tab.</li>
+        <li><strong>Sort your own way.</strong> Say how you want your tabs grouped, in plain words.</li>
       </ul>
     </div>
 
