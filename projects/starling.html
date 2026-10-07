@@ -115,54 +115,66 @@
     .lead-claim a { color: var(--accent); text-decoration: none; }
     @media (hover: hover) and (pointer: fine) { .lead-claim a:hover { text-decoration: underline; } }
 
-    /* ── How it works: three steps, drawn with six tabs from the demo above ── */
-    .how { list-style: none; margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-    .how-card, .else-card { border: 1px solid var(--rule); border-radius: 10px; background: var(--card); height: 214px; padding: 12px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; position: relative; }
-    .how-card.is-loose { justify-content: space-between; gap: 0; padding: 15px 12px; }
-    .how-head { height: 16px; display: flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 600; color: var(--ink); white-space: nowrap; }
-    .how-head i { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-    .how-head b { width: 62px; height: 4px; border-radius: 2px; background: var(--bar); }
-    .how-row { height: 20px; display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--ink); white-space: nowrap; min-width: 0; }
+    /* ── How it works: three steps on the left, one drawing on the right.
+       The same six tabs move as the steps change. ── */
+    .how { margin-top: 26px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: center; }
+    .how-steps { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .how-step { all: unset; box-sizing: border-box; display: block; width: 100%; cursor: pointer; padding: 10px 0 10px 16px; border-left: 2px solid var(--rule); transition: border-color .2s ease-out; }
+    .how-step:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .how-step b { display: block; font-size: 1rem; font-weight: 600; letter-spacing: -0.015em; line-height: 1.45; color: var(--ink); }
+    .how-step b i { font-style: normal; font-weight: 500; color: var(--mid); margin-right: 8px; transition: color .2s ease-out; }
+    .how-step span { display: block; font-size: 0.925rem; line-height: 1.6; color: var(--mid); margin-top: 2px; }
+    .how-step[aria-pressed="true"] { border-left-color: var(--accent); }
+    .how-step[aria-pressed="true"] b i { color: var(--accent); }
+    .how-stage { position: relative; height: 282px; border: 1px solid var(--rule); border-radius: 10px; background: var(--card); overflow: hidden; }
+    .how-row, .how-head { position: absolute; left: 16px; right: 16px; display: flex; align-items: center; white-space: nowrap; transition: top .6s cubic-bezier(.22,.9,.24,1), opacity .35s ease; }
+    .how-row { height: 26px; gap: 9px; font-size: 13px; color: var(--ink); }
     .how-row span { overflow: hidden; text-overflow: ellipsis; }
-    .how-row u { width: 14px; height: 14px; border-radius: 3.5px; flex-shrink: 0; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; line-height: 1; border: 1px solid var(--rule); background: #FFFFFF; color: #111111; }
-    .how-row u.w { font-family: Georgia, serif; font-size: 9px; }
+    .how-row u { width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; line-height: 1; border: 1px solid var(--rule); background: #FFFFFF; color: #111111; }
+    .how-row u.w { font-family: Georgia, serif; font-size: 10.5px; }
     .how-row u.g { background: #1A73E8; color: #FFFFFF; border-color: transparent; }
-    .how-row u.l { background: #2F6FD6; color: #FFFFFF; border-color: transparent; font-size: 7px; }
+    .how-row u.l { background: #2F6FD6; color: #FFFFFF; border-color: transparent; font-size: 8px; }
     .how-row u.k { background: #C8102E; color: #FFFFFF; border-color: transparent; }
-    .how-title { margin-top: 12px; font-size: 0.925rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); line-height: 1.45; }
-    .how-title span { color: var(--mid); font-weight: 500; margin-right: 7px; }
-    .how-why { font-size: 13px; line-height: 1.6; color: var(--mid); margin-top: 3px; }
+    .how-head { height: 22px; gap: 7px; font-size: 12px; font-weight: 600; color: var(--ink); opacity: 0; }
+    .how-head i { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .how-head span { opacity: 0; transition: opacity .4s ease; }
+    .how-stage[data-step="2"] .how-head, .how-stage[data-step="3"] .how-head { opacity: 1; transition-delay: .3s; }
+    .how-stage[data-step="3"] .how-head span { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) { .how-row, .how-head, .how-head span { transition: none; } }
 
-    /* By hand against one press. */
-    .cmp { margin-top: 34px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); border: 1px solid var(--rule); border-radius: 10px; background: var(--card); overflow: hidden; }
-    .cmp > div { padding: 16px 18px 18px; }
-    .cmp > div + div { border-left: 1px solid var(--rule); }
-    .cmp dt { font-size: 12px; font-weight: 500; color: var(--mid); margin-bottom: 10px; }
-    .cmp dd { font-size: 13px; line-height: 1.75; color: var(--mid); }
-    .cmp dd strong { display: block; margin-top: 10px; font-size: 0.925rem; font-weight: 600; color: var(--ink); }
-    .cmp-pill { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 14px; border-radius: 13px; background: var(--hover-row); border: 1px solid var(--rule); font-size: 11.5px; font-weight: 600; color: var(--ink); }
-    .how-note { margin-top: 22px; }
+    /* By hand against one press: two plain rows. */
+    .cmp { margin-top: 36px; border-top: 1px solid var(--rule); }
+    .cmp > div { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--rule); align-items: baseline; }
+    .cmp dt { font-size: 13px; font-weight: 500; color: var(--mid); }
+    .cmp dd { font-size: 0.925rem; line-height: 1.6; color: var(--mid); }
+    .cmp .is-new dt { color: var(--ink); font-weight: 600; }
+    .cmp .is-new dd { color: var(--ink); font-weight: 600; }
+    .how-note { margin-top: 20px; }
 
     /* ── What's next: the same button on three other piles ── */
-    .else { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-    .else-item { margin: 0; }
-    .else-row { height: 14px; display: flex; align-items: center; gap: 7px; }
+    .else { margin-top: 24px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .else-card { border: 1px solid var(--rule); border-radius: 10px; background: var(--card); padding: 14px 14px 52px; position: relative; overflow: hidden; }
+    .else-title { font-size: 0.925rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); padding-bottom: 11px; margin-bottom: 12px; border-bottom: 1px solid var(--rule); }
+    .else-group + .else-group { margin-top: 12px; }
+    .else-name { height: 18px; display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+    .else-name i { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .else-row { height: 15px; display: flex; align-items: center; gap: 7px; }
     .else-row u { width: 8px; height: 10px; border-radius: 2px; background: var(--bar); flex-shrink: 0; }
     .else-row u.round { height: 8px; border-radius: 50%; }
     .else-row s { height: 4px; border-radius: 2px; background: var(--bar); display: block; }
-    .else-thumbs { height: 28px; display: flex; align-items: center; gap: 5px; }
-    .else-thumbs b { width: 32px; height: 22px; border-radius: 3px; background: var(--soft); border: 1px solid var(--rule); }
-    .else-item figcaption { margin-top: 12px; font-size: 0.925rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+    .else-thumbs { height: 30px; display: flex; align-items: center; gap: 5px; }
+    .else-thumbs b { width: 34px; height: 23px; border-radius: 3px; background: var(--soft); border: 1px solid var(--rule); }
     @media (max-width: 540px) {
-      .how, .else { grid-template-columns: 1fr; gap: 26px; }
-      .cmp { grid-template-columns: 1fr; }
-      .cmp > div + div { border-left: none; border-top: 1px solid var(--rule); }
+      .how { grid-template-columns: 1fr; gap: 18px; }
+      .how-stage { order: -1; }
+      .else { grid-template-columns: 1fr; }
+      .cmp > div { grid-template-columns: 1fr; gap: 2px; }
     }
 
     /* ── The decisions: one animated before-and-after, then four small ones ──
        Everything here is drawn with boxes from the page's own tokens. */
-    .ba, .dec, .how, .cmp, .else { --card: #FFFFFF; --soft: #EEEDE9; --bar: #D9D8D3; }
-    @media (prefers-color-scheme: dark) { .ba, .dec, .how, .cmp, .else { --card: #1F1F1F; --soft: #2A2A2A; --bar: #3A3A3C; } }
+    .ba, .dec, .how, .else { --card: #FFFFFF; --soft: #EEEDE9; --bar: #D9D8D3; }
+    @media (prefers-color-scheme: dark) { .ba, .dec, .how, .else { --card: #1F1F1F; --soft: #2A2A2A; --bar: #3A3A3C; } }
     .ba-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 22px; }
     .ba-note { font-size: 13px; color: var(--mid); line-height: 1.5; }
     .ba-switch { display: inline-flex; padding: 2px; border-radius: 9px; background: var(--hover-row); border: 1px solid var(--rule); flex-shrink: 0; }
@@ -322,53 +334,23 @@
       </div>
     </div>
 
-    <!-- ── How it works: three steps, each drawn with the same six tabs, then by hand against one press. ── -->
+    <!-- ── How it works: three steps beside one drawing, then by hand against one press. ── -->
     <div class="cs-section">
       <p class="cs-label">How it works</p>
       <p class="lead-claim">Organize does the sorting you would do by hand.</p>
 
-      <ol class="how">
-        <li>
-          <div class="how-card is-loose" role="img" aria-label="Six open tabs in the order they were opened, with the topics mixed up.">
-            <div class="how-row"><u class="w">W</u><span>Pastel de nata</span></div>
-            <div class="how-row"><u class="g">G</u><span>Inter, Google Fonts</span></div>
-            <div class="how-row"><u class="w">W</u><span>Sourdough</span></div>
-            <div class="how-row"><u class="l">lp</u><span>Lisbon Travel 2026</span></div>
-            <div class="how-row"><u class="k">K</u><span>Sourdough Starter Recipe</span></div>
-            <div class="how-row"><u class="w">W</u><span>Typography</span></div>
-          </div>
-          <p class="how-title"><span>1</span>It reads every tab.</p>
-          <p class="how-why">The title, and what the page says about itself.</p>
-        </li>
-        <li>
-          <div class="how-card" role="img" aria-label="The same six tabs, now in three pairs. Each pair is about one topic, from two different websites. The pairs have no names yet.">
-            <div><div class="how-head"><i style="background:#0A84FF"></i><b></b></div><div class="how-row"><u class="w">W</u><span>Pastel de nata</span></div><div class="how-row"><u class="l">lp</u><span>Lisbon Travel 2026</span></div></div>
-            <div><div class="how-head"><i style="background:#34C759"></i><b></b></div><div class="how-row"><u class="g">G</u><span>Inter, Google Fonts</span></div><div class="how-row"><u class="w">W</u><span>Typography</span></div></div>
-            <div><div class="how-head"><i style="background:#FF9500"></i><b></b></div><div class="how-row"><u class="w">W</u><span>Sourdough</span></div><div class="how-row"><u class="k">K</u><span>Sourdough Starter Recipe</span></div></div>
-          </div>
-          <p class="how-title"><span>2</span>It puts related pages together.</p>
-          <p class="how-why">By topic, not by website. Pastel de nata is a Lisbon pastry, so it goes with the Lisbon tabs.</p>
-        </li>
-        <li>
-          <div class="how-card" role="img" aria-label="The same three pairs, now named Lisbon travel, Typography and Sourdough baking.">
-            <div><div class="how-head"><i style="background:#0A84FF"></i>Lisbon travel</div><div class="how-row"><u class="w">W</u><span>Pastel de nata</span></div><div class="how-row"><u class="l">lp</u><span>Lisbon Travel 2026</span></div></div>
-            <div><div class="how-head"><i style="background:#34C759"></i>Typography</div><div class="how-row"><u class="g">G</u><span>Inter, Google Fonts</span></div><div class="how-row"><u class="w">W</u><span>Typography</span></div></div>
-            <div><div class="how-head"><i style="background:#FF9500"></i>Sourdough baking</div><div class="how-row"><u class="w">W</u><span>Sourdough</span></div><div class="how-row"><u class="k">K</u><span>Sourdough Starter Recipe</span></div></div>
-          </div>
-          <p class="how-title"><span>3</span>It names each group.</p>
-          <p class="how-why">Apple Intelligence writes a short name that says what is inside.</p>
-        </li>
-      </ol>
+      <div class="how" id="how">
+        <ol class="how-steps">
+          <li><button class="how-step" data-step="1" aria-pressed="true"><b><i>1</i>It reads every tab.</b><span>The title, and what the page says about itself.</span></button></li>
+          <li><button class="how-step" data-step="2" aria-pressed="false"><b><i>2</i>It puts related pages together.</b><span>By topic, not by website. Pastel de nata is a Lisbon pastry, so it goes with the Lisbon tabs.</span></button></li>
+          <li><button class="how-step" data-step="3" aria-pressed="false"><b><i>3</i>It names each group.</b><span>Apple Intelligence writes a short name that says what is inside.</span></button></li>
+        </ol>
+        <div class="how-stage" id="how-stage" data-step="1" role="img" aria-label="Six open tabs with the topics mixed up. They move into three pairs by topic, each pair from two different websites. Then each pair gets a name: Lisbon travel, Typography, Sourdough baking."></div>
+      </div>
 
       <dl class="cmp">
-        <div>
-          <dt>By hand</dt>
-          <dd>Read every title.<br>Decide the groups.<br>Drag each tab.<br>Type each name.</dd>
-        </div>
-        <div>
-          <dt>With Starling</dt>
-          <dd><span class="cmp-pill"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span><strong>One press. About a second.</strong></dd>
-        </div>
+        <div><dt>By hand</dt><dd>Read every title, decide the groups, drag each tab, type each name.</dd></div>
+        <div class="is-new"><dt>With Starling</dt><dd>One press. About a second.</dd></div>
       </dl>
 
       <p class="cs-body-text how-note">
@@ -382,33 +364,27 @@
       <p class="lead-claim">The same button could work on anything that piles up and never gets sorted: downloads, screenshots, saved links.</p>
 
       <div class="else">
-        <figure class="else-item">
-          <div class="else-card" role="img" aria-label="A downloads folder sorted into Invoices, Fonts and Boarding passes, with an Organize button under it.">
-            <div><div class="how-head"><i style="background:#0A84FF"></i>Invoices</div><div class="else-row"><u></u><s style="width:96px"></s></div><div class="else-row"><u></u><s style="width:70px"></s></div></div>
-            <div><div class="how-head"><i style="background:#FF9500"></i>Fonts</div><div class="else-row"><u></u><s style="width:84px"></s></div><div class="else-row"><u></u><s style="width:110px"></s></div></div>
-            <div><div class="how-head"><i style="background:#34C759"></i>Boarding passes</div><div class="else-row"><u></u><s style="width:102px"></s></div><div class="else-row"><u></u><s style="width:64px"></s></div></div>
-            <span class="m-pill" style="left:12px; right:12px; bottom:12px"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span>
-          </div>
-          <figcaption>Downloads</figcaption>
-        </figure>
-        <figure class="else-item">
-          <div class="else-card" role="img" aria-label="Screenshots sorted into Receipts, Design ideas and Recipes, with an Organize button under them.">
-            <div><div class="how-head"><i style="background:#0A84FF"></i>Receipts</div><div class="else-thumbs"><b></b><b></b><b></b></div></div>
-            <div><div class="how-head"><i style="background:#FF9500"></i>Design ideas</div><div class="else-thumbs"><b></b><b></b></div></div>
-            <div><div class="how-head"><i style="background:#34C759"></i>Recipes</div><div class="else-thumbs"><b></b><b></b><b></b></div></div>
-            <span class="m-pill" style="left:12px; right:12px; bottom:12px"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span>
-          </div>
-          <figcaption>Screenshots</figcaption>
-        </figure>
-        <figure class="else-item">
-          <div class="else-card" role="img" aria-label="Saved links sorted into To read, Gift ideas and Apartments, with an Organize button under them.">
-            <div><div class="how-head"><i style="background:#0A84FF"></i>To read</div><div class="else-row"><u class="round"></u><s style="width:96px"></s></div><div class="else-row"><u class="round"></u><s style="width:70px"></s></div></div>
-            <div><div class="how-head"><i style="background:#FF9500"></i>Gift ideas</div><div class="else-row"><u class="round"></u><s style="width:84px"></s></div><div class="else-row"><u class="round"></u><s style="width:110px"></s></div></div>
-            <div><div class="how-head"><i style="background:#34C759"></i>Apartments</div><div class="else-row"><u class="round"></u><s style="width:102px"></s></div><div class="else-row"><u class="round"></u><s style="width:64px"></s></div></div>
-            <span class="m-pill" style="left:12px; right:12px; bottom:12px"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span>
-          </div>
-          <figcaption>Saved links</figcaption>
-        </figure>
+        <div class="else-card" role="img" aria-label="A downloads folder sorted into Invoices, Fonts and Boarding passes, with an Organize button under it.">
+          <p class="else-title">Downloads</p>
+          <div class="else-group"><div class="else-name"><i style="background:#0A84FF"></i>Invoices</div><div class="else-row"><u></u><s style="width:96px"></s></div><div class="else-row"><u></u><s style="width:70px"></s></div></div>
+          <div class="else-group"><div class="else-name"><i style="background:#FF9500"></i>Fonts</div><div class="else-row"><u></u><s style="width:84px"></s></div><div class="else-row"><u></u><s style="width:110px"></s></div></div>
+          <div class="else-group"><div class="else-name"><i style="background:#34C759"></i>Boarding passes</div><div class="else-row"><u></u><s style="width:102px"></s></div><div class="else-row"><u></u><s style="width:64px"></s></div></div>
+          <span class="m-pill" style="left:14px; right:14px; bottom:14px"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span>
+        </div>
+        <div class="else-card" role="img" aria-label="Screenshots sorted into Receipts, Design ideas and Recipes, with an Organize button under them.">
+          <p class="else-title">Screenshots</p>
+          <div class="else-group"><div class="else-name"><i style="background:#0A84FF"></i>Receipts</div><div class="else-thumbs"><b></b><b></b><b></b></div></div>
+          <div class="else-group"><div class="else-name"><i style="background:#FF9500"></i>Design ideas</div><div class="else-thumbs"><b></b><b></b></div></div>
+          <div class="else-group"><div class="else-name"><i style="background:#34C759"></i>Recipes</div><div class="else-thumbs"><b></b><b></b><b></b></div></div>
+          <span class="m-pill" style="left:14px; right:14px; bottom:14px"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span>
+        </div>
+        <div class="else-card" role="img" aria-label="Saved links sorted into To read, Gift ideas and Apartments, with an Organize button under them.">
+          <p class="else-title">Saved links</p>
+          <div class="else-group"><div class="else-name"><i style="background:#0A84FF"></i>To read</div><div class="else-row"><u class="round"></u><s style="width:96px"></s></div><div class="else-row"><u class="round"></u><s style="width:70px"></s></div></div>
+          <div class="else-group"><div class="else-name"><i style="background:#FF9500"></i>Gift ideas</div><div class="else-row"><u class="round"></u><s style="width:84px"></s></div><div class="else-row"><u class="round"></u><s style="width:110px"></s></div></div>
+          <div class="else-group"><div class="else-name"><i style="background:#34C759"></i>Apartments</div><div class="else-row"><u class="round"></u><s style="width:102px"></s></div><div class="else-row"><u class="round"></u><s style="width:64px"></s></div></div>
+          <span class="m-pill" style="left:14px; right:14px; bottom:14px"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span>
+        </div>
       </div>
     </div>
 
@@ -792,6 +768,72 @@
           if (entries.some(e => e.isIntersecting)) { io.disconnect(); setTimeout(play, 1400); }
         }, { threshold: 0.6 });
         io.observe(fit);
+      }
+      setTimeout(() => { if (!observerWorks) play(); }, 5000);
+    })();
+  </script>
+  <script>
+    /* How it works: six tabs from the demo above. Step 1 is the order they
+       were opened in, step 2 moves them into pairs, step 3 shows the names. */
+    (() => {
+      const stage = document.getElementById('how-stage');
+      const root = document.getElementById('how');
+      if (!stage || !root) return;
+      const GROUPS = [['Lisbon travel', '#0A84FF'], ['Typography', '#34C759'], ['Sourdough baking', '#FF9500']];
+      // [favicon class, favicon letter, title, group], in the order they were opened.
+      const TABS = [['w', 'W', 'Pastel de nata', 0], ['g', 'G', 'Inter, Google Fonts', 1], ['w', 'W', 'Sourdough', 2],
+                    ['l', 'lp', 'Lisbon Travel 2026', 0], ['k', 'K', 'Sourdough Starter Recipe', 2], ['w', 'W', 'Typography', 1]];
+      const seen = GROUPS.map(() => 0);
+      const rows = TABS.map(([cls, letter, title, g], i) => {
+        const row = document.createElement('div');
+        row.className = 'how-row';
+        const fav = document.createElement('u');
+        fav.className = cls;
+        fav.textContent = letter;
+        const name = document.createElement('span');
+        name.textContent = title;
+        row.append(fav, name);
+        stage.append(row);
+        return { row, loose: 31 + i * 39, grouped: 16 + g * 88 + 22 + seen[g]++ * 26 };
+      });
+      GROUPS.forEach(([name, color], g) => {
+        const head = document.createElement('div');
+        head.className = 'how-head';
+        head.style.top = (16 + g * 88) + 'px';
+        const dot = document.createElement('i');
+        dot.style.background = color;
+        const label = document.createElement('span');
+        label.textContent = name;
+        head.append(dot, label);
+        stage.append(head);
+      });
+      const buttons = [...root.querySelectorAll('.how-step')];
+      function show(step) {
+        stage.dataset.step = step;
+        rows.forEach(({ row, loose, grouped }, i) => {
+          row.style.transitionDelay = (step > 1 ? i * 40 : 0) + 'ms';
+          row.style.top = (step > 1 ? grouped : loose) + 'px';
+        });
+        buttons.forEach(b => b.setAttribute('aria-pressed', String(Number(b.dataset.step) === step)));
+      }
+      let touched = false, timers = [];
+      buttons.forEach(b => b.addEventListener('click', () => {
+        touched = true; timers.forEach(clearTimeout); show(Number(b.dataset.step));
+      }));
+      show(1);
+      // Play through once when it scrolls into view.
+      const play = () => {
+        if (touched) return;
+        touched = true;
+        timers = [setTimeout(() => show(2), 1300), setTimeout(() => show(3), 3300)];
+      };
+      let observerWorks = false;
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(entries => {
+          observerWorks = true;
+          if (entries.some(e => e.isIntersecting)) { io.disconnect(); play(); }
+        }, { threshold: 0.6 });
+        io.observe(stage);
       }
       setTimeout(() => { if (!observerWorks) play(); }, 5000);
     })();
