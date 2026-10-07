@@ -115,137 +115,54 @@
     .lead-claim a { color: var(--accent); text-decoration: none; }
     @media (hover: hover) and (pointer: fine) { .lead-claim a:hover { text-decoration: underline; } }
 
-    /* ── Idea diagram ── */
-    .idea-flow { display: block; width: 100%; height: auto; margin-top: 26px; overflow: visible; }
-    .idea-tabs rect { fill: var(--hover-row); stroke: var(--rule); stroke-width: 1; }
-    .idea-line { stroke: var(--mid); stroke-width: 1; fill: none; }
-    .idea-box { fill: var(--bg); stroke: var(--rule); stroke-width: 1; }
-    .idea-box.idea-focus { stroke: var(--accent); stroke-width: 1.5; }
-    .idea-name { fill: var(--ink); font-size: 13px; font-weight: 600; font-family: inherit; }
-    .idea-cap { fill: var(--mid); font-size: 11px; font-family: inherit; }
-    .idea-left { text-anchor: start; }
-    .idea-groups .g1 { fill: #34C759; } .idea-groups .g2 { fill: #FF9500; } .idea-groups .g3 { fill: var(--accent); }
+    /* ── How it works: three steps, drawn with six tabs from the demo above ── */
+    .how { list-style: none; margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .how-card, .else-card { border: 1px solid var(--rule); border-radius: 10px; background: var(--card); height: 214px; padding: 12px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; position: relative; }
+    .how-card.is-loose { justify-content: space-between; gap: 0; padding: 15px 12px; }
+    .how-head { height: 16px; display: flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+    .how-head i { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .how-head b { width: 62px; height: 4px; border-radius: 2px; background: var(--bar); }
+    .how-row { height: 20px; display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--ink); white-space: nowrap; min-width: 0; }
+    .how-row span { overflow: hidden; text-overflow: ellipsis; }
+    .how-row u { width: 14px; height: 14px; border-radius: 3.5px; flex-shrink: 0; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; line-height: 1; border: 1px solid var(--rule); background: #FFFFFF; color: #111111; }
+    .how-row u.w { font-family: Georgia, serif; font-size: 9px; }
+    .how-row u.g { background: #1A73E8; color: #FFFFFF; border-color: transparent; }
+    .how-row u.l { background: #2F6FD6; color: #FFFFFF; border-color: transparent; font-size: 7px; }
+    .how-row u.k { background: #C8102E; color: #FFFFFF; border-color: transparent; }
+    .how-title { margin-top: 12px; font-size: 0.925rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); line-height: 1.45; }
+    .how-title span { color: var(--mid); font-weight: 500; margin-right: 7px; }
+    .how-why { font-size: 13px; line-height: 1.6; color: var(--mid); margin-top: 3px; }
 
-    /* ── Forward-looking list ── */
-    .reflection-list { margin-top: 20px; list-style: none; display: flex; flex-direction: column; gap: 14px; }
-    .reflection-list li {
-      font-size: 13px; color: var(--mid); line-height: 1.7;
-      padding-left: 14px; border-left: 2px solid var(--rule);
-    }
-    .reflection-list li strong { color: var(--ink); font-weight: 600; }
+    /* By hand against one press. */
+    .cmp { margin-top: 34px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); border: 1px solid var(--rule); border-radius: 10px; background: var(--card); overflow: hidden; }
+    .cmp > div { padding: 16px 18px 18px; }
+    .cmp > div + div { border-left: 1px solid var(--rule); }
+    .cmp dt { font-size: 12px; font-weight: 500; color: var(--mid); margin-bottom: 10px; }
+    .cmp dd { font-size: 13px; line-height: 1.75; color: var(--mid); }
+    .cmp dd strong { display: block; margin-top: 10px; font-size: 0.925rem; font-weight: 600; color: var(--ink); }
+    .cmp-pill { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 14px; border-radius: 13px; background: var(--hover-row); border: 1px solid var(--rule); font-size: 11.5px; font-weight: 600; color: var(--ink); }
+    .how-note { margin-top: 22px; }
 
-    /* ── Back to work ── */
-    .back-work { max-width: 700px; margin: 0 auto; padding: 0 28px 64px; }
-    .back-work a {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 0.875rem; font-weight: 500;
-      color: var(--ink); text-decoration: none;
-      transition: color 0.15s ease-out;
-    }
-    .back-work a .arrow { color: var(--accent); transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1); }
-    @media (hover: hover) and (pointer: fine) {
-      .back-work a:hover { color: var(--accent); }
-      .back-work a:hover .arrow { transform: translateX(-3px); }
-    }
-
-    /* ── Footer ── */
-    .pf-footer {
-      max-width: 700px; margin: 0 auto;
-      border-top: 1px solid var(--rule);
-      padding: 26px 28px 52px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .pf-footer-copy { font-size: 0.76rem; color: var(--mid); }
-    .pf-footer-links { display: flex; gap: 22px; list-style: none; }
-    .pf-footer-links a {
-      font-size: 0.76rem; color: var(--mid);
-      text-decoration: none; transition: color 0.15s ease-out;
-    }
-    @media (hover: hover) and (pointer: fine) {
-      .pf-footer-links a:hover { color: var(--accent); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .back-work a .arrow { transition: none; }
-    }
-
+    /* ── What's next: the same button on three other piles ── */
+    .else { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .else-item { margin: 0; }
+    .else-row { height: 14px; display: flex; align-items: center; gap: 7px; }
+    .else-row u { width: 8px; height: 10px; border-radius: 2px; background: var(--bar); flex-shrink: 0; }
+    .else-row u.round { height: 8px; border-radius: 50%; }
+    .else-row s { height: 4px; border-radius: 2px; background: var(--bar); display: block; }
+    .else-thumbs { height: 28px; display: flex; align-items: center; gap: 5px; }
+    .else-thumbs b { width: 32px; height: 22px; border-radius: 3px; background: var(--soft); border: 1px solid var(--rule); }
+    .else-item figcaption { margin-top: 12px; font-size: 0.925rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
     @media (max-width: 540px) {
-      .pf-nav, .cs-header, .video-hero, .cs-body, .back-work { padding-left: 20px; padding-right: 20px; }
-      .pf-nav { padding-top: 28px; }
-      .pf-footer { flex-direction: column; gap: 14px; align-items: flex-start; padding-left: 20px; padding-right: 20px; }
-    }
-
-    /* ── Try it: a working mini Starling ──
-       Same groups as the real app made for these 16 tabs. Rows are absolutely
-       placed; moving them between slots is the animation. */
-    .try { --win: #FFFFFF; --side: #F7F6F3; --line: #E6E5E1; --pick: #E4E3DF; --hov: #ECEBE7; --btn: #E8E7E3; --btn-h: #DFDED9; --lane: #EEEDE9; }
-    @media (prefers-color-scheme: dark) {
-      .try { --win: #1F1F1F; --side: #1A1A1A; --line: #2E2E2E; --pick: #2E2E30; --hov: #262628; --btn: #2A2A2C; --btn-h: #333336; --lane: #2A2A2A; }
-    }
-    .try-win { border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; background: var(--win); }
-    .try-bar { height: 40px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-bottom: 1px solid var(--line); background: var(--side); }
-    .try-lights { display: flex; gap: 6px; }
-    .try-lights i { width: 10px; height: 10px; border-radius: 50%; display: block; }
-    .try-url { flex: 1; min-width: 0; height: 24px; border-radius: 12px; background: var(--win); border: 1px solid var(--line);
-               display: flex; align-items: center; padding: 0 12px; font-size: 12px; color: var(--mid);
-               white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .try-body { display: flex; height: 500px; }
-    .try-side { width: 268px; flex-shrink: 0; background: var(--side); border-right: 1px solid var(--line); display: flex; flex-direction: column; }
-    .try-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; }
-    .try-list { position: relative; transition: height .5s ease; }
-    .try-row, .try-head { position: absolute; left: 8px; right: 8px; transition: top .5s cubic-bezier(.22,.9,.24,1), opacity .3s ease, background .15s ease; }
-    .try-row { height: 28px; border-radius: 7px; }
-    .try-row.is-picked { background: var(--pick); }
-    @media (hover: hover) and (pointer: fine) { .try-row:not(.is-picked):hover { background: var(--hov); } }
-    .try-rowmain { all: unset; box-sizing: border-box; position: absolute; inset: 0; padding: 0 28px 0 8px; display: flex; align-items: center; gap: 8px; cursor: pointer; border-radius: 7px; }
-    .try-fav { width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 9.5px; font-weight: 700; box-shadow: inset 0 0 0 1px var(--rule); }
-    .try-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13px; color: var(--ink); }
-    .try-x { all: unset; position: absolute; right: 4px; top: 4px; width: 20px; height: 20px; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: var(--mid); opacity: 0; cursor: pointer; }
-    .try-row:hover .try-x, .try-x:focus-visible { opacity: 1; }
-    @media (hover: none) { .try-row.is-picked .try-x { opacity: 1; } }
-    .try-x:hover { background: var(--btn-h); color: var(--ink); }
-    .try-head { height: 24px; }
-    .try-headbtn { all: unset; box-sizing: border-box; width: 100%; height: 24px; padding: 0 8px; display: flex; align-items: center; gap: 6px; cursor: pointer; border-radius: 6px; }
-    .try-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-    .try-name { font-size: 11.5px; font-weight: 600; color: var(--mid); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .try-count { margin-left: auto; font-size: 11px; color: var(--mid); font-variant-numeric: tabular-nums; }
-    .try-chev { transition: transform .2s ease; color: var(--mid); }
-    .try-foot { border-top: 1px solid var(--line); padding: 10px 10px 8px; display: flex; flex-direction: column; gap: 8px; }
-    .try-actions { display: flex; gap: 8px; }
-    .try-organize { all: unset; box-sizing: border-box; height: 32px; border-radius: 16px; background: var(--btn); display: flex; align-items: center; justify-content: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--ink); cursor: pointer; transition: transform .12s ease-out, background .15s ease-out; }
-    .try-organize { flex: 1; }
-    @media (hover: hover) and (pointer: fine) { .try-organize:hover { background: var(--btn-h); } }
-    .try-organize:active { transform: scale(0.97); }
-    .try-prompt { height: 32px; border-radius: 16px; background: var(--win); border: 1.5px solid var(--accent); display: flex; align-items: center; gap: 8px; padding: 0 12px; box-sizing: border-box; }
-    .try-input { all: unset; flex: 1; min-width: 0; font-size: 13px; color: var(--ink); }
-    .try-input::placeholder { color: var(--mid); }
-    .try-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-    .try-chip { all: unset; box-sizing: border-box; height: 24px; padding: 0 10px; border-radius: 12px; border: 1px solid var(--rule); font-size: 12px; color: var(--ink); display: inline-flex; align-items: center; cursor: pointer; background: var(--win); }
-    @media (hover: hover) and (pointer: fine) { .try-chip:hover { border-color: var(--accent); color: var(--accent); } }
-    .try-status { font-size: 11px; line-height: 1.45; color: var(--mid); padding: 0 4px; min-height: 16px; }
-    .try-page { flex: 1; min-width: 0; background: var(--win); padding: 28px 28px 0; display: flex; flex-direction: column; gap: 14px; overflow: hidden; }
-    .try-host { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--mid); }
-    .try-ptitle { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; color: var(--ink); }
-    .try-hero { height: 150px; border-radius: 10px; display: flex; align-items: flex-end; padding: 14px; font-size: 44px; font-weight: 600; letter-spacing: -0.03em; }
-    .try-lines { display: flex; flex-direction: column; gap: 9px; padding-top: 4px; }
-    .try-lines i { display: block; height: 8px; border-radius: 4px; background: var(--lane); }
-    .try-caption { display: flex; flex-wrap: wrap; gap: 6px 14px; justify-content: space-between; margin-top: 12px; font-size: 0.75rem; line-height: 1.6; color: var(--mid); }
-    .try-reset { all: unset; cursor: pointer; color: var(--accent); font-weight: 500; }
-    @media (hover: hover) and (pointer: fine) { .try-reset:hover { text-decoration: underline; } }
-    .try button:focus-visible, .try-input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    .try-spin { animation: try-spin .9s linear infinite; }
-    @keyframes try-spin { to { transform: rotate(360deg); } }
-    @media (prefers-reduced-motion: reduce) { .try-row, .try-head, .try-list { transition: none; } }
-    @media (max-width: 640px) {
-      .try-page { display: none; }
-      .try-side { width: 100%; border-right: none; }
-      .try-body { height: 460px; }
+      .how, .else { grid-template-columns: 1fr; gap: 26px; }
+      .cmp { grid-template-columns: 1fr; }
+      .cmp > div + div { border-left: none; border-top: 1px solid var(--rule); }
     }
 
     /* ── The decisions: one animated before-and-after, then four small ones ──
        Everything here is drawn with boxes from the page's own tokens. */
-    .ba, .dec { --card: #FFFFFF; --soft: #EEEDE9; --bar: #D9D8D3; }
-    @media (prefers-color-scheme: dark) { .ba, .dec { --card: #1F1F1F; --soft: #2A2A2A; --bar: #3A3A3C; } }
+    .ba, .dec, .how, .cmp, .else { --card: #FFFFFF; --soft: #EEEDE9; --bar: #D9D8D3; }
+    @media (prefers-color-scheme: dark) { .ba, .dec, .how, .cmp, .else { --card: #1F1F1F; --soft: #2A2A2A; --bar: #3A3A3C; } }
     .ba-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 22px; }
     .ba-note { font-size: 13px; color: var(--mid); line-height: 1.5; }
     .ba-switch { display: inline-flex; padding: 2px; border-radius: 9px; background: var(--hover-row); border: 1px solid var(--rule); flex-shrink: 0; }
@@ -405,49 +322,94 @@
       </div>
     </div>
 
-    <!-- ── How it works: the two steps, drawn, then how the approach was chosen. ── -->
+    <!-- ── How it works: three steps, each drawn with the same six tabs, then by hand against one press. ── -->
     <div class="cs-section">
       <p class="cs-label">How it works</p>
-      <p class="cs-body-text">
-        <strong>Group by meaning, then name in words.</strong> Starling reads what each page is about and puts similar pages together. Then Apple Intelligence gives each group a short name.
-      </p>
+      <p class="lead-claim">Organize does the sorting you would do by hand.</p>
 
-      <svg class="idea-flow" viewBox="0 0 640 150" role="img" aria-label="Open tabs are grouped by meaning, so similar pages land together. Then each group gets a short name.">
-        <g class="idea-tabs">
-          <rect x="0" y="22" width="120" height="14" rx="3"/><rect x="0" y="44" width="120" height="14" rx="3"/>
-          <rect x="0" y="66" width="120" height="14" rx="3"/><rect x="0" y="88" width="120" height="14" rx="3"/>
-          <rect x="0" y="110" width="120" height="14" rx="3"/>
-        </g>
-        <text class="idea-cap" x="60" y="146" text-anchor="middle">Open tabs</text>
-        <path class="idea-line" d="M128 73 H162"/>
-        <rect class="idea-box" x="170" y="44" width="172" height="58" rx="10"/>
-        <text class="idea-name" x="256" y="68" text-anchor="middle">Group by meaning</text>
-        <text class="idea-cap" x="256" y="86" text-anchor="middle">similar pages land together</text>
-        <path class="idea-line" d="M350 73 H384"/>
-        <rect class="idea-box idea-focus" x="392" y="44" width="132" height="58" rx="10"/>
-        <text class="idea-name" x="458" y="68" text-anchor="middle">Name in words</text>
-        <text class="idea-cap" x="458" y="86" text-anchor="middle">one name per group</text>
-        <path class="idea-line" d="M532 73 H548"/>
-        <g class="idea-groups">
-          <circle cx="560" cy="40" r="4" class="g1"/><text class="idea-cap idea-left" x="570" y="44">Typography</text>
-          <circle cx="560" cy="66" r="4" class="g2"/><text class="idea-cap idea-left" x="570" y="70">Sourdough</text>
-          <circle cx="560" cy="92" r="4" class="g3"/><text class="idea-cap idea-left" x="570" y="96">Lisbon trip</text>
-        </g>
-      </svg>
+      <ol class="how">
+        <li>
+          <div class="how-card is-loose" role="img" aria-label="Six open tabs in the order they were opened, with the topics mixed up.">
+            <div class="how-row"><u class="w">W</u><span>Pastel de nata</span></div>
+            <div class="how-row"><u class="g">G</u><span>Inter, Google Fonts</span></div>
+            <div class="how-row"><u class="w">W</u><span>Sourdough</span></div>
+            <div class="how-row"><u class="l">lp</u><span>Lisbon Travel 2026</span></div>
+            <div class="how-row"><u class="k">K</u><span>Sourdough Starter Recipe</span></div>
+            <div class="how-row"><u class="w">W</u><span>Typography</span></div>
+          </div>
+          <p class="how-title"><span>1</span>It reads every tab.</p>
+          <p class="how-why">The title, and what the page says about itself.</p>
+        </li>
+        <li>
+          <div class="how-card" role="img" aria-label="The same six tabs, now in three pairs. Each pair is about one topic, from two different websites. The pairs have no names yet.">
+            <div><div class="how-head"><i style="background:#0A84FF"></i><b></b></div><div class="how-row"><u class="w">W</u><span>Pastel de nata</span></div><div class="how-row"><u class="l">lp</u><span>Lisbon Travel 2026</span></div></div>
+            <div><div class="how-head"><i style="background:#34C759"></i><b></b></div><div class="how-row"><u class="g">G</u><span>Inter, Google Fonts</span></div><div class="how-row"><u class="w">W</u><span>Typography</span></div></div>
+            <div><div class="how-head"><i style="background:#FF9500"></i><b></b></div><div class="how-row"><u class="w">W</u><span>Sourdough</span></div><div class="how-row"><u class="k">K</u><span>Sourdough Starter Recipe</span></div></div>
+          </div>
+          <p class="how-title"><span>2</span>It puts related pages together.</p>
+          <p class="how-why">By topic, not by website. Pastel de nata is a Lisbon pastry, so it goes with the Lisbon tabs.</p>
+        </li>
+        <li>
+          <div class="how-card" role="img" aria-label="The same three pairs, now named Lisbon travel, Typography and Sourdough baking.">
+            <div><div class="how-head"><i style="background:#0A84FF"></i>Lisbon travel</div><div class="how-row"><u class="w">W</u><span>Pastel de nata</span></div><div class="how-row"><u class="l">lp</u><span>Lisbon Travel 2026</span></div></div>
+            <div><div class="how-head"><i style="background:#34C759"></i>Typography</div><div class="how-row"><u class="g">G</u><span>Inter, Google Fonts</span></div><div class="how-row"><u class="w">W</u><span>Typography</span></div></div>
+            <div><div class="how-head"><i style="background:#FF9500"></i>Sourdough baking</div><div class="how-row"><u class="w">W</u><span>Sourdough</span></div><div class="how-row"><u class="k">K</u><span>Sourdough Starter Recipe</span></div></div>
+          </div>
+          <p class="how-title"><span>3</span>It names each group.</p>
+          <p class="how-why">Apple Intelligence writes a short name that says what is inside.</p>
+        </li>
+      </ol>
 
-      <p class="cs-body-text" style="margin-top:26px;">
-        The split was chosen by testing, on 43 tabs with a known right answer. Letting one language model do the whole job took 8 to 19 seconds and grouped no better. Splitting it takes about one second. For the grouping step, seven models were compared, Apple&rsquo;s built-in one among them. The smallest stayed, because models five times its size grouped no better.
+      <dl class="cmp">
+        <div>
+          <dt>By hand</dt>
+          <dd>Read every title.<br>Decide the groups.<br>Drag each tab.<br>Type each name.</dd>
+        </div>
+        <div>
+          <dt>With Starling</dt>
+          <dd><span class="cmp-pill"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span><strong>One press. About a second.</strong></dd>
+        </div>
+      </dl>
+
+      <p class="cs-body-text how-note">
+        Why two steps and not one: in a test with 43 tabs, asking a single model to do the whole job took 8 to 19 seconds, and the groups were no better. Grouping first and naming second takes about a second.
       </p>
     </div>
 
-    <!-- ── What's next: capabilities, not apologies. ── -->
+    <!-- ── What's next: the same button on other piles. Not built yet, so it says "could". ── -->
     <div class="cs-section">
       <p class="cs-label">What&rsquo;s next</p>
-      <ul class="reflection-list">
-        <li><strong>Organize while you browse.</strong> New tabs find their group as they open, so the list never piles up.</li>
-        <li><strong>Find any tab by meaning.</strong> Type what you remember, like &ldquo;that article about bread hydration&rdquo;, and Starling finds the tab.</li>
-        <li><strong>Sort your own way.</strong> Say how you want your tabs grouped, in plain words.</li>
-      </ul>
+      <p class="lead-claim">The same button could work on anything that piles up and never gets sorted: downloads, screenshots, saved links.</p>
+
+      <div class="else">
+        <figure class="else-item">
+          <div class="else-card" role="img" aria-label="A downloads folder sorted into Invoices, Fonts and Boarding passes, with an Organize button under it.">
+            <div><div class="how-head"><i style="background:#0A84FF"></i>Invoices</div><div class="else-row"><u></u><s style="width:96px"></s></div><div class="else-row"><u></u><s style="width:70px"></s></div></div>
+            <div><div class="how-head"><i style="background:#FF9500"></i>Fonts</div><div class="else-row"><u></u><s style="width:84px"></s></div><div class="else-row"><u></u><s style="width:110px"></s></div></div>
+            <div><div class="how-head"><i style="background:#34C759"></i>Boarding passes</div><div class="else-row"><u></u><s style="width:102px"></s></div><div class="else-row"><u></u><s style="width:64px"></s></div></div>
+            <span class="m-pill" style="left:12px; right:12px; bottom:12px"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span>
+          </div>
+          <figcaption>Downloads</figcaption>
+        </figure>
+        <figure class="else-item">
+          <div class="else-card" role="img" aria-label="Screenshots sorted into Receipts, Design ideas and Recipes, with an Organize button under them.">
+            <div><div class="how-head"><i style="background:#0A84FF"></i>Receipts</div><div class="else-thumbs"><b></b><b></b><b></b></div></div>
+            <div><div class="how-head"><i style="background:#FF9500"></i>Design ideas</div><div class="else-thumbs"><b></b><b></b></div></div>
+            <div><div class="how-head"><i style="background:#34C759"></i>Recipes</div><div class="else-thumbs"><b></b><b></b><b></b></div></div>
+            <span class="m-pill" style="left:12px; right:12px; bottom:12px"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span>
+          </div>
+          <figcaption>Screenshots</figcaption>
+        </figure>
+        <figure class="else-item">
+          <div class="else-card" role="img" aria-label="Saved links sorted into To read, Gift ideas and Apartments, with an Organize button under them.">
+            <div><div class="how-head"><i style="background:#0A84FF"></i>To read</div><div class="else-row"><u class="round"></u><s style="width:96px"></s></div><div class="else-row"><u class="round"></u><s style="width:70px"></s></div></div>
+            <div><div class="how-head"><i style="background:#FF9500"></i>Gift ideas</div><div class="else-row"><u class="round"></u><s style="width:84px"></s></div><div class="else-row"><u class="round"></u><s style="width:110px"></s></div></div>
+            <div><div class="how-head"><i style="background:#34C759"></i>Apartments</div><div class="else-row"><u class="round"></u><s style="width:102px"></s></div><div class="else-row"><u class="round"></u><s style="width:64px"></s></div></div>
+            <span class="m-pill" style="left:12px; right:12px; bottom:12px"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span>
+          </div>
+          <figcaption>Saved links</figcaption>
+        </figure>
+      </div>
     </div>
 
   </div>
