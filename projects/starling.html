@@ -115,6 +115,114 @@
     .lead-claim a { color: var(--accent); text-decoration: none; }
     @media (hover: hover) and (pointer: fine) { .lead-claim a:hover { text-decoration: underline; } }
 
+    /* ── Back to work ── */
+    .back-work { max-width: 700px; margin: 0 auto; padding: 0 28px 64px; }
+    .back-work a {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.875rem; font-weight: 500;
+      color: var(--ink); text-decoration: none;
+      transition: color 0.15s ease-out;
+    }
+    .back-work a .arrow { color: var(--accent); transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1); }
+    @media (hover: hover) and (pointer: fine) {
+      .back-work a:hover { color: var(--accent); }
+      .back-work a:hover .arrow { transform: translateX(-3px); }
+    }
+
+    /* ── Footer ── */
+    .pf-footer {
+      max-width: 700px; margin: 0 auto;
+      border-top: 1px solid var(--rule);
+      padding: 26px 28px 52px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .pf-footer-copy { font-size: 0.76rem; color: var(--mid); }
+    .pf-footer-links { display: flex; gap: 22px; list-style: none; }
+    .pf-footer-links a {
+      font-size: 0.76rem; color: var(--mid);
+      text-decoration: none; transition: color 0.15s ease-out;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .pf-footer-links a:hover { color: var(--accent); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .back-work a .arrow { transition: none; }
+    }
+
+    @media (max-width: 540px) {
+      .pf-nav, .cs-header, .video-hero, .cs-body, .back-work { padding-left: 20px; padding-right: 20px; }
+      .pf-nav { padding-top: 28px; }
+      .pf-footer { flex-direction: column; gap: 14px; align-items: flex-start; padding-left: 20px; padding-right: 20px; }
+    }
+
+    /* ── Try it: a working mini Starling ──
+       Same groups as the real app made for these 16 tabs. Rows are absolutely
+       placed; moving them between slots is the animation. */
+    .try { --win: #FFFFFF; --side: #F7F6F3; --line: #E6E5E1; --pick: #E4E3DF; --hov: #ECEBE7; --btn: #E8E7E3; --btn-h: #DFDED9; --lane: #EEEDE9; }
+    @media (prefers-color-scheme: dark) {
+      .try { --win: #1F1F1F; --side: #1A1A1A; --line: #2E2E2E; --pick: #2E2E30; --hov: #262628; --btn: #2A2A2C; --btn-h: #333336; --lane: #2A2A2A; }
+    }
+    .try-win { border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; background: var(--win); }
+    .try-bar { height: 40px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-bottom: 1px solid var(--line); background: var(--side); }
+    .try-lights { display: flex; gap: 6px; }
+    .try-lights i { width: 10px; height: 10px; border-radius: 50%; display: block; }
+    .try-url { flex: 1; min-width: 0; height: 24px; border-radius: 12px; background: var(--win); border: 1px solid var(--line);
+               display: flex; align-items: center; padding: 0 12px; font-size: 12px; color: var(--mid);
+               white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .try-body { display: flex; height: 500px; }
+    .try-side { width: 268px; flex-shrink: 0; background: var(--side); border-right: 1px solid var(--line); display: flex; flex-direction: column; }
+    .try-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; }
+    .try-list { position: relative; transition: height .5s ease; }
+    .try-row, .try-head { position: absolute; left: 8px; right: 8px; transition: top .5s cubic-bezier(.22,.9,.24,1), opacity .3s ease, background .15s ease; }
+    .try-row { height: 28px; border-radius: 7px; }
+    .try-row.is-picked { background: var(--pick); }
+    @media (hover: hover) and (pointer: fine) { .try-row:not(.is-picked):hover { background: var(--hov); } }
+    .try-rowmain { all: unset; box-sizing: border-box; position: absolute; inset: 0; padding: 0 28px 0 8px; display: flex; align-items: center; gap: 8px; cursor: pointer; border-radius: 7px; }
+    .try-fav { width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 9.5px; font-weight: 700; box-shadow: inset 0 0 0 1px var(--rule); }
+    .try-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13px; color: var(--ink); }
+    .try-x { all: unset; position: absolute; right: 4px; top: 4px; width: 20px; height: 20px; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: var(--mid); opacity: 0; cursor: pointer; }
+    .try-row:hover .try-x, .try-x:focus-visible { opacity: 1; }
+    @media (hover: none) { .try-row.is-picked .try-x { opacity: 1; } }
+    .try-x:hover { background: var(--btn-h); color: var(--ink); }
+    .try-head { height: 24px; }
+    .try-headbtn { all: unset; box-sizing: border-box; width: 100%; height: 24px; padding: 0 8px; display: flex; align-items: center; gap: 6px; cursor: pointer; border-radius: 6px; }
+    .try-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .try-name { font-size: 11.5px; font-weight: 600; color: var(--mid); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .try-count { margin-left: auto; font-size: 11px; color: var(--mid); font-variant-numeric: tabular-nums; }
+    .try-chev { transition: transform .2s ease; color: var(--mid); }
+    .try-foot { border-top: 1px solid var(--line); padding: 10px 10px 8px; display: flex; flex-direction: column; gap: 8px; }
+    .try-actions { display: flex; gap: 8px; }
+    .try-organize { all: unset; box-sizing: border-box; height: 32px; border-radius: 16px; background: var(--btn); display: flex; align-items: center; justify-content: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--ink); cursor: pointer; transition: transform .12s ease-out, background .15s ease-out; }
+    .try-organize { flex: 1; }
+    @media (hover: hover) and (pointer: fine) { .try-organize:hover { background: var(--btn-h); } }
+    .try-organize:active { transform: scale(0.97); }
+    .try-prompt { height: 32px; border-radius: 16px; background: var(--win); border: 1.5px solid var(--accent); display: flex; align-items: center; gap: 8px; padding: 0 12px; box-sizing: border-box; }
+    .try-input { all: unset; flex: 1; min-width: 0; font-size: 13px; color: var(--ink); }
+    .try-input::placeholder { color: var(--mid); }
+    .try-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .try-chip { all: unset; box-sizing: border-box; height: 24px; padding: 0 10px; border-radius: 12px; border: 1px solid var(--rule); font-size: 12px; color: var(--ink); display: inline-flex; align-items: center; cursor: pointer; background: var(--win); }
+    @media (hover: hover) and (pointer: fine) { .try-chip:hover { border-color: var(--accent); color: var(--accent); } }
+    .try-status { font-size: 11px; line-height: 1.45; color: var(--mid); padding: 0 4px; min-height: 16px; }
+    .try-page { flex: 1; min-width: 0; background: var(--win); padding: 28px 28px 0; display: flex; flex-direction: column; gap: 14px; overflow: hidden; }
+    .try-host { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--mid); }
+    .try-ptitle { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; color: var(--ink); }
+    .try-hero { height: 150px; border-radius: 10px; display: flex; align-items: flex-end; padding: 14px; font-size: 44px; font-weight: 600; letter-spacing: -0.03em; }
+    .try-lines { display: flex; flex-direction: column; gap: 9px; padding-top: 4px; }
+    .try-lines i { display: block; height: 8px; border-radius: 4px; background: var(--lane); }
+    .try-caption { display: flex; flex-wrap: wrap; gap: 6px 14px; justify-content: space-between; margin-top: 12px; font-size: 0.75rem; line-height: 1.6; color: var(--mid); }
+    .try-reset { all: unset; cursor: pointer; color: var(--accent); font-weight: 500; }
+    @media (hover: hover) and (pointer: fine) { .try-reset:hover { text-decoration: underline; } }
+    .try button:focus-visible, .try-input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .try-spin { animation: try-spin .9s linear infinite; }
+    @keyframes try-spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { .try-row, .try-head, .try-list { transition: none; } }
+    @media (max-width: 640px) {
+      .try-page { display: none; }
+      .try-side { width: 100%; border-right: none; }
+      .try-body { height: 460px; }
+    }
+
     /* ── How it works: three steps on the left, one drawing on the right.
        The same six tabs move as the steps change. ── */
     .how { margin-top: 26px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: center; }
