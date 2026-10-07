@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Starling &middot; Ladan Johari</title>
-  <meta name="description" content="A Mac browser that sorts your open tabs into named groups with one button, using small AI models that run on your own computer." />
+  <meta name="description" content="A browser that sorts your open tabs into named groups with one press." />
   <meta name="robots" content="index, follow" />
   <meta name="color-scheme" content="light dark" />
   <meta name="theme-color" content="#F7F6F3" media="(prefers-color-scheme: light)" />
@@ -14,7 +14,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
   <meta property="og:title" content="Starling &middot; Ladan Johari" />
-  <meta property="og:description" content="A Mac browser that sorts your open tabs into named groups with one button, using small AI models that run on your own computer." />
+  <meta property="og:description" content="A browser that sorts your open tabs into named groups with one press." />
   <meta property="og:url" content="https://ladanjohari.com/projects/starling.html" />
   <meta property="og:type" content="article" />
   <meta property="og:image" content="https://ladanjohari.com/assets/og-starling.jpg" />
@@ -112,72 +112,8 @@
       color: var(--mid); max-width: 560px;
     }
     .cs-body-text strong { color: var(--ink); font-weight: 600; }
-
-    /* ── Stepper: the interaction, as the hero ──
-       Three stills of the real product, one focus frame per step.
-       Replace the images and the `spots` array in the script below. */
-    .stepper {
-      margin-top: 0;
-      border: 1px solid var(--rule); border-radius: 10px;
-      overflow: hidden; background: #0a0a0a;
-    }
-    /* Set this to your stills' real aspect ratio (width/height in px). */
-    .stepper-frame { position: relative; width: 100%; aspect-ratio: 1600/1004; overflow: hidden; }
-    .stepper-frame img {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover; opacity: 0; transition: opacity 0.25s ease-out;
-    }
-    .stepper-frame img.is-active { opacity: 1; }
-    .stepper-spotlight { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
-    .stepper-nav { display: flex; border-top: 1px solid var(--rule); background: var(--bg); }
-    .stepper-tab {
-      flex: 1; padding: 14px 12px;
-      border: none; background: none; cursor: pointer; text-align: left;
-      border-right: 1px solid var(--rule);
-      transition: background 0.15s ease-out, transform 0.16s ease-out;
-    }
-    .stepper-tab:last-child { border-right: none; }
-    .stepper-tab:first-child { border-top-left-radius: 9px; border-bottom-left-radius: 9px; }
-    .stepper-tab:last-child { border-top-right-radius: 9px; border-bottom-right-radius: 9px; }
-    .stepper-tab:active { transform: scale(0.97); }
-    .stepper-tab.is-active { background: var(--hover-row); box-shadow: inset 0 0 0 2px var(--accent); }
-    .stepper-tab:focus-visible {
-      outline: none; box-shadow: inset 0 0 0 2px var(--accent); background: var(--hover-row);
-    }
-    @media (hover: hover) and (pointer: fine) {
-      .stepper-tab:hover { background: var(--hover-row); }
-    }
-    .stepper-tab-num {
-      font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
-      color: var(--accent); display: block; margin-bottom: 5px;
-    }
-    .stepper-tab-title {
-      font-size: 13px; font-weight: 600; color: var(--ink);
-      display: block; line-height: 1.35; letter-spacing: -0.01em;
-    }
-    .stepper-tab-desc {
-      font-size: 12px; color: var(--mid); display: block;
-      line-height: 1.5; margin-top: 4px;
-    }
-
-    /* ── Idea diagram ── */
-    .idea-flow { display: block; width: 100%; height: auto; margin-top: 26px; overflow: visible; }
-    .idea-tabs rect { fill: var(--hover-row); stroke: var(--rule); stroke-width: 1; }
-    .idea-line { stroke: var(--mid); stroke-width: 1; fill: none; }
-    .idea-box { fill: var(--bg); stroke: var(--rule); stroke-width: 1; }
-    .idea-box.idea-focus { stroke: var(--accent); stroke-width: 1.5; }
-    .idea-name { fill: var(--ink); font-size: 13px; font-weight: 600; font-family: inherit; }
-    .idea-cap { fill: var(--mid); font-size: 11px; font-family: inherit; }
-    .idea-left { text-anchor: start; }
-    .idea-groups .g1 { fill: #34C759; } .idea-groups .g2 { fill: #FF9500; } .idea-groups .g3 { fill: var(--accent); }
-
-    /* ── Forward-looking list ── */
-    .reflection-list { margin-top: 20px; list-style: none; display: flex; flex-direction: column; gap: 14px; }
-    .reflection-list li {
-      font-size: 13px; color: var(--mid); line-height: 1.7;
-      padding-left: 14px; border-left: 2px solid var(--rule);
-    }
-    .reflection-list li strong { color: var(--ink); font-weight: 600; }
+    .lead-claim a { color: var(--accent); text-decoration: none; }
+    @media (hover: hover) and (pointer: fine) { .lead-claim a:hover { text-decoration: underline; } }
 
     /* ── Back to work ── */
     .back-work { max-width: 700px; margin: 0 auto; padding: 0 28px 64px; }
@@ -211,17 +147,12 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .stepper-frame img, .stepper-tab { transition: none; }
       .back-work a .arrow { transition: none; }
     }
 
     @media (max-width: 540px) {
       .pf-nav, .cs-header, .video-hero, .cs-body, .back-work { padding-left: 20px; padding-right: 20px; }
       .pf-nav { padding-top: 28px; }
-      .stepper-nav { flex-direction: column; }
-      .stepper-tab { border-right: none; border-bottom: 1px solid var(--rule); }
-      .stepper-tab:first-child { border-top-left-radius: 9px; border-top-right-radius: 9px; border-bottom-left-radius: 0; }
-      .stepper-tab:last-child { border-bottom: none; border-top-right-radius: 0; border-bottom-left-radius: 9px; border-bottom-right-radius: 9px; }
       .pf-footer { flex-direction: column; gap: 14px; align-items: flex-start; padding-left: 20px; padding-right: 20px; }
     }
 
@@ -262,11 +193,10 @@
     .try-chev { transition: transform .2s ease; color: var(--mid); }
     .try-foot { border-top: 1px solid var(--line); padding: 10px 10px 8px; display: flex; flex-direction: column; gap: 8px; }
     .try-actions { display: flex; gap: 8px; }
-    .try-organize, .try-say { all: unset; box-sizing: border-box; height: 32px; border-radius: 16px; background: var(--btn); display: flex; align-items: center; justify-content: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--ink); cursor: pointer; transition: transform .12s ease-out, background .15s ease-out; }
+    .try-organize { all: unset; box-sizing: border-box; height: 32px; border-radius: 16px; background: var(--btn); display: flex; align-items: center; justify-content: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--ink); cursor: pointer; transition: transform .12s ease-out, background .15s ease-out; }
     .try-organize { flex: 1; }
-    .try-say { padding: 0 12px; font-size: 12px; font-weight: 500; }
-    @media (hover: hover) and (pointer: fine) { .try-organize:hover, .try-say:hover { background: var(--btn-h); } }
-    .try-organize:active, .try-say:active { transform: scale(0.97); }
+    @media (hover: hover) and (pointer: fine) { .try-organize:hover { background: var(--btn-h); } }
+    .try-organize:active { transform: scale(0.97); }
     .try-prompt { height: 32px; border-radius: 16px; background: var(--win); border: 1.5px solid var(--accent); display: flex; align-items: center; gap: 8px; padding: 0 12px; box-sizing: border-box; }
     .try-input { all: unset; flex: 1; min-width: 0; font-size: 13px; color: var(--ink); }
     .try-input::placeholder { color: var(--mid); }
@@ -292,6 +222,119 @@
       .try-side { width: 100%; border-right: none; }
       .try-body { height: 460px; }
     }
+
+    /* ── How it works: three steps on the left, one drawing on the right.
+       The same six tabs move as the steps change. ── */
+    .how { margin-top: 26px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: center; }
+    .how-steps { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .how-step { all: unset; box-sizing: border-box; display: block; width: 100%; cursor: pointer; padding: 10px 0 10px 16px; border-left: 2px solid var(--rule); transition: border-color .2s ease-out; }
+    .how-step:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .how-step b { display: block; font-size: 1rem; font-weight: 600; letter-spacing: -0.015em; line-height: 1.45; color: var(--ink); }
+    .how-step b i { font-style: normal; font-weight: 500; color: var(--mid); margin-right: 8px; transition: color .2s ease-out; }
+    .how-step span { display: block; font-size: 0.925rem; line-height: 1.6; color: var(--mid); margin-top: 2px; }
+    .how-step[aria-pressed="true"] { border-left-color: var(--accent); }
+    .how-step[aria-pressed="true"] b i { color: var(--accent); }
+    .how-stage { position: relative; height: 282px; border: 1px solid var(--rule); border-radius: 10px; background: var(--card); overflow: hidden; }
+    .how-row, .how-head { position: absolute; left: 16px; right: 16px; display: flex; align-items: center; white-space: nowrap; transition: top .6s cubic-bezier(.22,.9,.24,1), opacity .35s ease; }
+    .how-row { height: 26px; gap: 9px; font-size: 13px; color: var(--ink); }
+    .how-row span { overflow: hidden; text-overflow: ellipsis; }
+    .how-row u { width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; line-height: 1; border: 1px solid var(--rule); background: #FFFFFF; color: #111111; }
+    .how-row u.w { font-family: Georgia, serif; font-size: 10.5px; }
+    .how-row u.g { background: #1A73E8; color: #FFFFFF; border-color: transparent; }
+    .how-row u.l { background: #2F6FD6; color: #FFFFFF; border-color: transparent; font-size: 8px; }
+    .how-row u.k { background: #C8102E; color: #FFFFFF; border-color: transparent; }
+    .how-head { height: 22px; gap: 7px; font-size: 12px; font-weight: 600; color: var(--ink); opacity: 0; }
+    .how-head i { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .how-head span { opacity: 0; transition: opacity .4s ease; }
+    .how-stage[data-step="2"] .how-head, .how-stage[data-step="3"] .how-head { opacity: 1; transition-delay: .3s; }
+    .how-stage[data-step="3"] .how-head span { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) { .how-row, .how-head, .how-head span { transition: none; } }
+
+    /* By hand against one press: two plain rows. */
+    .cmp { margin-top: 36px; border-top: 1px solid var(--rule); }
+    .cmp > div { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--rule); align-items: baseline; }
+    .cmp dt { font-size: 13px; font-weight: 500; color: var(--mid); }
+    .cmp dd { font-size: 0.925rem; line-height: 1.6; color: var(--mid); }
+    .cmp .is-new dt { color: var(--ink); font-weight: 600; }
+    .cmp .is-new dd { color: var(--ink); font-weight: 600; }
+    .how-note { margin-top: 20px; }
+
+    /* ── More applications: the same button on three other piles ── */
+    .else { margin-top: 24px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .else-card { border: 1px solid var(--rule); border-radius: 10px; background: var(--card); padding: 14px 14px 52px; position: relative; overflow: hidden; }
+    .else-title { font-size: 0.925rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); padding-bottom: 11px; margin-bottom: 12px; border-bottom: 1px solid var(--rule); }
+    .else-group + .else-group { margin-top: 12px; }
+    .else-name { height: 18px; display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+    .else-name i { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .else-row { height: 15px; display: flex; align-items: center; gap: 7px; }
+    .else-row u { width: 8px; height: 10px; border-radius: 2px; background: var(--bar); flex-shrink: 0; }
+    .else-row u.round { height: 8px; border-radius: 50%; }
+    .else-row s { height: 4px; border-radius: 2px; background: var(--bar); display: block; }
+    .else-thumbs { height: 30px; display: flex; align-items: center; gap: 5px; }
+    .else-thumbs b { width: 34px; height: 23px; border-radius: 3px; background: var(--soft); border: 1px solid var(--rule); }
+    @media (max-width: 540px) {
+      .how { grid-template-columns: 1fr; gap: 18px; }
+      .how-stage { order: -1; }
+      .else { grid-template-columns: 1fr; }
+      .cmp > div { grid-template-columns: 1fr; gap: 2px; }
+    }
+
+    /* ── The decisions: one animated before-and-after, then four small ones ──
+       Everything here is drawn with boxes from the page's own tokens. */
+    .ba, .dec, .how, .else { --card: #FFFFFF; --soft: #EEEDE9; --bar: #D9D8D3; }
+    @media (prefers-color-scheme: dark) { .ba, .dec, .how, .else { --card: #1F1F1F; --soft: #2A2A2A; --bar: #3A3A3C; } }
+    .ba-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 22px; }
+    .ba-note { font-size: 13px; color: var(--mid); line-height: 1.5; }
+    .ba-switch { display: inline-flex; padding: 2px; border-radius: 9px; background: var(--hover-row); border: 1px solid var(--rule); flex-shrink: 0; }
+    .ba-switch button { all: unset; cursor: pointer; font-size: 12px; font-weight: 500; color: var(--mid); padding: 5px 12px; border-radius: 7px; transition: background .15s ease-out, color .15s ease-out; }
+    .ba-switch button[aria-pressed="true"] { background: var(--card); color: var(--ink); box-shadow: inset 0 0 0 1px var(--rule); }
+    .ba-switch button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+    .ba-fit { margin-top: 12px; position: relative; width: 100%; }
+    .ba-stage { position: absolute; left: 0; top: 0; width: 640px; height: 400px; transform-origin: 0 0;
+                border: 1px solid var(--rule); border-radius: 12px; background: var(--card); overflow: hidden; }
+    .ba-toolbar { position: absolute; left: 0; top: 0; right: 0; height: 30px; border-bottom: 1px solid var(--rule); background: var(--bg); }
+    .ba-toolbar i { position: absolute; top: 11px; width: 8px; height: 8px; border-radius: 50%; background: var(--bar); }
+    .ba-toolbar b { position: absolute; left: 220px; top: 8px; width: 260px; height: 14px; border-radius: 7px; background: var(--soft); }
+    .ba-strip { position: absolute; left: 0; top: 30px; right: 0; height: 26px; border-bottom: 1px solid var(--rule); background: var(--bg); transition: opacity .4s ease; }
+    .ba-side { position: absolute; left: 0; top: 30px; width: 200px; bottom: 0; background: var(--bg); border-right: 1px solid var(--rule); opacity: 0; transition: opacity .45s ease; }
+    .ba-page { position: absolute; left: 0; top: 56px; right: 0; bottom: 0; padding: 26px 36px; transition: left .6s cubic-bezier(.22,.9,.24,1), top .6s cubic-bezier(.22,.9,.24,1); }
+    .ba-page i { display: block; height: 8px; border-radius: 4px; background: var(--soft); margin-bottom: 10px; }
+    .ba-page i.h { height: 14px; width: 46%; background: var(--bar); margin-bottom: 18px; }
+    .ba-page i.img { height: 110px; border-radius: 8px; margin: 16px 0; }
+    .ba-chip { position: absolute; border-radius: 5px; background: var(--hover-row);
+               transition: left .7s cubic-bezier(.22,.9,.24,1), top .7s cubic-bezier(.22,.9,.24,1), width .7s cubic-bezier(.22,.9,.24,1), height .7s cubic-bezier(.22,.9,.24,1), background .4s ease; }
+    .ba-chip u { position: absolute; left: 9px; top: 50%; width: 9px; height: 9px; margin-top: -4.5px; border-radius: 2.5px; }
+    .ba-chip s { position: absolute; left: 26px; top: 50%; height: 4px; margin-top: -2px; border-radius: 2px; background: var(--bar); opacity: 0; transition: opacity .35s ease .3s; }
+    .ba-group { position: absolute; left: 12px; width: 180px; height: 14px; display: flex; align-items: center; gap: 6px; opacity: 0; transition: opacity .4s ease .35s; }
+    .ba-group i { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .ba-group span { font-size: 10.5px; font-weight: 600; color: var(--mid); white-space: nowrap; }
+    .ba-stage.is-after .ba-strip { opacity: 0; }
+    .ba-stage.is-after .ba-side { opacity: 1; }
+    .ba-stage.is-after .ba-page { left: 200px; top: 30px; }
+    .ba-stage.is-after .ba-chip { background: transparent; }
+    .ba-stage.is-after .ba-chip s, .ba-stage.is-after .ba-group { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) { .ba-stage *, .ba-chip { transition: none !important; } }
+
+    .dec { margin-top: 44px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: center; }
+    @media (max-width: 540px) { .dec { grid-template-columns: 1fr; gap: 16px; } }
+    .dec-title { font-size: 1rem; font-weight: 600; letter-spacing: -0.015em; color: var(--ink); line-height: 1.45; }
+    .dec-why { font-size: 0.925rem; line-height: 1.7; color: var(--mid); margin-top: 6px; }
+    .dec-card { border: 1px solid var(--rule); border-radius: 10px; background: var(--card); height: 168px; position: relative; overflow: hidden; }
+    /* Drawing parts shared by the small figures. */
+    .m-toolbar { position: absolute; left: 0; top: 0; right: 0; height: 30px; border-bottom: 1px solid var(--rule); background: var(--bg); }
+    .m-toolbar b { position: absolute; left: 22%; top: 8px; width: 46%; height: 14px; border-radius: 7px; background: var(--soft); }
+    .m-side { position: absolute; left: 0; top: 30px; bottom: 0; width: 48%; background: var(--bg); border-right: 1px solid var(--rule); }
+    .m-side.full { top: 0; }
+    .m-row { position: absolute; left: 12px; height: 12px; display: flex; align-items: center; gap: 7px; }
+    .m-row u { width: 8px; height: 8px; border-radius: 2.5px; background: var(--bar); flex-shrink: 0; }
+    .m-row s { height: 4px; border-radius: 2px; background: var(--bar); display: block; }
+    .m-pill { position: absolute; height: 24px; border-radius: 12px; background: var(--hover-row); border: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 11px; font-weight: 600; color: var(--ink); }
+    .m-ring { box-shadow: 0 0 0 2px var(--accent); border-color: transparent; }
+    .m-head { position: absolute; left: 12px; right: 12px; height: 14px; display: flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 600; color: var(--mid); white-space: nowrap; }
+    .m-head i { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .m-head.mine { color: var(--ink); }
+    .m-head em { font-style: normal; font-weight: 500; font-size: 10px; color: var(--accent); margin-left: auto; }
+    .m-head em.quiet { color: var(--mid); }
   </style>
 </head>
 <body>
@@ -304,7 +347,7 @@
   <div class="cs-header">
     <h1 class="cs-title">Starling</h1>
     <p class="cs-descriptor">
-      Press Organize and your tabs sort themselves into named groups. Everything runs on your own Mac.
+      Too many tabs? One press, and your browser tidies its own tabs into groups.
     </p>
     <div class="cs-meta">
       <span>2026</span>
@@ -335,116 +378,122 @@
       </div>
     </div>
     <div class="try-caption">
-      <span>Try it: press Organize. Shift-click it, or press Say how, to sort your own way. The groups come from the real app; page previews are illustrations.</span>
+      <span id="try-hint">Try it yourself.</span>
       <button class="try-reset" id="try-reset">Start over</button>
     </div>
   </div>
 
-  <div class="video-hero">
-    <div class="stepper" id="stepper">
-      <div class="stepper-frame">
-        <img src="/assets/img/starling/step-01.jpg" alt="Starling with 16 open tabs in one unsorted list" class="is-active" data-step="0" />
-        <img src="/assets/img/starling/step-02.jpg" alt="The same tabs sorted into named groups: Lisbon travel, Photography, Sourdough baking, Typography and Interaction design" data-step="1" />
-        <img src="/assets/img/starling/step-03.jpg" alt="The Organize button turned into a text box with the words by site typed in" data-step="2" />
-        <svg class="stepper-spotlight" viewBox="0 0 1600 1004" preserveAspectRatio="none">
-          <defs>
-            <mask id="spot-mask">
-              <rect width="1600" height="1004" fill="white" />
-              <rect id="spot-window" x="0" y="0" width="100" height="100" rx="14" fill="black" />
-            </mask>
-          </defs>
-          <rect width="1600" height="1004" fill="rgba(0,0,0,0.45)" mask="url(#spot-mask)" />
-          <rect id="spot-border" x="0" y="0" width="100" height="100" rx="14"
-            fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" />
-        </svg>
-      </div>
-      <div class="stepper-nav">
-        <button class="stepper-tab is-active" data-step="0">
-          <span class="stepper-tab-num">01</span>
-          <span class="stepper-tab-title">Pile up</span>
-          <span class="stepper-tab-desc">16 tabs from a day of browsing, in one long list.</span>
-        </button>
-        <button class="stepper-tab" data-step="1">
-          <span class="stepper-tab-num">02</span>
-          <span class="stepper-tab-title">Organize</span>
-          <span class="stepper-tab-desc">One press. Similar pages gather into groups, and each group gets a name.</span>
-        </button>
-        <button class="stepper-tab" data-step="2">
-          <span class="stepper-tab-num">03</span>
-          <span class="stepper-tab-title">Say how</span>
-          <span class="stepper-tab-desc">Shift-click Organize and type how you want them sorted, like &ldquo;by site&rdquo;.</span>
-        </button>
-      </div>
-    </div>
-    <p class="video-caption">Working prototype, running on 16 real tabs. Click a step.</p>
-  </div>
-
   <div class="cs-body">
 
-    <!-- ── Why it matters: the problem in words a stranger has felt. Then who it's for. ── -->
+    <!-- ── Why it matters: the problem in words a stranger has felt. ── -->
     <div class="cs-section">
       <p class="cs-label">Why it matters</p>
-      <p class="lead-claim">Every browser lets tabs pile up. None of them puts them away for you.</p>
+      <p class="lead-claim">Too many tabs is so common that it has its own name, tab hoarding, and <a href="https://en.wikipedia.org/wiki/Tab_(interface)#Tab_hoarding" target="_blank" rel="noopener">its own section on Wikipedia</a>.</p>
       <p class="cs-body-text">
-        After a day of research there are forty tabs open, and finding one means reading tiny titles one by one. Sorting them by hand takes longer than the research did, so nobody does it.
-        <br><br>
-        <strong>It&rsquo;s for people who think in the browser:</strong> designers collecting references, developers reading documentation, anyone planning a trip.
+        Finding one tab means reading tiny titles one by one, and sorting them by hand takes longer than it is worth. So nobody does it.
       </p>
     </div>
 
-    <!-- ── The idea: name the concept, then SHOW it. A diagram beats four paragraphs. ── -->
+    <!-- ── Design decisions: today against Starling, then two choices, each drawn. ── -->
     <div class="cs-section">
-      <p class="cs-label">The idea</p>
-      <p class="cs-body-text">
-        <strong>Sort by meaning, name in words.</strong> A small model reads each page and places it by what it is about, so similar pages land together. A second small model then gives each group a short name.
-      </p>
+      <p class="cs-label">Design decisions</p>
 
+      <div class="ba" id="ba">
+        <div class="ba-head">
+          <span class="ba-note" id="ba-note" aria-live="polite">Today: 20 tabs in a row. Every title is gone.</span>
+          <span class="ba-switch" role="group" aria-label="Before and after">
+            <button id="ba-before" aria-pressed="true">Today</button>
+            <button id="ba-after" aria-pressed="false">Starling</button>
+          </span>
+        </div>
+        <div class="ba-fit" id="ba-fit">
+          <div class="ba-stage" id="ba-stage" role="img" aria-label="A browser with 20 tabs squeezed into one row, which become the same tabs organized in groups in a sidebar.">
+            <div class="ba-toolbar"><i style="left:12px"></i><i style="left:25px"></i><i style="left:38px"></i><b></b></div>
+            <div class="ba-strip"></div>
+            <div class="ba-side"></div>
+            <div class="ba-page"><i class="h"></i><i style="width:92%"></i><i style="width:84%"></i><i style="width:88%"></i><i class="img"></i><i style="width:90%"></i><i style="width:70%"></i></div>
+          </div>
+        </div>
+      </div>
 
-      <svg class="idea-flow" viewBox="0 0 640 150" role="img" aria-label="Open tabs go to MiniLM-L6, which finds which pages belong together, then to Qwen3 1.7B, which names each group.">
-        <g class="idea-tabs">
-          <rect x="0" y="22" width="120" height="14" rx="3"/><rect x="0" y="44" width="120" height="14" rx="3"/>
-          <rect x="0" y="66" width="120" height="14" rx="3"/><rect x="0" y="88" width="120" height="14" rx="3"/>
-          <rect x="0" y="110" width="120" height="14" rx="3"/>
-        </g>
-        <text class="idea-cap" x="60" y="146" text-anchor="middle">Open tabs</text>
-        <path class="idea-line" d="M128 73 H170"/>
-        <rect class="idea-box" x="178" y="44" width="168" height="58" rx="10"/>
-        <text class="idea-name" x="262" y="68" text-anchor="middle">MiniLM-L6</text>
-        <text class="idea-cap" x="262" y="86" text-anchor="middle">finds what belongs together</text>
-        <path class="idea-line" d="M354 73 H394"/>
-        <rect class="idea-box idea-focus" x="402" y="44" width="110" height="58" rx="10"/>
-        <text class="idea-name" x="457" y="68" text-anchor="middle">Qwen3 1.7B</text>
-        <text class="idea-cap" x="457" y="86" text-anchor="middle">names each group</text>
-        <path class="idea-line" d="M520 73 H540"/>
-        <g class="idea-groups">
-          <circle cx="552" cy="40" r="4" class="g1"/><text class="idea-cap idea-left" x="562" y="44">Typography</text>
-          <circle cx="552" cy="66" r="4" class="g2"/><text class="idea-cap idea-left" x="562" y="70">Sourdough</text>
-          <circle cx="552" cy="92" r="4" class="g3"/><text class="idea-cap idea-left" x="562" y="96">Lisbon trip</text>
-        </g>
-      </svg>
+      <div class="dec">
+        <div class="dec-text">
+          <p class="dec-title">Organize sits under the tabs, with its name on it.</p>
+          <p class="dec-why">The toolbar is for the page you are looking at: back, reload, the address. Organize acts on the list of tabs, so it sits right under that list. It carries its name because an icon alone does not say what it does.</p>
+        </div>
+        <div class="dec-card" role="img" aria-label="A browser with the tab list on the left and a labeled Organize button directly under it. The toolbar above holds only the address.">
+          <div class="m-toolbar"><b></b></div>
+          <div class="m-side"><div class="m-row" style="top:14px"><u></u><s style="width:84px"></s></div><div class="m-row" style="top:34px"><u></u><s style="width:66px"></s></div><div class="m-row" style="top:54px"><u></u><s style="width:90px"></s></div><div class="m-row" style="top:74px"><u></u><s style="width:58px"></s></div><span class="m-pill m-ring" style="left:12px; right:12px; bottom:12px"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span></div>
+        </div>
+      </div>
 
+      <div class="dec">
+        <div class="dec-text">
+          <p class="dec-title">Groups you name stay yours.</p>
+          <p class="dec-why">When you organize again, Starling re-sorts only the groups it made. A group you named stays exactly as you left it, with the same tabs inside.</p>
+        </div>
+        <div class="dec-card" role="img" aria-label="Three groups after organizing again. Bread baking, which you named, stays. The other two, made by Starling, were re-sorted.">
+          <div class="m-side full" style="width:100%; border-right:none">
+            <div class="m-head mine" style="top:12px"><i style="background:#FF9500"></i>Bread baking<em>yours, stays</em></div><div class="m-row" style="top:32px"><u></u><s style="width:120px"></s></div><div class="m-row" style="top:48px"><u></u><s style="width:96px"></s></div>
+            <div class="m-head" style="top:70px"><i style="background:#0A84FF"></i>wikipedia.org <svg width="8" height="8" viewBox="0 0 10 10" aria-hidden="true" style="opacity:.55"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg><em class="quiet">re-sorted</em></div><div class="m-row" style="top:90px"><u></u><s style="width:130px"></s></div><div class="m-row" style="top:106px"><u></u><s style="width:88px"></s></div>
+            <div class="m-head" style="top:128px"><i style="background:#34C759"></i>apple.com <svg width="8" height="8" viewBox="0 0 10 10" aria-hidden="true" style="opacity:.55"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg><em class="quiet">re-sorted</em></div><div class="m-row" style="top:148px"><u></u><s style="width:104px"></s></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <p class="cs-body-text" style="margin-top:26px;">
-        Letting one big language model do all of it was slower and no better: on a test of 43 tabs it took 18.6 seconds, against 2.5 for this split. Each model does the part it is good at, so Organize is fast enough to press without thinking. Nothing you have open leaves your Mac.
+    <!-- ── How it works: three steps beside one drawing, then by hand against one press. ── -->
+    <div class="cs-section">
+      <p class="cs-label">How it works</p>
+      <p class="lead-claim">Organize does the sorting you would do by hand.</p>
+
+      <div class="how" id="how">
+        <ol class="how-steps">
+          <li><button class="how-step" data-step="1" aria-pressed="true"><b><i>1</i>It reads every tab.</b><span>The title, and what the page says about itself.</span></button></li>
+          <li><button class="how-step" data-step="2" aria-pressed="false"><b><i>2</i>It puts related pages together.</b><span>By topic, not by website. Pastel de nata is a Lisbon pastry, so it goes with the Lisbon tabs.</span></button></li>
+          <li><button class="how-step" data-step="3" aria-pressed="false"><b><i>3</i>It names each group.</b><span>Apple Intelligence writes a short name that says what is inside.</span></button></li>
+        </ol>
+        <div class="how-stage" id="how-stage" data-step="1" role="img" aria-label="Six open tabs with the topics mixed up. They move into three pairs by topic, each pair from two different websites. Then each pair gets a name: Lisbon travel, Typography, Sourdough baking."></div>
+      </div>
+
+      <dl class="cmp">
+        <div><dt>By hand</dt><dd>Read every title, decide the groups, drag each tab, type each name.</dd></div>
+        <div class="is-new"><dt>With Starling</dt><dd>One press. About a second.</dd></div>
+      </dl>
+
+      <p class="cs-body-text how-note">
+        Why two steps and not one: in a test with 43 tabs, asking a single model to do the whole job took 8 to 19 seconds, and the groups were no better. Grouping first and naming second takes about a second.
       </p>
     </div>
 
-    <!-- ── Optional: where else the idea applies. One line, not a paragraph. ── -->
+    <!-- ── More applications: the same button on other piles. Not built yet, so it says "could". ── -->
     <div class="cs-section">
-      <p class="cs-label">Where else it works</p>
-      <p class="cs-body-text">
-        Anything that piles up and never gets sorted: downloads, screenshots, saved links.
-      </p>
-    </div>
+      <p class="cs-label">More applications</p>
+      <p class="lead-claim">The same button could work on anything that piles up and never gets sorted: downloads, screenshots, saved links.</p>
 
-    <!-- ── What's next: capabilities, not apologies. ── -->
-    <div class="cs-section">
-      <p class="cs-label">What&rsquo;s next</p>
-      <ul class="reflection-list">
-        <li><strong>Organize while you browse.</strong> New tabs find their group as they open, so the list never piles up.</li>
-        <li><strong>Search every tab by meaning.</strong> The same model that groups pages can find &ldquo;that article about bread hydration&rdquo; across hundreds of tabs.</li>
-        <li><strong>Prompts that need taste.</strong> &ldquo;By site&rdquo; and named lists already work. Requests like &ldquo;work vs fun&rdquo; are next.</li>
-      </ul>
+      <div class="else">
+        <div class="else-card" role="img" aria-label="A downloads folder sorted into Invoices, Fonts and Boarding passes, with an Organize button under it.">
+          <p class="else-title">Downloads</p>
+          <div class="else-group"><div class="else-name"><i style="background:#0A84FF"></i>Invoices</div><div class="else-row"><u></u><s style="width:96px"></s></div><div class="else-row"><u></u><s style="width:70px"></s></div></div>
+          <div class="else-group"><div class="else-name"><i style="background:#FF9500"></i>Fonts</div><div class="else-row"><u></u><s style="width:84px"></s></div><div class="else-row"><u></u><s style="width:110px"></s></div></div>
+          <div class="else-group"><div class="else-name"><i style="background:#34C759"></i>Boarding passes</div><div class="else-row"><u></u><s style="width:102px"></s></div><div class="else-row"><u></u><s style="width:64px"></s></div></div>
+          <span class="m-pill" style="left:14px; right:14px; bottom:14px"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span>
+        </div>
+        <div class="else-card" role="img" aria-label="Screenshots sorted into Receipts, Design ideas and Recipes, with an Organize button under them.">
+          <p class="else-title">Screenshots</p>
+          <div class="else-group"><div class="else-name"><i style="background:#0A84FF"></i>Receipts</div><div class="else-thumbs"><b></b><b></b><b></b></div></div>
+          <div class="else-group"><div class="else-name"><i style="background:#FF9500"></i>Design ideas</div><div class="else-thumbs"><b></b><b></b></div></div>
+          <div class="else-group"><div class="else-name"><i style="background:#34C759"></i>Recipes</div><div class="else-thumbs"><b></b><b></b><b></b></div></div>
+          <span class="m-pill" style="left:14px; right:14px; bottom:14px"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span>
+        </div>
+        <div class="else-card" role="img" aria-label="Saved links sorted into To read, Gift ideas and Apartments, with an Organize button under them.">
+          <p class="else-title">Saved links</p>
+          <div class="else-group"><div class="else-name"><i style="background:#0A84FF"></i>To read</div><div class="else-row"><u class="round"></u><s style="width:96px"></s></div><div class="else-row"><u class="round"></u><s style="width:70px"></s></div></div>
+          <div class="else-group"><div class="else-name"><i style="background:#FF9500"></i>Gift ideas</div><div class="else-row"><u class="round"></u><s style="width:84px"></s></div><div class="else-row"><u class="round"></u><s style="width:110px"></s></div></div>
+          <div class="else-group"><div class="else-name"><i style="background:#34C759"></i>Apartments</div><div class="else-row"><u class="round"></u><s style="width:102px"></s></div><div class="else-row"><u class="round"></u><s style="width:64px"></s></div></div>
+          <span class="m-pill" style="left:14px; right:14px; bottom:14px"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -636,17 +685,15 @@
           input.focus({ preventScroll: true });
           return;
         }
-        controls.innerHTML = '<div class="try-actions"><button class="try-organize" title="Shift-click to say how">' +
+        controls.innerHTML = '<div class="try-actions"><button class="try-organize">' +
           (st.organizing
             ? '<svg class="try-spin" width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M7 1.5a5.5 5.5 0 1 1-5.5 5.5"/></svg><span>Organizing…</span>'
             : '<svg width="13" height="13" viewBox="0 0 10 10" aria-hidden="true">' + SPARK + '</svg><span>Organize</span>') +
-          '</button><button class="try-say">Say how</button></div>';
+          '</button></div>';
         controls.querySelector('.try-organize').addEventListener('click', e => {
           if (st.organizing) return;
-          if (e.shiftKey) return set({ prompt: true, notice: '' });
           run({ mode: 'topic', labels: [] });
         });
-        controls.querySelector('.try-say').addEventListener('click', () => set({ prompt: true, notice: '' }));
       }
 
       function render() {
@@ -737,90 +784,166 @@
 
       document.getElementById('try-reset').addEventListener('click', () => { clearTimeout(timer); st = fresh(); controlsKey = ''; render(); });
       render();
+
+      /* Tidy once on arrival, so the result is seen before anything is read.
+         The Organize button presses itself; any touch from the visitor cancels it. */
+      let autoplayed = false;
+      const autoplay = () => {
+        if (autoplayed || st.mode !== 'none' || st.organizing || st.prompt) return;
+        autoplayed = true;
+        const button = controls.querySelector('.try-organize');
+        if (button) { button.style.transform = 'scale(0.97)'; setTimeout(() => { button.style.transform = ''; }, 160); }
+        run({ mode: 'topic', labels: [] });
+      };
+      const cancelAutoplay = () => { autoplayed = true; };
+      root.addEventListener('pointerdown', cancelAutoplay, { once: true });
+      root.addEventListener('keydown', cancelAutoplay, { once: true });
+      let observerWorks = false;
+      if ('IntersectionObserver' in window) {
+        const seen = new IntersectionObserver(entries => {
+          observerWorks = true;
+          if (entries.some(e => e.isIntersecting)) { seen.disconnect(); setTimeout(autoplay, 900); }
+        }, { threshold: 0.5 });
+        seen.observe(root.querySelector('.try-win'));
+      }
+      // Safety net: some environments never run the observer at all.
+      setTimeout(() => { if (!observerWorks) autoplay(); }, 4000);
     })();
   </script>
-
   <script>
+    /* Today against Starling: 20 tabs leave the tab row and land in five named
+       groups. One stage of fixed size, scaled to fit the column. */
     (() => {
-      const stepper = document.getElementById('stepper');
-      if (!stepper) return;
-      const imgs = stepper.querySelectorAll('.stepper-frame img');
-      const tabs = stepper.querySelectorAll('.stepper-tab');
-      const spotWindow = document.getElementById('spot-window');
-      const spotBorder = document.getElementById('spot-border');
-      let current = 0, timer = null, hovered = false;
-
-      /* One focus frame per step, in the stills' own pixel space (1600 x 1004).
-         Measure these from the real UI while capturing, do not eyeball them. */
-      const spots = [
-        { x: 14, y: 56, w: 378, h: 830, rx: 14 },
-        { x: 14, y: 56, w: 378, h: 935, rx: 14 },
-        { x: 18, y: 896, w: 292, h: 60, rx: 30 }
-      ];
-
-      let anim = null;
-      let cur = { ...spots[0] };
-      const lerp = (a, b, t) => a + (b - a) * t;
-
-      function setSpot(s) {
-        [spotWindow, spotBorder].forEach(el => {
-          el.setAttribute('x', s.x); el.setAttribute('y', s.y);
-          el.setAttribute('width', s.w); el.setAttribute('height', s.h);
-          el.setAttribute('rx', s.rx);
-        });
-      }
-
-      function animateTo(target) {
-        if (anim) cancelAnimationFrame(anim);
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          cur = { ...target }; setSpot(cur); return;
-        }
-        const from = { ...cur }, start = performance.now(), dur = 400;
-        function tick(now) {
-          const t = Math.min((now - start) / dur, 1);
-          const ease = 1 - Math.pow(1 - t, 4);
-          cur = {
-            x: lerp(from.x, target.x, ease), y: lerp(from.y, target.y, ease),
-            w: lerp(from.w, target.w, ease), h: lerp(from.h, target.h, ease),
-            rx: lerp(from.rx, target.rx, ease)
-          };
-          setSpot(cur);
-          if (t < 1) anim = requestAnimationFrame(tick);
-        }
-        anim = requestAnimationFrame(tick);
-      }
-
-      function goTo(i) {
-        current = i;
-        imgs.forEach((img, idx) => img.classList.toggle('is-active', idx === i));
-        tabs.forEach((tab, idx) => tab.classList.toggle('is-active', idx === i));
-        animateTo(spots[i]);
-      }
-
-      function advance() { goTo((current + 1) % imgs.length); }
-      function startTimer() {
-        stopTimer();
-        if (hovered) return;
-        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          timer = setInterval(advance, 3500);
-        }
-      }
-      function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
-
-      stepper.addEventListener('mouseenter', () => { hovered = true; stopTimer(); });
-      stepper.addEventListener('mouseleave', () => { hovered = false; startTimer(); });
-      stepper.addEventListener('focusin',   () => { hovered = true; stopTimer(); });
-      stepper.addEventListener('focusout',  () => { hovered = false; startTimer(); });
-
-      tabs.forEach((tab, idx) => {
-        tab.addEventListener('click', () => { goTo(idx); startTimer(); });
+      const stage = document.getElementById('ba-stage');
+      const fit = document.getElementById('ba-fit');
+      if (!stage || !fit) return;
+      const GROUPS = [['Lisbon trip', '#0A84FF'], ['Sourdough', '#FF9500'], ['Typography', '#34C759'], ['Photography', '#FF2D55'], ['Interaction design', '#AF52DE']];
+      // The order the tabs were opened in: topics all mixed up.
+      const ORDER = [2, 0, 4, 1, 3, 0, 2, 1, 4, 3, 1, 0, 3, 2, 4, 0, 1, 4, 2, 3];
+      const WIDTHS = [92, 70, 104, 82, 120, 76, 98, 88, 110, 72, 96, 84, 108, 78, 100, 90, 74, 112, 86, 94];
+      const seen = GROUPS.map(() => 0);
+      const chips = ORDER.map((g, i) => {
+        const chip = document.createElement('div');
+        chip.className = 'ba-chip';
+        const k = seen[g]++;
+        chip.innerHTML = '<u style="background:' + GROUPS[g][1] + '"></u><s style="width:' + WIDTHS[i] + 'px"></s>';
+        stage.append(chip);
+        return { chip, before: { left: 9 + i * 31.1, top: 34, width: 28, height: 18 }, after: { left: 4, top: 36 + g * 72 + 15 + k * 13.5, width: 190, height: 12 } };
+      });
+      GROUPS.forEach(([name, color], g) => {
+        const head = document.createElement('div');
+        head.className = 'ba-group';
+        head.style.top = (36 + g * 72) + 'px';
+        head.innerHTML = '<i style="background:' + color + '"></i><span></span>';
+        head.querySelector('span').textContent = name;
+        stage.append(head);
       });
 
-      new IntersectionObserver((entries) => {
-        entries.forEach(e => e.isIntersecting ? startTimer() : stopTimer());
-      }, { threshold: 0.3 }).observe(stepper);
+      const note = document.getElementById('ba-note');
+      const beforeButton = document.getElementById('ba-before');
+      const afterButton = document.getElementById('ba-after');
+      function show(after) {
+        stage.classList.toggle('is-after', after);
+        chips.forEach(({ chip, before, after: to }, i) => {
+          const spot = after ? to : before;
+          chip.style.transitionDelay = (after ? i * 18 : 0) + 'ms';
+          Object.assign(chip.style, { left: spot.left + 'px', top: spot.top + 'px', width: spot.width + 'px', height: spot.height + 'px' });
+        });
+        beforeButton.setAttribute('aria-pressed', String(!after));
+        afterButton.setAttribute('aria-pressed', String(after));
+        note.textContent = after ? 'Starling: same tabs, but organized in groups.' : 'Today: 20 tabs in a row. Every title is gone.';
+      }
+      let touched = false;
+      beforeButton.addEventListener('click', () => { touched = true; show(false); });
+      afterButton.addEventListener('click', () => { touched = true; show(true); });
 
-      setSpot(spots[0]);
+      // Scale the 640 by 400 stage to the column, at interaction time.
+      const scale = () => {
+        const k = fit.clientWidth / 640;
+        stage.style.transform = 'scale(' + k + ')';
+        fit.style.height = (400 * k) + 'px';
+      };
+      scale();
+      window.addEventListener('resize', scale);
+
+      show(false);
+      // Play once when it scrolls into view.
+      const play = () => { if (!touched) { touched = true; show(true); } };
+      let observerWorks = false;
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(entries => {
+          observerWorks = true;
+          if (entries.some(e => e.isIntersecting)) { io.disconnect(); setTimeout(play, 1400); }
+        }, { threshold: 0.6 });
+        io.observe(fit);
+      }
+      setTimeout(() => { if (!observerWorks) play(); }, 5000);
+    })();
+  </script>
+  <script>
+    /* How it works: six tabs from the demo above. Step 1 is the order they
+       were opened in, step 2 moves them into pairs, step 3 shows the names. */
+    (() => {
+      const stage = document.getElementById('how-stage');
+      const root = document.getElementById('how');
+      if (!stage || !root) return;
+      const GROUPS = [['Lisbon travel', '#0A84FF'], ['Typography', '#34C759'], ['Sourdough baking', '#FF9500']];
+      // [favicon class, favicon letter, title, group], in the order they were opened.
+      const TABS = [['w', 'W', 'Pastel de nata', 0], ['g', 'G', 'Inter, Google Fonts', 1], ['w', 'W', 'Sourdough', 2],
+                    ['l', 'lp', 'Lisbon Travel 2026', 0], ['k', 'K', 'Sourdough Starter Recipe', 2], ['w', 'W', 'Typography', 1]];
+      const seen = GROUPS.map(() => 0);
+      const rows = TABS.map(([cls, letter, title, g], i) => {
+        const row = document.createElement('div');
+        row.className = 'how-row';
+        const fav = document.createElement('u');
+        fav.className = cls;
+        fav.textContent = letter;
+        const name = document.createElement('span');
+        name.textContent = title;
+        row.append(fav, name);
+        stage.append(row);
+        return { row, loose: 31 + i * 39, grouped: 16 + g * 88 + 22 + seen[g]++ * 26 };
+      });
+      GROUPS.forEach(([name, color], g) => {
+        const head = document.createElement('div');
+        head.className = 'how-head';
+        head.style.top = (16 + g * 88) + 'px';
+        const dot = document.createElement('i');
+        dot.style.background = color;
+        const label = document.createElement('span');
+        label.textContent = name;
+        head.append(dot, label);
+        stage.append(head);
+      });
+      const buttons = [...root.querySelectorAll('.how-step')];
+      function show(step) {
+        stage.dataset.step = step;
+        rows.forEach(({ row, loose, grouped }, i) => {
+          row.style.transitionDelay = (step > 1 ? i * 40 : 0) + 'ms';
+          row.style.top = (step > 1 ? grouped : loose) + 'px';
+        });
+        buttons.forEach(b => b.setAttribute('aria-pressed', String(Number(b.dataset.step) === step)));
+      }
+      let touched = false, timers = [];
+      buttons.forEach(b => b.addEventListener('click', () => {
+        touched = true; timers.forEach(clearTimeout); show(Number(b.dataset.step));
+      }));
+      show(1);
+      // Play through once when it scrolls into view.
+      const play = () => {
+        if (touched) return;
+        touched = true;
+        timers = [setTimeout(() => show(2), 1300), setTimeout(() => show(3), 3300)];
+      };
+      let observerWorks = false;
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(entries => {
+          observerWorks = true;
+          if (entries.some(e => e.isIntersecting)) { io.disconnect(); play(); }
+        }, { threshold: 0.6 });
+        io.observe(stage);
+      }
+      setTimeout(() => { if (!observerWorks) play(); }, 5000);
     })();
   </script>
 </body>
