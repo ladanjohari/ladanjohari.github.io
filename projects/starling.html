@@ -212,12 +212,10 @@
     .try-chev { transition: transform .2s ease; color: var(--mid); }
     .try-foot { border-top: 1px solid var(--line); padding: 10px 10px 8px; display: flex; flex-direction: column; gap: 8px; }
     .try-actions { display: flex; gap: 8px; }
-    .try-organize, .try-say { all: unset; box-sizing: border-box; height: 32px; border-radius: 16px; background: var(--btn); display: flex; align-items: center; justify-content: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--ink); cursor: pointer; transition: transform .12s ease-out, background .15s ease-out; }
+    .try-organize { all: unset; box-sizing: border-box; height: 32px; border-radius: 16px; background: var(--btn); display: flex; align-items: center; justify-content: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--ink); cursor: pointer; transition: transform .12s ease-out, background .15s ease-out; }
     .try-organize { flex: 1; }
-    .try-say { padding: 0 12px; font-size: 12px; font-weight: 500; display: none; }
-    @media (hover: none) { .try-say { display: flex; } }
-    @media (hover: hover) and (pointer: fine) { .try-organize:hover, .try-say:hover { background: var(--btn-h); } }
-    .try-organize:active, .try-say:active { transform: scale(0.97); }
+    @media (hover: hover) and (pointer: fine) { .try-organize:hover { background: var(--btn-h); } }
+    .try-organize:active { transform: scale(0.97); }
     .try-prompt { height: 32px; border-radius: 16px; background: var(--win); border: 1.5px solid var(--accent); display: flex; align-items: center; gap: 8px; padding: 0 12px; box-sizing: border-box; }
     .try-input { all: unset; flex: 1; min-width: 0; font-size: 13px; color: var(--ink); }
     .try-input::placeholder { color: var(--mid); }
@@ -280,18 +278,14 @@
     .ba-stage.is-after .ba-chip s, .ba-stage.is-after .ba-group { opacity: 1; }
     @media (prefers-reduced-motion: reduce) { .ba-stage *, .ba-chip { transition: none !important; } }
 
-    .dec { margin-top: 44px; }
+    .dec { margin-top: 44px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: center; }
+    @media (max-width: 540px) { .dec { grid-template-columns: 1fr; gap: 16px; } }
     .dec-title { font-size: 1rem; font-weight: 600; letter-spacing: -0.015em; color: var(--ink); line-height: 1.45; }
-    .dec-why { font-size: 0.925rem; line-height: 1.7; color: var(--mid); max-width: 560px; margin-top: 4px; }
-    .dec-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
-    @media (max-width: 540px) { .dec-pair { grid-template-columns: 1fr; } }
+    .dec-why { font-size: 0.925rem; line-height: 1.7; color: var(--mid); margin-top: 6px; }
     .dec-card { border: 1px solid var(--rule); border-radius: 10px; background: var(--card); height: 168px; position: relative; overflow: hidden; }
-    .dec-tag { font-size: 12px; color: var(--mid); margin-top: 8px; line-height: 1.5; }
-    .dec-tag strong { color: var(--ink); font-weight: 600; }
     /* Drawing parts shared by the small figures. */
     .m-toolbar { position: absolute; left: 0; top: 0; right: 0; height: 30px; border-bottom: 1px solid var(--rule); background: var(--bg); }
     .m-toolbar b { position: absolute; left: 22%; top: 8px; width: 46%; height: 14px; border-radius: 7px; background: var(--soft); }
-    .m-icon { position: absolute; display: flex; align-items: center; justify-content: center; color: var(--ink); }
     .m-side { position: absolute; left: 0; top: 30px; bottom: 0; width: 48%; background: var(--bg); border-right: 1px solid var(--rule); }
     .m-side.full { top: 0; }
     .m-row { position: absolute; left: 12px; height: 12px; display: flex; align-items: center; gap: 7px; }
@@ -299,17 +293,11 @@
     .m-row s { height: 4px; border-radius: 2px; background: var(--bar); display: block; }
     .m-pill { position: absolute; height: 24px; border-radius: 12px; background: var(--hover-row); border: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 11px; font-weight: 600; color: var(--ink); }
     .m-ring { box-shadow: 0 0 0 2px var(--accent); border-color: transparent; }
-    .m-menu { position: absolute; border: 1px solid var(--rule); border-radius: 9px; background: var(--card); padding: 5px; display: flex; flex-direction: column; gap: 2px; }
-    .m-menu span { font-size: 11.5px; color: var(--ink); padding: 5px 10px; border-radius: 6px; white-space: nowrap; }
-    .m-menu span:first-child { background: var(--hover-row); }
-    .m-field { position: absolute; height: 26px; border-radius: 13px; border: 1.5px solid var(--accent); background: var(--card); display: flex; align-items: center; gap: 7px; padding: 0 11px; font-size: 11.5px; color: var(--ink); }
-    .m-key { position: absolute; font-size: 11px; color: var(--mid); display: flex; align-items: center; gap: 6px; }
-    .m-key kbd { font-family: inherit; font-size: 11px; color: var(--ink); border: 1px solid var(--rule); border-radius: 5px; padding: 1px 6px; background: var(--bg); }
     .m-head { position: absolute; left: 12px; right: 12px; height: 14px; display: flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 600; color: var(--mid); white-space: nowrap; }
     .m-head i { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
     .m-head.mine { color: var(--ink); }
     .m-head em { font-style: normal; font-weight: 500; font-size: 10px; color: var(--accent); margin-left: auto; }
-    .m-foot { position: absolute; left: 14px; right: 14px; font-size: 11px; line-height: 1.5; color: var(--mid); }
+    .m-head em.quiet { color: var(--mid); }
   </style>
 </head>
 <body>
@@ -353,7 +341,7 @@
       </div>
     </div>
     <div class="try-caption">
-      <span id="try-hint">Try it. Shift-click Organize to say how.</span>
+      <span id="try-hint">Try it yourself.</span>
       <button class="try-reset" id="try-reset">Start over</button>
     </div>
   </div>
@@ -369,9 +357,9 @@
       </p>
     </div>
 
-    <!-- ── The decisions: today against Starling, then four choices, each drawn. ── -->
+    <!-- ── Design decisions: today against Starling, then two choices, each drawn. ── -->
     <div class="cs-section">
-      <p class="cs-label">The decisions</p>
+      <p class="cs-label">Design decisions</p>
 
       <div class="ba" id="ba">
         <div class="ba-head">
@@ -382,7 +370,7 @@
           </span>
         </div>
         <div class="ba-fit" id="ba-fit">
-          <div class="ba-stage" id="ba-stage" role="img" aria-label="A browser with 20 tabs squeezed into one row, which become five named groups in a sidebar.">
+          <div class="ba-stage" id="ba-stage" role="img" aria-label="A browser with 20 tabs squeezed into one row, which become the same tabs organized in groups in a sidebar.">
             <div class="ba-toolbar"><i style="left:12px"></i><i style="left:25px"></i><i style="left:38px"></i><b></b></div>
             <div class="ba-strip"></div>
             <div class="ba-side"></div>
@@ -392,92 +380,26 @@
       </div>
 
       <div class="dec">
-        <p class="dec-title">Organize sits under the tabs, with its name on it.</p>
-        <p class="dec-why">It acts on the list, so it lives with the list. A bare icon in the toolbar explained nothing.</p>
-        <div class="dec-pair">
-          <div>
-            <div class="dec-card" role="img" aria-label="A browser toolbar with a small unlabeled sparkle icon at the far right, away from the tab list.">
-              <div class="m-toolbar"><b></b><span class="m-icon m-ring" style="right:12px; top:5px; width:20px; height:20px; border-radius:6px"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg></span></div>
-              <div class="m-side"><div class="m-row" style="top:14px"><u></u><s style="width:84px"></s></div><div class="m-row" style="top:34px"><u></u><s style="width:66px"></s></div><div class="m-row" style="top:54px"><u></u><s style="width:90px"></s></div><div class="m-row" style="top:74px"><u></u><s style="width:58px"></s></div><div class="m-row" style="top:94px"><u></u><s style="width:78px"></s></div></div>
-            </div>
-            <p class="dec-tag"><strong>Before.</strong> A sparkle in the toolbar, far from the tabs.</p>
-          </div>
-          <div>
-            <div class="dec-card" role="img" aria-label="The tab list with a labeled Organize button directly under it.">
-              <div class="m-toolbar"><b></b></div>
-              <div class="m-side"><div class="m-row" style="top:14px"><u></u><s style="width:84px"></s></div><div class="m-row" style="top:34px"><u></u><s style="width:66px"></s></div><div class="m-row" style="top:54px"><u></u><s style="width:90px"></s></div><div class="m-row" style="top:74px"><u></u><s style="width:58px"></s></div><span class="m-pill m-ring" style="left:12px; right:12px; bottom:12px"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span></div>
-            </div>
-            <p class="dec-tag"><strong>After.</strong> A labeled button, right under the list it sorts.</p>
-          </div>
+        <div class="dec-text">
+          <p class="dec-title">Organize sits under the tabs, with its name on it.</p>
+          <p class="dec-why">The toolbar is for the page you are looking at: back, reload, the address. Organize acts on the list of tabs, so it sits right under that list. It carries its name because an icon alone does not say what it does.</p>
+        </div>
+        <div class="dec-card" role="img" aria-label="A browser with the tab list on the left and a labeled Organize button directly under it. The toolbar above holds only the address.">
+          <div class="m-toolbar"><b></b></div>
+          <div class="m-side"><div class="m-row" style="top:14px"><u></u><s style="width:84px"></s></div><div class="m-row" style="top:34px"><u></u><s style="width:66px"></s></div><div class="m-row" style="top:54px"><u></u><s style="width:90px"></s></div><div class="m-row" style="top:74px"><u></u><s style="width:58px"></s></div><span class="m-pill m-ring" style="left:12px; right:12px; bottom:12px"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span></div>
         </div>
       </div>
 
       <div class="dec">
-        <p class="dec-title">One button. Hold Shift to say how.</p>
-        <p class="dec-why">Three modes asked people to choose before they had seen anything. Now the first press just works, and a few words handle the rest.</p>
-        <div class="dec-pair">
-          <div>
-            <div class="dec-card" role="img" aria-label="A menu with three choices: By Topic, By Site, By Trail.">
-              <span class="m-pill" style="left:16px; top:18px; width:112px"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span>
-              <div class="m-menu" style="left:16px; top:50px"><span>By Topic</span><span>By Site</span><span>By Trail</span></div>
-            </div>
-            <p class="dec-tag"><strong>Before.</strong> Three modes to pick from, every time.</p>
-          </div>
-          <div>
-            <div class="dec-card" role="img" aria-label="One Organize button. With Shift held, it becomes a text box that reads by site.">
-              <span class="m-pill" style="left:16px; top:18px; width:160px"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span>
-              <span class="m-key" style="left:18px; top:62px"><kbd>Shift</kbd> and click</span>
-              <span class="m-field" style="left:16px; top:92px; width:160px"><span style="color:var(--mid); display:flex"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg></span>by site</span>
-            </div>
-            <p class="dec-tag"><strong>After.</strong> One press sorts by topic. Shift-click to type your own way.</p>
-          </div>
+        <div class="dec-text">
+          <p class="dec-title">Groups you name stay yours.</p>
+          <p class="dec-why">When you organize again, Starling re-sorts only the groups it made. A group you named stays exactly as you left it, with the same tabs inside.</p>
         </div>
-      </div>
-
-      <div class="dec">
-        <p class="dec-title">Groups you name stay yours.</p>
-        <p class="dec-why">Organizing again reshuffles only the groups Starling made. Your own work is never undone.</p>
-        <div class="dec-pair">
-          <div>
-            <div class="dec-card" role="img" aria-label="Three groups: Bread baking, which you named, and two that Starling made, Lisbon travel and Typography.">
-              <div class="m-side full" style="width:100%; border-right:none">
-                <div class="m-head mine" style="top:12px"><i style="background:#FF9500"></i>Bread baking<em>yours</em></div><div class="m-row" style="top:32px"><u></u><s style="width:120px"></s></div><div class="m-row" style="top:48px"><u></u><s style="width:96px"></s></div>
-                <div class="m-head" style="top:70px"><i style="background:#0A84FF"></i>Lisbon travel <svg width="8" height="8" viewBox="0 0 10 10" aria-hidden="true" style="opacity:.55"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg></div><div class="m-row" style="top:90px"><u></u><s style="width:104px"></s></div><div class="m-row" style="top:106px"><u></u><s style="width:130px"></s></div>
-                <div class="m-head" style="top:128px"><i style="background:#34C759"></i>Typography <svg width="8" height="8" viewBox="0 0 10 10" aria-hidden="true" style="opacity:.55"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg></div><div class="m-row" style="top:148px"><u></u><s style="width:88px"></s></div>
-              </div>
-            </div>
-            <p class="dec-tag"><strong>Before.</strong> You renamed one group.</p>
-          </div>
-          <div>
-            <div class="dec-card" role="img" aria-label="After organizing by site, Bread baking is unchanged, and the other groups became wikipedia.org and apple.com.">
-              <div class="m-side full" style="width:100%; border-right:none">
-                <div class="m-head mine" style="top:12px"><i style="background:#FF9500"></i>Bread baking<em>yours</em></div><div class="m-row" style="top:32px"><u></u><s style="width:120px"></s></div><div class="m-row" style="top:48px"><u></u><s style="width:96px"></s></div>
-                <div class="m-head" style="top:70px"><i style="background:#0A84FF"></i>wikipedia.org <svg width="8" height="8" viewBox="0 0 10 10" aria-hidden="true" style="opacity:.55"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg></div><div class="m-row" style="top:90px"><u></u><s style="width:130px"></s></div><div class="m-row" style="top:106px"><u></u><s style="width:88px"></s></div>
-                <div class="m-head" style="top:128px"><i style="background:#34C759"></i>apple.com <svg width="8" height="8" viewBox="0 0 10 10" aria-hidden="true" style="opacity:.55"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg></div><div class="m-row" style="top:148px"><u></u><s style="width:104px"></s></div>
-              </div>
-            </div>
-            <p class="dec-tag"><strong>After Organize, by site.</strong> Everything else moved. Yours did not.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="dec">
-        <p class="dec-title">It says what happened, not how.</p>
-        <p class="dec-why">The first version listed its models and timings under the button. People only need to know their tabs are sorted.</p>
-        <div class="dec-pair">
-          <div>
-            <div class="dec-card" role="img" aria-label="Under the Organize button: Balanced, 5 groups in 2.5 seconds with MiniLM-L6 and Qwen3 1.7B.">
-              <span class="m-pill" style="left:14px; right:14px; top:44px"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span>
-              <span class="m-foot" style="top:82px">16 tabs in 5 groups, 1 awake<br>Balanced: 5 groups in 2.5 s with MiniLM-L6 + Qwen3 1.7B</span>
-            </div>
-            <p class="dec-tag"><strong>Before.</strong> Model names and timings.</p>
-          </div>
-          <div>
-            <div class="dec-card" role="img" aria-label="Under the Organize button: 16 tabs in 5 groups.">
-              <span class="m-pill" style="left:14px; right:14px; top:44px"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg>Organize</span>
-              <span class="m-foot" style="top:82px">16 tabs in 5 groups</span>
-            </div>
-            <p class="dec-tag"><strong>After.</strong> Just the result.</p>
+        <div class="dec-card" role="img" aria-label="Three groups after organizing again. Bread baking, which you named, stays. The other two, made by Starling, were re-sorted.">
+          <div class="m-side full" style="width:100%; border-right:none">
+            <div class="m-head mine" style="top:12px"><i style="background:#FF9500"></i>Bread baking<em>yours, stays</em></div><div class="m-row" style="top:32px"><u></u><s style="width:120px"></s></div><div class="m-row" style="top:48px"><u></u><s style="width:96px"></s></div>
+            <div class="m-head" style="top:70px"><i style="background:#0A84FF"></i>wikipedia.org <svg width="8" height="8" viewBox="0 0 10 10" aria-hidden="true" style="opacity:.55"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg><em class="quiet">re-sorted</em></div><div class="m-row" style="top:90px"><u></u><s style="width:130px"></s></div><div class="m-row" style="top:106px"><u></u><s style="width:88px"></s></div>
+            <div class="m-head" style="top:128px"><i style="background:#34C759"></i>apple.com <svg width="8" height="8" viewBox="0 0 10 10" aria-hidden="true" style="opacity:.55"><path d="M5 0 L6.1 3.9 L10 5 L6.1 6.1 L5 10 L3.9 6.1 L0 5 L3.9 3.9 Z" fill="currentColor"/></svg><em class="quiet">re-sorted</em></div><div class="m-row" style="top:148px"><u></u><s style="width:104px"></s></div>
           </div>
         </div>
       </div>
@@ -727,17 +649,15 @@
           input.focus({ preventScroll: true });
           return;
         }
-        controls.innerHTML = '<div class="try-actions"><button class="try-organize" title="Shift-click to say how">' +
+        controls.innerHTML = '<div class="try-actions"><button class="try-organize">' +
           (st.organizing
             ? '<svg class="try-spin" width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M7 1.5a5.5 5.5 0 1 1-5.5 5.5"/></svg><span>Organizing…</span>'
             : '<svg width="13" height="13" viewBox="0 0 10 10" aria-hidden="true">' + SPARK + '</svg><span>Organize</span>') +
-          '</button><button class="try-say">Say how</button></div>';
+          '</button></div>';
         controls.querySelector('.try-organize').addEventListener('click', e => {
           if (st.organizing) return;
-          if (e.shiftKey) return set({ prompt: true, notice: '' });
           run({ mode: 'topic', labels: [] });
         });
-        controls.querySelector('.try-say').addEventListener('click', () => set({ prompt: true, notice: '' }));
       }
 
       function render() {
@@ -842,9 +762,6 @@
       const cancelAutoplay = () => { autoplayed = true; };
       root.addEventListener('pointerdown', cancelAutoplay, { once: true });
       root.addEventListener('keydown', cancelAutoplay, { once: true });
-      if (window.matchMedia('(hover: none)').matches) {
-        document.getElementById('try-hint').textContent = 'Try it. Press Say how to sort your own way.';
-      }
       let observerWorks = false;
       if ('IntersectionObserver' in window) {
         const seen = new IntersectionObserver(entries => {
@@ -898,7 +815,7 @@
         });
         beforeButton.setAttribute('aria-pressed', String(!after));
         afterButton.setAttribute('aria-pressed', String(after));
-        note.textContent = after ? 'Starling: the same 20 tabs, in five named groups.' : 'Today: 20 tabs in a row. Every title is gone.';
+        note.textContent = after ? 'Starling: same tabs, but organized in groups.' : 'Today: 20 tabs in a row. Every title is gone.';
       }
       let touched = false;
       beforeButton.addEventListener('click', () => { touched = true; show(false); });
