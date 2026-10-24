@@ -155,34 +155,38 @@
       .study-meta { order: -1; }
     }
 
-    /* ── Lab: a tiled wall of small pieces (Persian kashi palette), each opens in place ── */
+    /* ── Lab: a wall of small pieces in grey gradients (placeholders until the clips), each opens in place ── */
     .lab { margin-top: 64px; margin-bottom: 80px; }
-    .lab-grid { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 3px; padding: 3px; margin-top: 20px; background: var(--hover-row); border-radius: 6px; }
-    .lab-tile { display: block; position: relative; width: 100%; aspect-ratio: 1 / 1; border: 0; padding: 0; border-radius: 2px; cursor: pointer; background: var(--tile, #23408E); font: inherit; }
+    .lab-grid { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-top: 20px; }
+    .lab-tile { display: block; position: relative; width: 100%; aspect-ratio: 1 / 1; border: 0; padding: 0; border-radius: 10px; cursor: pointer; background: var(--tile, #8E8C88); font: inherit; }
     .lab-name { position: absolute; left: 6px; bottom: 6px; font-size: 0.7rem; font-weight: 500; color: #fff; background: rgba(17,17,17,0.72); padding: 3px 8px; border-radius: 999px; opacity: 0; transform: translateY(3px); transition: opacity 0.16s ease-out, transform 0.16s ease-out; white-space: nowrap; max-width: calc(100% - 12px); overflow: hidden; text-overflow: ellipsis; }
     @media (hover: hover) and (pointer: fine) { .lab-tile:hover .lab-name { opacity: 1; transform: none; } }
     .lab-tile:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     .lab-tile:focus-visible .lab-name { opacity: 1; transform: none; }
 
     /* The pop-up is a small page: a bar with the title and Close, then the piece in its own form. */
-    .lab-sheet { border: 0; padding: 0; background: transparent; width: min(var(--w, 560px), calc(100vw - 32px)); max-width: none; max-height: calc(100vh - 32px); margin: auto; color: var(--ink); overflow: visible; }
+    .lab-sheet { border: 0; padding: 0; background: transparent; width: min(var(--w, 560px), calc(100vw - 32px)); max-width: none; max-height: calc(100vh - 32px); margin: auto; color: var(--ink); overflow: hidden; border-radius: 18px; }
     .lab-sheet::backdrop { background: rgba(0,0,0,0.55); }
     .lab-card { background: var(--bg); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; max-height: calc(100vh - 32px); }
     .lab-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 10px 10px 20px; border-bottom: 1px solid var(--rule); flex-shrink: 0; }
     .lab-bar h3 { font-size: 0.95rem; font-weight: 600; letter-spacing: -0.01em; }
-    .lab-close { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--rule); background: transparent; color: var(--ink); cursor: pointer; display: grid; place-items: center; flex-shrink: 0; }
+    .lab-close { width: 44px; height: 44px; border-radius: 50%; border: 0; background: transparent; color: var(--ink); cursor: pointer; display: grid; place-items: center; flex-shrink: 0; }
     .lab-close svg { width: 14px; height: 14px; }
-    .lab-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    @media (hover: hover) and (pointer: fine) { .lab-close:hover { background: var(--hover-row); } }
+    .lab-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 0; }
+    .lab-card:focus { outline: none; }
     .lab-body { padding: 16px 20px 20px; overflow: auto; }
     .lab-body p { font-size: 0.875rem; line-height: 1.6; color: var(--mid); margin-top: 12px; text-wrap: pretty; }
     .lab-frame { display: block; width: 100%; border: 0; border-radius: 10px; background: #111; }
     .lab-frame.video { aspect-ratio: 16 / 9; }
-    .lab-frame.page { height: min(72vh, 760px); background: var(--bg); border: 1px solid var(--rule); }
+    .lab-sheet.is-page .lab-card { height: calc(100vh - 32px); }
+    .lab-sheet.is-page .lab-body { flex: 1; padding: 0; overflow: hidden; display: flex; }
+    .lab-frame.page { flex: 1; height: 100%; border-radius: 0; background: var(--bg); }
     .lab-photo { display: block; width: 100%; border-radius: 10px; }
     @media (max-width: 540px) {
       .lab-sheet { width: calc(100vw - 16px); }
       .lab-body { padding: 12px 12px 16px; }
-      .lab-frame.page { height: 70vh; }
+      .lab-sheet.is-page .lab-card { height: calc(100vh - 16px); }
     }
 
     /* ── AboutStrip: the art band ── */
@@ -281,7 +285,7 @@
   <header class="hero">
     <div class="hero-desc hero-line">
       <h1 class="hero-lead">I&rsquo;m a product designer based in the Bay Area, CA.</h1>
-      <p>I design and build how people work with interfaces and AI. My work has a common theme: making navigation and interactions easier and more&nbsp;findable.</p>
+      <p>I design and build how people work with interfaces and AI. My work has a common theme: making navigation easier and things more&nbsp;findable.</p>
     </div>
   </header>
 
@@ -416,16 +420,16 @@
   <section class="lab" aria-label="Lab">
     <h2 class="section-label reveal">Lab</h2>
     <ul class="lab-grid reveal">
-      <li><button class="lab-tile" type="button" data-lab="starling" style="--tile:#1A9BA8"><span class="lab-name">Starling</span></button></li>
-      <li><button class="lab-tile" type="button" data-lab="substrate" style="--tile:#23408E"><span class="lab-name">Substrate</span></button></li>
-      <li><button class="lab-tile" type="button" data-lab="agent-approvals" style="--tile:#E0A43A"><span class="lab-name">agent-approvals</span></button></li>
-      <li><button class="lab-tile" type="button" data-lab="tags" style="--tile:#F1E9D8"><span class="lab-name">Tags</span></button></li>
-      <li><button class="lab-tile" type="button" data-lab="light-cube" style="--tile:#23408E"><span class="lab-name">Light Cube</span></button></li>
+      <li><button class="lab-tile" type="button" data-lab="starling" style="--tile:linear-gradient(135deg, #E4E2DD, #B9B7B2)"><span class="lab-name">Starling</span></button></li>
+      <li><button class="lab-tile" type="button" data-lab="substrate" style="--tile:linear-gradient(315deg, #9C9A96, #6E6C69)"><span class="lab-name">Substrate</span></button></li>
+      <li><button class="lab-tile" type="button" data-lab="agent-approvals" style="--tile:linear-gradient(135deg, #CFCDC8, #A4A29E)"><span class="lab-name">agent-approvals</span></button></li>
+      <li><button class="lab-tile" type="button" data-lab="tags" style="--tile:linear-gradient(315deg, #7F7D7A, #4F4E4C)"><span class="lab-name">Tags</span></button></li>
+      <li><button class="lab-tile" type="button" data-lab="light-cube" style="--tile:linear-gradient(135deg, #D9D7D2, #8E8C88)"><span class="lab-name">Light Cube</span></button></li>
     </ul>
   </section>
 
   <dialog class="lab-sheet" id="labSheet" aria-labelledby="labTitle">
-    <div class="lab-card">
+    <div class="lab-card" id="labCard" tabindex="-1" autofocus>
       <div class="lab-bar">
         <h3 id="labTitle"></h3>
         <button class="lab-close" type="button" id="labClose" aria-label="Close"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
@@ -710,13 +714,20 @@
         if (p.line) { const t = document.createElement('p'); t.textContent = p.line; body.appendChild(t); }
         document.getElementById('labTitle').textContent = p.title;
         sheet.style.setProperty('--w', (p.w || 560) + 'px');
+        sheet.classList.toggle('is-page', p.kind === 'page' || p.kind === 'post');
         if (push) { history.pushState({ lab: key }, '', '#lab-' + key); pushed = true; }
-        if (!sheet.open) sheet.showModal();
+        if (!sheet.open) { sheet.showModal(); card.focus(); }
       };
 
       document.querySelectorAll('.lab-tile').forEach(t => t.addEventListener('click', () => { opener = t; open(t.dataset.lab, true); }));
       document.getElementById('labClose').addEventListener('click', () => sheet.close());
-      sheet.addEventListener('click', e => { if (e.target === sheet) sheet.close(); });
+      // A click anywhere outside the card, on the grey, closes it.
+      const card = document.getElementById('labCard');
+      sheet.addEventListener('click', e => {
+        const r = card.getBoundingClientRect();
+        const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+        if (!inside) sheet.close();
+      });
       sheet.addEventListener('close', () => {
         body.textContent = '';
         if (pushed) { pushed = false; history.back(); }
