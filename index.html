@@ -60,14 +60,11 @@
     .nav-name { font-size: 0.875rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
 
     .hero { padding: 80px 0 72px; }
-    .hero-eyebrow { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); margin-bottom: 14px; }
-    .hero-headline { font-size: clamp(1.8rem, 4.5vw, 2.6rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1.15; color: var(--ink); margin-bottom: 18px; max-width: 540px; }
-    .hero-headline em { font-style: normal; color: var(--accent); }
+    .hero-title { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.4; color: var(--ink); margin-bottom: 14px; }
     .hero-desc { font-size: 0.975rem; line-height: 1.7; color: var(--mid); max-width: 460px; text-wrap: pretty; }
     .hero-line { opacity: 0; animation: hero-fade 0.6s ease-out forwards; }
-    h1.hero-line { animation-delay: 0.15s; }
     .hero-desc .hero-line { animation-delay: 0.35s; }
-    .hero-eyebrow-anim { opacity: 0; animation: hero-fade 0.6s ease-out forwards; animation-delay: 0s; }
+    .hero-title-anim { opacity: 0; animation: hero-fade 0.6s ease-out forwards; animation-delay: 0s; }
     @keyframes hero-fade { from { opacity: 0; } to { opacity: 1; } }
 
     .section-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
@@ -98,7 +95,7 @@
     }
     .work-row:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent); }
     .wf-step:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--accent); }
-    .nav-name:focus-visible, .elsewhere-text a:focus-visible, .hero-eyebrow a:focus-visible {
+    .nav-name:focus-visible, .elsewhere-text a:focus-visible {
       outline: none; border-radius: 3px; box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
     }
 
@@ -157,14 +154,39 @@
       .study-meta { order: -1; }
     }
 
+    /* ── Lab: a living wall of small pieces, each opens in place ── */
+    .lab { margin-top: 64px; margin-bottom: 80px; }
+    .lab-grid { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .lab-tile { display: block; position: relative; aspect-ratio: 1 / 1; border-radius: 12px; overflow: hidden; border: 1px solid var(--rule); background: #111; color: inherit; text-decoration: none; }
+    .lab-tile img, .lab-tile video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .lab-name { position: absolute; left: 8px; bottom: 8px; font-size: 0.75rem; font-weight: 500; color: #fff; background: rgba(17,17,17,0.72); padding: 4px 9px; border-radius: 999px; opacity: 0; transform: translateY(4px); transition: opacity 0.18s ease-out, transform 0.18s ease-out; }
+    .lab-tile:hover .lab-name, .lab-tile:focus-visible .lab-name { opacity: 1; transform: none; }
+    .lab-tile:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    @media (hover: none) { .lab-name { opacity: 1; transform: none; } }
+    @media (max-width: 540px) { .lab-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } }
+
+    .lab-sheet { border: 0; padding: 0; background: transparent; max-width: min(560px, calc(100vw - 32px)); width: 100%; margin: auto; color: var(--ink); }
+    .lab-sheet::backdrop { background: rgba(0,0,0,0.6); }
+    .lab-card { background: var(--bg); border-radius: 18px; padding: 14px; }
+    .lab-media { position: relative; aspect-ratio: 1 / 1; border-radius: 10px; overflow: hidden; background: #111; }
+    .lab-media img, .lab-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .lab-info { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 14px 4px 4px; }
+    .lab-info h3 { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.015em; }
+    .lab-info p { font-size: 0.875rem; line-height: 1.6; color: var(--mid); margin-top: 4px; text-wrap: pretty; }
+    .lab-link { display: inline-block; margin-top: 8px; font-size: 0.85rem; font-weight: 500; color: var(--accent); text-decoration: none; }
+    .lab-link[hidden] { display: none; }
+    .lab-close { font: inherit; font-size: 0.85rem; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--rule); background: transparent; color: var(--ink); cursor: pointer; flex-shrink: 0; }
+    .lab-close:focus-visible, .lab-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
     /* ── AboutStrip: the art band ── */
     .about-strip {
-      display: grid; grid-template-columns: 1fr 180px;
-      gap: 28px; align-items: center;
-      margin-top: 26px;
+      display: grid; grid-template-columns: minmax(0, 1fr) 220px;
+      gap: 32px; align-items: stretch;
+      margin-top: 20px;
     }
+    .about-strip .about-text { max-width: none; }
     .about-strip .about-tease {
-      margin: 0; padding: 0; border: 0; max-width: 400px;
+      margin: 18px 0 0; padding: 0; border: 0; max-width: 400px;
     }
     .about-strip .about-tease a {
       color: var(--ink); font-weight: 600; text-decoration: none;
@@ -172,7 +194,7 @@
       transition: color 0.15s ease-out, text-decoration-color 0.15s ease-out;
     }
     .album-link {
-      position: relative; display: block; width: 100%; aspect-ratio: 4 / 3;
+      position: relative; display: block; width: 100%; height: 100%; min-height: 150px;
       border-radius: 8px; overflow: hidden;
       border: 1px solid var(--rule); background: var(--hover-row);
       justify-self: end;
@@ -191,7 +213,7 @@
     @media (prefers-reduced-motion: reduce) { .album-img { transition: none; } }
     @media (max-width: 620px) {
       .about-strip { grid-template-columns: 1fr; gap: 18px; }
-      .album-link { justify-self: stretch; }
+      .album-link { justify-self: stretch; height: auto; aspect-ratio: 4 / 3; }
     }
 
     .elsewhere { padding: 0; margin-bottom: 12px; }
@@ -232,7 +254,7 @@
       .work-row, .work-arrow { transition: none; }
       .thumb-video { display: none !important; }
       .cursor-dot { display: none !important; }
-      .hero-line, .hero-eyebrow-anim { opacity: 1; animation: none; }
+      .hero-line, .hero-title-anim { opacity: 1; animation: none; }
       .wf-pips-fill { transition: none; }
       .wf-tag { transition: none; }
       .reveal { opacity: 1; transform: none; transition: none; }
@@ -250,10 +272,9 @@
   </nav>
 
   <header class="hero">
-    <p class="hero-eyebrow hero-eyebrow-anim">Product Designer &middot; Bay Area, CA</p>
-    <h1 class="hero-headline hero-line">I design and build how people work with&nbsp;AI.</h1>
+    <h1 class="hero-title hero-title-anim">Product Designer &middot; Bay Area, CA</h1>
     <p class="hero-desc">
-      <span class="hero-line">My work has a common theme: making navigation and paths easier and&nbsp;clearer.</span>
+      <span class="hero-line">I design and build how people work with AI. My work has a common theme: making navigation and paths easier and&nbsp;clearer.</span>
     </p>
   </header>
 
@@ -322,47 +343,7 @@
         </a>
       </li>
 
-      <li class="work-item reveal">
-        <a class="work-row" draggable="false" href="/projects/starling.html">
-          <div class="work-thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-        <!-- a browser sidebar: tabs gathered into three named groups, the Organize pill below -->
-        <rect width="196" height="122" fill="#101114"/>
-        <rect x="14" y="8" width="168" height="106" rx="7" fill="#17181c" stroke="#26272d" stroke-width=".6"/>
-        <circle cx="24" cy="20" r="2.2" fill="#34C759"/><rect x="30" y="18" width="40" height="4" rx="2" fill="#5c5e66"/>
-        <rect x="24" y="27" width="112" height="5" rx="2.5" fill="#3a3c44"/><rect x="24" y="36" width="94" height="5" rx="2.5" fill="#3a3c44"/>
-        <circle cx="24" cy="50" r="2.2" fill="#FF9500"/><rect x="30" y="48" width="52" height="4" rx="2" fill="#5c5e66"/>
-        <rect x="24" y="57" width="120" height="5" rx="2.5" fill="#3a3c44"/><rect x="24" y="66" width="100" height="5" rx="2.5" fill="#3a3c44"/>
-        <circle cx="24" cy="80" r="2.2" fill="#0A84FF"/><rect x="30" y="78" width="36" height="4" rx="2" fill="#5c5e66"/>
-        <rect x="24" y="87" width="108" height="5" rx="2.5" fill="#3a3c44"/>
-        <rect x="56" y="98" width="84" height="11" rx="5.5" fill="#26272d"/>
-        <path d="M78 101.2 L79 103.5 L81.3 104.5 L79 105.5 L78 107.8 L77 105.5 L74.7 104.5 L77 103.5 Z" fill="#e8e8e8"/>
-        <text x="85" y="106.6" fill="#e8e8e8" font-family="Geist,sans-serif" font-size="6.2" font-weight="600">Organize</text>
-      </svg><video class="thumb-video" src="/assets/previews/starling-frame.mp4" data-src-light="/assets/previews/starling-frame.mp4" data-src-dark="/assets/previews/starling-frame.mp4" loop muted playsinline preload="metadata"></video></div>
-          <div class="work-info">
-            <h3 class="work-title">Starling</h3>
-            <div class="work-desc">A browser that sorts your open tabs into named groups with one press.</div>
-          </div>
-          <div class="work-meta">
-            <span class="work-status">View project <span class="work-arrow">&rarr;</span></span>
-          </div>
-        </a>
-      </li>
 
-      <li class="work-item reveal">
-        <a class="work-row" draggable="false" href="/projects/substrate.html">
-          <div class="work-thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-        <!-- a goal on the left, branches and sub-branches, and the one thing that closes it on the right -->
-        <rect width="196" height="122" fill="#0e0e12"/><path d="M26 61 C 50.0 61, 50.0 38, 74 38" fill="none" stroke="#34C759" stroke-width=".9" opacity=".75"/><path d="M26 61 C 50.0 61, 50.0 84, 74 84" fill="none" stroke="#3a3a44" stroke-width=".8" opacity="1"/><path d="M74 38 C 100.0 38, 100.0 20, 126 20" fill="none" stroke="#34C759" stroke-width=".9" opacity=".75"/><path d="M126 20 C 147.5 20, 147.5 61, 169 61" fill="none" stroke="#34C759" stroke-width=".9" opacity=".75"/><path d="M74 38 C 100.0 38, 100.0 50, 126 50" fill="none" stroke="#34C759" stroke-width=".9" opacity=".75"/><path d="M126 50 C 147.5 50, 147.5 61, 169 61" fill="none" stroke="#34C759" stroke-width=".9" opacity=".75"/><path d="M74 84 C 100.0 84, 100.0 72, 126 72" fill="none" stroke="#3a3a44" stroke-width=".8" opacity="1"/><path d="M126 72 C 147.5 72, 147.5 61, 169 61" fill="none" stroke="#3a3a44" stroke-width=".8" opacity="1"/><path d="M74 84 C 100.0 84, 100.0 102, 126 102" fill="none" stroke="#3a3a44" stroke-width=".8" opacity="1"/><path d="M126 102 C 147.5 102, 147.5 61, 169 61" fill="none" stroke="#3a3a44" stroke-width=".8" opacity="1"/><circle cx="74" cy="38" r="2.6" fill="#34C759"/><circle cx="74" cy="84" r="2.6" fill="#55555e"/><circle cx="126" cy="20" r="3.2" fill="#34C759"/><circle cx="126" cy="50" r="3.2" fill="#34C759"/><circle cx="126" cy="72" r="3.2" fill="#ffffff"/><circle cx="126" cy="102" r="3.2" fill="#55555e"/><circle cx="22" cy="61" r="4" fill="#E8952A"/><circle cx="174" cy="61" r="4.5" fill="none" stroke="#8d8d97" stroke-width="1"/>
-      </svg><video class="thumb-video" src="/assets/previews/substrate-frame.mp4" data-src-light="/assets/previews/substrate-frame.mp4" data-src-dark="/assets/previews/substrate-frame.mp4" loop muted playsinline preload="metadata"></video></div>
-          <div class="work-info">
-            <h3 class="work-title">Substrate</h3>
-            <div class="work-desc">Approve a plan before AI agents start, and see where they need you from the menu bar.</div>
-          </div>
-          <div class="work-meta">
-            <span class="work-status">View project <span class="work-arrow">&rarr;</span></span>
-          </div>
-        </a>
-      </li>
 
       <li class="work-item reveal">
         <a class="work-row" draggable="false"href="https://youtu.be/b9VX6qipe84?si=1SfM56ucYbxOrpg4" target="_blank" rel="noopener">
@@ -424,6 +405,31 @@
 
     </ul>
   </section>
+
+  <section class="lab" aria-label="Lab">
+    <h2 class="section-label reveal">Lab</h2>
+    <ul class="lab-grid reveal">
+      <li><a class="lab-tile" href="#lab-starling" data-lab="starling"><video src="/assets/lab/starling.mp4" poster="/assets/lab/starling.jpg" muted loop playsinline preload="metadata" aria-hidden="true"></video><span class="lab-name">Starling</span></a></li>
+      <li><a class="lab-tile" href="#lab-substrate" data-lab="substrate"><video src="/assets/lab/substrate.mp4" poster="/assets/lab/substrate.jpg" muted loop playsinline preload="metadata" aria-hidden="true"></video><span class="lab-name">Substrate</span></a></li>
+      <li><a class="lab-tile" href="#lab-agent-approvals" data-lab="agent-approvals"><video src="/assets/lab/agent-approvals.mp4" poster="/assets/lab/agent-approvals.jpg" muted loop playsinline preload="metadata" aria-hidden="true"></video><span class="lab-name">agent-approvals</span></a></li>
+      <li><a class="lab-tile" href="#lab-tags" data-lab="tags"><img src="/assets/lab/tags.jpg" alt="" loading="lazy"><span class="lab-name">Tags</span></a></li>
+      <li><a class="lab-tile" href="#lab-light-cube" data-lab="light-cube"><img src="/assets/lab/light-cube.jpg" alt="" loading="lazy"><span class="lab-name">Light Cube</span></a></li>
+    </ul>
+  </section>
+
+  <dialog class="lab-sheet" id="labSheet" aria-labelledby="labTitle">
+    <div class="lab-card">
+      <div class="lab-media" id="labMedia"></div>
+      <div class="lab-info">
+        <div>
+          <h3 id="labTitle"></h3>
+          <p id="labLine"></p>
+          <a class="lab-link" id="labLink" href="#" target="_blank" rel="noopener"></a>
+        </div>
+        <button class="lab-close" type="button" id="labClose">Close</button>
+      </div>
+    </div>
+  </dialog>
 
   <section class="workflow-section" aria-label="Workflow" hidden style="display:none; margin-top:0; margin-bottom:80px;">
     <h2 class="section-label reveal">Workflow</h2>
@@ -505,9 +511,11 @@
 
   <section aria-label="About" style="margin-bottom:80px;">
     <h2 class="section-label reveal">About</h2>
-    <p class="about-text reveal" style="margin-top:20px;">I&rsquo;m a creative technologist with an MFA in Design from UC Davis and a master&rsquo;s in Architecture. Now, as a product designer, and with AI tools in the loop, I direct the work like a studio of one.</p>
     <div class="about-strip reveal">
+      <div>
+    <p class="about-text">I&rsquo;m a creative technologist with an MFA in Design from UC Davis and a master&rsquo;s in Architecture. Now, as a product designer, and with AI tools in the loop, I direct the work like a studio of one.</p>
       <p class="about-tease"><strong><a href="/art.html">Before all this, I made physical things &rarr;</a></strong></p>
+      </div>
       <a class="album-link" href="/art.html" id="albumLink" aria-label="See the art">
         <img class="album-img active" src="/assets/album/frame-1.jpg" alt="Edge, a bronze figure tipping forward on a long black base" loading="lazy">
         <img class="album-img" src="/assets/album/frame-2.jpg" alt="Architectural gold rings worn across the fingers" loading="lazy">
@@ -662,6 +670,76 @@
       band.addEventListener('pointerleave', stop);
       link.addEventListener('focus', start);
       link.addEventListener('blur', stop);
+    })();
+  </script>
+  <script>
+    /* Lab: every tile loops while it is on screen. A click opens the piece in place,
+       with its own address (#lab-name) so it can be shared, and Back closes it. */
+    (() => {
+      const pieces = {
+        'starling': { title: 'Starling', line: 'A browser that sorts your open tabs into named groups with one press.', video: '/assets/lab/starling.mp4', poster: '/assets/lab/starling.jpg', link: '/projects/starling.html', linkText: 'Read the case study', same: true },
+        'substrate': { title: 'Substrate', line: 'Approve a plan before AI agents start, and see where they need you from the menu bar.', video: '/assets/lab/substrate.mp4', poster: '/assets/lab/substrate.jpg', link: '/projects/substrate.html', linkText: 'Read the case study', same: true },
+        'agent-approvals': { title: 'agent-approvals', line: 'Open-source React components for the moment an agent needs a person.', video: '/assets/lab/agent-approvals.mp4', poster: '/assets/lab/agent-approvals.jpg', link: 'https://ladanjohari.com/agent-approvals/', linkText: 'Read the docs' },
+        'tags': { title: 'Tags', line: 'A feature concept for iMessage.', poster: '/assets/lab/tags.jpg', link: 'https://youtu.be/SrWk4_VLGWA', linkText: 'Watch the demo on YouTube' },
+        'light-cube': { title: 'Light Cube', line: 'Whether a virtual room can carry the same emotional weight as a lit physical one. 23 participants, three colours, two rooms.', poster: '/assets/lab/light-cube.jpg' }
+      };
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const tiles = [...document.querySelectorAll('.lab-tile')];
+      const vids = tiles.map(t => t.querySelector('video')).filter(Boolean);
+      if (!reduce && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver(es => es.forEach(e => {
+          if (e.isIntersecting) e.target.play().catch(() => {}); else e.target.pause();
+        }), { threshold: 0.25 });
+        vids.forEach(v => io.observe(v));
+      }
+
+      const sheet = document.getElementById('labSheet');
+      const media = document.getElementById('labMedia');
+      const link = document.getElementById('labLink');
+      if (!sheet || typeof sheet.showModal !== 'function') return;
+      let opener = null, pushed = false;
+
+      const open = (key, push) => {
+        const p = pieces[key]; if (!p) return;
+        media.textContent = '';
+        if (p.video && !reduce) {
+          const v = document.createElement('video');
+          Object.assign(v, { src: p.video, poster: p.poster, muted: true, loop: true, autoplay: true, playsInline: true });
+          v.setAttribute('playsinline', ''); v.setAttribute('aria-hidden', 'true');
+          media.appendChild(v); v.play().catch(() => {});
+        } else {
+          const img = document.createElement('img'); img.src = p.poster; img.alt = p.title; media.appendChild(img);
+        }
+        document.getElementById('labTitle').textContent = p.title;
+        document.getElementById('labLine').textContent = p.line;
+        if (p.link) {
+          link.hidden = false; link.href = p.link; link.textContent = p.linkText + ' \u2192';
+          if (p.same) link.removeAttribute('target'); else link.target = '_blank';
+        } else { link.hidden = true; }
+        if (push) { history.pushState({ lab: key }, '', '#lab-' + key); pushed = true; }
+        if (!sheet.open) sheet.showModal();
+      };
+      const close = () => {
+        if (sheet.open) sheet.close();
+      };
+
+      tiles.forEach(t => t.addEventListener('click', e => {
+        e.preventDefault(); opener = t; open(t.dataset.lab, true);
+      }));
+      document.getElementById('labClose').addEventListener('click', close);
+      sheet.addEventListener('click', e => { if (e.target === sheet) close(); });
+      sheet.addEventListener('close', () => {
+        media.textContent = '';
+        if (pushed) { pushed = false; history.back(); }
+        else if (location.hash.startsWith('#lab-')) history.replaceState(null, '', location.pathname);
+        if (opener) opener.focus();
+      });
+      window.addEventListener('popstate', () => {
+        const key = location.hash.startsWith('#lab-') ? location.hash.slice(5) : null;
+        if (key && pieces[key]) { pushed = false; open(key, false); }
+        else if (sheet.open) { pushed = false; sheet.close(); }
+      });
+      if (location.hash.startsWith('#lab-')) open(location.hash.slice(5), false);
     })();
   </script>
 </body>
