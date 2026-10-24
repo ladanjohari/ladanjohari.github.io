@@ -60,12 +60,12 @@
     .nav-name { font-size: 0.875rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
 
     .hero { padding: 80px 0 72px; }
-    .hero-title { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.4; color: var(--ink); margin-bottom: 14px; }
+    .hero-lead { display: inline; font: inherit; color: inherit; letter-spacing: inherit; }
+    .hero-desc p { display: inline; }
     .hero-desc { font-size: 0.975rem; line-height: 1.7; color: var(--mid); max-width: 460px; text-wrap: pretty; }
     .hero-line { opacity: 0; animation: hero-fade 0.6s ease-out forwards; }
-    .hero-desc .hero-line { animation-delay: 0.35s; }
-    .hero-title-anim { opacity: 0; animation: hero-fade 0.6s ease-out forwards; animation-delay: 0s; }
-    @keyframes hero-fade { from { opacity: 0; } to { opacity: 1; } }
+    .hero-desc.hero-line { animation-delay: 0.1s; }
+        @keyframes hero-fade { from { opacity: 0; } to { opacity: 1; } }
 
     .section-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
 
@@ -75,7 +75,8 @@
     .work-row { display: flex; align-items: center; gap: 22px; text-decoration: none; color: var(--ink); padding: 16px 14px; border-radius: 14px; position: relative; transition: background 0.14s ease, transform 0.16s ease-out; touch-action: manipulation; -webkit-user-drag: none; }
     .work-row img, .work-row video { -webkit-user-drag: none; }
     .work-row:active { transform: scale(0.995); }
-    .work-thumb { position: relative; width: 196px; height: 122px; border-radius: 12px; overflow: hidden; flex-shrink: 0; border: 1px solid var(--rule); transition: border-color 0.12s ease-out; background: #111; }
+    /* WorkRow picture, enlarged 24 Oct 2026. The earlier size was 196 x 122. */
+    .work-thumb { position: relative; width: 236px; height: 147px; border-radius: 12px; overflow: hidden; flex-shrink: 0; border: 1px solid var(--rule); transition: border-color 0.12s ease-out; background: #111; }
     .work-thumb svg { width: 100%; height: 100%; display: block; }
     .work-info { flex: 1; min-width: 0; }
     .work-title { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
@@ -154,29 +155,35 @@
       .study-meta { order: -1; }
     }
 
-    /* ── Lab: a living wall of small pieces, each opens in place ── */
+    /* ── Lab: a tiled wall of small pieces (Persian kashi palette), each opens in place ── */
     .lab { margin-top: 64px; margin-bottom: 80px; }
-    .lab-grid { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
-    .lab-tile { display: block; position: relative; aspect-ratio: 1 / 1; border-radius: 12px; overflow: hidden; border: 1px solid var(--rule); background: #111; color: inherit; text-decoration: none; }
-    .lab-tile img, .lab-tile video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-    .lab-name { position: absolute; left: 8px; bottom: 8px; font-size: 0.75rem; font-weight: 500; color: #fff; background: rgba(17,17,17,0.72); padding: 4px 9px; border-radius: 999px; opacity: 0; transform: translateY(4px); transition: opacity 0.18s ease-out, transform 0.18s ease-out; }
-    .lab-tile:hover .lab-name, .lab-tile:focus-visible .lab-name { opacity: 1; transform: none; }
+    .lab-grid { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 3px; padding: 3px; margin-top: 20px; background: var(--hover-row); border-radius: 6px; }
+    .lab-tile { display: block; position: relative; width: 100%; aspect-ratio: 1 / 1; border: 0; padding: 0; border-radius: 2px; cursor: pointer; background: var(--tile, #23408E); font: inherit; }
+    .lab-name { position: absolute; left: 6px; bottom: 6px; font-size: 0.7rem; font-weight: 500; color: #fff; background: rgba(17,17,17,0.72); padding: 3px 8px; border-radius: 999px; opacity: 0; transform: translateY(3px); transition: opacity 0.16s ease-out, transform 0.16s ease-out; white-space: nowrap; max-width: calc(100% - 12px); overflow: hidden; text-overflow: ellipsis; }
+    @media (hover: hover) and (pointer: fine) { .lab-tile:hover .lab-name { opacity: 1; transform: none; } }
     .lab-tile:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    @media (hover: none) { .lab-name { opacity: 1; transform: none; } }
-    @media (max-width: 540px) { .lab-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } }
+    .lab-tile:focus-visible .lab-name { opacity: 1; transform: none; }
 
-    .lab-sheet { border: 0; padding: 0; background: transparent; max-width: min(560px, calc(100vw - 32px)); width: 100%; margin: auto; color: var(--ink); }
-    .lab-sheet::backdrop { background: rgba(0,0,0,0.6); }
-    .lab-card { background: var(--bg); border-radius: 18px; padding: 14px; }
-    .lab-media { position: relative; aspect-ratio: 1 / 1; border-radius: 10px; overflow: hidden; background: #111; }
-    .lab-media img, .lab-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-    .lab-info { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 14px 4px 4px; }
-    .lab-info h3 { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.015em; }
-    .lab-info p { font-size: 0.875rem; line-height: 1.6; color: var(--mid); margin-top: 4px; text-wrap: pretty; }
-    .lab-link { display: inline-block; margin-top: 8px; font-size: 0.85rem; font-weight: 500; color: var(--accent); text-decoration: none; }
-    .lab-link[hidden] { display: none; }
-    .lab-close { font: inherit; font-size: 0.85rem; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--rule); background: transparent; color: var(--ink); cursor: pointer; flex-shrink: 0; }
-    .lab-close:focus-visible, .lab-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    /* The pop-up is a small page: a bar with the title and Close, then the piece in its own form. */
+    .lab-sheet { border: 0; padding: 0; background: transparent; width: min(var(--w, 560px), calc(100vw - 32px)); max-width: none; max-height: calc(100vh - 32px); margin: auto; color: var(--ink); overflow: visible; }
+    .lab-sheet::backdrop { background: rgba(0,0,0,0.55); }
+    .lab-card { background: var(--bg); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; max-height: calc(100vh - 32px); }
+    .lab-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 10px 10px 20px; border-bottom: 1px solid var(--rule); flex-shrink: 0; }
+    .lab-bar h3 { font-size: 0.95rem; font-weight: 600; letter-spacing: -0.01em; }
+    .lab-close { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--rule); background: transparent; color: var(--ink); cursor: pointer; display: grid; place-items: center; flex-shrink: 0; }
+    .lab-close svg { width: 14px; height: 14px; }
+    .lab-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .lab-body { padding: 16px 20px 20px; overflow: auto; }
+    .lab-body p { font-size: 0.875rem; line-height: 1.6; color: var(--mid); margin-top: 12px; text-wrap: pretty; }
+    .lab-frame { display: block; width: 100%; border: 0; border-radius: 10px; background: #111; }
+    .lab-frame.video { aspect-ratio: 16 / 9; }
+    .lab-frame.page { height: min(72vh, 760px); background: var(--bg); border: 1px solid var(--rule); }
+    .lab-photo { display: block; width: 100%; border-radius: 10px; }
+    @media (max-width: 540px) {
+      .lab-sheet { width: calc(100vw - 16px); }
+      .lab-body { padding: 12px 12px 16px; }
+      .lab-frame.page { height: 70vh; }
+    }
 
     /* ── AboutStrip: the art band ── */
     .about-strip {
@@ -254,7 +261,7 @@
       .work-row, .work-arrow { transition: none; }
       .thumb-video { display: none !important; }
       .cursor-dot { display: none !important; }
-      .hero-line, .hero-title-anim { opacity: 1; animation: none; }
+      .hero-line { opacity: 1; animation: none; }
       .wf-pips-fill { transition: none; }
       .wf-tag { transition: none; }
       .reveal { opacity: 1; transform: none; transition: none; }
@@ -272,10 +279,10 @@
   </nav>
 
   <header class="hero">
-    <h1 class="hero-title hero-title-anim">Product Designer &middot; Bay Area, CA</h1>
-    <p class="hero-desc">
-      <span class="hero-line">I design and build how people work with AI. My work has a common theme: making navigation and paths easier and&nbsp;clearer.</span>
-    </p>
+    <div class="hero-desc hero-line">
+      <h1 class="hero-lead">I&rsquo;m a product designer based in the Bay Area, CA.</h1>
+      <p>I design and build how people work with interfaces and AI. My work has a common theme: making navigation and interactions easier and more&nbsp;findable.</p>
+    </div>
   </header>
 
   <section id="work" aria-label="Selected work" style="margin-bottom:0;">
@@ -409,25 +416,21 @@
   <section class="lab" aria-label="Lab">
     <h2 class="section-label reveal">Lab</h2>
     <ul class="lab-grid reveal">
-      <li><a class="lab-tile" href="#lab-starling" data-lab="starling"><video src="/assets/lab/starling.mp4" poster="/assets/lab/starling.jpg" muted loop playsinline preload="metadata" aria-hidden="true"></video><span class="lab-name">Starling</span></a></li>
-      <li><a class="lab-tile" href="#lab-substrate" data-lab="substrate"><video src="/assets/lab/substrate.mp4" poster="/assets/lab/substrate.jpg" muted loop playsinline preload="metadata" aria-hidden="true"></video><span class="lab-name">Substrate</span></a></li>
-      <li><a class="lab-tile" href="#lab-agent-approvals" data-lab="agent-approvals"><video src="/assets/lab/agent-approvals.mp4" poster="/assets/lab/agent-approvals.jpg" muted loop playsinline preload="metadata" aria-hidden="true"></video><span class="lab-name">agent-approvals</span></a></li>
-      <li><a class="lab-tile" href="#lab-tags" data-lab="tags"><img src="/assets/lab/tags.jpg" alt="" loading="lazy"><span class="lab-name">Tags</span></a></li>
-      <li><a class="lab-tile" href="#lab-light-cube" data-lab="light-cube"><img src="/assets/lab/light-cube.jpg" alt="" loading="lazy"><span class="lab-name">Light Cube</span></a></li>
+      <li><button class="lab-tile" type="button" data-lab="starling" style="--tile:#1A9BA8"><span class="lab-name">Starling</span></button></li>
+      <li><button class="lab-tile" type="button" data-lab="substrate" style="--tile:#23408E"><span class="lab-name">Substrate</span></button></li>
+      <li><button class="lab-tile" type="button" data-lab="agent-approvals" style="--tile:#E0A43A"><span class="lab-name">agent-approvals</span></button></li>
+      <li><button class="lab-tile" type="button" data-lab="tags" style="--tile:#F1E9D8"><span class="lab-name">Tags</span></button></li>
+      <li><button class="lab-tile" type="button" data-lab="light-cube" style="--tile:#23408E"><span class="lab-name">Light Cube</span></button></li>
     </ul>
   </section>
 
   <dialog class="lab-sheet" id="labSheet" aria-labelledby="labTitle">
     <div class="lab-card">
-      <div class="lab-media" id="labMedia"></div>
-      <div class="lab-info">
-        <div>
-          <h3 id="labTitle"></h3>
-          <p id="labLine"></p>
-          <a class="lab-link" id="labLink" href="#" target="_blank" rel="noopener"></a>
-        </div>
-        <button class="lab-close" type="button" id="labClose">Close</button>
+      <div class="lab-bar">
+        <h3 id="labTitle"></h3>
+        <button class="lab-close" type="button" id="labClose" aria-label="Close"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
       </div>
+      <div class="lab-body" id="labBody"></div>
     </div>
   </dialog>
 
@@ -673,63 +676,49 @@
     })();
   </script>
   <script>
-    /* Lab: every tile loops while it is on screen. A click opens the piece in place,
-       with its own address (#lab-name) so it can be shared, and Back closes it. */
+    /* Lab: each tile opens its piece in a small page inside the homepage. The piece
+       decides its form: a video, a post, a whole page, or one photo. Each has its own
+       address (#lab-name) so it can be shared, and Back closes it. Embeds load only
+       when opened. */
     (() => {
       const pieces = {
-        'starling': { title: 'Starling', line: 'A browser that sorts your open tabs into named groups with one press.', video: '/assets/lab/starling.mp4', poster: '/assets/lab/starling.jpg', link: '/projects/starling.html', linkText: 'Read the case study', same: true },
-        'substrate': { title: 'Substrate', line: 'Approve a plan before AI agents start, and see where they need you from the menu bar.', video: '/assets/lab/substrate.mp4', poster: '/assets/lab/substrate.jpg', link: '/projects/substrate.html', linkText: 'Read the case study', same: true },
-        'agent-approvals': { title: 'agent-approvals', line: 'Open-source React components for the moment an agent needs a person.', video: '/assets/lab/agent-approvals.mp4', poster: '/assets/lab/agent-approvals.jpg', link: 'https://ladanjohari.com/agent-approvals/', linkText: 'Read the docs' },
-        'tags': { title: 'Tags', line: 'A feature concept for iMessage.', poster: '/assets/lab/tags.jpg', link: 'https://youtu.be/SrWk4_VLGWA', linkText: 'Watch the demo on YouTube' },
-        'light-cube': { title: 'Light Cube', line: 'Whether a virtual room can carry the same emotional weight as a lit physical one. 23 participants, three colours, two rooms.', poster: '/assets/lab/light-cube.jpg' }
+        'starling': { title: 'Starling', kind: 'page', src: '/projects/starling.html', w: 860 },
+        'substrate': { title: 'Substrate', kind: 'page', src: '/projects/substrate.html', w: 860 },
+        'agent-approvals': { title: 'agent-approvals', kind: 'page', src: '/agent-approvals/', w: 860 },
+        'tags': { title: 'Tags', kind: 'video', src: 'https://www.youtube-nocookie.com/embed/SrWk4_VLGWA?autoplay=1&rel=0', line: 'A feature concept for iMessage.', w: 760 },
+        'light-cube': { title: 'Light Cube', kind: 'photo', src: '/assets/lab/light-cube.jpg', alt: 'A participant in a VR headset in a room lit blue, the virtual and the physical room side by side', line: 'Whether a virtual room can carry the same emotional weight as a lit physical one. 23 participants, three colours, two rooms.', w: 520 }
       };
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const tiles = [...document.querySelectorAll('.lab-tile')];
-      const vids = tiles.map(t => t.querySelector('video')).filter(Boolean);
-      if (!reduce && 'IntersectionObserver' in window) {
-        const io = new IntersectionObserver(es => es.forEach(e => {
-          if (e.isIntersecting) e.target.play().catch(() => {}); else e.target.pause();
-        }), { threshold: 0.25 });
-        vids.forEach(v => io.observe(v));
-      }
-
       const sheet = document.getElementById('labSheet');
-      const media = document.getElementById('labMedia');
-      const link = document.getElementById('labLink');
+      const body = document.getElementById('labBody');
       if (!sheet || typeof sheet.showModal !== 'function') return;
       let opener = null, pushed = false;
 
+      const frame = (cls, src, title, allow) => {
+        const f = document.createElement('iframe');
+        f.className = 'lab-frame ' + cls; f.src = src; f.title = title; f.loading = 'eager';
+        if (allow) f.allow = allow;
+        f.setAttribute('allowfullscreen', '');
+        return f;
+      };
       const open = (key, push) => {
         const p = pieces[key]; if (!p) return;
-        media.textContent = '';
-        if (p.video && !reduce) {
-          const v = document.createElement('video');
-          Object.assign(v, { src: p.video, poster: p.poster, muted: true, loop: true, autoplay: true, playsInline: true });
-          v.setAttribute('playsinline', ''); v.setAttribute('aria-hidden', 'true');
-          media.appendChild(v); v.play().catch(() => {});
-        } else {
-          const img = document.createElement('img'); img.src = p.poster; img.alt = p.title; media.appendChild(img);
-        }
+        body.textContent = '';
+        if (p.kind === 'video') body.appendChild(frame('video', p.src, p.title, 'autoplay; encrypted-media; picture-in-picture; fullscreen'));
+        if (p.kind === 'post') body.appendChild(frame('page', p.src, p.title));
+        if (p.kind === 'page') body.appendChild(frame('page', p.src, p.title));
+        if (p.kind === 'photo') { const im = document.createElement('img'); im.className = 'lab-photo'; im.src = p.src; im.alt = p.alt || p.title; body.appendChild(im); }
+        if (p.line) { const t = document.createElement('p'); t.textContent = p.line; body.appendChild(t); }
         document.getElementById('labTitle').textContent = p.title;
-        document.getElementById('labLine').textContent = p.line;
-        if (p.link) {
-          link.hidden = false; link.href = p.link; link.textContent = p.linkText + ' \u2192';
-          if (p.same) link.removeAttribute('target'); else link.target = '_blank';
-        } else { link.hidden = true; }
+        sheet.style.setProperty('--w', (p.w || 560) + 'px');
         if (push) { history.pushState({ lab: key }, '', '#lab-' + key); pushed = true; }
         if (!sheet.open) sheet.showModal();
       };
-      const close = () => {
-        if (sheet.open) sheet.close();
-      };
 
-      tiles.forEach(t => t.addEventListener('click', e => {
-        e.preventDefault(); opener = t; open(t.dataset.lab, true);
-      }));
-      document.getElementById('labClose').addEventListener('click', close);
-      sheet.addEventListener('click', e => { if (e.target === sheet) close(); });
+      document.querySelectorAll('.lab-tile').forEach(t => t.addEventListener('click', () => { opener = t; open(t.dataset.lab, true); }));
+      document.getElementById('labClose').addEventListener('click', () => sheet.close());
+      sheet.addEventListener('click', e => { if (e.target === sheet) sheet.close(); });
       sheet.addEventListener('close', () => {
-        media.textContent = '';
+        body.textContent = '';
         if (pushed) { pushed = false; history.back(); }
         else if (location.hash.startsWith('#lab-')) history.replaceState(null, '', location.pathname);
         if (opener) opener.focus();
