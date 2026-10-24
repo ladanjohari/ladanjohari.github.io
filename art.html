@@ -275,6 +275,8 @@
     .piece-spec span::after { content: ' · '; color: var(--rule); }
     .piece-spec span:last-child::after { content: ''; }
     .piece-hero { border-radius: 8px; display: block; }
+    /* The statement under the studio photograph, in the body paragraph size. */
+    .art-statement { font-size: 0.975rem; line-height: 1.7; color: var(--ink); max-width: 60ch; margin-top: 32px; text-wrap: pretty; }
     /* Caption under a photograph: the role first, the show and the museum under it. */
     .photo-caption {
       font-size: 0.82rem; line-height: 1.6; color: var(--mid);
@@ -393,13 +395,6 @@
     <a class="pf-wordmark" href="/">Ladan Johari</a>
   </nav>
 
-  <div class="page-header">
-    <p class="page-descriptor">
-      I work primarily with bronze and ceramic, combining the permanence of metal with the
-      tactile warmth of clay. My forms are inspired by architectural geometry, cultural
-      heritage, and personal narratives, balancing bold structures with subtle feelings.
-    </p>
-  </div>
 
   <!-- Constellation. Hidden for now, kept in place so it can be switched back on:
        delete the `hidden` attribute and the display:none to bring it back. -->
@@ -419,6 +414,11 @@
         <span><em>Parviz Tanavoli and the Lions of Iran</em>, 2017, Tehran Museum of Contemporary Art.</span>
       </figcaption>
     </figure>
+    <p class="art-statement">
+      I work primarily with bronze and ceramic, combining the permanence of metal with the
+      tactile warmth of clay. My forms are inspired by architectural geometry, cultural
+      heritage, and personal narratives, balancing bold structures with subtle feelings.
+    </p>
   </div>
 
   <!-- ── The pieces, in the arrangement from the original site ── -->

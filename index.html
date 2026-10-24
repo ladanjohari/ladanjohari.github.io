@@ -23,7 +23,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Person","name":"Ladan Johari","jobTitle":"Product Designer","url":"https://ladanjohari.com","sameAs":["https://www.linkedin.com/in/ladan-johari/","https://github.com/ladanjohari"],"address":{"@type":"PostalAddress","addressRegion":"CA","addressCountry":"US"}}
+  {"@context":"https://schema.org","@type":"Person","name":"Ladan Johari","jobTitle":"Product Designer","url":"https://ladanjohari.com","sameAs":["https://www.linkedin.com/in/ladan-johari/","https://x.com/JohariLadan","https://github.com/ladanjohari"],"address":{"@type":"PostalAddress","addressRegion":"CA","addressCountry":"US"}}
   </script>
   <link rel="preload" href="/assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
   <style>
@@ -60,7 +60,7 @@
     .nav-name { font-size: 0.875rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
 
     .hero { padding: 80px 0 72px; }
-    .hero-eyebrow { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; }
+    .hero-eyebrow { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); margin-bottom: 14px; }
     .hero-headline { font-size: clamp(1.8rem, 4.5vw, 2.6rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1.15; color: var(--ink); margin-bottom: 18px; max-width: 540px; }
     .hero-headline em { font-style: normal; color: var(--accent); }
     .hero-desc { font-size: 0.975rem; line-height: 1.7; color: var(--mid); max-width: 460px; text-wrap: pretty; }
@@ -69,22 +69,6 @@
     .hero-desc .hero-line { animation-delay: 0.35s; }
     .hero-eyebrow-anim { opacity: 0; animation: hero-fade 0.6s ease-out forwards; animation-delay: 0s; }
     @keyframes hero-fade { from { opacity: 0; } to { opacity: 1; } }
-    .eyebrow-dot {
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background-color: var(--accent);
-      margin-right: 8px;
-      vertical-align: middle;
-      position: relative;
-      top: -1px;
-      animation: dot-shimmer 3s ease-in-out infinite;
-    }
-    @keyframes dot-shimmer {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.25; }
-    }
 
     .section-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
 
@@ -248,7 +232,6 @@
       .work-row, .work-arrow { transition: none; }
       .thumb-video { display: none !important; }
       .cursor-dot { display: none !important; }
-      .eyebrow-dot { animation: none; }
       .hero-line, .hero-eyebrow-anim { opacity: 1; animation: none; }
       .wf-pips-fill { transition: none; }
       .wf-tag { transition: none; }
@@ -267,10 +250,10 @@
   </nav>
 
   <header class="hero">
-    <p class="hero-eyebrow hero-eyebrow-anim"><span class="eyebrow-dot"></span>Product Designer &middot; Bay Area, CA</p>
+    <p class="hero-eyebrow hero-eyebrow-anim">Product Designer &middot; Bay Area, CA</p>
     <h1 class="hero-headline hero-line">I design and build how people work with&nbsp;AI.</h1>
     <p class="hero-desc">
-      <span class="hero-line">I make software easy to read, fast to move through, and intentional with&nbsp;details.</span>
+      <span class="hero-line">My work has a common theme: making navigation and paths easier and&nbsp;clearer.</span>
     </p>
   </header>
 
@@ -300,10 +283,8 @@
           <div class="work-info">
             <h3 class="work-title">Session Indicator</h3>
             <div class="work-desc">Track every running AI agent from the menu bar so you never lose your place.</div>
-            <div class="work-tags">AI Agent UI &middot; Interaction System</div>
           </div>
           <div class="work-meta">
-            <span class="work-year">2026</span>
             <span class="work-status">View project <span class="work-arrow">&rarr;</span></span>
           </div>
         </a>
@@ -334,10 +315,8 @@
           <div class="work-info">
             <h3 class="work-title">Prompted Find</h3>
             <div class="work-desc">Find the moment you need in a long video by meaning, not keywords.</div>
-            <div class="work-tags">Semantic Decomposition &middot; Applied to Video</div>
           </div>
           <div class="work-meta">
-            <span class="work-year">2025</span>
             <span class="work-status">View project <span class="work-arrow">&rarr;</span></span>
           </div>
         </a>
@@ -362,10 +341,8 @@
           <div class="work-info">
             <h3 class="work-title">Starling</h3>
             <div class="work-desc">A browser that sorts your open tabs into named groups with one press.</div>
-            <div class="work-tags">AI Interface &middot; macOS Browser</div>
           </div>
           <div class="work-meta">
-            <span class="work-year">2026</span>
             <span class="work-status">View project <span class="work-arrow">&rarr;</span></span>
           </div>
         </a>
@@ -380,10 +357,8 @@
           <div class="work-info">
             <h3 class="work-title">Substrate</h3>
             <div class="work-desc">Approve a plan before AI agents start, and see where they need you from the menu bar.</div>
-            <div class="work-tags">AI Agent UI &middot; macOS App</div>
           </div>
           <div class="work-meta">
-            <span class="work-year">2026</span>
             <span class="work-status">View project <span class="work-arrow">&rarr;</span></span>
           </div>
         </a>
@@ -417,10 +392,8 @@
           <div class="work-info">
             <h3 class="work-title">Xcode Symbol Browser</h3>
             <div class="work-desc">Read a codebase&rsquo;s structure at a glance instead of digging through files.</div>
-            <div class="work-tags">Developer Tools &middot; Information Architecture</div>
           </div>
           <div class="work-meta">
-            <span class="work-year">2024</span>
             <span class="work-status">Watch demo <span class="work-arrow">&#8599;</span></span>
           </div>
         </a>
@@ -442,10 +415,8 @@
           <div class="work-info">
             <h3 class="work-title">Trails</h3>
             <div class="work-desc">See everything you&rsquo;ve read as a living graph you can navigate.</div>
-            <div class="work-tags">Knowledge Navigation &middot; Graph Interface</div>
           </div>
           <div class="work-meta">
-            <span class="work-year">2024</span>
             <span class="work-status">Watch demo <span class="work-arrow">&#8599;</span></span>
           </div>
         </a>
@@ -534,9 +505,9 @@
 
   <section aria-label="About" style="margin-bottom:80px;">
     <h2 class="section-label reveal">About</h2>
-    <p class="about-text reveal" style="margin-top:20px;">I&rsquo;m a creative technologist with an MFA in Design from UC Davis and a master&rsquo;s in Architecture. Now, as a product designer, and with AI tools in the loop, I direct the work like a studio of one: getting prototypes ready for early testing, collecting feedback, and moving quickly without losing quality.</p>
+    <p class="about-text reveal" style="margin-top:20px;">I&rsquo;m a creative technologist with an MFA in Design from UC Davis and a master&rsquo;s in Architecture. Now, as a product designer, and with AI tools in the loop, I direct the work like a studio of one.</p>
     <div class="about-strip reveal">
-      <p class="about-tease"><strong><a href="/art.html">Before all this, I made physical things &rarr;</a></strong><span style="display:block; margin-top:8px;">Minimum form, maximum presence. The rule that shapes my art still runs through everything I design.</span></p>
+      <p class="about-tease"><strong><a href="/art.html">Before all this, I made physical things &rarr;</a></strong></p>
       <a class="album-link" href="/art.html" id="albumLink" aria-label="See the art">
         <img class="album-img active" src="/assets/album/frame-1.jpg" alt="Edge, a bronze figure tipping forward on a long black base" loading="lazy">
         <img class="album-img" src="/assets/album/frame-2.jpg" alt="Architectural gold rings worn across the fingers" loading="lazy">
@@ -547,7 +518,7 @@
 
   <section class="elsewhere" aria-label="Elsewhere" style="margin-bottom:80px;">
     <h2 class="section-label reveal">Elsewhere</h2>
-    <p class="elsewhere-text reveal" style="margin-top:20px;">Code on <a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a>, connect on <a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a>, see my <a href="assets/resume/LadanJohari-Resume.pdf" target="_blank" rel="noopener">r&eacute;sum&eacute;</a>.</p>
+    <p class="elsewhere-text reveal" style="margin-top:20px;">Code on <a href="https://github.com/ladanjohari" target="_blank" rel="noopener">GitHub</a>, connect on <a href="https://www.linkedin.com/in/ladan-johari/" target="_blank" rel="noopener">LinkedIn</a>, find me on <a href="https://x.com/JohariLadan" target="_blank" rel="noopener">X</a>.</p>
   </section>
 
   <footer>
