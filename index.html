@@ -231,8 +231,11 @@
     .elsewhere-text { font-size: 0.925rem; line-height: 1.7; color: var(--mid); text-wrap: pretty; }
     .elsewhere-text a { color: var(--ink); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--rule); transition: color 0.12s, text-decoration-color 0.12s; }
     .elsewhere-text a:hover { color: var(--accent); text-decoration-color: var(--accent-dim); }
-    footer { border-top: 1px solid var(--rule); padding: 26px 0 52px; }
+    footer { border-top: 1px solid var(--rule); padding: 26px 0 52px; display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
     .footer-copy { font-size: 0.72rem; color: var(--mid); }
+    .footer-link { font-size: 0.72rem; color: var(--mid); padding: 10px 12px; margin: -10px -12px; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--rule); transition: color 0.12s, text-decoration-color 0.12s; }
+    .footer-link:hover { color: var(--accent); text-decoration-color: var(--accent-dim); }
+    .footer-link:focus-visible { outline: none; border-radius: 3px; box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); }
 
     @media (max-width: 540px) {
       .shell { padding: 0 20px; }
@@ -565,6 +568,7 @@
 
   <footer>
     <span class="footer-copy">&copy; 2026 Ladan Johari</span>
+    <a class="footer-link" href="https://x.com/JohariLadan" target="_blank" rel="noopener" aria-label="Ladan Johari on X">X</a>
   </footer>
 
 </div>
