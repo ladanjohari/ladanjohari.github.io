@@ -168,11 +168,11 @@
     .lab button { font: inherit; }
     .lab .spine:focus-visible, .lab .cd:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
     /* the shelf: one line of spines, .lab the open one is current */
-    .stage { position: relative; }
+    .lab .stage { position: relative; }
     .lab .track { overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; padding: 10px 0 4px; }
     .lab .track::-webkit-scrollbar { display: none; }
     .lab .shelf { display: flex; gap: 5px; height: 230px; width: max-content; align-items: stretch; }
-    .lab .spine { flex: 0 0 40px; min-width: 0; border: 0; border-radius: 10px; background: var(--c); color: var(--t); cursor: pointer; padding: 0; position: relative; overflow: hidden; transition: flex-basis .5s cubic-bezier(.32,.72,0,1), transform .25s cubic-bezier(.32,.72,0,1); text-align: left; }
+    .lab .spine { flex: 0 0 40px; min-width: 0; border: 0; border-radius: 10px; background: var(--c); color: var(--t); cursor: pointer; padding: 0; position: relative; overflow: hidden; transition: flex-basis .6s cubic-bezier(.32,.72,0,1), transform .25s cubic-bezier(.32,.72,0,1); text-align: left; }
     @media (hover: hover) and (pointer: fine) { .lab .spine:not(.cur):hover { transform: translateY(-6px); } }
     .lab .spine:active { transform: scale(.97); }
     .lab .spine .name { position: absolute; left: 11px; bottom: 12px; writing-mode: vertical-rl; transform: rotate(180deg); font-size: 12.5px; font-weight: 500; white-space: nowrap; transition: opacity .2s ease .22s; }
@@ -180,33 +180,40 @@
     .lab .spine .open b { position: absolute; left: 0; bottom: 0; font-size: 13px; font-weight: 500; opacity: .9; }
     .lab .spine.cur { flex-basis: 220px; }
     .lab .spine.cur .name { opacity: 0; transition: opacity .1s ease; }
-    .lab .spine.cur .open { opacity: 1; transition: opacity .3s ease .18s; }
+    .lab .spine.cur .open { opacity: 1; transition: opacity .45s ease .2s; }
     .lab .mini { position: absolute; inset: 0 0 26px; }
-    .lab .mini .w { position: absolute; left: 0; right: 0; top: 4%; text-align: center; font-size: 24px; font-weight: 600; letter-spacing: -0.03em; opacity: 0; transform: translateY(6px); transition: opacity .2s ease, transform .2s ease; }
-    .lab .mini.on .w { opacity: 1; transform: none; transition: opacity .35s ease .7s, transform .45s cubic-bezier(.32,.72,0,1) .7s; }
+    .lab .mini .w { position: absolute; left: 0; right: 0; top: 4%; text-align: center; font-size: 24px; font-weight: 600; letter-spacing: -0.03em; opacity: 0; transform: translateY(8px); filter: blur(4px); transition: opacity .2s ease, transform .2s ease, filter .2s ease; }
+    .lab .mini.on .w { opacity: 1; transform: none; filter: none; transition: opacity .9s ease-out, transform 1.1s cubic-bezier(.22,1,.36,1), filter .9s ease-out; transition-delay: var(--wd, .8s); }
     .lab .mini.nt, .lab .mini.nt * { transition: none !important; }
     .lab .mini .p { position: absolute; border-radius: 999px; background: var(--a); transition: left .6s cubic-bezier(.32,.72,0,1), top .6s cubic-bezier(.32,.72,0,1), width .6s cubic-bezier(.32,.72,0,1), height .6s cubic-bezier(.32,.72,0,1), opacity .4s ease; transition-delay: var(--d, 0s); }
-    /* Substrate: the root of the plan is the goal, .lab in the card's ink */
-    .k-plan.on .i0 { background: var(--t); }
-    .lab .mini .ln { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-    .lab .mini .ln path { fill: none; stroke: var(--a); stroke-width: 1.5; vector-effect: non-scaling-stroke; stroke-dasharray: 60; stroke-dashoffset: 60; transition: stroke-dashoffset .2s ease; }
-    .lab .mini.on .ln path { stroke-dashoffset: 0; transition: stroke-dashoffset .5s ease .35s; }
+
+    /* Substrate: a plan that branches. The goal lands first, then where you start, then the paths and steps between */
+    .lab .k-plan { --wd: 3.2s; }
+    .lab .k-plan .tree { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .lab .k-plan .tree path { fill: none; stroke: var(--a); stroke-width: 1.25; opacity: .6; stroke-dasharray: 100; stroke-dashoffset: 100; }
+    .lab .k-plan.on .tree path { stroke-dashoffset: 0; transition: stroke-dashoffset var(--l, .5s) cubic-bezier(.45,0,.25,1) var(--d, 0s); }
+    .lab .k-plan .tree .n { opacity: 0; transform: scale(.4); transform-box: fill-box; transform-origin: center; }
+    .lab .k-plan.on .tree .n { opacity: 1; transform: none; transition: opacity .5s ease var(--d, 0s), transform .7s cubic-bezier(.34,1.3,.64,1) var(--d, 0s); }
+    .lab .k-plan .tree .step { fill: var(--a); }
+    .lab .k-plan .tree .start { fill: var(--c); stroke: var(--t); stroke-width: 2; }
+    .lab .k-plan .tree .goal circle { fill: var(--t); }
+    .lab .k-plan .tree .goal .ring { fill: none; stroke: var(--t); stroke-width: 1.5; opacity: .45; }
     /* Tags: received and sent bubbles, .lab two get a tag and the rest step back */
-    .k-tag .p { background: var(--t); opacity: .9; }
+    .lab .k-tag .p { background: var(--t); opacity: .9; }
     .lab .k-tag .p.sent { background: var(--a); opacity: 1; }
-    .lab .k-tag.on .p:not(.tagged) { opacity: .28; transition-delay: .35s; }
-    .lab .k-tag { --tg: #FFCC00; }
+    .lab .k-tag.on .p:not(.tagged) { opacity: .28; transition: opacity .8s ease 1.2s; }
+    .lab .k-tag { --tg: #FFCC00; --wd: 1.7s; }
     .lab .k-tag .chip { position: absolute; left: -4px; bottom: -4px; width: 11px; height: 11px; border-radius: 50%; background: var(--tg); box-shadow: 0 0 0 2px var(--c); transform: scale(0); transition: transform .2s ease; }
-    .lab .k-tag.on .p.tagged { animation: press .4s ease .2s both; }
+    .lab .k-tag.on .p.tagged { animation: press .6s cubic-bezier(.45,0,.25,1) .3s both; }
     @keyframes press { 50% { transform: scale(.93); } }
-    .lab .k-tag.on .chip { transform: scale(1); transition: transform .35s cubic-bezier(.34,1.56,.64,1) .5s; }
+    .lab .k-tag.on .chip { transform: scale(1); transition: transform .55s cubic-bezier(.34,1.4,.64,1) .75s; }
     /* agent-approvals: the button fills while held, .lab then confirms */
-    .k-hold .p { background: transparent; box-shadow: inset 0 0 0 1.5px var(--t); overflow: hidden; }
+    .lab .k-hold .p { background: transparent; box-shadow: inset 0 0 0 1.5px var(--t); overflow: hidden; }
     .lab .k-hold .fl { position: absolute; inset: 0; width: 0; background: var(--t); transition: width .15s ease; }
-    .lab .k-hold.on .fl { width: 100%; transition: width 1.1s linear .1s; }
+    .lab .k-hold.on .fl { width: 100%; transition: width 1.2s linear .4s; }
     .lab .k-hold .ck { position: absolute; left: 50%; top: 50%; width: 18px; height: 9px; margin: -7px 0 0 -9px; border-left: 2.5px solid var(--c); border-bottom: 2.5px solid var(--c); transform: rotate(-45deg) scale(0); transition: transform .15s ease; }
-    .lab .k-hold.on .ck { transform: rotate(-45deg) scale(1); transition: transform .3s cubic-bezier(.34,1.56,.64,1) 1.2s; }
-    .lab .k-hold.on .w { transition-delay: 1.3s, 1.3s; }
+    .lab .k-hold.on .ck { transform: rotate(-45deg) scale(1); transition: transform .45s cubic-bezier(.34,1.4,.64,1) 1.65s; }
+    .lab .k-hold { --wd: 1.9s; }
     .lab .ind { padding-top: 14px; }
     .lab .cbar { display: flex; justify-content: center; }
     .lab .cwin { --slot: 30px; --cw: 84px; --pw: 56px; --ph: 12px; --dd: 10px; position: relative; width: calc(var(--slot) * 2 + var(--cw)); height: 44px; overflow: hidden; }
@@ -227,6 +234,10 @@
     .lab .sheet { --r: 20px; background: var(--bg); border-radius: var(--r); width: min(540px, 100%); max-height: 100%; display: flex; flex-direction: column; overflow: hidden; }
     .lab .sheet .bar { flex: none; display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 6px 6px 6px 20px; background: var(--c); color: var(--t); }
     .lab .sheet .bar b { flex: 1; min-width: 0; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    /* a package keeps its name in code type, with npm beside it in the pop-up */
+    .lab .pkg { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: -0.02em; }
+    .lab .sheet .bar b.pkg { font-size: 16px; }
+    .lab .sheet .bar .npmtag { margin-left: 4px; padding: 0 7px; border-radius: 999px; box-shadow: inset 0 0 0 1.5px currentColor; font-family: "Geist", system-ui, sans-serif; font-size: 11px; font-weight: 600; line-height: 18px; vertical-align: 2px; letter-spacing: 0; }
     .lab .sheet .x { flex: none; width: 44px; height: 44px; border-radius: 50%; border: 0; background: transparent; color: inherit; cursor: pointer; display: grid; place-items: center; }
     .lab .sheet .x:hover { background: rgba(127,127,127,.18); }
     .lab .sheet .x svg { width: 14px; height: 14px; }
@@ -238,14 +249,18 @@
     .lab .sheet .about .src { font-size: 12.5px; line-height: 1.4; color: var(--mid); }
     .lab .sheet .about .src a { color: inherit; text-underline-offset: 2px; }
     .lab .sheet .about .src a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
-    .lab .sheet .foot { padding: 4px 8px 8px; }
+    .lab .sheet .foot { padding: 4px 8px 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .lab .sheet .npm { min-height: 44px; display: inline-flex; align-items: center; gap: 10px; padding: 0 16px; border: 0; border-radius: 999px; background: transparent; box-shadow: inset 0 0 0 1px var(--rule); color: var(--ink); font: inherit; font-size: 14px; cursor: pointer; transition: background .2s ease; }
+    .lab .sheet .npm span { color: var(--mid); font-size: 13px; }
+    @media (hover: hover) and (pointer: fine) { .lab .sheet .npm:hover { background: var(--panel); } }
+    .lab .sheet .npm:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     .lab .sheet .go svg { width: 12px; height: 12px; flex: none; }
     .lab .sheet .go { min-height: 44px; display: inline-flex; align-items: center; gap: 6px; padding: 0 18px; border-radius: 999px; background: var(--ink); color: var(--bg); text-decoration: none; font-weight: 500; font-size: 14px; }
     .lab .sheet .go:hover { opacity: .88; }
     .lab .sheet .x:focus-visible, .lab .sheet .go:focus-visible, .lab .seg2 button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
     /* the pitch frame: concentric with the sheet (20 = 12 + 8) */
-    .pitch { background: var(--panel); border-radius: 12px; padding: 12px; display: grid; gap: 10px; }
+    .lab .pitch { background: var(--panel); border-radius: 12px; padding: 12px; display: grid; gap: 10px; }
     .lab .ptop { display: flex; justify-content: center; }
     .lab .seg2 { flex: none; display: flex; padding: 2px; border-radius: 999px; background: var(--seg); }
     .lab .seg2 button { position: relative; min-height: 32px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; color: var(--mid); font: inherit; font-size: 13px; cursor: pointer; transition: background .2s ease, color .2s ease; }
@@ -255,21 +270,21 @@
     .lab .chrome { height: 22px; display: flex; align-items: center; gap: 5px; padding: 0 8px; border-bottom: 1px solid var(--rule); }
     .lab .chrome i { width: 7px; height: 7px; border-radius: 50%; background: var(--sk); }
     .lab .chrome u { flex: 1; height: 8px; margin: 0 18% 0 12%; border-radius: 4px; background: var(--sk); text-decoration: none; }
-    .lab .st { position: absolute; inset: 22px 0 0; transition: opacity .35s ease; }
+    .lab .st { position: absolute; inset: 22px 0 0; transition: opacity .6s ease; }
     .lab .pitch[data-s="a"] .st.b, .lab .pitch[data-s="b"] .st.a { opacity: 0; pointer-events: none; }
     .lab .sk { display: block; height: 6px; border-radius: 3px; background: var(--sk); }
 
     /* Substrate: a desktop. Today, .lab each agent in its own window; with Substrate, .lab one panel under the menu bar */
-    .p-sub .mbar { position: absolute; left: 0; right: 0; top: 0; height: 18px; display: flex; align-items: center; gap: 7px; padding: 0 8px; background: var(--skl); border-bottom: 1px solid var(--rule); z-index: 5; }
+    .lab .p-sub .mbar { position: absolute; left: 0; right: 0; top: 0; height: 18px; display: flex; align-items: center; gap: 7px; padding: 0 8px; background: var(--skl); border-bottom: 1px solid var(--rule); z-index: 5; }
     .lab .p-sub .mbar u { height: 5px; border-radius: 3px; background: var(--sk); flex: none; }
     .lab .p-sub .mbar .ap { width: 7px; height: 8px; border-radius: 2px; background: var(--sk); flex: none; }
     .lab .p-sub .mbar .sp { flex: 1; }
     .lab .p-sub .pill { display: flex; gap: 3px; padding: 3px 6px; border-radius: 999px; background: var(--seg); opacity: 0; transform: scale(.6); transition: opacity .25s ease, transform .3s ease; }
-    .lab .pitch[data-s="b"] .p-sub .pill { opacity: 1; transform: none; transition: opacity .3s ease .15s, transform .4s cubic-bezier(.34,1.56,.64,1) .15s; }
+    .lab .pitch[data-s="b"] .p-sub .pill { opacity: 1; transform: none; transition: opacity .5s ease .3s, transform .6s cubic-bezier(.34,1.4,.64,1) .3s; }
     .lab .p-sub .d { width: 5px; height: 5px; border-radius: 50%; flex: none; background: var(--sk); }
     .lab .p-sub .d.ok { background: var(--ok); } .lab .p-sub .d.run { background: var(--sub); } .lab .p-sub .d.need { background: var(--warn); }
     .lab .p-sub .st { inset: 18px 0 0; }
-    .lab .p-sub .st.a { transform-origin: 82% 0; transition: opacity .35s ease, transform .45s cubic-bezier(.32,.72,0,1); }
+    .lab .p-sub .st.a { transform-origin: 82% 0; transition: opacity .6s ease, transform .8s cubic-bezier(.32,.72,0,1); }
     .lab .pitch[data-s="b"] .p-sub .st.a { transform: scale(.9); }
     .lab .p-sub .aw { position: absolute; width: 37%; padding-bottom: 7px; border-radius: 7px; background: var(--card); box-shadow: 0 0 0 1px var(--rule); display: grid; gap: 5px; }
     .lab .p-sub .aw .ah { display: flex; align-items: center; gap: 3px; height: 15px; padding: 0 6px; border-bottom: 1px solid var(--rule); color: var(--mid); font-size: 9px; }
@@ -281,28 +296,28 @@
     .lab .p-sub .stt.need b { width: 5px; height: 5px; border-radius: 50%; background: var(--warn); flex: none; }
     .lab .p-sub .spin { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--sk); border-top-color: var(--mid); animation: spin 1s linear infinite; flex: none; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .lab .p-sub .panel { position: absolute; right: 8px; top: 4px; width: 64%; padding: 8px 10px; border-radius: 9px; background: var(--card); box-shadow: 0 0 0 1px var(--rule); display: grid; gap: 5px; transform: translateY(-6px); opacity: 0; transition: transform .45s cubic-bezier(.32,.72,0,1) .1s, opacity .3s ease .1s; }
+    .lab .p-sub .panel { position: absolute; right: 8px; top: 4px; width: 64%; padding: 8px 10px; border-radius: 9px; background: var(--card); box-shadow: 0 0 0 1px var(--rule); display: grid; gap: 5px; transform: translateY(-6px); opacity: 0; transition: transform .7s cubic-bezier(.32,.72,0,1) .2s, opacity .5s ease .2s; }
     .lab .pitch[data-s="b"] .p-sub .panel { transform: none; opacity: 1; }
     .lab .p-sub .ph { display: flex; justify-content: space-between; gap: 8px; }
     .lab .p-sub .ph b { font-weight: 600; }
     .lab .p-sub .ph small { font-size: inherit; color: var(--warn-t); white-space: nowrap; }
-    .lab .p-sub .row { display: flex; align-items: center; gap: 6px; padding: 0 6px 0 4px; opacity: 0; transform: translateX(-4px); transition: opacity .3s ease, transform .35s cubic-bezier(.32,.72,0,1); }
+    .lab .p-sub .row { display: flex; align-items: center; gap: 6px; padding: 0 6px 0 4px; opacity: 0; transform: translateX(-4px); transition: opacity .5s ease .35s, transform .6s cubic-bezier(.32,.72,0,1) .35s; }
     .lab .pitch[data-s="b"] .p-sub .row { opacity: 1; transform: none; }
-    .lab .pitch[data-s="b"] .p-sub .row:nth-child(3) { transition-delay: .3s; } .lab .pitch[data-s="b"] .p-sub .row:nth-child(4) { transition-delay: .45s; } .lab .pitch[data-s="b"] .p-sub .row:nth-child(5) { transition-delay: .6s; }
+    .lab .pitch[data-s="b"] .p-sub .row:nth-child(3) { transition-delay: .6s; } .lab .pitch[data-s="b"] .p-sub .row:nth-child(4) { transition-delay: .85s; } .lab .pitch[data-s="b"] .p-sub .row:nth-child(5) { transition-delay: 1.1s; }
     .lab .p-sub .row.wait { padding-top: 4px; padding-bottom: 4px; border-radius: 6px; box-shadow: inset 0 0 0 1px var(--warn); }
     .lab .p-sub .row span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .lab .p-sub .row em { font-style: normal; color: var(--mid); white-space: nowrap; }
     .lab .p-sub .links { color: var(--sub); display: flex; gap: 10px; padding: 2px 4px 0; }
 
     /* Tags: Today you scroll back through a thread; with Tags you tap the tag in search */
-    .win.bare { background: transparent; box-shadow: none; }
+    .lab .win.bare { background: transparent; box-shadow: none; }
     .lab .p-tag .st { inset: 0; }
     .lab .p-tag .phone { position: absolute; left: 50%; top: 4px; bottom: -30px; width: 46%; margin-left: -23%; border-radius: 22px; box-shadow: 0 0 0 1px var(--rule); background: var(--card); overflow: hidden; }
     .lab .p-tag .ph-h { position: relative; z-index: 1; height: 34px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 3px; padding-bottom: 4px; background: var(--card); border-bottom: 1px solid var(--rule); }
     .lab .p-tag .ph-h i { width: 13px; height: 13px; border-radius: 50%; background: var(--sk); }
     .lab .p-tag .ph-h u { width: 28px; height: 4px; border-radius: 2px; background: var(--sk); }
     .lab .p-tag .thr { padding: 6px 10px; display: grid; gap: 5px; }
-    .lab .pitch[data-s="a"] .p-tag .thr { animation: hunt 2.4s cubic-bezier(.45,0,.4,1) both; }
+    .lab .pitch[data-s="a"] .p-tag .thr { animation: hunt 3s cubic-bezier(.45,0,.4,1) both; }
     @keyframes hunt { from { transform: translateY(-48%); } to { transform: translateY(0); } }
     .lab .p-tag .bub { max-width: 80%; justify-self: start; padding: 5px 8px; border-radius: 11px; background: var(--skl); }
     .lab .p-tag .bub.me { justify-self: end; background: var(--imsg); }
@@ -314,11 +329,11 @@
     .lab .p-tag .chips { display: flex; flex-wrap: wrap; gap: 4px; margin: 0 10px 8px; }
     .lab .p-tag .chips span { padding: 0 6px; line-height: 15px; border-radius: 999px; background: var(--skl); font-size: 9px; color: var(--mid); }
     .lab .p-tag .chips .on { background: var(--tagc); color: #111; font-weight: 600; transition: transform .2s ease; }
-    .lab .pitch[data-s="b"] .p-tag .chips .on { animation: tapon .5s cubic-bezier(.34,1.56,.64,1) .35s both; }
+    .lab .pitch[data-s="b"] .p-tag .chips .on { animation: tapon .7s cubic-bezier(.34,1.4,.64,1) .5s both; }
     @keyframes tapon { 0% { transform: scale(1); background: var(--skl); color: var(--mid); } 40% { transform: scale(.9); } 100% { transform: scale(1); } }
     .lab .p-tag .res { display: flex; align-items: center; gap: 6px; padding: 6px 10px; border-top: 1px solid var(--rule); opacity: 0; transform: translateY(4px); transition: opacity .2s ease, transform .2s ease; }
-    .lab .pitch[data-s="b"] .p-tag .res { opacity: 1; transform: none; transition: opacity .35s ease .8s, transform .4s cubic-bezier(.32,.72,0,1) .8s; }
-    .lab .pitch[data-s="b"] .p-tag .res + .res { transition-delay: .95s; }
+    .lab .pitch[data-s="b"] .p-tag .res { opacity: 1; transform: none; transition: opacity .6s ease 1.1s, transform .7s cubic-bezier(.32,.72,0,1) 1.1s; }
+    .lab .pitch[data-s="b"] .p-tag .res + .res { transition-delay: 1.35s; }
     .lab .p-tag .res > i { width: 15px; height: 15px; border-radius: 50%; background: var(--sk); flex: none; }
     .lab .p-tag .res > div { flex: 1; min-width: 0; display: grid; gap: 3px; }
     .lab .p-tag .res b { font-size: 9.5px; font-weight: 600; }
@@ -326,7 +341,7 @@
     .lab .p-tag .tdot { width: 7px; height: 7px; border-radius: 50%; background: var(--tagc); flex: none; }
 
     /* agent-approvals */
-    .p-aa .list { position: absolute; left: 8%; right: 8%; top: 12px; display: grid; gap: 6px; }
+    .lab .p-aa .list { position: absolute; left: 8%; right: 8%; top: 12px; display: grid; gap: 6px; }
     .lab .p-aa .st.b .list { top: 30px; }
     .lab .p-aa .act { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 8px; background: var(--skl); }
     .lab .p-aa .act span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -336,7 +351,7 @@
     .lab .p-aa .hold { position: relative; flex: none; padding: 3px 10px; border-radius: 999px; color: var(--ink); box-shadow: inset 0 0 0 1px var(--red); overflow: hidden; font-weight: 500; white-space: nowrap; }
     .lab .p-aa .hold s { position: absolute; left: 0; top: 0; bottom: 0; width: 0; overflow: hidden; background: var(--red); color: #fff; text-decoration: none; }
     .lab .p-aa .hold s span { position: absolute; left: 10px; top: 3px; white-space: nowrap; }
-    .lab .pitch[data-s="b"] .p-aa .hold s { animation: holdF 1.2s linear .7s both; }
+    .lab .pitch[data-s="b"] .p-aa .hold s { animation: holdF 1.2s linear 1s both; }
     @keyframes holdF { from { width: 0; } to { width: 100%; } }
     .lab .p-aa .why { text-align: right; padding-right: 2px; font-size: 9.5px; color: var(--mid); }
     @media (prefers-reduced-motion: reduce) { .lab .pop, .lab .sheet, .lab .st, .lab .panel, .lab .row, .lab .pill, .lab .res, .lab .chips .on, .lab .p-tag .thr { transition: none !important; animation: none !important; } .lab .p-sub .spin, .lab .p-aa .hold s { animation: none !important; } .lab .pitch[data-s="b"] .p-aa .hold s { width: 100%; } }
@@ -856,11 +871,11 @@
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var touch = window.matchMedia("(hover: none)").matches;
   var host = document.querySelector("[data-lab-row]"); if (!host) return;
-  // [name, word on the card, unused, scene, card colour, accent on the card]
+  // [name, word on the card, is a package, scene, card colour, accent on the card]
   var PIECES = [
     ["Substrate", "Planned.", false, "plan", "#16305C", "#4D94FF"],
     ["Tags", "Tagged.", false, "tag", "#34C759", "#FFFFFF"],
-    ["agent-approvals", "Hold.", false, "hold", "#FF453A", "#FFFFFF"]
+    ["agent-approvals", "Hold.", true, "hold", "#FF453A", "#FFFFFF"]
   ];
   var INFO = {
     "Substrate": { url: "/projects/substrate.html", kind: "more",
@@ -870,7 +885,7 @@
     "Tags": { url: "https://www.youtube.com/watch?v=SrWk4_VLGWA", kind: "demo",
       title: "Tag a message now, find it later by the tag.",
       text: "You remember the address or recipe someone sent you, but not when, or even who sent it, so scrolling back and searching don\u2019t help. Tags is a feature concept for iMessage: press and hold any message to give it a tag like #food, then tap that tag in search to see every message you saved with it, from every conversation." },
-    "agent-approvals": { url: "/agent-approvals/", kind: "more",
+    "agent-approvals": { url: "/agent-approvals/", kind: "more", npm: "npm i agent-approvals",
       title: "The interface for the moment an AI agent needs a person.",
       text: "When every request looks the same, people stop reading: Anthropic found users approve about 93% of permission prompts. agent-approvals is a set of React components that clear routine requests in one click, and make anything that can\u2019t be undone, like a refund, wait for a 1.2 second hold.",
       src: ["Anthropic, How we contain Claude across products, May 2026", "https://www.anthropic.com/engineering/how-we-contain-claude"] }
@@ -883,10 +898,12 @@
 
   // each piece acts out what it does on its open card, then its word lands in the centre
   var ACTS = {
-    // a flat list becomes a plan that branches
-    plan: { n: 4, line: true,
-      a: [[14, 40, 72, 8], [14, 54, 72, 8], [14, 68, 72, 8], [14, 82, 72, 8]],
-      b: [[32, 44, 36, 10], [4, 80, 26, 9], [37, 80, 26, 9], [70, 80, 26, 9]] },
+    // the goal appears first, then where you start, then the steps that lead from one to the other
+    plan: { n: 0, a: [], b: [], tree: {
+      nodes: { s: [14, 110], a: [54, 86], b: [62, 152], c: [98, 112], d: [110, 70], e: [114, 150], f: [146, 132], g: [178, 110] },
+      at: { g: .2, s: .7, a: 1.45, b: 1.5, c: 1.95, d: 1.95, e: 2.35, f: 2.55 },
+      // [from, to, starts at, takes]
+      edges: [["s", "a", 1.1], ["s", "b", 1.1], ["a", "d", 1.6], ["a", "c", 1.6], ["b", "c", 1.6], ["b", "e", 1.6, .8], ["c", "f", 2.1], ["e", "f", 2.4, .4], ["d", "g", 2.1, .9], ["f", "g", 2.75]] } },
     // messages in a thread; two get a tag, the rest step back
     tag: { n: 5, chips: [0, 3], sent: [1, 3],
       a: [[4, 34, 54, 8], [42, 45, 54, 8], [4, 56, 44, 8], [34, 67, 62, 8], [4, 78, 50, 8]],
@@ -895,18 +912,28 @@
     hold: { n: 1, fill: true,
       a: [[12, 56, 76, 20]], b: [[12, 56, 76, 20]] }
   };
+  // curved paths between the steps, a hollow start and a ringed goal
+  function tree(T) {
+    var N = T.nodes, h = '<svg class="tree" viewBox="0 0 192 176" aria-hidden="true">';
+    T.edges.forEach(function (e) { var p = N[e[0]], q = N[e[1]], x = (p[0] + q[0]) / 2;
+      h += '<path pathLength="100" style="--d:' + e[2] + 's;--l:' + (e[3] || .5) + 's" d="M' + p + ' C' + x + ',' + p[1] + ' ' + x + ',' + q[1] + ' ' + q + '"/>'; });
+    Object.keys(T.at).forEach(function (k) { var p = N[k], at = ' style="--d:' + T.at[k] + 's"', c = ' cx="' + p[0] + '" cy="' + p[1] + '"';
+      h += k === "g" ? '<g class="n goal"' + at + '><circle class="ring"' + c + ' r="10"/><circle' + c + ' r="5.5"/></g>'
+        : k === "s" ? '<circle class="n start"' + at + c + ' r="6"/>' : '<circle class="n step"' + at + c + ' r="3.5"/>'; });
+    return h + '</svg>';
+  }
   function scene(pc) {
     var act = ACTS[pc[3]] || ACTS.plan;
     var m = document.createElement("div"); m.className = "mini k-" + (pc[3] || "plan");
     var w = document.createElement("span"); w.className = "w"; w.textContent = pc[1]; m.appendChild(w);
-    if (act.line) m.insertAdjacentHTML("beforeend", '<svg class="ln" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M50 54 L17 80 M50 54 L50 80 M50 54 L83 80"/></svg>');
+    if (act.tree) m.insertAdjacentHTML("beforeend", tree(act.tree));
     var ps = []; for (var i = 0; i < act.n; i++) { var p = document.createElement("span"); p.className = "p i" + i; if (act.sent && act.sent.indexOf(i) >= 0) p.classList.add("sent"); if (act.chips && act.chips.indexOf(i) >= 0) { p.classList.add("tagged"); p.innerHTML = '<i class="chip"></i>'; } if (act.fill) p.innerHTML = '<i class="fl"></i><i class="ck"></i>'; m.appendChild(p); ps.push(p); }
-    function put(st) { ps.forEach(function (p, i) { var r = st[i]; p.style.left = r[0] + "%"; p.style.top = r[1] + "%"; p.style.width = r[2] + "%"; p.style.height = r[3] + "%"; p.style.setProperty("--d", (i * .05) + "s"); }); }
+    function put(st) { ps.forEach(function (p, i) { var r = st[i]; p.style.left = r[0] + "%"; p.style.top = r[1] + "%"; p.style.width = r[2] + "%"; p.style.height = r[3] + "%"; p.style.setProperty("--d", (act.d ? act.d[i] : i * .05) + "s"); }); }
     function a() { m.classList.remove("on"); put(act.a); }
     function b() { m.classList.add("on"); put(act.b); }
     var t = 0, done = false; b();
     return { el: m,
-      play: function () { if (done) return; done = true; if (reduce) return; m.classList.add("nt"); a(); void m.offsetWidth; m.classList.remove("nt"); clearTimeout(t); t = setTimeout(b, 380); },
+      play: function () { if (done) return; done = true; if (reduce) return; m.classList.add("nt"); a(); void m.offsetWidth; m.classList.remove("nt"); clearTimeout(t); t = setTimeout(b, 420); },
       stop: function () { clearTimeout(t); done = false; m.classList.add("nt"); b(); void m.offsetWidth; m.classList.remove("nt"); } };
   }
 
@@ -937,7 +964,7 @@
     var bs = el.querySelectorAll(".seg2 button");
     function show(v) { el.dataset.s = v; bs.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.v === v ? "true" : "false"); }); }
     bs.forEach(function (b) { b.addEventListener("click", function () { clearTimeout(ptimer); show(b.dataset.v); }); });
-    if (reduce) show("b"); else { show("a"); ptimer = setTimeout(function () { show("b"); }, 2600); }
+    if (reduce) show("b"); else { show("a"); ptimer = setTimeout(function () { show("b"); }, 3400); }
     return el;
   }
 
@@ -949,10 +976,12 @@
   function openPop(pc, from, push) {
     var d = INFO[pc[0]], body = document.getElementById("labPopB");
     sheet.style.setProperty("--c", pc[4]); sheet.style.setProperty("--t", inkBar(pc[4]));
-    document.getElementById("labPopT").textContent = pc[0];
+    var pt = document.getElementById("labPopT"); pt.className = pc[2] ? "pkg" : ""; pt.innerHTML = esc(pc[0]) + (pc[2] ? ' <span class="npmtag">npm</span>' : '');
     body.innerHTML = ""; body.appendChild(pitch(pc[0]));
     var g = GO[d.kind], ext = d.url.charAt(0) !== "/";
-    body.insertAdjacentHTML("beforeend", '<div class="about"><h3>' + esc(d.title) + '</h3><p>' + esc(d.text).replace(/agent-approvals/g, '<span class="nw">agent-approvals</span>') + '</p>' + (d.src ? '<p class="src">Source: <a href="' + d.src[1] + '" target="_blank" rel="noopener">' + esc(d.src[0]) + '</a></p>' : '') + '</div><div class="foot"><a class="go" href="' + d.url + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + (d.kind === "demo" ? g[1] + g[0] : g[0] + g[1]) + '</a></div>');
+    body.insertAdjacentHTML("beforeend", '<div class="about"><h3>' + esc(d.title) + '</h3><p>' + esc(d.text).replace(/agent-approvals/g, '<span class="nw">agent-approvals</span>') + '</p>' + (d.src ? '<p class="src">Source: <a href="' + d.src[1] + '" target="_blank" rel="noopener">' + esc(d.src[0]) + '</a></p>' : '') + '</div><div class="foot"><a class="go" href="' + d.url + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + (d.kind === "demo" ? g[1] + g[0] : g[0] + g[1]) + '</a>' + (d.npm ? '<button type="button" class="npm" aria-label="Copy ' + d.npm + '">' + d.npm + '<span>Copy</span></button>' : '') + '</div>');
+    var cp = body.querySelector(".npm");
+    if (cp) cp.addEventListener("click", function () { var t = cp.querySelector("span"); (navigator.clipboard ? navigator.clipboard.writeText(d.npm) : Promise.reject()).then(function () { t.textContent = "Copied"; setTimeout(function () { t.textContent = "Copy"; }, 1600); }, function () {}); });
     body.scrollTop = 0; if (from) last = from;
     if (push) { history.pushState({ lab: key(pc[0]) }, "", "#lab-" + key(pc[0])); pushed = true; }
     if (pop.hidden) { pop.hidden = false; document.documentElement.style.overflow = "hidden"; }
@@ -991,8 +1020,8 @@
     var items = PIECES.map(function (pc, i) {
       var b = document.createElement("button"); b.type = "button"; b.className = "spine"; b.setAttribute("aria-label", pc[0]);
       if (K[i]) { b.style.setProperty("--c", K[i].c); b.style.setProperty("--t", K[i].t); b.style.setProperty("--a", K[i].a); }
-      b.innerHTML = '<span class="name">' + pc[0] + '</span>';
-      var o = document.createElement("div"); o.className = "open"; var s = scene(pc); o.appendChild(s.el); o.insertAdjacentHTML("beforeend", "<b>" + pc[0] + "</b>"); b.appendChild(o); b._s = s;
+      var pk = pc[2] ? ' class="pkg"' : ''; b.innerHTML = '<span class="name' + (pc[2] ? ' pkg' : '') + '">' + pc[0] + '</span>';
+      var o = document.createElement("div"); o.className = "open"; var s = scene(pc); o.appendChild(s.el); o.insertAdjacentHTML("beforeend", "<b" + pk + ">" + pc[0] + "</b>"); b.appendChild(o); b._s = s;
       shelf.appendChild(b);
       if (!touch) { b.addEventListener("mouseenter", function () { clearTimeout(ht); ht = setTimeout(function () { set(i); }, 90); }); b.addEventListener("mouseleave", function () { clearTimeout(ht); }); }
       b.addEventListener("click", function () { if (row.cur !== i) { row.go(i); return; } openPop(pc, b, true); });
