@@ -188,7 +188,7 @@
     .lab .mini .p { position: absolute; border-radius: 999px; background: var(--a); transition: left .6s cubic-bezier(.32,.72,0,1), top .6s cubic-bezier(.32,.72,0,1), width .6s cubic-bezier(.32,.72,0,1), height .6s cubic-bezier(.32,.72,0,1), opacity .4s ease; transition-delay: var(--d, 0s); }
 
     /* Substrate: a plan that branches. The goal lands first, then where you start, then the paths and steps between */
-    .lab .k-plan { --wd: 2.9s; }
+    .lab .k-plan { --wd: 3.2s; }
     .lab .k-plan .tree { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
     .lab .k-plan .tree path { fill: none; stroke: var(--a); stroke-width: 1.25; opacity: .6; stroke-dasharray: 100; stroke-dashoffset: 100; }
     .lab .k-plan.on .tree path { stroke-dashoffset: 0; transition: stroke-dashoffset var(--l, .5s) cubic-bezier(.45,0,.25,1) var(--d, 0s); }
@@ -896,10 +896,10 @@
   var ACTS = {
     // the goal appears first, then where you start, then the steps that lead from one to the other
     plan: { n: 0, a: [], b: [], tree: {
-      nodes: { s: [16, 110], a: [62, 78], b: [62, 142], m: [108, 110], c: [150, 80], e: [150, 140], g: [178, 110] },
-      at: { g: .2, s: .7, a: 1.45, b: 1.45, m: 1.95, c: 2.45, e: 2.45 },
+      nodes: { s: [14, 124], a: [54, 86], b: [62, 152], c: [98, 112], d: [110, 70], e: [114, 150], f: [150, 100], g: [178, 84] },
+      at: { g: .2, s: .7, a: 1.45, b: 1.5, c: 1.95, d: 1.95, e: 2.35, f: 2.55 },
       // [from, to, starts at, takes]
-      edges: [["s", "a", 1.1], ["s", "b", 1.1], ["a", "m", 1.6], ["b", "m", 1.6], ["a", "e", 1.6, .85], ["m", "c", 2.1], ["m", "e", 2.1], ["c", "g", 2.6], ["e", "g", 2.6]] } },
+      edges: [["s", "a", 1.1], ["s", "b", 1.1], ["a", "d", 1.6], ["a", "c", 1.6], ["b", "c", 1.6], ["b", "e", 1.6, .8], ["c", "f", 2.1], ["e", "f", 2.4, .4], ["d", "g", 2.1, .9], ["f", "g", 2.75]] } },
     // messages in a thread; two get a tag, the rest step back
     tag: { n: 5, chips: [0, 3], sent: [1, 3],
       a: [[4, 34, 54, 8], [42, 45, 54, 8], [4, 56, 44, 8], [34, 67, 62, 8], [4, 78, 50, 8]],
