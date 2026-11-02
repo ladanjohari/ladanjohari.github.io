@@ -7,3 +7,4 @@
 | v3 | 1 Nov 2026 | Substrate card as a branching tree: ringed goal first, hollow start, then curved paths and steps. npm line in the agent-approvals pop-up. | index.html on branch lab-calm (v2 saved as index-v2-round14.html) | same link, version 2 |
 | v4 | 1 Nov 2026 | Substrate tree made uneven so it no longer reads as DNA: rises from a low start to a high goal, steps at different heights. | index.html on branch lab-calm (v3 saved as index-v3-round15.html) | same link, version 3 |
 | v5 | 1 Nov 2026 | Substrate start and goal at the same height; one step moved lower so paths stop knotting near the goal. | index.html on branch lab-calm (v4 saved as index-v4-round16.html) | same link, version 4 |
+| v6 | 1 Nov 2026 | agent-approvals name in code type on spine, card and pop-up, with an npm tag in the pop-up. Published with rounds 14 to 17. | index.html (v5 saved as index-v5-round17.html) | live site |

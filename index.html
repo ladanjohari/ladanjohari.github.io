@@ -234,6 +234,10 @@
     .lab .sheet { --r: 20px; background: var(--bg); border-radius: var(--r); width: min(540px, 100%); max-height: 100%; display: flex; flex-direction: column; overflow: hidden; }
     .lab .sheet .bar { flex: none; display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 6px 6px 6px 20px; background: var(--c); color: var(--t); }
     .lab .sheet .bar b { flex: 1; min-width: 0; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    /* a package keeps its name in code type, with npm beside it in the pop-up */
+    .lab .pkg { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: -0.02em; }
+    .lab .sheet .bar b.pkg { font-size: 16px; }
+    .lab .sheet .bar .npmtag { margin-left: 4px; padding: 0 7px; border-radius: 999px; box-shadow: inset 0 0 0 1.5px currentColor; font-family: "Geist", system-ui, sans-serif; font-size: 11px; font-weight: 600; line-height: 18px; vertical-align: 2px; letter-spacing: 0; }
     .lab .sheet .x { flex: none; width: 44px; height: 44px; border-radius: 50%; border: 0; background: transparent; color: inherit; cursor: pointer; display: grid; place-items: center; }
     .lab .sheet .x:hover { background: rgba(127,127,127,.18); }
     .lab .sheet .x svg { width: 14px; height: 14px; }
@@ -867,11 +871,11 @@
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var touch = window.matchMedia("(hover: none)").matches;
   var host = document.querySelector("[data-lab-row]"); if (!host) return;
-  // [name, word on the card, unused, scene, card colour, accent on the card]
+  // [name, word on the card, is a package, scene, card colour, accent on the card]
   var PIECES = [
     ["Substrate", "Planned.", false, "plan", "#16305C", "#4D94FF"],
     ["Tags", "Tagged.", false, "tag", "#34C759", "#FFFFFF"],
-    ["agent-approvals", "Hold.", false, "hold", "#FF453A", "#FFFFFF"]
+    ["agent-approvals", "Hold.", true, "hold", "#FF453A", "#FFFFFF"]
   ];
   var INFO = {
     "Substrate": { url: "/projects/substrate.html", kind: "more",
@@ -972,7 +976,7 @@
   function openPop(pc, from, push) {
     var d = INFO[pc[0]], body = document.getElementById("labPopB");
     sheet.style.setProperty("--c", pc[4]); sheet.style.setProperty("--t", inkBar(pc[4]));
-    document.getElementById("labPopT").textContent = pc[0];
+    var pt = document.getElementById("labPopT"); pt.className = pc[2] ? "pkg" : ""; pt.innerHTML = esc(pc[0]) + (pc[2] ? ' <span class="npmtag">npm</span>' : '');
     body.innerHTML = ""; body.appendChild(pitch(pc[0]));
     var g = GO[d.kind], ext = d.url.charAt(0) !== "/";
     body.insertAdjacentHTML("beforeend", '<div class="about"><h3>' + esc(d.title) + '</h3><p>' + esc(d.text).replace(/agent-approvals/g, '<span class="nw">agent-approvals</span>') + '</p>' + (d.src ? '<p class="src">Source: <a href="' + d.src[1] + '" target="_blank" rel="noopener">' + esc(d.src[0]) + '</a></p>' : '') + '</div><div class="foot"><a class="go" href="' + d.url + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + (d.kind === "demo" ? g[1] + g[0] : g[0] + g[1]) + '</a>' + (d.npm ? '<button type="button" class="npm" aria-label="Copy ' + d.npm + '">' + d.npm + '<span>Copy</span></button>' : '') + '</div>');
@@ -1016,8 +1020,8 @@
     var items = PIECES.map(function (pc, i) {
       var b = document.createElement("button"); b.type = "button"; b.className = "spine"; b.setAttribute("aria-label", pc[0]);
       if (K[i]) { b.style.setProperty("--c", K[i].c); b.style.setProperty("--t", K[i].t); b.style.setProperty("--a", K[i].a); }
-      b.innerHTML = '<span class="name">' + pc[0] + '</span>';
-      var o = document.createElement("div"); o.className = "open"; var s = scene(pc); o.appendChild(s.el); o.insertAdjacentHTML("beforeend", "<b>" + pc[0] + "</b>"); b.appendChild(o); b._s = s;
+      var pk = pc[2] ? ' class="pkg"' : ''; b.innerHTML = '<span class="name' + (pc[2] ? ' pkg' : '') + '">' + pc[0] + '</span>';
+      var o = document.createElement("div"); o.className = "open"; var s = scene(pc); o.appendChild(s.el); o.insertAdjacentHTML("beforeend", "<b" + pk + ">" + pc[0] + "</b>"); b.appendChild(o); b._s = s;
       shelf.appendChild(b);
       if (!touch) { b.addEventListener("mouseenter", function () { clearTimeout(ht); ht = setTimeout(function () { set(i); }, 90); }); b.addEventListener("mouseleave", function () { clearTimeout(ht); }); }
       b.addEventListener("click", function () { if (row.cur !== i) { row.go(i); return; } openPop(pc, b, true); });
