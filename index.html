@@ -187,16 +187,17 @@
     .lab .mini.nt, .lab .mini.nt * { transition: none !important; }
     .lab .mini .p { position: absolute; border-radius: 999px; background: var(--a); transition: left .6s cubic-bezier(.32,.72,0,1), top .6s cubic-bezier(.32,.72,0,1), width .6s cubic-bezier(.32,.72,0,1), height .6s cubic-bezier(.32,.72,0,1), opacity .4s ease; transition-delay: var(--d, 0s); }
 
-    .lab .mini .ln { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-    .lab .mini .ln path { fill: none; stroke: var(--a); stroke-width: 1.5; vector-effect: non-scaling-stroke; stroke-dasharray: 60; stroke-dashoffset: 60; transition: stroke-dashoffset .2s ease; }
-    .lab .mini.on .ln path { stroke-dashoffset: 0; transition: stroke-dashoffset .5s ease .35s; }
-    /* Substrate: the goal lands first, then where you start, then the path and the steps along it */
-    .lab .k-plan { --wd: 2.7s; }
-    .lab .k-plan .p { opacity: 0; transform: scale(.88); transition: opacity .7s ease, transform .9s cubic-bezier(.22,1,.36,1); transition-delay: var(--d, 0s); }
-    .lab .k-plan.on .p { opacity: 1; transform: none; }
-    .lab .k-plan .i0 { background: var(--t); }
-    .lab .k-plan .ln path { vector-effect: none; stroke-width: .8; stroke-dasharray: 100; stroke-dashoffset: 100; opacity: .7; }
-    .lab .k-plan.on .ln path { transition: stroke-dashoffset 1s cubic-bezier(.45,0,.25,1) 1.3s; }
+    /* Substrate: a plan that branches. The goal lands first, then where you start, then the paths and steps between */
+    .lab .k-plan { --wd: 2.9s; }
+    .lab .k-plan .tree { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .lab .k-plan .tree path { fill: none; stroke: var(--a); stroke-width: 1.25; opacity: .6; stroke-dasharray: 100; stroke-dashoffset: 100; }
+    .lab .k-plan.on .tree path { stroke-dashoffset: 0; transition: stroke-dashoffset var(--l, .5s) cubic-bezier(.45,0,.25,1) var(--d, 0s); }
+    .lab .k-plan .tree .n { opacity: 0; transform: scale(.4); transform-box: fill-box; transform-origin: center; }
+    .lab .k-plan.on .tree .n { opacity: 1; transform: none; transition: opacity .5s ease var(--d, 0s), transform .7s cubic-bezier(.34,1.3,.64,1) var(--d, 0s); }
+    .lab .k-plan .tree .step { fill: var(--a); }
+    .lab .k-plan .tree .start { fill: var(--c); stroke: var(--t); stroke-width: 2; }
+    .lab .k-plan .tree .goal circle { fill: var(--t); }
+    .lab .k-plan .tree .goal .ring { fill: none; stroke: var(--t); stroke-width: 1.5; opacity: .45; }
     /* Tags: received and sent bubbles, .lab two get a tag and the rest step back */
     .lab .k-tag .p { background: var(--t); opacity: .9; }
     .lab .k-tag .p.sent { background: var(--a); opacity: 1; }
@@ -244,7 +245,11 @@
     .lab .sheet .about .src { font-size: 12.5px; line-height: 1.4; color: var(--mid); }
     .lab .sheet .about .src a { color: inherit; text-underline-offset: 2px; }
     .lab .sheet .about .src a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
-    .lab .sheet .foot { padding: 4px 8px 8px; }
+    .lab .sheet .foot { padding: 4px 8px 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .lab .sheet .npm { min-height: 44px; display: inline-flex; align-items: center; gap: 10px; padding: 0 16px; border: 0; border-radius: 999px; background: transparent; box-shadow: inset 0 0 0 1px var(--rule); color: var(--ink); font: inherit; font-size: 14px; cursor: pointer; transition: background .2s ease; }
+    .lab .sheet .npm span { color: var(--mid); font-size: 13px; }
+    @media (hover: hover) and (pointer: fine) { .lab .sheet .npm:hover { background: var(--panel); } }
+    .lab .sheet .npm:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     .lab .sheet .go svg { width: 12px; height: 12px; flex: none; }
     .lab .sheet .go { min-height: 44px; display: inline-flex; align-items: center; gap: 6px; padding: 0 18px; border-radius: 999px; background: var(--ink); color: var(--bg); text-decoration: none; font-weight: 500; font-size: 14px; }
     .lab .sheet .go:hover { opacity: .88; }
@@ -876,7 +881,7 @@
     "Tags": { url: "https://www.youtube.com/watch?v=SrWk4_VLGWA", kind: "demo",
       title: "Tag a message now, find it later by the tag.",
       text: "You remember the address or recipe someone sent you, but not when, or even who sent it, so scrolling back and searching don\u2019t help. Tags is a feature concept for iMessage: press and hold any message to give it a tag like #food, then tap that tag in search to see every message you saved with it, from every conversation." },
-    "agent-approvals": { url: "/agent-approvals/", kind: "more",
+    "agent-approvals": { url: "/agent-approvals/", kind: "more", npm: "npm i agent-approvals",
       title: "The interface for the moment an AI agent needs a person.",
       text: "When every request looks the same, people stop reading: Anthropic found users approve about 93% of permission prompts. agent-approvals is a set of React components that clear routine requests in one click, and make anything that can\u2019t be undone, like a refund, wait for a 1.2 second hold.",
       src: ["Anthropic, How we contain Claude across products, May 2026", "https://www.anthropic.com/engineering/how-we-contain-claude"] }
@@ -890,9 +895,11 @@
   // each piece acts out what it does on its open card, then its word lands in the centre
   var ACTS = {
     // the goal appears first, then where you start, then the steps that lead from one to the other
-    plan: { n: 5, path: "M17 88 L79 40", d: [.2, .8, 1.6, 1.9, 2.2],
-      a: [[62, 35, 34, 10], [4, 84, 26, 8], [19.75, 72, 26, 8], [35.5, 60, 26, 8], [51.25, 48, 26, 8]],
-      b: [[62, 35, 34, 10], [4, 84, 26, 8], [19.75, 72, 26, 8], [35.5, 60, 26, 8], [51.25, 48, 26, 8]] },
+    plan: { n: 0, a: [], b: [], tree: {
+      nodes: { s: [16, 110], a: [62, 78], b: [62, 142], m: [108, 110], c: [150, 80], e: [150, 140], g: [178, 110] },
+      at: { g: .2, s: .7, a: 1.45, b: 1.45, m: 1.95, c: 2.45, e: 2.45 },
+      // [from, to, starts at, takes]
+      edges: [["s", "a", 1.1], ["s", "b", 1.1], ["a", "m", 1.6], ["b", "m", 1.6], ["a", "e", 1.6, .85], ["m", "c", 2.1], ["m", "e", 2.1], ["c", "g", 2.6], ["e", "g", 2.6]] } },
     // messages in a thread; two get a tag, the rest step back
     tag: { n: 5, chips: [0, 3], sent: [1, 3],
       a: [[4, 34, 54, 8], [42, 45, 54, 8], [4, 56, 44, 8], [34, 67, 62, 8], [4, 78, 50, 8]],
@@ -901,11 +908,21 @@
     hold: { n: 1, fill: true,
       a: [[12, 56, 76, 20]], b: [[12, 56, 76, 20]] }
   };
+  // curved paths between the steps, a hollow start and a ringed goal
+  function tree(T) {
+    var N = T.nodes, h = '<svg class="tree" viewBox="0 0 192 176" aria-hidden="true">';
+    T.edges.forEach(function (e) { var p = N[e[0]], q = N[e[1]], x = (p[0] + q[0]) / 2;
+      h += '<path pathLength="100" style="--d:' + e[2] + 's;--l:' + (e[3] || .5) + 's" d="M' + p + ' C' + x + ',' + p[1] + ' ' + x + ',' + q[1] + ' ' + q + '"/>'; });
+    Object.keys(T.at).forEach(function (k) { var p = N[k], at = ' style="--d:' + T.at[k] + 's"', c = ' cx="' + p[0] + '" cy="' + p[1] + '"';
+      h += k === "g" ? '<g class="n goal"' + at + '><circle class="ring"' + c + ' r="10"/><circle' + c + ' r="5.5"/></g>'
+        : k === "s" ? '<circle class="n start"' + at + c + ' r="6"/>' : '<circle class="n step"' + at + c + ' r="3.5"/>'; });
+    return h + '</svg>';
+  }
   function scene(pc) {
     var act = ACTS[pc[3]] || ACTS.plan;
     var m = document.createElement("div"); m.className = "mini k-" + (pc[3] || "plan");
     var w = document.createElement("span"); w.className = "w"; w.textContent = pc[1]; m.appendChild(w);
-    if (act.path) m.insertAdjacentHTML("beforeend", '<svg class="ln" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="100" d="' + act.path + '"/></svg>');
+    if (act.tree) m.insertAdjacentHTML("beforeend", tree(act.tree));
     var ps = []; for (var i = 0; i < act.n; i++) { var p = document.createElement("span"); p.className = "p i" + i; if (act.sent && act.sent.indexOf(i) >= 0) p.classList.add("sent"); if (act.chips && act.chips.indexOf(i) >= 0) { p.classList.add("tagged"); p.innerHTML = '<i class="chip"></i>'; } if (act.fill) p.innerHTML = '<i class="fl"></i><i class="ck"></i>'; m.appendChild(p); ps.push(p); }
     function put(st) { ps.forEach(function (p, i) { var r = st[i]; p.style.left = r[0] + "%"; p.style.top = r[1] + "%"; p.style.width = r[2] + "%"; p.style.height = r[3] + "%"; p.style.setProperty("--d", (act.d ? act.d[i] : i * .05) + "s"); }); }
     function a() { m.classList.remove("on"); put(act.a); }
@@ -958,7 +975,9 @@
     document.getElementById("labPopT").textContent = pc[0];
     body.innerHTML = ""; body.appendChild(pitch(pc[0]));
     var g = GO[d.kind], ext = d.url.charAt(0) !== "/";
-    body.insertAdjacentHTML("beforeend", '<div class="about"><h3>' + esc(d.title) + '</h3><p>' + esc(d.text).replace(/agent-approvals/g, '<span class="nw">agent-approvals</span>') + '</p>' + (d.src ? '<p class="src">Source: <a href="' + d.src[1] + '" target="_blank" rel="noopener">' + esc(d.src[0]) + '</a></p>' : '') + '</div><div class="foot"><a class="go" href="' + d.url + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + (d.kind === "demo" ? g[1] + g[0] : g[0] + g[1]) + '</a></div>');
+    body.insertAdjacentHTML("beforeend", '<div class="about"><h3>' + esc(d.title) + '</h3><p>' + esc(d.text).replace(/agent-approvals/g, '<span class="nw">agent-approvals</span>') + '</p>' + (d.src ? '<p class="src">Source: <a href="' + d.src[1] + '" target="_blank" rel="noopener">' + esc(d.src[0]) + '</a></p>' : '') + '</div><div class="foot"><a class="go" href="' + d.url + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + (d.kind === "demo" ? g[1] + g[0] : g[0] + g[1]) + '</a>' + (d.npm ? '<button type="button" class="npm" aria-label="Copy ' + d.npm + '">' + d.npm + '<span>Copy</span></button>' : '') + '</div>');
+    var cp = body.querySelector(".npm");
+    if (cp) cp.addEventListener("click", function () { var t = cp.querySelector("span"); (navigator.clipboard ? navigator.clipboard.writeText(d.npm) : Promise.reject()).then(function () { t.textContent = "Copied"; setTimeout(function () { t.textContent = "Copy"; }, 1600); }, function () {}); });
     body.scrollTop = 0; if (from) last = from;
     if (push) { history.pushState({ lab: key(pc[0]) }, "", "#lab-" + key(pc[0])); pushed = true; }
     if (pop.hidden) { pop.hidden = false; document.documentElement.style.overflow = "hidden"; }
