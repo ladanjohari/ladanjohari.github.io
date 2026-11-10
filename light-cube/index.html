@@ -77,12 +77,6 @@
   .title { top: 20px; left: 20px; padding: 16px 20px; max-width: 320px; }
   .title h1 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
   .title p { margin: 4px 0 0; font-size: 13px; line-height: 1.45; color: var(--muted); }
-  /* Back to the site, worded like the other project pages. Small to see, 44 px to hit. */
-  .title .back { position: relative; display: inline-flex; align-items: center; gap: 5px; margin: 0 0 6px; font-size: 12px; font-weight: 500; color: var(--muted); text-decoration: none; }
-  .title .back::before { content: ""; position: absolute; inset: -14px -10px; }
-  .title .back .arrow { transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1); }
-  @media (hover: hover) { .title .back:hover { color: var(--ink); } .title .back:hover .arrow { transform: translateX(-3px); } }
-  .title .back:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 4px; }
 
   .tabs { top: 20px; right: 20px; display: flex; gap: 4px; padding: 5px; border-radius: 999px; }
   .tabs button, .chip { font: inherit; font-size: 13px; color: var(--ink); background: transparent; border: 0;
@@ -94,7 +88,7 @@
   .tabs button:focus-visible, .chip:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .swatch { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--line); flex: none; }
 
-  .finding { left: 20px; bottom: 44px; width: 380px; padding: 20px 22px 18px; transition: opacity 280ms ease, transform 280ms ease; }
+  .finding { left: 20px; bottom: 70px; width: 380px; padding: 20px 22px 18px; transition: opacity 280ms ease, transform 280ms ease; }
   .finding.swap { opacity: 0; transform: translateY(6px); }
   .eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 8px; }
   .finding h2 { margin: 0 0 8px; font-size: 18px; line-height: 1.3; font-weight: 500; letter-spacing: -0.01em; }
@@ -139,11 +133,11 @@
   .scale-row b { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
   input[type="range"] { width: 100%; accent-color: var(--accent); margin: 0; }
 
-  .camera { right: 20px; bottom: 44px; padding: 12px 14px; max-width: 280px; }
+  .camera { right: 20px; bottom: 70px; padding: 12px 14px; max-width: 280px; }
   .chip { background: var(--glass-hover); }
   .camera p { margin: 8px 2px 0; font-size: 11.5px; line-height: 1.4; color: var(--muted); }
 
-  .foot { left: 20px; right: 20px; bottom: 14px; font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; align-items: center; gap: 8px; pointer-events: none; }
+  .foot { left: 20px; right: 20px; bottom: 40px; font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; align-items: center; gap: 8px; pointer-events: none; }
   .finding .award { display: flex; align-items: flex-start; gap: 6px; margin: 12px 0 0; font-size: 12px; line-height: 1.45; font-weight: 400; color: var(--muted); }
   .finding .award .laurel { margin-top: -3px; }
   .finding .award[hidden] { display: none; }
@@ -154,6 +148,13 @@
   /* Equal spacing: 10 px from each end to the content, 8 px either side of the divider */
   .foot .right { gap: 8px; padding: 0 10px; }
   .foot .sep { width: 1px; height: 12px; background: color-mix(in srgb, var(--ink) 20%, transparent); }
+  /* Back to the site, under the credit: worded and sized like the other project pages' back link, but monochrome and frameless */
+  .foot .back { position: absolute; left: 0; top: calc(100% + 8px); pointer-events: auto; display: inline-flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 500; line-height: 18px; color: #111111; text-decoration: none; }   /* it sits on the room, not on glass, and the room is light in both themes */
+  .foot .back::before { content: ""; position: absolute; inset: -13px -10px; }
+  .foot .back .arrow { transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1); }
+  @media (hover: hover) and (pointer: fine) { .foot .back:hover .arrow { transform: translateX(-3px); } }
+  .foot .back:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 4px; }
   /* Hide UI: everything fades out except this toggle, so the room fills the screen */
   /* Drawn small to match the pill, but the hit area is 44 px (Apple's minimum touch target) */
   .ui-toggle { position: relative; pointer-events: auto; color: var(--ink); display: grid; place-items: center; width: 15px; height: 15px;
@@ -164,8 +165,8 @@
   .ui-toggle svg { width: 15px; height: 15px; }
   .ui-toggle .slash { opacity: 0; }
   .ui-toggle[aria-pressed="true"] .slash { opacity: 1; }
-  .ui:not(.foot):not(.poster-modal), .foot .credit { transition: opacity 240ms ease; }
-  body.ui-off .ui:not(.foot):not(.poster-modal), body.ui-off .foot .credit { opacity: 0; pointer-events: none; }
+  .ui:not(.foot):not(.poster-modal), .foot .credit, .foot .back { transition: opacity 240ms ease; }
+  body.ui-off .ui:not(.foot):not(.poster-modal), body.ui-off .foot .credit, body.ui-off .foot .back { opacity: 0; pointer-events: none; }
   body.ui-off .foot .keys, body.ui-off .foot .sep { display: none; }
   body.ui-off .foot .right { width: 24px; padding: 0; justify-content: center; }
 
@@ -177,17 +178,17 @@
 
   @media (max-width: 720px) {
     .title { top: 16px; left: 16px; right: 16px; max-width: none; padding: 12px 14px; }
-    .tabs { top: 140px; left: 16px; right: 16px; justify-content: space-between; }
+    .tabs { top: 118px; left: 16px; right: 16px; justify-content: space-between; }
     .tabs button { padding: 7px 8px; }
-    .camera { top: 194px; right: 16px; bottom: auto; padding: 4px; }
+    .camera { top: 172px; right: 16px; bottom: auto; padding: 4px; }
     .camera p { display: none; }
-    .finding { left: 16px; right: 16px; bottom: 48px; width: auto; padding: 14px; }
+    .finding { left: 16px; right: 16px; bottom: 74px; width: auto; padding: 14px; }
     .finding h2 { font-size: 16px; }
     .finding p { font-size: 13px; }
-    .foot { left: 16px; right: 16px; bottom: 12px; font-size: 10px; }
+    .foot { left: 16px; right: 16px; bottom: 38px; font-size: 10px; }
     .foot .keys, .foot .sep { display: none; }
     .foot .right { width: 24px; padding: 0; justify-content: center; }
-    .panel { top: 180px; left: 16px; right: auto; }
+    .panel { top: 158px; left: 16px; right: auto; }
     .chart { margin-top: 10px; }
     .chart img { padding: 3px 2px 0; max-height: 92px; object-fit: contain; }
     .chart figcaption, .walk-hint { display: none; }
@@ -218,7 +219,6 @@
 <canvas id="scene" aria-label="A white hall with a red and a blue room, seen through the screen like a window"></canvas>
 
 <div class="ui card title">
-  <a class="back" href="/#work"><span class="arrow" aria-hidden="true">&larr;</span>Works</a>
   <h1>Light Cube</h1>
   <p>Move your mouse, or your head. The screen is a window into the room.</p>
 </div>
@@ -274,6 +274,7 @@
 
 <div class="ui foot">
   <span class="credit">MFA thesis &middot; UC Davis &middot; 2024</span>
+  <a class="back" href="/#work"><span class="arrow" aria-hidden="true">&larr;</span>Works</a>
   <span class="right"><span class="keys">1&ndash;4 rooms &middot; H hide &middot; P controls</span><span class="sep" aria-hidden="true"></span><button class="ui-toggle" id="ui-toggle" type="button" aria-pressed="false" aria-label="Hide interface" title="Hide interface (H)"><svg viewBox="0 0 24 24" aria-hidden="true"><defs><mask id="eye-cut"><rect width="24" height="24" fill="#fff"/><path class="slash" d="M4.2 3.4l16.4 16.4" stroke="#000" stroke-width="4.2" stroke-linecap="round"/></mask></defs><g mask="url(#eye-cut)"><path d="M12 5.2c-4.6 0-8.2 3.6-9.6 6.8 1.4 3.2 5 6.8 9.6 6.8s8.2-3.6 9.6-6.8C20.2 8.8 16.6 5.2 12 5.2Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="12" r="3.4" fill="currentColor"/></g><path class="slash" d="M4.2 3.4l16.4 16.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button></span>
 </div>
 
