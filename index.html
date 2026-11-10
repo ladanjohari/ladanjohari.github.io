@@ -60,8 +60,9 @@
     .nav-name { font-size: 0.875rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
 
     .hero { padding: 80px 0 72px; }
-    .hero-lead { display: inline; font: inherit; color: inherit; letter-spacing: inherit; }
-    .hero-desc p { display: inline; }
+    /* HeroBlock: the claim leads in ink, who I am follows in grey. Before 10 Nov 2026 it was one grey paragraph. */
+    .hero-lead { font-size: 1.75rem; font-weight: 600; line-height: 1.25; letter-spacing: -0.025em; color: var(--ink); max-width: 520px; text-wrap: balance; }
+    .hero-desc p { margin-top: 16px; }
     .hero-desc { font-size: 0.975rem; line-height: 1.7; color: var(--mid); max-width: 460px; text-wrap: pretty; }
     .hero-line { opacity: 0; animation: hero-fade 0.6s ease-out forwards; }
     .hero-desc.hero-line { animation-delay: 0.1s; }
@@ -412,7 +413,7 @@
       .shell { padding: 0 20px; }
       nav { padding-top: 28px; }
       .hero { padding: 56px 0 48px; }
-      .hero-name { font-size: 2rem; }
+      .hero-lead { font-size: 1.5rem; }
       .cursor-dot { display: none; }
       .nav-links { gap: 18px; }
       .wf-tool { display: none; }
@@ -459,8 +460,8 @@
 
   <header class="hero">
     <div class="hero-desc hero-line">
-      <h1 class="hero-lead">I&rsquo;m a product designer based in the Bay Area, CA.</h1>
-      <p>I design and build how people work with interfaces and AI. My work has a common theme: making navigation easier and things more&nbsp;findable.</p>
+      <h1 class="hero-lead">I make navigation easier and things more&nbsp;findable.</h1>
+      <p>I&rsquo;m a product designer based in the Bay Area. I&nbsp;design and build how people work with interfaces and&nbsp;AI.</p>
     </div>
   </header>
 
