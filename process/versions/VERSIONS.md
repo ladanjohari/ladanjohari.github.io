@@ -9,3 +9,4 @@ Saved before each design change to `index.html`, so any round can be brought bac
 | 10 Nov 2026 | `index-2026-11-10-opening-round2.html` | Round 2: her wording in one paragraph, "product designer" and the findability line at weight 600 in ink | Too bold, same weight as her name and the project titles; she wants only a slight emphasis |
 | 10 Nov 2026 | `index-2026-11-10-opening-round3.html` | Round 3: the two phrases at weight 500 in ink | Still too strong; she asked for lighter still |
 | 10 Nov 2026 | `index-2026-11-10-before-list.html` | Opening round 4 (kept), Selected Work as six equal rows with blue "View project" labels | Starling leads, the two YouTube demos become compact rows, labels get quieter |
+| 10 Nov 2026 | `index-2026-11-10-list-round1.html` | List round 1: Starling leading full width, YouTube demos compact, grey arrows instead of blue labels | Not wanted for now; Prompted Find, Xcode Symbol Browser and Trails move to the Lab instead |

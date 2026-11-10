@@ -84,26 +84,15 @@
     .work-title { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
     .work-desc { font-size: 0.85rem; color: var(--mid); margin-top: 5px; line-height: 1.5; text-wrap: pretty; }
     .work-tags { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--mid); margin-top: 7px; line-height: 1.5; }
-    /* The arrow sits after the title in grey: a right arrow opens a project page, a diagonal one a video on YouTube.
-       Before 10 Nov 2026 each row ended in a blue uppercase "View project" label. */
-    .work-arrow { display: inline-block; margin-left: 2px; font-weight: 400; color: var(--mid); transition: transform 0.16s cubic-bezier(0.23, 1, 0.32, 1), color 0.16s ease-out; }
-    .work-note { font-size: 0.75rem; color: var(--mid); margin-top: 6px; }
-    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-    /* Starling leads: the picture runs the full width and the words sit under it */
-    .work-row.is-lead { flex-direction: column; align-items: stretch; gap: 18px; padding-bottom: 22px; }
-    .work-row.is-lead .work-thumb { width: 100%; height: auto; aspect-ratio: 16 / 10; }
-    .work-row.is-lead .work-title { font-size: 1.3rem; }
-    .work-row.is-lead .work-desc { font-size: 0.925rem; }
-    /* The two YouTube demos are earlier work without a case study, so they sit smaller at the end */
-    .work-row.is-demo { gap: 18px; padding-top: 12px; padding-bottom: 12px; }
-    .work-row.is-demo .work-thumb { width: 118px; height: 74px; border-radius: 8px; }
-    .work-row.is-demo .work-title { font-size: 1rem; }
+    .work-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; flex-shrink: 0; min-width: 92px; }
+    .work-year { font-size: 0.82rem; font-weight: 500; color: var(--mid); }
+    .work-status { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); white-space: nowrap; }
+    .work-arrow { display: inline-block; transition: transform 0.16s cubic-bezier(0.23, 1, 0.32, 1); }
 
     .thumb-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.22s ease-out; pointer-events: none; }
     @media (hover: hover) and (pointer: fine) {
       .work-row:hover { background: var(--hover-row); }
-      .work-row:hover .work-arrow { color: var(--accent); transform: translateX(3px); }
-      .work-row.is-demo:hover .work-arrow { transform: translate(2px, -2px); }
+      .work-row:hover .work-arrow { transform: translateX(3px); }
       .work-row:hover .work-thumb { border-color: var(--rule); }
       .work-row:hover .thumb-video { opacity: 1; }
     }
@@ -439,11 +428,8 @@
       .work-title { font-size: 1.05rem; }
       .work-desc { font-size: 0.85rem; margin-top: 4px; }
       .work-tags { font-size: 0.62rem; margin-top: 8px; }
-      .work-row.is-lead .work-title { font-size: 1.15rem; }
-      .work-row.is-lead .work-desc { font-size: 0.875rem; }
-      .work-row.is-demo { flex-direction: row; align-items: center; gap: 14px; }
-      .work-row.is-demo .work-thumb { width: 104px; height: 65px; aspect-ratio: auto; border-radius: 8px; }
-      .work-row.is-demo .work-title { font-size: 0.95rem; }
+      .work-meta { flex-direction: row; align-items: center; justify-content: space-between; min-width: 0; margin-top: 2px; }
+      .work-year { font-size: 0.78rem; }
     }
     @media (max-width: 480px) {
       .hero-name { font-size: 28px; }
@@ -485,17 +471,33 @@
     <ul class="work-list">
 
       <li class="work-item reveal">
-        <a class="work-row is-lead" draggable="false" href="/projects/starling.html">
-          <div class="work-thumb"><img class="thumb-still" src="/assets/previews/starling-still.webp" alt="" width="784" height="490" decoding="async" draggable="false"><video class="thumb-video" src="/assets/previews/starling-frame.mp4" data-src-light="/assets/previews/starling-frame.mp4" data-src-dark="/assets/previews/starling-frame.mp4" loop muted playsinline preload="metadata"></video></div>
+        <a class="work-row" draggable="false" href="/projects/starling.html">
+          <div class="work-thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <!-- a browser sidebar: tabs gathered into three named groups, the Organize pill below -->
+        <rect width="196" height="122" fill="#101114"/>
+        <rect x="14" y="8" width="168" height="106" rx="7" fill="#17181c" stroke="#26272d" stroke-width=".6"/>
+        <circle cx="24" cy="20" r="2.2" fill="#34C759"/><rect x="30" y="18" width="40" height="4" rx="2" fill="#5c5e66"/>
+        <rect x="24" y="27" width="112" height="5" rx="2.5" fill="#3a3c44"/><rect x="24" y="36" width="94" height="5" rx="2.5" fill="#3a3c44"/>
+        <circle cx="24" cy="50" r="2.2" fill="#FF9500"/><rect x="30" y="48" width="52" height="4" rx="2" fill="#5c5e66"/>
+        <rect x="24" y="57" width="120" height="5" rx="2.5" fill="#3a3c44"/><rect x="24" y="66" width="100" height="5" rx="2.5" fill="#3a3c44"/>
+        <circle cx="24" cy="80" r="2.2" fill="#0A84FF"/><rect x="30" y="78" width="36" height="4" rx="2" fill="#5c5e66"/>
+        <rect x="24" y="87" width="108" height="5" rx="2.5" fill="#3a3c44"/>
+        <rect x="56" y="98" width="84" height="11" rx="5.5" fill="#26272d"/>
+        <path d="M78 101.2 L79 103.5 L81.3 104.5 L79 105.5 L78 107.8 L77 105.5 L74.7 104.5 L77 103.5 Z" fill="#e8e8e8"/>
+        <text x="85" y="106.6" fill="#e8e8e8" font-family="Geist,sans-serif" font-size="6.2" font-weight="600">Organize</text>
+      </svg><video class="thumb-video" src="/assets/previews/starling-frame.mp4" data-src-light="/assets/previews/starling-frame.mp4" data-src-dark="/assets/previews/starling-frame.mp4" loop muted playsinline preload="metadata"></video></div>
           <div class="work-info">
-            <h3 class="work-title">Starling <span class="work-arrow" aria-hidden="true">&rarr;</span></h3>
+            <h3 class="work-title">Starling</h3>
             <div class="work-desc">A browser that sorts your open tabs into named groups with one press.</div>
+          </div>
+          <div class="work-meta">
+            <span class="work-status">View project <span class="work-arrow">&rarr;</span></span>
           </div>
         </a>
       </li>
 
       <li class="work-item reveal">
-        <a class="work-row" draggable="false" href="/projects/session-indicator.html">
+        <a class="work-row" draggable="false"href="/projects/session-indicator.html">
           <div class="work-thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
         <rect width="196" height="122" fill="#0e0e12"/>
         <!-- menu bar hint with pill -->
@@ -514,8 +516,11 @@
         <circle cx="65" cy="94" r="2.8" fill="#34C759"/><text x="72" y="96.6" fill="#8a8a93" font-family="Geist,sans-serif" font-size="6.6" font-weight="500">lint-check</text><text x="170" y="96.6" fill="#6a6a72" font-family="Geist,sans-serif" font-size="5.6" text-anchor="end">done &middot; 1m</text>
       </svg><video class="thumb-video" src="/assets/previews/session-indicator-frame-light.mp4" data-src-light="/assets/previews/session-indicator-frame-light.mp4" data-src-dark="/assets/previews/session-indicator-frame.mp4" loop muted playsinline preload="metadata"></video></div>
           <div class="work-info">
-            <h3 class="work-title">Session Indicator <span class="work-arrow" aria-hidden="true">&rarr;</span></h3>
+            <h3 class="work-title">Session Indicator</h3>
             <div class="work-desc">Track every running AI agent from the menu bar so you never lose your place.</div>
+          </div>
+          <div class="work-meta">
+            <span class="work-status">View project <span class="work-arrow">&rarr;</span></span>
           </div>
         </a>
       </li>
@@ -524,14 +529,17 @@
         <a class="work-row" draggable="false" href="/light-cube/">
           <div class="work-thumb"><img class="thumb-still" src="/assets/previews/light-cube-night-still.webp" alt="" width="480" height="300" decoding="async" draggable="false"><div class="thumb-scrub" data-sprite="/assets/previews/light-cube-night-scrub.webp" data-frames="24" aria-hidden="true"></div></div>
           <div class="work-info">
-            <h3 class="work-title">Light Cube <span class="work-arrow" aria-hidden="true">&rarr;</span></h3>
+            <h3 class="work-title">Light Cube</h3>
             <div class="work-desc">Rooms of colored light from my MFA thesis, rebuilt so your screen becomes a window into them.</div>
+          </div>
+          <div class="work-meta">
+            <span class="work-status">View project <span class="work-arrow">&rarr;</span></span>
           </div>
         </a>
       </li>
 
       <li class="work-item reveal">
-        <a class="work-row" draggable="false" href="/projects/promptedfind.html">
+        <a class="work-row" draggable="false"href="/projects/promptedfind.html">
           <div class="work-thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
         <rect width="196" height="122" fill="#0d1424"/>
         <!-- video player -->
@@ -553,8 +561,11 @@
         <rect x="142" y="84" width="38" height="16" rx="4.5" fill="#2e4d94"/><text x="161" y="94.6" fill="#fff" font-family="Geist,sans-serif" font-size="6.4" font-weight="600" text-anchor="middle">Precision</text>
       </svg><video class="thumb-video" src="/assets/previews/promptedfind-frame.mp4" data-src-light="/assets/previews/promptedfind-frame.mp4" data-src-dark="/assets/previews/promptedfind-frame-dark.mp4" loop muted playsinline preload="metadata"></video></div>
           <div class="work-info">
-            <h3 class="work-title">Prompted Find <span class="work-arrow" aria-hidden="true">&rarr;</span></h3>
+            <h3 class="work-title">Prompted Find</h3>
             <div class="work-desc">Find the moment you need in a long video by meaning, not keywords.</div>
+          </div>
+          <div class="work-meta">
+            <span class="work-status">View project <span class="work-arrow">&rarr;</span></span>
           </div>
         </a>
       </li>
@@ -562,7 +573,7 @@
 
 
       <li class="work-item reveal">
-        <a class="work-row is-demo" draggable="false" href="https://youtu.be/b9VX6qipe84?si=1SfM56ucYbxOrpg4" target="_blank" rel="noopener">
+        <a class="work-row" draggable="false"href="https://youtu.be/b9VX6qipe84?si=1SfM56ucYbxOrpg4" target="_blank" rel="noopener">
           <div class="work-thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
         <rect width="196" height="122" fill="#1c1c20"/>
         <rect x="8" y="8" width="57" height="60" rx="4" fill="#26262b" stroke="#31313a" stroke-width=".5"/>
@@ -587,15 +598,17 @@
         </g>
       </svg><video class="thumb-video" src="/assets/previews/xcode-symbol-browser-frame.mp4" data-src-light="/assets/previews/xcode-symbol-browser-frame.mp4" data-src-dark="/assets/previews/xcode-symbol-browser-frame-dark.mp4" loop muted playsinline preload="metadata"></video></div>
           <div class="work-info">
-            <h3 class="work-title">Xcode Symbol Browser <span class="work-arrow" aria-hidden="true">&#8599;</span></h3>
+            <h3 class="work-title">Xcode Symbol Browser</h3>
             <div class="work-desc">Read a codebase&rsquo;s structure at a glance instead of digging through files.</div>
-            <div class="work-note">Video demo<span class="sr-only">, opens YouTube</span></div>
+          </div>
+          <div class="work-meta">
+            <span class="work-status">Watch demo <span class="work-arrow">&#8599;</span></span>
           </div>
         </a>
       </li>
 
       <li class="work-item reveal">
-        <a class="work-row is-demo" draggable="false" href="https://youtu.be/BYO3REaPhIc?si=oELKKk-ifSpXeRDm" target="_blank" rel="noopener">
+        <a class="work-row" draggable="false"href="https://youtu.be/BYO3REaPhIc?si=oELKKk-ifSpXeRDm" target="_blank" rel="noopener">
           <div class="work-thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
         <rect width="196" height="122" fill="#0f0f13"/>
         <path d="M48 46 C 72 42, 86 66, 106 72" stroke="#ff6b5c" stroke-width="1.5" fill="none" opacity=".85"/>
@@ -608,9 +621,11 @@
         <circle cx="48" cy="46" r="1.8" fill="#ff6b5c"/><circle cx="152" cy="44" r="1.8" fill="#ff6b5c"/><circle cx="132" cy="90" r="1.6" fill="#ff6b5c" opacity=".7"/>
       </svg><video class="thumb-video" src="/assets/previews/trails-frame.mp4" data-src-light="/assets/previews/trails-frame.mp4" data-src-dark="/assets/previews/trails-frame-dark.mp4" loop muted playsinline preload="metadata"></video></div>
           <div class="work-info">
-            <h3 class="work-title">Trails <span class="work-arrow" aria-hidden="true">&#8599;</span></h3>
+            <h3 class="work-title">Trails</h3>
             <div class="work-desc">See everything you&rsquo;ve read as a living graph you can navigate.</div>
-            <div class="work-note">Video demo<span class="sr-only">, opens YouTube</span></div>
+          </div>
+          <div class="work-meta">
+            <span class="work-status">Watch demo <span class="work-arrow">&#8599;</span></span>
           </div>
         </a>
       </li>
