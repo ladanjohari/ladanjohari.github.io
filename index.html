@@ -171,7 +171,8 @@
       .lab { --panel: #222222; --scrim: rgba(0,0,0,.6); --dot: rgba(255,255,255,.45);
         --seg: rgba(255,255,255,.08); --card: #262626; --sk: #3A3A3A; --skl: #2F2F2F; --sub: #4D94FF; --ok: #30D158; --ok-t: #30D158; --warn: #FF9F0A; --warn-t: #FFB340; --imsg: #0A84FF; --tagc: #FFD60A; --red: #FF453A; }
     }
-    .lab-in { width: max-content; max-width: 100%; margin-top: 20px; }
+    /* centred while the shelf is short; once it outgrows the column it fills it and scrolls */
+    .lab-in { width: max-content; max-width: 100%; margin: 20px auto 0; }
     .lab button { font: inherit; }
     .lab .spine:focus-visible, .lab .cd:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
     /* the shelf: one line of spines, .lab the open one is current */
@@ -928,12 +929,12 @@
   var host = document.querySelector("[data-lab-row]"); if (!host) return;
   // [name, word on the card, is a package, scene, card colour, accent on the card]
   var PIECES = [
+    ["Prompted Find", "Found.", false, "find", "#FF0000", "#111111"],
+    ["Xcode Symbol Browser", "Mapped.", false, "cols", "#147EFB", "#FFFFFF"],
+    ["Trails", "Traced.", false, "trail", "#DDBDC2", "#111111"],
     ["Substrate", "Planned.", false, "plan", "#16305C", "#4D94FF"],
     ["Tags", "Tagged.", false, "tag", "#34C759", "#FFFFFF"],
-    ["agent-approvals", "Hold.", true, "hold", "#FF453A", "#FFFFFF"],
-    ["Prompted Find", "Found.", false, "find", "#5856D6", "#FF453A"],
-    ["Xcode Symbol Browser", "Mapped.", false, "cols", "#FF9500", "#FFFFFF"],
-    ["Trails", "Traced.", false, "trail", "#30B0C7", "#FFFFFF"]
+    ["agent-approvals", "Hold.", true, "hold", "#FF453A", "#FFFFFF"]
   ];
   var INFO = {
     "Substrate": { url: "/projects/substrate.html", kind: "more",
