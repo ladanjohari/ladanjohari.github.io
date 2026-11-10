@@ -366,19 +366,31 @@
     @media (max-width: 540px) { .lab .win { aspect-ratio: 4 / 3; } .lab .p-tag .phone { width: 58%; margin-left: -29%; } }
 
 
-    /* Prompted Find: one long timeline breaks into parts, one lights up, the playhead jumps there */
+    /* Prompted Find, after its clip: moments on a timeline, one is picked, the playhead jumps to it and progress follows */
     .lab .k-find { --wd: 1.6s; }
-    .lab .k-find .p { border-radius: 2px; background: var(--t); opacity: .45; }
-    .lab .k-find.on .p.i2 { opacity: 1; }
-    .lab .k-find .p.i4 { border-radius: 1px; background: var(--a); opacity: 1; }
-    /* Xcode Symbol Browser: one long list of files splits into columns, one symbol picked in each */
-    .lab .k-cols { --wd: 1.5s; }
-    .lab .k-cols .p { border-radius: 3px; background: var(--t); opacity: .4; }
-    .lab .k-cols .p.hl::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--a); opacity: 0; transition: opacity .2s ease; }
-    .lab .k-cols.on .p.hl { opacity: 1; }
-    .lab .k-cols.on .p.hl::after { opacity: 1; transition: opacity .5s ease var(--hd, .9s); }
-    /* Trails: pages you read appear one by one, joined by the path you took */
-    .lab .k-trail { --wd: 2.9s; }
+    .lab .k-find .p { border-radius: 999px; background: var(--t); opacity: .4; }
+    .lab .k-find .p.card { border-radius: 4px; opacity: .22; }
+    .lab .k-find.on .p.hl { opacity: .95; }
+    .lab .k-find .p.head { border-radius: 1px; background: var(--a); opacity: 1; }
+    .lab .k-find .p.knob { border-radius: 50%; background: var(--a); opacity: 1; }
+    .lab .k-find .p.track { opacity: .22; }
+    .lab .k-find .p.fill { opacity: .95; }
+    /* Xcode Symbol Browser, after its clip: one column, then the next opens beside it, a pick in each, and its line in the code below */
+    .lab .k-cols { --wd: 1.7s; }
+    .lab .k-cols .p { border-radius: 2px; background: var(--t); opacity: .4; }
+    .lab .k-cols .p.sel { border-radius: 4px; opacity: .3; }
+    .lab .k-cols.on .p.sel, .lab .k-cols.on .p.hl { opacity: .95; }
+    /* Trails, after its clip: two pages and a rail of markers; the marked passage in each lights up, joined across the rail */
+    .lab .k-link { --wd: 1.9s; }
+    .lab .k-link svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .lab .k-link .pg, .lab .k-link .rl { fill: #FFFFFF; opacity: .55; }
+    .lab .k-link .ln { fill: var(--t); opacity: .3; }
+    .lab .k-link .dt { fill: var(--t); opacity: .45; }
+    .lab .k-link .dt.hit { fill: var(--a); opacity: 1; }
+    .lab .k-link .band { fill: var(--a); opacity: 0; transition: opacity .2s ease; }
+    .lab .k-link.on .band { opacity: .3; transition: opacity .5s ease .5s; }
+    .lab .k-link .thread { fill: none; stroke: var(--a); stroke-width: 1.5; stroke-dasharray: 100; stroke-dashoffset: 100; }
+    .lab .k-link.on .thread { stroke-dashoffset: 0; transition: stroke-dashoffset .6s cubic-bezier(.45,0,.25,1) .8s; }
 
     .lab .p-pf .vid { position: absolute; left: 8%; right: 8%; top: 10px; height: 52%; border-radius: 6px; background: #111111; }
     .lab .p-pf .st.b .vid { right: 40%; }
@@ -414,47 +426,46 @@
     .lab .p-xs .f.dir i { background: var(--sub); opacity: .55; }
     .lab .p-xs .code { position: absolute; left: calc(34% + 12px); right: 10px; top: 10px; display: grid; gap: 6px; }
     .lab .p-xs .code .sk { height: 5px; }
-    .lab .p-xs .cols { position: absolute; inset: 0; display: flex; }
-    .lab .p-xs .col { flex: 1; min-width: 0; padding: 6px 5px; border-right: 1px solid var(--rule); display: grid; align-content: start; gap: 2px; opacity: 0; transform: translateX(-6px); transition: opacity .2s ease, transform .2s ease; }
+    /* after its clip: modules, then types, then members, each with its letter badge; the definition shows below */
+    .lab .p-xs .cols { position: absolute; left: 0; right: 0; top: 0; height: 60%; display: flex; border-bottom: 1px solid var(--rule); }
+    .lab .p-xs .col { flex: 1; min-width: 0; padding: 6px 5px; border-right: 1px solid var(--rule); display: grid; align-content: start; gap: 1px; opacity: 0; transform: translateX(-6px); transition: opacity .2s ease, transform .2s ease; }
     .lab .p-xs .col:last-child { border-right: 0; }
     .lab .pitch[data-s="b"] .p-xs .col { opacity: 1; transform: none; transition: opacity .5s ease var(--d), transform .6s cubic-bezier(.32,.72,0,1) var(--d); }
-    .lab .p-xs .col u { padding: 0 5px 3px; font-size: 8.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; text-decoration: none; color: var(--mid); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .lab .p-xs .col span { display: flex; align-items: center; justify-content: space-between; gap: 4px; padding: 3px 5px; border-radius: 4px; font-size: 9.5px; white-space: nowrap; overflow: hidden; }
-    .lab .p-xs .col span.on { background: var(--sub); color: #fff; }
-    .lab .p-xs .col span.on::after { content: "\203A"; }
-    .lab .p-xs .col span.pk { box-shadow: inset 0 0 0 1px var(--sub); }
-    .lab .p-xs .peek { position: absolute; left: 40%; right: 6%; bottom: 10px; padding: 7px 9px; border-radius: 7px; background: var(--card); box-shadow: 0 0 0 1px var(--rule); display: grid; gap: 4px; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 9px; line-height: 1.35; opacity: 0; transform: translateY(4px); transition: opacity .2s ease, transform .2s ease; }
-    .lab .pitch[data-s="b"] .p-xs .peek { opacity: 1; transform: none; transition: opacity .5s ease 1.3s, transform .6s cubic-bezier(.32,.72,0,1) 1.3s; }
-    .lab .p-xs .peek b { color: var(--sub); font-weight: 600; }
-    .lab .p-xs .peek em { font-style: normal; color: var(--mid); }
+    .lab .p-xs .col span { display: flex; align-items: center; gap: 5px; padding: 2px 5px; border-radius: 4px; font-size: 9.5px; white-space: nowrap; overflow: hidden; }
+    .lab .p-xs .col span.via { background: var(--skl); font-weight: 600; }
+    .lab .p-xs .col span.on { background: var(--sub); color: #fff; font-weight: 600; }
+    .lab .p-xs .col span.via::after, .lab .p-xs .col span.on::after { content: "\203A"; margin-left: auto; }
+    .lab .p-xs .bd { width: 10px; height: 10px; border-radius: 2.5px; flex: none; display: grid; place-items: center; font-size: 7px; font-weight: 700; color: #fff; background: var(--bd); }
+    .lab .p-xs .src { position: absolute; left: 0; right: 0; bottom: 0; height: 40%; padding: 5px 0; display: grid; align-content: start; gap: 1px; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 9px; opacity: 0; transition: opacity .2s ease; }
+    .lab .pitch[data-s="b"] .p-xs .src { opacity: 1; transition: opacity .5s ease 1s; }
+    .lab .p-xs .src i { font-style: normal; }
+    .lab .p-xs .src > span { display: flex; gap: 10px; padding: 1.5px 10px; white-space: nowrap; overflow: hidden; }
+    .lab .p-xs .src em { width: 18px; flex: none; font-style: normal; color: var(--mid); }
+    .lab .p-xs .src .kw { color: #AF52DE; } .lab .p-xs .src .ty { color: var(--sub); } .lab .p-xs .src .cm { color: var(--mid); }
+    .lab .p-xs .src .on { background: transparent; transition: background .2s ease; }
+    .lab .pitch[data-s="b"] .p-xs .src .on { background: var(--accent-dim); transition: background .5s ease 1.5s; }
 
-    /* Trails: Today a history list to scroll through; with Trails, the pages you read as a map, with the way you came */
-    .lab .p-tr .hist { position: absolute; left: 12%; right: 12%; top: 8px; bottom: 0; overflow: hidden; }
-    .lab .p-tr .hist > b { display: block; padding: 0 4px 5px; font-size: 10px; font-weight: 600; }
-    .lab .p-tr .rows { display: grid; gap: 2px; }
-    .lab .pitch[data-s="a"] .p-tr .rows { animation: hunt 3s cubic-bezier(.45,0,.4,1) both; }
-    .lab .p-tr .hr { display: flex; align-items: center; gap: 7px; padding: 4px; border-radius: 5px; }
-    .lab .p-tr .hr em { width: 30px; flex: none; font-style: normal; font-size: 9px; color: var(--mid); }
-    .lab .p-tr .hr i { width: 10px; height: 10px; border-radius: 3px; background: var(--sk); flex: none; }
-    .lab .p-tr .hr .sk { flex: none; height: 5px; }
-    .lab .p-tr .map { position: absolute; inset: 0; }
-    .lab .p-tr .map svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-    .lab .p-tr .map path { fill: none; stroke: var(--sk); stroke-width: .7; }
-    .lab .p-tr .map path.way { stroke: var(--sub); stroke-dasharray: 100; stroke-dashoffset: 100; }
-    .lab .pitch[data-s="b"] .p-tr .map path.way { stroke-dashoffset: 0; transition: stroke-dashoffset .45s cubic-bezier(.45,0,.25,1) var(--d); }
-    .lab .p-tr .nd { position: absolute; width: 30px; height: 21px; margin: -10.5px 0 0 -15px; padding: 4px; border-radius: 4px; background: var(--card); box-shadow: 0 0 0 1px var(--rule); display: grid; gap: 3px; align-content: start; opacity: 0; transform: scale(.6); transition: opacity .2s ease, transform .2s ease; }
-    .lab .pitch[data-s="b"] .p-tr .nd { opacity: 1; transform: none; transition: opacity .4s ease var(--d), transform .6s cubic-bezier(.34,1.3,.64,1) var(--d); }
-    .lab .p-tr .nd .sk { height: 3px; }
-    .lab .p-tr .nd.on { box-shadow: 0 0 0 1px var(--sub); }
-    .lab .p-tr .nd.here { box-shadow: 0 0 0 1.5px var(--sub), 0 0 0 4px var(--seg); }
-    .lab .p-tr .nd s { position: absolute; left: 50%; top: calc(100% + 3px); transform: translateX(-50%); font-size: 9px; text-decoration: none; color: var(--mid); white-space: nowrap; }
-    .lab .p-tr .nd.on s, .lab .p-tr .nd.here s { color: var(--ink); font-weight: 500; }
-    .lab .p-tr .snap { position: absolute; right: 3%; bottom: 8%; width: 24%; padding: 6px; border-radius: 7px; background: var(--card); box-shadow: 0 0 0 1px var(--rule); display: grid; gap: 4px; opacity: 0; transform: translateY(4px); transition: opacity .2s ease, transform .2s ease; }
-    .lab .pitch[data-s="b"] .p-tr .snap { opacity: 1; transform: none; transition: opacity .5s ease 1.9s, transform .6s cubic-bezier(.32,.72,0,1) 1.9s; }
-    .lab .p-tr .snap b { font-size: 9.5px; font-weight: 600; }
-    .lab .p-tr .snap i { height: 26px; border-radius: 4px; background: var(--skl); }
-    .lab .p-tr .snap .sk { height: 4px; }
-    @media (prefers-reduced-motion: reduce) { .lab .p-pf .segs i, .lab .p-pf .ph, .lab .p-pf .ask, .lab .p-pf .ask em, .lab .p-pf .lbls span, .lab .p-xs .tree, .lab .p-xs .col, .lab .p-xs .peek, .lab .p-tr .rows, .lab .p-tr .map path, .lab .p-tr .nd, .lab .p-tr .snap { transition: none !important; animation: none !important; } }
+    /* Trails, after its clip: Today two documents side by side, each scrolled on its own; with Trails, a rail of
+       markers between them, and the marked passage in each lights up, joined by a band that pinches to its marker */
+    .lab .p-tr .st { inset: 22px 0 0; }
+    .lab .p-tr .doc { position: absolute; top: 7%; bottom: 0; width: 41%; border-radius: 6px 6px 0 0; background: var(--card); box-shadow: 0 0 0 1px var(--rule); overflow: hidden; }
+    .lab .p-tr .doc.l { left: 5%; } .lab .p-tr .doc.r { right: 5%; }
+    .lab .p-tr .ls { display: grid; gap: 5px; padding: 9px 9px 0; }
+    .lab .p-tr .ls .sk { height: 4px; }
+    .lab .p-tr .ls .sk.h { height: 7px; width: 52%; margin-bottom: 3px; background: var(--mid); opacity: .5; }
+    .lab .pitch[data-s="a"] .p-tr .doc.l .ls { animation: hunt 3s cubic-bezier(.45,0,.4,1) both; }
+    .lab .pitch[data-s="a"] .p-tr .doc.r .ls { animation: hunt 3s cubic-bezier(.45,0,.4,1) .4s both reverse; }
+    .lab .p-tr .rail { position: absolute; left: 48.5%; width: 3%; top: 7%; bottom: 7%; border-radius: 999px; background: var(--skl); box-shadow: 0 0 0 1px var(--rule); opacity: 0; transition: opacity .2s ease; }
+    .lab .pitch[data-s="b"] .p-tr .rail { opacity: 1; transition: opacity .5s ease .1s; }
+    .lab .p-tr .rail i { position: absolute; left: 50%; width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; border-radius: 2px; }
+    .lab .p-tr .hl { position: absolute; height: 13%; border-radius: 3px; background: var(--red); opacity: 0; transition: opacity .2s ease; }
+    .lab .pitch[data-s="b"] .p-tr .hl { opacity: .2; transition: opacity .5s ease .7s; }
+    .lab .p-tr .beam { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .lab .p-tr .beam polygon { fill: var(--red); opacity: 0; transition: opacity .2s ease; }
+    .lab .pitch[data-s="b"] .p-tr .beam polygon { opacity: .2; transition: opacity .5s ease .9s; }
+    .lab .p-tr .beam path { fill: none; stroke: var(--red); stroke-width: 1.5; vector-effect: non-scaling-stroke; opacity: 0; transition: opacity .2s ease; }
+    .lab .pitch[data-s="b"] .p-tr .beam path { opacity: 1; transition: opacity .5s ease 1.1s; }
+    @media (prefers-reduced-motion: reduce) { .lab .p-pf .segs i, .lab .p-pf .ph, .lab .p-pf .ask, .lab .p-pf .ask em, .lab .p-pf .lbls span, .lab .p-xs .tree, .lab .p-xs .col, .lab .p-xs .src, .lab .p-xs .src .on, .lab .p-tr .doc .ls, .lab .p-tr .rail, .lab .p-tr .hl, .lab .p-tr .beam path { transition: none !important; animation: none !important; } }
 
     /* ── AboutStrip: the art band ── */
     .about-strip {
@@ -931,7 +942,7 @@
   var PIECES = [
     ["Prompted Find", "Found.", false, "find", "#FF0000", "#111111"],
     ["Xcode Symbol Browser", "Mapped.", false, "cols", "#147EFB", "#FFFFFF"],
-    ["Trails", "Traced.", false, "trail", "#DDBDC2", "#111111"],
+    ["Trails", "Linked.", false, "link", "#FFCC00", "#FF3B30"],
     ["Substrate", "Planned.", false, "plan", "#16305C", "#4D94FF"],
     ["Tags", "Tagged.", false, "tag", "#34C759", "#FFFFFF"],
     ["agent-approvals", "Hold.", true, "hold", "#FF453A", "#FFFFFF"]
@@ -955,8 +966,8 @@
       title: "See what a codebase holds, not only where its files are.",
       text: "When you join a new codebase, the file tree tells you where things live, not what they do or how they connect. Xcode Symbol Browser is a prototype for Xcode that lays out classes, structs, protocols and enums in columns, like Finder\u2019s column view. Hover a symbol to preview its definition without opening the file." },
     "Trails": { url: "https://youtu.be/BYO3REaPhIc", kind: "demo",
-      title: "Your research as a map, not a history list.",
-      text: "Browsers treat every page on its own. Once you close a tab, why you opened it and where it led are gone. Trails is a Safari extension that draws the pages you read as a map while you browse. Each link you follow leaves a trail, related pages sit together, and hovering a page shows a snapshot of it." }
+      title: "Link a passage in one document to a passage in another.",
+      text: "Research means reading several sources at once, and how a line in one connects to a paragraph in another lives only in your head. Trails is a Safari extension that keeps related documents side by side and lets you link passages across them. Each link gets a marker on the rail between the two. Click it, and both passages light up, joined across the rail." }
   };
   var N = PIECES.length;
   function lum(hex) { var v = [1, 3, 5].map(function (i) { var c = parseInt(hex.substr(i, 2), 16) / 255; return c <= .03928 ? c / 12.92 : Math.pow((c + .055) / 1.055, 2.4); }); return .2126 * v[0] + .7152 * v[1] + .0722 * v[2]; }
@@ -979,19 +990,31 @@
     // a button that fills while it is held, then confirms
     hold: { n: 1, fill: true,
       a: [[12, 56, 76, 20]], b: [[12, 56, 76, 20]] },
-    // one unbroken timeline splits into four parts; the playhead, a red line, jumps to the one that answers
-    find: { n: 5, d: [0, .05, .1, .15, .75],
-      a: [[8, 62, 21, 3], [29, 62, 21, 3], [50, 62, 21, 3], [71, 62, 21, 3], [7.4, 56, 1.2, 15]],
-      b: [[8, 61, 19, 5], [29, 61, 19, 5], [50, 60, 19, 7], [71, 61, 21, 5], [58.9, 56, 1.2, 15]] },
-    // one long list of files splits into three columns, and one symbol is picked in each
-    cols: { n: 6, hl: [0, 4, 5], d: [0, .04, .08, .2, .24, .36],
-      a: [[12, 34, 62, 5], [12, 43, 48, 5], [12, 52, 70, 5], [12, 61, 54, 5], [12, 70, 66, 5], [12, 79, 44, 5]],
-      b: [[6, 40, 27, 7], [6, 50, 22, 7], [6, 60, 25, 7], [37, 40, 26, 7], [37, 50, 28, 7], [68, 50, 26, 7]] },
-    // pages appear in the order you read them, each joined to the last; the ringed one is where you are
-    trail: { n: 0, a: [], b: [], tree: {
-      nodes: { s: [20, 132], a: [52, 98], b: [86, 128], c: [110, 82], d: [142, 112], e: [96, 162], g: [174, 78] },
-      at: { s: .3, a: .75, b: 1.2, e: 1.65, c: 1.65, d: 2.1, g: 2.55 },
-      edges: [["s", "a", .4, .35], ["a", "b", .85, .35], ["b", "e", 1.3, .35], ["b", "c", 1.3, .35], ["c", "d", 1.75, .35], ["d", "g", 2.2, .35]] } }
+    // after the Prompted Find clip: moments on a timeline; one is picked, the playhead jumps to it and progress follows
+    find: { n: 12, cls: ["", "hl", "", "", "card", "card hl", "card", "card", "head", "knob", "track", "fill"],
+      d: [0, .03, .06, .09, .05, .08, .11, .14, .45, .45, .45, .45],
+      a: [[6, 36, 18, 5], [28, 36, 20, 5], [52, 36, 18, 5], [74, 36, 20, 5], [6, 47, 20, 16], [28, 47, 20, 16], [52, 47, 18, 16], [74, 47, 20, 16], [9, 31, 1.2, 34], [7.4, 28, 4.4, 4.8], [6, 80, 88, 3], [6, 80, 5, 3]],
+      b: [[6, 36, 18, 5], [28, 36, 20, 5], [52, 36, 18, 5], [74, 36, 20, 5], [6, 47, 20, 16], [28, 47, 20, 16], [52, 47, 18, 16], [74, 47, 20, 16], [37, 31, 1.2, 34], [35.4, 28, 4.4, 4.8], [6, 80, 88, 3], [6, 80, 32, 3]] },
+    // after the Xcode Symbol Browser clip: a column of modules, then types and members open beside it,
+    // one picked in each, and its line lights up in the code below
+    cols: { n: 16, cls: ["", "sel", "", "", "", "", "", "", "sel", "", "", "sel", "", "", "", "hl"],
+      d: [0, 0, 0, 0, 0, .25, .25, .25, .25, .25, .5, .5, .5, 0, 0, 0],
+      a: [[5, 34, 20, 3.5], [4, 39.5, 27, 7.5], [5, 49, 19, 3.5], [5, 56.5, 16, 3.5], [5, 64, 21, 3.5],
+        [36, 34, 0, 3.5], [36, 41.5, 0, 3.5], [36, 49, 0, 3.5], [35, 54.5, 0, 7.5], [36, 64, 0, 3.5],
+        [67, 34, 0, 3.5], [66, 39.5, 0, 7.5], [67, 49, 0, 3.5],
+        [5, 78, 44, 3], [5, 84.5, 62, 3], [5, 91, 54, 3]],
+      b: [[5, 34, 20, 3.5], [4, 39.5, 27, 7.5], [5, 49, 19, 3.5], [5, 56.5, 16, 3.5], [5, 64, 21, 3.5],
+        [36, 34, 22, 3.5], [36, 41.5, 14, 3.5], [36, 49, 17, 3.5], [35, 54.5, 27, 7.5], [36, 64, 15, 3.5],
+        [67, 34, 18, 3.5], [66, 39.5, 27, 7.5], [67, 49, 19, 3.5],
+        [5, 78, 44, 3], [5, 84.5, 62, 3], [5, 91, 54, 3]] },
+    // after the Trails clip: two pages and a rail of markers between them; the marked passage in each
+    // lights up, and a band pinches through its marker on the rail to join them
+    link: { n: 0, a: [], b: [], svg: (function () {
+      function lines(x) { var h = '<rect class="ln" x="' + x + '" y="58" width="34" height="5" rx="1.5"/>'; [58, 66, 52, 62, 48, 64, 56, 60, 50, 62, 54].forEach(function (w, i) { h += '<rect class="ln" x="' + x + '" y="' + (70 + i * 8) + '" width="' + w + '" height="3" rx="1.5"/>'; }); return h; }
+      return '<svg viewBox="0 0 192 176" aria-hidden="true"><rect class="pg" x="8" y="50" width="74" height="122" rx="5"/><rect class="pg" x="110" y="50" width="74" height="122" rx="5"/>' + lines(14) + lines(116) +
+        '<rect class="rl" x="91" y="54" width="10" height="114" rx="5"/><circle class="dt" cx="96" cy="70" r="2.6"/><circle class="dt hit" cx="96" cy="92" r="2.6"/><circle class="dt" cx="96" cy="118" r="2.6"/><circle class="dt" cx="96" cy="144" r="2.6"/>' +
+        '<rect class="band" x="12" y="108" width="66" height="18" rx="3"/><rect class="band" x="114" y="68" width="66" height="18" rx="3"/><polygon class="band" points="82,108 91,89 101,89 110,68 110,86 101,95 91,95 82,126"/>' +
+        '<path class="thread" pathLength="100" d="M82 117 C 87 117, 87 92, 96 92 S 105 77, 110 77"/></svg>'; })() }
   };
   // curved paths between the steps, a hollow start and a ringed goal
   function tree(T) {
@@ -1008,7 +1031,8 @@
     var m = document.createElement("div"); m.className = "mini k-" + (pc[3] || "plan") + (act.tree ? " k-tree" : "");
     var w = document.createElement("span"); w.className = "w"; w.textContent = pc[1]; m.appendChild(w);
     if (act.tree) m.insertAdjacentHTML("beforeend", tree(act.tree));
-    var ps = []; for (var i = 0; i < act.n; i++) { var p = document.createElement("span"); p.className = "p i" + i; if (act.sent && act.sent.indexOf(i) >= 0) p.classList.add("sent"); if (act.hl && act.hl.indexOf(i) >= 0) p.classList.add("hl"); if (act.chips && act.chips.indexOf(i) >= 0) { p.classList.add("tagged"); p.innerHTML = '<i class="chip"></i>'; } if (act.fill) p.innerHTML = '<i class="fl"></i><i class="ck"></i>'; m.appendChild(p); ps.push(p); }
+    if (act.svg) m.insertAdjacentHTML("beforeend", act.svg);
+    var ps = []; for (var i = 0; i < act.n; i++) { var p = document.createElement("span"); p.className = "p i" + i; if (act.sent && act.sent.indexOf(i) >= 0) p.classList.add("sent"); if (act.cls && act.cls[i]) p.className += " " + act.cls[i]; if (act.chips && act.chips.indexOf(i) >= 0) { p.classList.add("tagged"); p.innerHTML = '<i class="chip"></i>'; } if (act.fill) p.innerHTML = '<i class="fl"></i><i class="ck"></i>'; m.appendChild(p); ps.push(p); }
     function put(st) { ps.forEach(function (p, i) { var r = st[i]; p.style.left = r[0] + "%"; p.style.top = r[1] + "%"; p.style.width = r[2] + "%"; p.style.height = r[3] + "%"; p.style.setProperty("--d", (act.d ? act.d[i] : i * .05) + "s"); }); }
     function a() { m.classList.remove("on"); put(act.a); }
     function b() { m.classList.add("on"); put(act.b); }
@@ -1027,9 +1051,11 @@
   // Xcode Symbol Browser, Today: a file tree, and lines of code beside it
   var FILES = [["Sources", 0, 1], ["App", 1, 1], ["AppDelegate.swift", 2], ["Models", 1, 1], ["Branch.swift", 2], ["Commit.swift", 2], ["GitRepository.swift", 2], ["Remote.swift", 2], ["Views", 1, 1], ["CommitList.swift", 2], ["DiffView.swift", 2], ["Sidebar.swift", 2], ["Utilities", 1, 1], ["Extensions.swift", 2], ["Shell.swift", 2]].reduce(function (h, f) { return h + '<div class="f' + (f[2] ? ' dir' : '') + '" style="--in:' + f[1] + '"><i></i>' + f[0] + '</div>'; }, '');
   var CODE = [40, 72, 64, 30, 0, 56, 80, 68, 44, 0, 62, 76, 38].reduce(function (h, w) { return h + (w ? '<span class="sk" style="width:' + w + '%"></span>' : '<span></span>'); }, '');
-  // Trails, Today: the history list, one page after another
-  var HIST = [["10:42", 62], ["10:40", 48], ["10:37", 70], ["10:31", 54], ["10:28", 66], ["10:24", 44], ["10:19", 58], ["10:15", 50]].reduce(function (h, r) { return h + '<div class="hr"><em>' + r[0] + '</em><i></i><span class="sk" style="width:' + r[1] + '%"></span></div>'; }, '');
-  function node(x, y, d, cls, label) { return '<div class="nd' + (cls ? ' ' + cls : '') + '" style="left:' + x + '%;top:' + y + '%;--d:' + d + '"><span class="sk" style="width:80%"></span><span class="sk" style="width:55%"></span>' + (label ? '<s>' + label + '</s>' : '') + '</div>'; }
+  // Xcode Symbol Browser, after: a run of symbols of one kind, each with its letter badge; one may be picked
+  function sym(k, c, names, pick, how) { return names.reduce(function (h, n, i) { return h + '<span' + (i === pick ? ' class="' + how + '"' : '') + '><b class="bd" style="--bd:' + c + '">' + k + '</b>' + n + '</span>'; }, ''); }
+  // Trails: two documents side by side, a heading and lines of text in each
+  function doc(side, ws) { var l = ws.concat(ws).reduce(function (h, w) { return h + '<span class="sk" style="width:' + w + '%"></span>'; }, ''); return '<div class="doc ' + side + '"><div class="ls"><span class="sk h"></span>' + l + '</div></div>'; }
+  var DOC_L = doc("l", [92, 86, 90, 70, 0, 88, 94, 84, 60, 0, 90, 82, 76]), DOC_R = doc("r", [88, 94, 72, 0, 90, 84, 92, 66, 0, 86, 90, 80, 58]);
   var PITCH = {
     "Substrate": { cls: "p-sub", b: "Substrate",
       top: '<div class="mbar" aria-hidden="true"><i class="ap"></i><u style="width:20px"></u><u style="width:12px"></u><u style="width:12px"></u><u style="width:14px"></u><span class="sp"></span><span class="pill"><i class="d ok"></i><i class="d ok"></i><i class="d run"></i><i class="d need"></i></span><u style="width:10px"></u><u style="width:34px"></u></div>',
@@ -1046,12 +1072,13 @@
       bb: '<div class="vid"><i></i></div><div class="ask"><span>Where do they talk about landing?</span><em>Landing &middot; 29:48</em></div><div class="segs"><i style="--d:.3s"></i><i style="--d:.4s"></i><i class="hit" style="--d:.5s"></i><i style="--d:.6s"></i><b class="ph"></b></div><div class="lbls"><span>Mission</span><span>Heat shields</span><span class="hit">Landing</span><span>Q&amp;A</span></div>' },
     "Xcode Symbol Browser": { cls: "p-xs", b: "Symbol Browser",
       a: '<div class="nav"><div class="tree">' + FILES + FILES + '</div></div><div class="code">' + CODE + '</div>',
-      bb: '<div class="cols"><div class="col" style="--d:.1s"><u>Kinds</u><span class="on">Classes</span><span>Structs</span><span>Protocols</span><span>Enums</span></div><div class="col" style="--d:.4s"><u>Classes</u><span class="on">GitRepository</span><span>Commit</span><span>Remote</span><span>Branch</span></div><div class="col" style="--d:.7s"><u>GitRepository</u><span>location</span><span class="pk">fetch()</span><span>status()</span><span>tree</span></div></div><div class="peek"><span><em>func</em> <b>fetch</b>() <em>async throws</em></span><span><em>// Pulls new commits from the remote</em></span></div>' },
+      bb: '<div class="cols"><div class="col" style="--d:.1s">' + sym("A", "#8E8E93", ["QueryEngine", "SourceControl", "SPMBuildCore", "SPMBuild", "SMPSQLite3"], 1, "via") + '</div><div class="col" style="--d:.4s">' + sym("C", "#AF52DE", ["GitRepository"]) + sym("S", "#FF2D55", ["Hash", "Commit", "Tree", "Entry"], 2, "on") + '</div><div class="col" style="--d:.7s">' + sym("P", "#34C759", ["location", "contents"], 1, "on") + sym("E", "#0A84FF", ["EntryType"]) + '</div></div>' +
+        '<div class="src"><span><em>346</em><span><i class="kw">public struct</i> <i class="ty">Tree</i> {</span></span><span><em>391</em><span><i class="kw">public let</i> location: <i class="ty">Location</i></span></span><span><em>393</em><i class="cm">/// The list of contents.</i></span><span class="on"><em>394</em><span><i class="kw">public let</i> contents: [<i class="ty">Entry</i>]</span></span></div>' },
     "Trails": { cls: "p-tr", b: "Trails",
-      a: '<div class="hist"><b>History</b><div class="rows">' + HIST + HIST + '</div></div>',
-      bb: '<div class="map"><svg viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true"><path d="M60 66 L32 90"/><path d="M96 30 L56 14"/><path class="way" pathLength="100" style="--d:.35s" d="M20 30 L60 66"/><path class="way" pathLength="100" style="--d:.75s" d="M60 66 L96 30"/><path class="way" pathLength="100" style="--d:1.15s" d="M96 30 L132 66"/></svg>' +
-        node(10, 30, ".1s", "on", "Swiss style") + node(30, 66, ".5s", "on", "Grid systems") + node(48, 30, ".9s", "on", "Helvetica") + node(66, 66, "1.3s", "here", "Akzidenz") + node(16, 90, "1.5s", "", "") + node(28, 14, "1.5s", "", "") +
-        '<div class="snap"><b>Akzidenz-Grotesk</b><i></i><span class="sk" style="width:90%"></span><span class="sk" style="width:70%"></span></div></div>' }
+      a: DOC_L + DOC_R,
+      bb: DOC_L + DOC_R + '<div class="hl" style="left:6%;width:39%;top:52%"></div><div class="hl" style="right:6%;width:39%;top:24%"></div>' +
+        '<div class="rail"><i style="top:12.8%;background:var(--imsg)"></i><i style="top:29%;background:var(--ok)"></i><i style="top:45.3%;background:var(--red)"></i><i style="top:73%;background:var(--warn)"></i></div>' +
+        '<svg class="beam" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polygon points="45,52 48.5,44 51.5,44 55,24 55,37 51.5,48 48.5,48 45,65"/><path d="M45 58.5 C 47 58.5, 47 46, 50 46 S 53 30.5, 55 30.5"/></svg>' }
   };
   var ptimer = 0;
   function pitch(name) {
