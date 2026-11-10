@@ -196,15 +196,15 @@
 
     /* Substrate: a plan that branches. The goal lands first, then where you start, then the paths and steps between */
     .lab .k-plan { --wd: 3.2s; }
-    .lab .k-plan .tree { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-    .lab .k-plan .tree path { fill: none; stroke: var(--a); stroke-width: 1.25; opacity: .6; stroke-dasharray: 100; stroke-dashoffset: 100; }
-    .lab .k-plan.on .tree path { stroke-dashoffset: 0; transition: stroke-dashoffset var(--l, .5s) cubic-bezier(.45,0,.25,1) var(--d, 0s); }
-    .lab .k-plan .tree .n { opacity: 0; transform: scale(.4); transform-box: fill-box; transform-origin: center; }
-    .lab .k-plan.on .tree .n { opacity: 1; transform: none; transition: opacity .5s ease var(--d, 0s), transform .7s cubic-bezier(.34,1.3,.64,1) var(--d, 0s); }
-    .lab .k-plan .tree .step { fill: var(--a); }
-    .lab .k-plan .tree .start { fill: var(--c); stroke: var(--t); stroke-width: 2; }
-    .lab .k-plan .tree .goal circle { fill: var(--t); }
-    .lab .k-plan .tree .goal .ring { fill: none; stroke: var(--t); stroke-width: 1.5; opacity: .45; }
+    .lab .k-tree .tree { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .lab .k-tree .tree path { fill: none; stroke: var(--a); stroke-width: 1.25; opacity: .6; stroke-dasharray: 100; stroke-dashoffset: 100; }
+    .lab .k-tree.on .tree path { stroke-dashoffset: 0; transition: stroke-dashoffset var(--l, .5s) cubic-bezier(.45,0,.25,1) var(--d, 0s); }
+    .lab .k-tree .tree .n { opacity: 0; transform: scale(.4); transform-box: fill-box; transform-origin: center; }
+    .lab .k-tree.on .tree .n { opacity: 1; transform: none; transition: opacity .5s ease var(--d, 0s), transform .7s cubic-bezier(.34,1.3,.64,1) var(--d, 0s); }
+    .lab .k-tree .tree .step { fill: var(--a); }
+    .lab .k-tree .tree .start { fill: var(--c); stroke: var(--t); stroke-width: 2; }
+    .lab .k-tree .tree .goal circle { fill: var(--t); }
+    .lab .k-tree .tree .goal .ring { fill: none; stroke: var(--t); stroke-width: 1.5; opacity: .45; }
     /* Tags: received and sent bubbles, .lab two get a tag and the rest step back */
     .lab .k-tag .p { background: var(--t); opacity: .9; }
     .lab .k-tag .p.sent { background: var(--a); opacity: 1; }
@@ -364,6 +364,96 @@
     @media (prefers-reduced-motion: reduce) { .lab .pop, .lab .sheet, .lab .st, .lab .panel, .lab .row, .lab .pill, .lab .res, .lab .chips .on, .lab .p-tag .thr { transition: none !important; animation: none !important; } .lab .p-sub .spin, .lab .p-aa .hold s { animation: none !important; } .lab .pitch[data-s="b"] .p-aa .hold s { width: 100%; } }
     @media (max-width: 540px) { .lab .win { aspect-ratio: 4 / 3; } .lab .p-tag .phone { width: 58%; margin-left: -29%; } }
 
+
+    /* Prompted Find: one long timeline breaks into parts, one lights up, the playhead jumps there */
+    .lab .k-find { --wd: 1.6s; }
+    .lab .k-find .p { border-radius: 2px; background: var(--t); opacity: .45; }
+    .lab .k-find.on .p.i2 { opacity: 1; }
+    .lab .k-find .p.i4 { border-radius: 1px; background: var(--a); opacity: 1; }
+    /* Xcode Symbol Browser: one long list of files splits into columns, one symbol picked in each */
+    .lab .k-cols { --wd: 1.5s; }
+    .lab .k-cols .p { border-radius: 3px; background: var(--t); opacity: .4; }
+    .lab .k-cols .p.hl::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--a); opacity: 0; transition: opacity .2s ease; }
+    .lab .k-cols.on .p.hl { opacity: 1; }
+    .lab .k-cols.on .p.hl::after { opacity: 1; transition: opacity .5s ease var(--hd, .9s); }
+    /* Trails: pages you read appear one by one, joined by the path you took */
+    .lab .k-trail { --wd: 2.9s; }
+
+    .lab .p-pf .vid { position: absolute; left: 8%; right: 8%; top: 10px; height: 52%; border-radius: 6px; background: #111111; }
+    .lab .p-pf .st.b .vid { right: 40%; }
+    .lab .p-pf .vid i { position: absolute; left: 50%; top: 50%; margin: -7px 0 0 -4px; border-left: 12px solid rgba(255,255,255,.55); border-top: 7px solid transparent; border-bottom: 7px solid transparent; }
+    .lab .p-pf .bar, .lab .p-pf .segs { position: absolute; left: 8%; right: 8%; top: calc(52% + 24px); height: 4px; }
+    .lab .p-pf .bar { border-radius: 2px; background: var(--sk); }
+    .lab .p-pf .ph { position: absolute; top: 50%; left: 6%; width: 2px; height: 16px; margin: -8px 0 0 -1px; border-radius: 1px; background: var(--red); }
+    .lab .pitch[data-s="a"] .p-pf .bar .ph { animation: scrub 3.2s cubic-bezier(.45,0,.4,1) both; }
+    @keyframes scrub { 0% { left: 6%; } 30% { left: 74%; } 55% { left: 30%; } 78% { left: 58%; } 100% { left: 44%; } }
+    .lab .p-pf .tm, .lab .p-pf .lbls { position: absolute; left: 8%; right: 8%; top: calc(52% + 36px); display: flex; gap: 3px; font-size: 9.5px; color: var(--mid); }
+    .lab .p-pf .tm { justify-content: space-between; }
+    .lab .p-pf .segs { display: flex; gap: 3px; }
+    .lab .p-pf .segs i { flex: 1; border-radius: 2px; background: var(--sub); opacity: .3; transform: scaleX(0); transform-origin: left; transition: transform .2s ease; }
+    .lab .p-pf .segs i.hit { opacity: 1; }
+    .lab .pitch[data-s="b"] .p-pf .segs i { transform: none; transition: transform .6s cubic-bezier(.32,.72,0,1) var(--d); }
+    .lab .pitch[data-s="b"] .p-pf .segs .ph { left: 62.5%; transition: left .8s cubic-bezier(.32,.72,0,1) 1.3s; }
+    .lab .p-pf .lbls span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: 0; transition: opacity .2s ease; }
+    .lab .p-pf .lbls .hit { color: var(--ink); font-weight: 600; }
+    .lab .pitch[data-s="b"] .p-pf .lbls span { opacity: 1; transition: opacity .5s ease .8s; }
+    .lab .p-pf .ask { position: absolute; left: 63%; right: 8%; top: 10px; height: 52%; padding: 7px; border-radius: 6px; background: var(--skl); box-shadow: 0 0 0 1px var(--rule); display: flex; flex-direction: column; gap: 6px; opacity: 0; transform: translateX(6px); transition: opacity .2s ease, transform .2s ease; }
+    .lab .pitch[data-s="b"] .p-pf .ask { opacity: 1; transform: none; transition: opacity .5s ease .2s, transform .6s cubic-bezier(.32,.72,0,1) .2s; }
+    .lab .p-pf .ask span { padding: 4px 6px; border-radius: 5px; background: var(--card); box-shadow: inset 0 0 0 1px var(--rule); font-size: 9.5px; }
+    .lab .p-pf .ask em { font-style: normal; font-size: 9.5px; font-weight: 600; color: var(--sub); opacity: 0; transition: opacity .2s ease; }
+    .lab .pitch[data-s="b"] .p-pf .ask em { opacity: 1; transition: opacity .5s ease 1.1s; }
+
+    /* Xcode Symbol Browser: Today a file tree and a wall of code; with the browser, symbols in columns and a preview on hover */
+    .lab .p-xs .nav { position: absolute; left: 0; top: 0; bottom: 0; width: 34%; padding: 6px 0; background: var(--skl); border-right: 1px solid var(--rule); overflow: hidden; }
+    .lab .p-xs .tree { display: grid; gap: 1px; }
+    .lab .pitch[data-s="a"] .p-xs .tree { animation: hunt 3s cubic-bezier(.45,0,.4,1) both; }
+    .lab .p-xs .f { display: flex; align-items: center; gap: 4px; padding: 2px 6px 2px calc(6px + var(--in, 0) * 9px); font-size: 9.5px; color: var(--mid); white-space: nowrap; }
+    .lab .p-xs .f i { width: 7px; height: 6px; border-radius: 1.5px; background: var(--sk); flex: none; }
+    .lab .p-xs .f.dir { color: var(--ink); }
+    .lab .p-xs .f.dir i { background: var(--sub); opacity: .55; }
+    .lab .p-xs .code { position: absolute; left: calc(34% + 12px); right: 10px; top: 10px; display: grid; gap: 6px; }
+    .lab .p-xs .code .sk { height: 5px; }
+    .lab .p-xs .cols { position: absolute; inset: 0; display: flex; }
+    .lab .p-xs .col { flex: 1; min-width: 0; padding: 6px 5px; border-right: 1px solid var(--rule); display: grid; align-content: start; gap: 2px; opacity: 0; transform: translateX(-6px); transition: opacity .2s ease, transform .2s ease; }
+    .lab .p-xs .col:last-child { border-right: 0; }
+    .lab .pitch[data-s="b"] .p-xs .col { opacity: 1; transform: none; transition: opacity .5s ease var(--d), transform .6s cubic-bezier(.32,.72,0,1) var(--d); }
+    .lab .p-xs .col u { padding: 0 5px 3px; font-size: 8.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; text-decoration: none; color: var(--mid); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .lab .p-xs .col span { display: flex; align-items: center; justify-content: space-between; gap: 4px; padding: 3px 5px; border-radius: 4px; font-size: 9.5px; white-space: nowrap; overflow: hidden; }
+    .lab .p-xs .col span.on { background: var(--sub); color: #fff; }
+    .lab .p-xs .col span.on::after { content: "\203A"; }
+    .lab .p-xs .col span.pk { box-shadow: inset 0 0 0 1px var(--sub); }
+    .lab .p-xs .peek { position: absolute; left: 40%; right: 6%; bottom: 10px; padding: 7px 9px; border-radius: 7px; background: var(--card); box-shadow: 0 0 0 1px var(--rule); display: grid; gap: 4px; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 9px; line-height: 1.35; opacity: 0; transform: translateY(4px); transition: opacity .2s ease, transform .2s ease; }
+    .lab .pitch[data-s="b"] .p-xs .peek { opacity: 1; transform: none; transition: opacity .5s ease 1.3s, transform .6s cubic-bezier(.32,.72,0,1) 1.3s; }
+    .lab .p-xs .peek b { color: var(--sub); font-weight: 600; }
+    .lab .p-xs .peek em { font-style: normal; color: var(--mid); }
+
+    /* Trails: Today a history list to scroll through; with Trails, the pages you read as a map, with the way you came */
+    .lab .p-tr .hist { position: absolute; left: 12%; right: 12%; top: 8px; bottom: 0; overflow: hidden; }
+    .lab .p-tr .hist > b { display: block; padding: 0 4px 5px; font-size: 10px; font-weight: 600; }
+    .lab .p-tr .rows { display: grid; gap: 2px; }
+    .lab .pitch[data-s="a"] .p-tr .rows { animation: hunt 3s cubic-bezier(.45,0,.4,1) both; }
+    .lab .p-tr .hr { display: flex; align-items: center; gap: 7px; padding: 4px; border-radius: 5px; }
+    .lab .p-tr .hr em { width: 30px; flex: none; font-style: normal; font-size: 9px; color: var(--mid); }
+    .lab .p-tr .hr i { width: 10px; height: 10px; border-radius: 3px; background: var(--sk); flex: none; }
+    .lab .p-tr .hr .sk { flex: none; height: 5px; }
+    .lab .p-tr .map { position: absolute; inset: 0; }
+    .lab .p-tr .map svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .lab .p-tr .map path { fill: none; stroke: var(--sk); stroke-width: .7; }
+    .lab .p-tr .map path.way { stroke: var(--sub); stroke-dasharray: 100; stroke-dashoffset: 100; }
+    .lab .pitch[data-s="b"] .p-tr .map path.way { stroke-dashoffset: 0; transition: stroke-dashoffset .45s cubic-bezier(.45,0,.25,1) var(--d); }
+    .lab .p-tr .nd { position: absolute; width: 30px; height: 21px; margin: -10.5px 0 0 -15px; padding: 4px; border-radius: 4px; background: var(--card); box-shadow: 0 0 0 1px var(--rule); display: grid; gap: 3px; align-content: start; opacity: 0; transform: scale(.6); transition: opacity .2s ease, transform .2s ease; }
+    .lab .pitch[data-s="b"] .p-tr .nd { opacity: 1; transform: none; transition: opacity .4s ease var(--d), transform .6s cubic-bezier(.34,1.3,.64,1) var(--d); }
+    .lab .p-tr .nd .sk { height: 3px; }
+    .lab .p-tr .nd.on { box-shadow: 0 0 0 1px var(--sub); }
+    .lab .p-tr .nd.here { box-shadow: 0 0 0 1.5px var(--sub), 0 0 0 4px var(--seg); }
+    .lab .p-tr .nd s { position: absolute; left: 50%; top: calc(100% + 3px); transform: translateX(-50%); font-size: 9px; text-decoration: none; color: var(--mid); white-space: nowrap; }
+    .lab .p-tr .nd.on s, .lab .p-tr .nd.here s { color: var(--ink); font-weight: 500; }
+    .lab .p-tr .snap { position: absolute; right: 3%; bottom: 8%; width: 24%; padding: 6px; border-radius: 7px; background: var(--card); box-shadow: 0 0 0 1px var(--rule); display: grid; gap: 4px; opacity: 0; transform: translateY(4px); transition: opacity .2s ease, transform .2s ease; }
+    .lab .pitch[data-s="b"] .p-tr .snap { opacity: 1; transform: none; transition: opacity .5s ease 1.9s, transform .6s cubic-bezier(.32,.72,0,1) 1.9s; }
+    .lab .p-tr .snap b { font-size: 9.5px; font-weight: 600; }
+    .lab .p-tr .snap i { height: 26px; border-radius: 4px; background: var(--skl); }
+    .lab .p-tr .snap .sk { height: 4px; }
+    @media (prefers-reduced-motion: reduce) { .lab .p-pf .segs i, .lab .p-pf .ph, .lab .p-pf .ask, .lab .p-pf .ask em, .lab .p-pf .lbls span, .lab .p-xs .tree, .lab .p-xs .col, .lab .p-xs .peek, .lab .p-tr .rows, .lab .p-tr .map path, .lab .p-tr .nd, .lab .p-tr .snap { transition: none !important; animation: none !important; } }
 
     /* ── AboutStrip: the art band ── */
     .about-strip {
@@ -534,98 +624,6 @@
           </div>
           <div class="work-meta">
             <span class="work-status">View project <span class="work-arrow">&rarr;</span></span>
-          </div>
-        </a>
-      </li>
-
-      <li class="work-item reveal">
-        <a class="work-row" draggable="false"href="/projects/promptedfind.html">
-          <div class="work-thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-        <rect width="196" height="122" fill="#0d1424"/>
-        <!-- video player -->
-        <rect x="14" y="8" width="168" height="38" rx="6" fill="#101a32" stroke="#1e2d52" stroke-width=".6"/>
-        <path d="M93 21 L93 33 L104 27 Z" fill="#334a80"/>
-        <!-- ruler -->
-        <text x="16" y="58" fill="#44598a" font-family="Geist,sans-serif" font-size="5">0:00</text>
-        <text x="98" y="58" fill="#44598a" font-family="Geist,sans-serif" font-size="5" text-anchor="middle">37:00</text>
-        <text x="180" y="58" fill="#44598a" font-family="Geist,sans-serif" font-size="5" text-anchor="end">1:14:31</text>
-        <!-- track with segments (image 1) -->
-        <rect x="16" y="63" width="164" height="4.6" rx="2.3" fill="#1b2a4a"/>
-        <rect x="16" y="63" width="22" height="4.6" rx="2.3" fill="#2e4d94"/><rect x="52" y="63" width="26" height="4.6" rx="2.3" fill="#2e4d94"/><rect x="104" y="63" width="24" height="4.6" rx="2.3" fill="#2e4d94"/><rect x="148" y="63" width="32" height="4.6" rx="2.3" fill="#2e4d94"/>
-        <!-- red round playhead on the track -->
-        <circle cx="119" cy="65.3" r="5.4" fill="#e0524d"/>
-        <!-- moment pills, white labels (image 1) -->
-        <rect x="16" y="84" width="36" height="16" rx="4.5" fill="#2e4d94"/><text x="34" y="94.6" fill="#fff" font-family="Geist,sans-serif" font-size="6.4" font-weight="600" text-anchor="middle">Why h&#8230;</text>
-        <rect x="56" y="84" width="40" height="16" rx="4.5" fill="#2e4d94"/><text x="76" y="94.6" fill="#fff" font-family="Geist,sans-serif" font-size="6.4" font-weight="600" text-anchor="middle">Mars at&#8230;</text>
-        <rect x="100" y="84" width="38" height="16" rx="4.5" fill="#e0524d"/><text x="119" y="94.6" fill="#fff" font-family="Geist,sans-serif" font-size="6.4" font-weight="600" text-anchor="middle">Deploy&#8230;</text>
-        <rect x="142" y="84" width="38" height="16" rx="4.5" fill="#2e4d94"/><text x="161" y="94.6" fill="#fff" font-family="Geist,sans-serif" font-size="6.4" font-weight="600" text-anchor="middle">Precision</text>
-      </svg><video class="thumb-video" src="/assets/previews/promptedfind-frame.mp4" data-src-light="/assets/previews/promptedfind-frame.mp4" data-src-dark="/assets/previews/promptedfind-frame-dark.mp4" loop muted playsinline preload="metadata"></video></div>
-          <div class="work-info">
-            <h3 class="work-title">Prompted Find</h3>
-            <div class="work-desc">Find the moment you need in a long video by meaning, not keywords.</div>
-          </div>
-          <div class="work-meta">
-            <span class="work-status">View project <span class="work-arrow">&rarr;</span></span>
-          </div>
-        </a>
-      </li>
-
-
-
-      <li class="work-item reveal">
-        <a class="work-row" draggable="false"href="https://youtu.be/b9VX6qipe84?si=1SfM56ucYbxOrpg4" target="_blank" rel="noopener">
-          <div class="work-thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-        <rect width="196" height="122" fill="#1c1c20"/>
-        <rect x="8" y="8" width="57" height="60" rx="4" fill="#26262b" stroke="#31313a" stroke-width=".5"/>
-        <rect x="69" y="8" width="57" height="60" rx="4" fill="#26262b" stroke="#31313a" stroke-width=".5"/>
-        <rect x="130" y="8" width="58" height="60" rx="4" fill="#26262b" stroke="#31313a" stroke-width=".5"/>
-        <rect x="13" y="14" width="47" height="9" rx="2.5" fill="#2a3a5e"/><rect x="16" y="17" width="3.5" height="3.5" rx="1" fill="#28c840"/><rect x="23" y="17" width="26" height="3.5" rx="1.5" fill="#8fb4ec"/><path d="M55 17 l2.6 1.7 -2.6 1.7" stroke="#6f9fe0" fill="none" stroke-width="1.1"/>
-        <rect x="13" y="26" width="47" height="7" rx="2.5" fill="#33333a"/><rect x="13" y="36" width="47" height="7" rx="2.5" fill="#33333a"/><rect x="13" y="46" width="47" height="7" rx="2.5" fill="#33333a"/><rect x="13" y="56" width="47" height="7" rx="2.5" fill="#33333a"/>
-        <rect x="74" y="14" width="47" height="7" rx="2.5" fill="#33333a"/><rect x="76" y="15.5" width="3.5" height="3.5" rx="1" fill="#4d94ff"/>
-        <rect x="73" y="24" width="49" height="9" rx="2.5" fill="#4a3620"/><rect x="76" y="27" width="3.5" height="3.5" rx="1" fill="#ff9f0a"/><rect x="83" y="27" width="26" height="3.5" rx="1.5" fill="#e0b070"/><path d="M117 27 l2.6 1.7 -2.6 1.7" stroke="#e0b070" fill="none" stroke-width="1.1"/>
-        <rect x="74" y="36" width="47" height="7" rx="2.5" fill="#33333a"/><rect x="76" y="37.5" width="3.5" height="3.5" rx="1" fill="#ff5f57"/>
-        <rect x="74" y="46" width="47" height="7" rx="2.5" fill="#33333a"/><rect x="76" y="47.5" width="3.5" height="3.5" rx="1" fill="#4d94ff"/>
-        <rect x="135" y="14" width="49" height="9" rx="2.5" fill="#3a2a5e"/><rect x="138" y="17" width="3.5" height="3.5" rx="1" fill="#bf5af2"/><rect x="145" y="17" width="28" height="3.5" rx="1.5" fill="#c79bea"/>
-        <rect x="135" y="26" width="49" height="7" rx="2.5" fill="#33333a"/><rect x="138" y="27.5" width="3.5" height="3.5" rx="1" fill="#bf5af2"/>
-        <rect x="135" y="36" width="49" height="7" rx="2.5" fill="#33333a"/><rect x="138" y="37.5" width="3.5" height="3.5" rx="1" fill="#bf5af2"/>
-        <rect x="8" y="72" width="180" height="42" rx="4" fill="#19191d" stroke="#2a2a30" stroke-width=".5"/>
-        <rect x="8" y="72" width="15" height="42" fill="#161619"/>
-        <g font-family="'SF Mono',Menlo,monospace" font-size="4.8">
-          <text x="12" y="82" fill="#44444c">1</text><text x="28" y="82" fill="#c98fff">class</text><text x="50" y="82" fill="#6fc3ff">GitRepository</text><text x="98" y="82" fill="#6a6a72">{</text>
-          <text x="12" y="92" fill="#44444c">2</text><text x="32" y="92" fill="#c98fff">struct</text><text x="58" y="92" fill="#6fc3ff">Tree</text><text x="78" y="92" fill="#6a6a72">{</text>
-          <rect x="24" y="96" width="164" height="8" fill="#2a3a5e" opacity=".5"/>
-          <text x="12" y="102" fill="#8fb4ec">3</text><text x="36" y="102" fill="#c98fff">let</text><text x="50" y="102" fill="#e6e6ea">location</text><text x="82" y="102" fill="#6fc3ff">Location</text>
-        </g>
-      </svg><video class="thumb-video" src="/assets/previews/xcode-symbol-browser-frame.mp4" data-src-light="/assets/previews/xcode-symbol-browser-frame.mp4" data-src-dark="/assets/previews/xcode-symbol-browser-frame-dark.mp4" loop muted playsinline preload="metadata"></video></div>
-          <div class="work-info">
-            <h3 class="work-title">Xcode Symbol Browser</h3>
-            <div class="work-desc">Read a codebase&rsquo;s structure at a glance instead of digging through files.</div>
-          </div>
-          <div class="work-meta">
-            <span class="work-status">Watch demo <span class="work-arrow">&#8599;</span></span>
-          </div>
-        </a>
-      </li>
-
-      <li class="work-item reveal">
-        <a class="work-row" draggable="false"href="https://youtu.be/BYO3REaPhIc?si=oELKKk-ifSpXeRDm" target="_blank" rel="noopener">
-          <div class="work-thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-        <rect width="196" height="122" fill="#0f0f13"/>
-        <path d="M48 46 C 72 42, 86 66, 106 72" stroke="#ff6b5c" stroke-width="1.5" fill="none" opacity=".85"/>
-        <path d="M106 72 C 130 78, 142 52, 152 44" stroke="#ff6b5c" stroke-width="1.5" fill="none" opacity=".85"/>
-        <path d="M106 72 C 102 90, 122 96, 132 90" stroke="#ff6b5c" stroke-width="1.2" fill="none" opacity=".55"/>
-        <g><rect x="32" y="32" width="32" height="26" rx="4" fill="#1a1a20" stroke="#2c2c34" stroke-width=".6"/><rect x="36" y="37" width="20" height="2.4" rx="1" fill="#3a3a44"/><rect x="36" y="42" width="24" height="2.4" rx="1" fill="#2e2e37"/><rect x="36" y="47" width="16" height="2.4" rx="1" fill="#2e2e37"/></g>
-        <g><rect x="138" y="30" width="32" height="26" rx="4" fill="#1a1a20" stroke="#2c2c34" stroke-width=".6"/><rect x="142" y="35" width="18" height="2.4" rx="1" fill="#3a3a44"/><rect x="142" y="40" width="24" height="2.4" rx="1" fill="#2e2e37"/></g>
-        <g><rect x="116" y="80" width="30" height="24" rx="4" fill="#1a1a20" stroke="#2c2c34" stroke-width=".6"/><rect x="120" y="85" width="16" height="2.2" rx="1" fill="#3a3a44"/><rect x="120" y="89" width="22" height="2.2" rx="1" fill="#2e2e37"/></g>
-        <g><rect x="88" y="58" width="36" height="28" rx="5" fill="#131a2c" stroke="#4d94ff" stroke-width="1.2"/><rect x="93" y="63" width="22" height="2.6" rx="1" fill="#6f9fe0"/><rect x="93" y="68" width="26" height="2.6" rx="1" fill="#2b3f66"/><rect x="93" y="73" width="18" height="2.6" rx="1" fill="#2b3f66"/><rect x="93" y="78" width="24" height="2.6" rx="1" fill="#2b3f66"/></g>
-        <circle cx="48" cy="46" r="1.8" fill="#ff6b5c"/><circle cx="152" cy="44" r="1.8" fill="#ff6b5c"/><circle cx="132" cy="90" r="1.6" fill="#ff6b5c" opacity=".7"/>
-      </svg><video class="thumb-video" src="/assets/previews/trails-frame.mp4" data-src-light="/assets/previews/trails-frame.mp4" data-src-dark="/assets/previews/trails-frame-dark.mp4" loop muted playsinline preload="metadata"></video></div>
-          <div class="work-info">
-            <h3 class="work-title">Trails</h3>
-            <div class="work-desc">See everything you&rsquo;ve read as a living graph you can navigate.</div>
-          </div>
-          <div class="work-meta">
-            <span class="work-status">Watch demo <span class="work-arrow">&#8599;</span></span>
           </div>
         </a>
       </li>
@@ -932,7 +930,10 @@
   var PIECES = [
     ["Substrate", "Planned.", false, "plan", "#16305C", "#4D94FF"],
     ["Tags", "Tagged.", false, "tag", "#34C759", "#FFFFFF"],
-    ["agent-approvals", "Hold.", true, "hold", "#FF453A", "#FFFFFF"]
+    ["agent-approvals", "Hold.", true, "hold", "#FF453A", "#FFFFFF"],
+    ["Prompted Find", "Found.", false, "find", "#5856D6", "#FF453A"],
+    ["Xcode Symbol Browser", "Mapped.", false, "cols", "#FF9500", "#FFFFFF"],
+    ["Trails", "Traced.", false, "trail", "#30B0C7", "#FFFFFF"]
   ];
   var INFO = {
     "Substrate": { url: "/projects/substrate.html", kind: "more",
@@ -945,7 +946,16 @@
     "agent-approvals": { url: "/agent-approvals/", kind: "more", npm: "npm i agent-approvals",
       title: "The interface for the moment an AI agent needs a person.",
       text: "When every request looks the same, people stop reading: Anthropic found users approve about 93% of permission prompts. agent-approvals is a set of React components that clear routine requests in one click, and make anything that can\u2019t be undone, like a refund, wait for a 1.2 second hold.",
-      src: ["Anthropic, How we contain Claude across products, May 2026", "https://www.anthropic.com/engineering/how-we-contain-claude"] }
+      src: ["Anthropic, How we contain Claude across products, May 2026", "https://www.anthropic.com/engineering/how-we-contain-claude"] },
+    "Prompted Find": { url: "/projects/promptedfind.html", kind: "more",
+      title: "Ask a question about a video. Land on the moment that answers it.",
+      text: "A document has headings and a table of contents. A video only has time, so finding one part of a 74 minute talk means dragging the scrubber and guessing. Prompted Find breaks a long video into labeled parts by meaning. Ask a question, and the parts that answer it light up on the timeline. One click jumps there." },
+    "Xcode Symbol Browser": { url: "https://youtu.be/b9VX6qipe84", kind: "demo",
+      title: "See what a codebase holds, not only where its files are.",
+      text: "When you join a new codebase, the file tree tells you where things live, not what they do or how they connect. Xcode Symbol Browser is a prototype for Xcode that lays out classes, structs, protocols and enums in columns, like Finder\u2019s column view. Hover a symbol to preview its definition without opening the file." },
+    "Trails": { url: "https://youtu.be/BYO3REaPhIc", kind: "demo",
+      title: "Your research as a map, not a history list.",
+      text: "Browsers treat every page on its own. Once you close a tab, why you opened it and where it led are gone. Trails is a Safari extension that draws the pages you read as a map while you browse. Each link you follow leaves a trail, related pages sit together, and hovering a page shows a snapshot of it." }
   };
   var N = PIECES.length;
   function lum(hex) { var v = [1, 3, 5].map(function (i) { var c = parseInt(hex.substr(i, 2), 16) / 255; return c <= .03928 ? c / 12.92 : Math.pow((c + .055) / 1.055, 2.4); }); return .2126 * v[0] + .7152 * v[1] + .0722 * v[2]; }
@@ -967,7 +977,20 @@
       b: [[4, 34, 54, 8], [42, 45, 54, 8], [4, 56, 44, 8], [34, 67, 62, 8], [4, 78, 50, 8]] },
     // a button that fills while it is held, then confirms
     hold: { n: 1, fill: true,
-      a: [[12, 56, 76, 20]], b: [[12, 56, 76, 20]] }
+      a: [[12, 56, 76, 20]], b: [[12, 56, 76, 20]] },
+    // one unbroken timeline splits into four parts; the playhead, a red line, jumps to the one that answers
+    find: { n: 5, d: [0, .05, .1, .15, .75],
+      a: [[8, 62, 21, 3], [29, 62, 21, 3], [50, 62, 21, 3], [71, 62, 21, 3], [7.4, 56, 1.2, 15]],
+      b: [[8, 61, 19, 5], [29, 61, 19, 5], [50, 60, 19, 7], [71, 61, 21, 5], [58.9, 56, 1.2, 15]] },
+    // one long list of files splits into three columns, and one symbol is picked in each
+    cols: { n: 6, hl: [0, 4, 5], d: [0, .04, .08, .2, .24, .36],
+      a: [[12, 34, 62, 5], [12, 43, 48, 5], [12, 52, 70, 5], [12, 61, 54, 5], [12, 70, 66, 5], [12, 79, 44, 5]],
+      b: [[6, 40, 27, 7], [6, 50, 22, 7], [6, 60, 25, 7], [37, 40, 26, 7], [37, 50, 28, 7], [68, 50, 26, 7]] },
+    // pages appear in the order you read them, each joined to the last; the ringed one is where you are
+    trail: { n: 0, a: [], b: [], tree: {
+      nodes: { s: [20, 132], a: [52, 98], b: [86, 128], c: [110, 82], d: [142, 112], e: [96, 162], g: [174, 78] },
+      at: { s: .3, a: .75, b: 1.2, e: 1.65, c: 1.65, d: 2.1, g: 2.55 },
+      edges: [["s", "a", .4, .35], ["a", "b", .85, .35], ["b", "e", 1.3, .35], ["b", "c", 1.3, .35], ["c", "d", 1.75, .35], ["d", "g", 2.2, .35]] } }
   };
   // curved paths between the steps, a hollow start and a ringed goal
   function tree(T) {
@@ -981,10 +1004,10 @@
   }
   function scene(pc) {
     var act = ACTS[pc[3]] || ACTS.plan;
-    var m = document.createElement("div"); m.className = "mini k-" + (pc[3] || "plan");
+    var m = document.createElement("div"); m.className = "mini k-" + (pc[3] || "plan") + (act.tree ? " k-tree" : "");
     var w = document.createElement("span"); w.className = "w"; w.textContent = pc[1]; m.appendChild(w);
     if (act.tree) m.insertAdjacentHTML("beforeend", tree(act.tree));
-    var ps = []; for (var i = 0; i < act.n; i++) { var p = document.createElement("span"); p.className = "p i" + i; if (act.sent && act.sent.indexOf(i) >= 0) p.classList.add("sent"); if (act.chips && act.chips.indexOf(i) >= 0) { p.classList.add("tagged"); p.innerHTML = '<i class="chip"></i>'; } if (act.fill) p.innerHTML = '<i class="fl"></i><i class="ck"></i>'; m.appendChild(p); ps.push(p); }
+    var ps = []; for (var i = 0; i < act.n; i++) { var p = document.createElement("span"); p.className = "p i" + i; if (act.sent && act.sent.indexOf(i) >= 0) p.classList.add("sent"); if (act.hl && act.hl.indexOf(i) >= 0) p.classList.add("hl"); if (act.chips && act.chips.indexOf(i) >= 0) { p.classList.add("tagged"); p.innerHTML = '<i class="chip"></i>'; } if (act.fill) p.innerHTML = '<i class="fl"></i><i class="ck"></i>'; m.appendChild(p); ps.push(p); }
     function put(st) { ps.forEach(function (p, i) { var r = st[i]; p.style.left = r[0] + "%"; p.style.top = r[1] + "%"; p.style.width = r[2] + "%"; p.style.height = r[3] + "%"; p.style.setProperty("--d", (act.d ? act.d[i] : i * .05) + "s"); }); }
     function a() { m.classList.remove("on"); put(act.a); }
     function b() { m.classList.add("on"); put(act.b); }
@@ -1000,6 +1023,12 @@
   var BUSY = '<span class="stt"><i class="spin"></i>Working</span>';
   function bub(w, me, x) { return '<div class="bub' + (me ? ' me' : '') + '"' + (x || '') + '><span class="sk" style="--w:' + w + 'px"></span></div>'; }
   var THREAD = [70, 0, 50, 1, 84, 1, 46, 0, 62, 1, 40, 0, 76, 0, 52, 1, 66, 1, 44, 0, 72, 1, 58, 0].reduce(function (h, v, i, a) { return i % 2 ? h : h + bub(v, a[i + 1]); }, '');
+  // Xcode Symbol Browser, Today: a file tree, and lines of code beside it
+  var FILES = [["Sources", 0, 1], ["App", 1, 1], ["AppDelegate.swift", 2], ["Models", 1, 1], ["Branch.swift", 2], ["Commit.swift", 2], ["GitRepository.swift", 2], ["Remote.swift", 2], ["Views", 1, 1], ["CommitList.swift", 2], ["DiffView.swift", 2], ["Sidebar.swift", 2], ["Utilities", 1, 1], ["Extensions.swift", 2], ["Shell.swift", 2]].reduce(function (h, f) { return h + '<div class="f' + (f[2] ? ' dir' : '') + '" style="--in:' + f[1] + '"><i></i>' + f[0] + '</div>'; }, '');
+  var CODE = [40, 72, 64, 30, 0, 56, 80, 68, 44, 0, 62, 76, 38].reduce(function (h, w) { return h + (w ? '<span class="sk" style="width:' + w + '%"></span>' : '<span></span>'); }, '');
+  // Trails, Today: the history list, one page after another
+  var HIST = [["10:42", 62], ["10:40", 48], ["10:37", 70], ["10:31", 54], ["10:28", 66], ["10:24", 44], ["10:19", 58], ["10:15", 50]].reduce(function (h, r) { return h + '<div class="hr"><em>' + r[0] + '</em><i></i><span class="sk" style="width:' + r[1] + '%"></span></div>'; }, '');
+  function node(x, y, d, cls, label) { return '<div class="nd' + (cls ? ' ' + cls : '') + '" style="left:' + x + '%;top:' + y + '%;--d:' + d + '"><span class="sk" style="width:80%"></span><span class="sk" style="width:55%"></span>' + (label ? '<s>' + label + '</s>' : '') + '</div>'; }
   var PITCH = {
     "Substrate": { cls: "p-sub", b: "Substrate",
       top: '<div class="mbar" aria-hidden="true"><i class="ap"></i><u style="width:20px"></u><u style="width:12px"></u><u style="width:12px"></u><u style="width:14px"></u><span class="sp"></span><span class="pill"><i class="d ok"></i><i class="d ok"></i><i class="d run"></i><i class="d need"></i></span><u style="width:10px"></u><u style="width:34px"></u></div>',
@@ -1010,7 +1039,18 @@
       bb: '<div class="phone"><div class="srch"><svg viewBox="0 0 10 10" aria-hidden="true"><circle cx="4.2" cy="4.2" r="3" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M6.5 6.5L9 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Search</div><div class="lbl">Tags</div><div class="chips"><span class="on">#food</span><span>#address</span><span>#recipe</span><span>#shopping</span></div><div class="res"><i></i><div><b>Sammy</b><span class="sk" style="width:90%"></span></div><span class="tdot"></span></div><div class="res"><i></i><div><b>Paula</b><span class="sk" style="width:70%"></span></div><span class="tdot"></span></div></div>' },
     "agent-approvals": { cls: "p-aa", b: "agent-approvals",
       a: '<div class="list"><div class="act"><i></i><span>Search the web for the refund policy</span><b class="allow">Allow</b></div><div class="act"><i></i><span>Read order 4473</span><b class="allow">Allow</b></div><div class="act"><i></i><span>Draft the reply</span><b class="allow">Allow</b></div><div class="act"><i></i><span>Refund $240 to the customer</span><b class="allow">Allow</b></div></div>',
-      bb: '<div class="list"><div class="act grp"><i></i><span>3 routine requests</span><b class="allow">Allow all</b></div><div class="act risk"><i></i><span>Refund $240 to the customer</span><b class="hold">Hold to approve<s><span>Hold to approve</span></s></b></div><div class="why">Can’t be undone, so it takes a 1.2 second hold</div></div>' }
+      bb: '<div class="list"><div class="act grp"><i></i><span>3 routine requests</span><b class="allow">Allow all</b></div><div class="act risk"><i></i><span>Refund $240 to the customer</span><b class="hold">Hold to approve<s><span>Hold to approve</span></s></b></div><div class="why">Can’t be undone, so it takes a 1.2 second hold</div></div>' },
+    "Prompted Find": { cls: "p-pf", b: "Prompted Find",
+      a: '<div class="vid"><i></i></div><div class="bar"><b class="ph"></b></div><div class="tm"><span>0:00</span><span>1:14:31</span></div>',
+      bb: '<div class="vid"><i></i></div><div class="ask"><span>Where do they talk about landing?</span><em>Landing &middot; 29:48</em></div><div class="segs"><i style="--d:.3s"></i><i style="--d:.4s"></i><i class="hit" style="--d:.5s"></i><i style="--d:.6s"></i><b class="ph"></b></div><div class="lbls"><span>Mission</span><span>Heat shields</span><span class="hit">Landing</span><span>Q&amp;A</span></div>' },
+    "Xcode Symbol Browser": { cls: "p-xs", b: "Symbol Browser",
+      a: '<div class="nav"><div class="tree">' + FILES + FILES + '</div></div><div class="code">' + CODE + '</div>',
+      bb: '<div class="cols"><div class="col" style="--d:.1s"><u>Kinds</u><span class="on">Classes</span><span>Structs</span><span>Protocols</span><span>Enums</span></div><div class="col" style="--d:.4s"><u>Classes</u><span class="on">GitRepository</span><span>Commit</span><span>Remote</span><span>Branch</span></div><div class="col" style="--d:.7s"><u>GitRepository</u><span>location</span><span class="pk">fetch()</span><span>status()</span><span>tree</span></div></div><div class="peek"><span><em>func</em> <b>fetch</b>() <em>async throws</em></span><span><em>// Pulls new commits from the remote</em></span></div>' },
+    "Trails": { cls: "p-tr", b: "Trails",
+      a: '<div class="hist"><b>History</b><div class="rows">' + HIST + HIST + '</div></div>',
+      bb: '<div class="map"><svg viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true"><path d="M60 66 L32 90"/><path d="M96 30 L56 14"/><path class="way" pathLength="100" style="--d:.35s" d="M20 30 L60 66"/><path class="way" pathLength="100" style="--d:.75s" d="M60 66 L96 30"/><path class="way" pathLength="100" style="--d:1.15s" d="M96 30 L132 66"/></svg>' +
+        node(10, 30, ".1s", "on", "Swiss style") + node(30, 66, ".5s", "on", "Grid systems") + node(48, 30, ".9s", "on", "Helvetica") + node(66, 66, "1.3s", "here", "Akzidenz") + node(16, 90, "1.5s", "", "") + node(28, 14, "1.5s", "", "") +
+        '<div class="snap"><b>Akzidenz-Grotesk</b><i></i><span class="sk" style="width:90%"></span><span class="sk" style="width:70%"></span></div></div>' }
   };
   var ptimer = 0;
   function pitch(name) {

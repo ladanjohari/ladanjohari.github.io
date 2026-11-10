@@ -10,3 +10,4 @@ Saved before each design change to `index.html`, so any round can be brought bac
 | 10 Nov 2026 | `index-2026-11-10-opening-round3.html` | Round 3: the two phrases at weight 500 in ink | Still too strong; she asked for lighter still |
 | 10 Nov 2026 | `index-2026-11-10-before-list.html` | Opening round 4 (kept), Selected Work as six equal rows with blue "View project" labels | Starling leads, the two YouTube demos become compact rows, labels get quieter |
 | 10 Nov 2026 | `index-2026-11-10-list-round1.html` | List round 1: Starling leading full width, YouTube demos compact, grey arrows instead of blue labels | Not wanted for now; Prompted Find, Xcode Symbol Browser and Trails move to the Lab instead |
+| 10 Nov 2026 | `index-2026-11-10-before-lab-move.html` | Selected Work with six rows, Lab with Substrate, Tags, agent-approvals | Prompted Find, Xcode Symbol Browser and Trails move into the Lab with their own pop-ups |
