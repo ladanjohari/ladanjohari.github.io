@@ -95,6 +95,11 @@
       .work-row:hover .thumb-video { opacity: 1; }
     }
     .work-row:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent); }
+    /* Light Cube: the picture is a window. Where the cursor sits along the row picks one of
+       24 renders of the room taken from different eye positions, so the room shifts like the page. */
+    .thumb-still { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .thumb-scrub { position: absolute; inset: 0; background: no-repeat 0 50% / 100% 2400%; opacity: 0; transition: opacity 0.22s ease-out; pointer-events: none; }
+    .thumb-scrub.is-live { opacity: 1; }
     .wf-step:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--accent); }
     .nav-name:focus-visible, .elsewhere-text a:focus-visible {
       outline: none; border-radius: 3px; box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
@@ -433,6 +438,7 @@
     @media (prefers-reduced-motion: reduce) {
       .work-row, .work-arrow { transition: none; }
       .thumb-video { display: none !important; }
+      .thumb-scrub { display: none !important; }
       .cursor-dot { display: none !important; }
       .hero-line { opacity: 1; animation: none; }
       .wf-pips-fill { transition: none; }
@@ -510,6 +516,19 @@
           <div class="work-info">
             <h3 class="work-title">Session Indicator</h3>
             <div class="work-desc">Track every running AI agent from the menu bar so you never lose your place.</div>
+          </div>
+          <div class="work-meta">
+            <span class="work-status">View project <span class="work-arrow">&rarr;</span></span>
+          </div>
+        </a>
+      </li>
+
+      <li class="work-item reveal">
+        <a class="work-row" draggable="false" href="/light-cube/">
+          <div class="work-thumb"><img class="thumb-still" src="/assets/previews/light-cube-still.webp" alt="" width="480" height="300" decoding="async" draggable="false"><div class="thumb-scrub" data-sprite="/assets/previews/light-cube-scrub.webp" data-frames="24" aria-hidden="true"></div></div>
+          <div class="work-info">
+            <h3 class="work-title">Light Cube</h3>
+            <div class="work-desc">Rooms of colored light from my MFA thesis, rebuilt so your screen becomes a window into them.</div>
           </div>
           <div class="work-meta">
             <span class="work-status">View project <span class="work-arrow">&rarr;</span></span>
@@ -810,6 +829,42 @@
       row.addEventListener('mouseleave', () => { if (preview.pause) { preview.pause(); preview.currentTime = 0; } });
     });
   }
+  // Light Cube row: the cursor's place along the row chooses which render shows, eased so it
+  // glides like the page's own parallax. Touch has no cursor, so the row sweeps slowly while
+  // it dwells mid-screen, on the same rules as the clips below.
+  document.querySelectorAll('.thumb-scrub').forEach(scrub => {
+    if (reduceMotionPreviews) return;
+    const row = scrub.closest('.work-row');
+    const last = +scrub.dataset.frames - 1, rest = last / 2;
+    let target = rest, shown = rest, raf = 0, sweepStart = 0, dwell = 0;
+    const load = () => { if (!scrub.style.backgroundImage) scrub.style.backgroundImage = `url(${scrub.dataset.sprite})`; };
+    const paint = () => { scrub.style.backgroundPositionY = (Math.round(shown) / last) * 100 + '%'; };
+    const tick = now => {
+      if (sweepStart) target = rest + Math.sin((now - sweepStart) / 1400) * rest;
+      shown += (target - shown) * 0.16;
+      paint();
+      raf = (sweepStart || Math.abs(target - shown) > 0.02) ? requestAnimationFrame(tick) : 0;
+    };
+    const run = () => { if (!raf) raf = requestAnimationFrame(tick); };
+    const reset = () => { scrub.classList.remove('is-live'); cancelAnimationFrame(raf); raf = sweepStart = 0; target = shown = rest; paint(); };
+    if (canHover) {
+      row.addEventListener('mouseenter', () => { load(); scrub.classList.add('is-live'); });
+      row.addEventListener('mousemove', e => {
+        const r = row.getBoundingClientRect();
+        target = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)) * last;
+        run();
+      });
+      row.addEventListener('mouseleave', reset);
+    } else if (!(navigator.connection && navigator.connection.saveData)) {
+      new IntersectionObserver(entries => entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          load();
+          dwell = setTimeout(() => { scrub.classList.add('is-live'); sweepStart = performance.now(); run(); }, 600);
+        } else { clearTimeout(dwell); reset(); }
+      }), { rootMargin: '-35% 0px -35% 0px', threshold: 0 }).observe(row);
+    }
+  });
+
   // Touch devices never hover: a row plays its preview only while it sits
   // in the middle band of the screen, and only after a short dwell, so
   // scrolling past shows thumbnails and pausing on a row starts the clip.
