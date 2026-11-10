@@ -346,12 +346,21 @@ renderer.toneMapping = THREE.NeutralToneMapping;
 renderer.toneMappingExposure = 1.0;
 RectAreaLightUniformsLib.init();
 
+/* The hall's light, 0 to 1. The page opens on the gallery after hours, as in the homepage thumbnail:
+   the coloured rooms on, the hall dark. Then the hall's light comes up (see the loop).
+   ?night=0.06 holds it at that level, for rendering the thumbnail. */
+const NIGHT = new URLSearchParams(location.search).get('night');
+const LUX_START = 0.06;
+let hallLux = NIGHT ? (+NIGHT || LUX_START) : LUX_START;
+const hallLights = [];                                   // [light, its full intensity], refilled by buildWorld
+const BG_NIGHT = new THREE.Color(0x111111), BG_DAY = new THREE.Color(0xffffff);
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xffffff);
-scene.add(new THREE.HemisphereLight(0xf4f2ff, 0xcfc8c2, 0.32));
+scene.background = new THREE.Color().lerpColors(BG_NIGHT, BG_DAY, hallLux);
+const hemi = new THREE.HemisphereLight(0xf4f2ff, 0xcfc8c2, 0.32 * hallLux);
+scene.add(hemi);
 
 const wallMat = new THREE.MeshStandardMaterial({ color: 0xe6e3e0, roughness: 0.95, metalness: 0, side: THREE.DoubleSide });
-const greyMat = new THREE.MeshStandardMaterial({ color: 0xa3a29c, roughness: 1, metalness: 0, side: THREE.DoubleSide, emissive: 0x4a4a46, emissiveIntensity: 1 });
+const greyMat = new THREE.MeshStandardMaterial({ color: 0xa3a29c, roughness: 1, metalness: 0, side: THREE.DoubleSide, emissive: 0x4a4a46, emissiveIntensity: hallLux });
 const glowMat = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide });
 /* The aperture wall sits on the shell's open edge; nudging its depth keeps the shell's rim from flickering through */
 const frameMat = wallMat.clone();
@@ -448,7 +457,7 @@ const glowRamp = (() => {
 })();
 const lightWallMat = new THREE.MeshStandardMaterial({
   color: 0xe6e3e0, roughness: 0.95, metalness: 0, side: THREE.DoubleSide,
-  emissive: 0xffffff, emissiveIntensity: 1.35, emissiveMap: glowRamp
+  emissive: 0xffffff, emissiveIntensity: 1.35 * hallLux, emissiveMap: glowRamp
 });
 function coveSamples(a, b, R, step) {
   /* dense along each cove (evenly spaced in angle), coarse across the flat middle */
@@ -502,7 +511,8 @@ function buildWorld() {
 
   /* The light wall */
   g.add(lightWall(X0, X1, H, z0, RH));
-  const wl = new THREE.RectAreaLight(0xffffff, 1.6, X1 - X0, H);
+  const wl = new THREE.RectAreaLight(0xffffff, 1.6 * hallLux, X1 - X0, H);
+  hallLights.length = 0; hallLights.push([wl, 1.6]);
   wl.position.set(cxHall, H / 2, z0 + 0.01); wl.lookAt(cxHall, H / 2, L.bz1); g.add(wl);
 
   /* Hall side walls, west and east, from the end of the coves */
@@ -515,7 +525,8 @@ function buildWorld() {
   addPlane(g, fw, H, greyMat, V(fcx, H / 2, L.hwZ1));
   addPlane(g, L.hwZ1 - L.bz1, H, greyMat, V(L.hwX0, H / 2, (L.bz1 + L.hwZ1) / 2), { y: Math.PI / 2 });
   addPlane(g, L.hwZ1 - L.bz1, H, greyMat, V(L.hwX1, H / 2, (L.bz1 + L.hwZ1) / 2), { y: -Math.PI / 2 });
-  const hl = new THREE.RectAreaLight(0xe8ecd8, 1.1, fw, 3);
+  const hl = new THREE.RectAreaLight(0xe8ecd8, 1.1 * hallLux, fw, 3);
+  hallLights.push([hl, 1.1]);
   hl.position.set(fcx, 2.4, L.hwZ1 - 0.02); hl.lookAt(fcx, 2.4, 0); g.add(hl);
 
   /* The block, built from surfaces that share exact edges (no boxes, no overlaps):
@@ -823,9 +834,27 @@ themeBtn.addEventListener('click', () => {
 });
 const readout = document.getElementById('p-readout');
 
+/* ---------- Lights up ---------- */
+function setHallLux(l) {
+  hallLux = l;
+  hemi.intensity = 0.32 * l;
+  greyMat.emissiveIntensity = l;
+  lightWallMat.emissiveIntensity = 1.35 * l;
+  hallLights.forEach(([light, full]) => { light.intensity = full * l; });
+  scene.background.lerpColors(BG_NIGHT, BG_DAY, l);
+}
+/* A beat in the dark, then the hall's light rises over 2.5 s. Reduced motion opens lit. */
+let lightsUp = NIGHT ? null : { t0: performance.now() + 700, dur: 2500 };
+if (lightsUp && reduceMotion) { setHallLux(1); lightsUp = null; }
+
 /* ---------- Loop ---------- */
 function frame(now) {
   trackHead();
+  if (lightsUp) {
+    const p = Math.min(1, Math.max(0, (now - lightsUp.t0) / lightsUp.dur));
+    setHallLux(LUX_START + (1 - LUX_START) * ease(p));
+    if (p >= 1) lightsUp = null;
+  }
   if (settings.drift && !reduceMotion && now - lastInput > 2500) {
     const t = now / 1000;
     eyeTarget.set(Math.sin(t * 0.35) * 0.45, Math.sin(t * 0.23) * 0.2, 1);
