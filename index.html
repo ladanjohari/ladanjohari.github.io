@@ -453,8 +453,21 @@
     .lab .p-tr .ls { display: grid; gap: 5px; padding: 9px 9px 0; }
     .lab .p-tr .ls .sk { height: 4px; }
     .lab .p-tr .ls .sk.h { height: 7px; width: 52%; margin-bottom: 3px; background: var(--mid); opacity: .5; }
-    .lab .pitch[data-s="a"] .p-tr .doc.l .ls { animation: hunt 3s cubic-bezier(.45,0,.4,1) both; }
-    .lab .pitch[data-s="a"] .p-tr .doc.r .ls { animation: hunt 3s cubic-bezier(.45,0,.4,1) .4s both reverse; }
+    /* Today: one page at a time, and the tab hops from the paper to each source and back */
+    .lab .p-tr .tabs { position: absolute; left: 0; right: 0; top: 0; display: flex; gap: 2px; padding: 5px 8px; border-bottom: 1px solid var(--rule); }
+    .lab .p-tr .tabs i { flex: 1; min-width: 0; height: 12px; border-radius: 3px; background: var(--skl); box-shadow: inset 0 0 0 1px var(--rule); }
+    .lab .p-tr .tabs .cur { position: absolute; top: 5px; left: 8px; width: calc((100% - 30px) / 8); height: 12px; border-radius: 3px; background: var(--card); box-shadow: 0 0 0 1px var(--sub); }
+    .lab .pitch[data-s="a"] .p-tr .tabs .cur { animation: hop 3.2s steps(1, end) both; }
+    @keyframes hop { 0% { left: 8px; } 20% { left: 50%; } 40% { left: 8px; } 60% { left: 76%; } 80% { left: 8px; } }
+    .lab .p-tr .pgx { position: absolute; inset: 0; }
+    .lab .p-tr .pgx .doc.one { left: 20%; right: 20%; width: auto; top: 30px; }
+    .lab .pitch[data-s="a"] .p-tr .pgx { animation: swap 3.2s steps(1, end) both; }
+    @keyframes swap { 0%, 40%, 80% { opacity: 1; } 20%, 60% { opacity: .35; } }
+    /* With Trails: the paper on the left, the cited source on the right, here a video, opened at the cited part */
+    .lab .p-tr .doc.v .vid2 { position: absolute; left: 6%; right: 6%; top: 4%; height: 34%; border-radius: 4px; background: #111111; box-shadow: 0 0 0 0 var(--red); transition: box-shadow .2s ease; }
+    .lab .pitch[data-s="b"] .p-tr .doc.v .vid2 { box-shadow: 0 0 0 2px var(--red); transition: box-shadow .5s ease .7s; }
+    .lab .p-tr .vid2 i { position: absolute; left: 50%; top: 50%; margin: -6px 0 0 -4px; border-left: 10px solid rgba(255,255,255,.6); border-top: 6px solid transparent; border-bottom: 6px solid transparent; }
+    .lab .p-tr .doc.v .ls { position: absolute; left: 0; right: 0; top: 42%; }
     .lab .p-tr .rail { position: absolute; left: 48.5%; width: 3%; top: 7%; bottom: 7%; border-radius: 999px; background: var(--skl); box-shadow: 0 0 0 1px var(--rule); opacity: 0; transition: opacity .2s ease; }
     .lab .pitch[data-s="b"] .p-tr .rail { opacity: 1; transition: opacity .5s ease .1s; }
     .lab .p-tr .rail i { position: absolute; left: 50%; width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; border-radius: 2px; }
@@ -465,7 +478,7 @@
     .lab .pitch[data-s="b"] .p-tr .beam polygon { opacity: .2; transition: opacity .5s ease .9s; }
     .lab .p-tr .beam path { fill: none; stroke: var(--red); stroke-width: 1.5; vector-effect: non-scaling-stroke; opacity: 0; transition: opacity .2s ease; }
     .lab .pitch[data-s="b"] .p-tr .beam path { opacity: 1; transition: opacity .5s ease 1.1s; }
-    @media (prefers-reduced-motion: reduce) { .lab .p-pf .segs i, .lab .p-pf .ph, .lab .p-pf .ask, .lab .p-pf .ask em, .lab .p-pf .lbls span, .lab .p-xs .tree, .lab .p-xs .col, .lab .p-xs .src, .lab .p-xs .src .on, .lab .p-tr .doc .ls, .lab .p-tr .rail, .lab .p-tr .hl, .lab .p-tr .beam path { transition: none !important; animation: none !important; } }
+    @media (prefers-reduced-motion: reduce) { .lab .p-pf .segs i, .lab .p-pf .ph, .lab .p-pf .ask, .lab .p-pf .ask em, .lab .p-pf .lbls span, .lab .p-xs .tree, .lab .p-xs .col, .lab .p-xs .src, .lab .p-xs .src .on, .lab .p-tr .tabs .cur, .lab .p-tr .pgx, .lab .p-tr .vid2, .lab .p-tr .rail, .lab .p-tr .hl, .lab .p-tr .beam path { transition: none !important; animation: none !important; } }
 
     /* ── AboutStrip: the art band ── */
     .about-strip {
@@ -966,8 +979,8 @@
       title: "See what a codebase holds, not only where its files are.",
       text: "When you join a new codebase, the file tree tells you where things live, not what they do or how they connect. Xcode Symbol Browser is a prototype for Xcode that lays out classes, structs, protocols and enums in columns, like Finder\u2019s column view. Hover a symbol to preview its definition without opening the file." },
     "Trails": { url: "https://youtu.be/BYO3REaPhIc", kind: "demo",
-      title: "Link a passage in one document to a passage in another.",
-      text: "Research means reading several sources at once, and how a line in one connects to a paragraph in another lives only in your head. Trails is a Safari extension that keeps related documents side by side and lets you link passages across them. Each link gets a marker on the rail between the two. Click it, and both passages light up, joined across the rail." }
+      title: "Read a document and everything it cites, side by side.",
+      text: "When a paper points to dozens of sources, checking each one means switching tabs and losing your place. Trails is a Safari feature that keeps your main document on the left and opens what it cites on the right, whether that is a web page, a PDF or a video. As you scroll, each source opens at the exact part being cited, joined to the line that cites it. Follow a source\u2019s own references, and they open in the next pane." }
   };
   var N = PIECES.length;
   function lum(hex) { var v = [1, 3, 5].map(function (i) { var c = parseInt(hex.substr(i, 2), 16) / 255; return c <= .03928 ? c / 12.92 : Math.pow((c + .055) / 1.055, 2.4); }); return .2126 * v[0] + .7152 * v[1] + .0722 * v[2]; }
@@ -1075,10 +1088,10 @@
       bb: '<div class="cols"><div class="col" style="--d:.1s">' + sym("A", "#8E8E93", ["QueryEngine", "SourceControl", "SPMBuildCore", "SPMBuild", "SMPSQLite3"], 1, "via") + '</div><div class="col" style="--d:.4s">' + sym("C", "#AF52DE", ["GitRepository"]) + sym("S", "#FF2D55", ["Hash", "Commit", "Tree", "Entry"], 2, "on") + '</div><div class="col" style="--d:.7s">' + sym("P", "#34C759", ["location", "contents"], 1, "on") + sym("E", "#0A84FF", ["EntryType"]) + '</div></div>' +
         '<div class="src"><span><em>346</em><span><i class="kw">public struct</i> <i class="ty">Tree</i> {</span></span><span><em>391</em><span><i class="kw">public let</i> location: <i class="ty">Location</i></span></span><span><em>393</em><i class="cm">/// The list of contents.</i></span><span class="on"><em>394</em><span><i class="kw">public let</i> contents: [<i class="ty">Entry</i>]</span></span></div>' },
     "Trails": { cls: "p-tr", b: "Trails",
-      a: DOC_L + DOC_R,
-      bb: DOC_L + DOC_R + '<div class="hl" style="left:6%;width:39%;top:52%"></div><div class="hl" style="right:6%;width:39%;top:24%"></div>' +
+      a: '<div class="tabs">' + new Array(9).join('<i></i>') + '<b class="cur"></b></div><div class="pgx">' + DOC_L.replace('doc l', 'doc one') + '</div>',
+      bb: DOC_L + '<div class="doc r v"><div class="vid2"><i></i></div><div class="ls">' + DOC_R.split('<div class="ls">')[1] + '<div class="hl" style="left:6%;width:39%;top:52%"></div>' +
         '<div class="rail"><i style="top:12.8%;background:var(--imsg)"></i><i style="top:29%;background:var(--ok)"></i><i style="top:45.3%;background:var(--red)"></i><i style="top:73%;background:var(--warn)"></i></div>' +
-        '<svg class="beam" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polygon points="45,52 48.5,44 51.5,44 55,24 55,37 51.5,48 48.5,48 45,65"/><path d="M45 58.5 C 47 58.5, 47 46, 50 46 S 53 30.5, 55 30.5"/></svg>' }
+        '<svg class="beam" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polygon points="45,52 48.5,44 51.5,44 56.5,20 56.5,34 51.5,48 48.5,48 45,65"/><path d="M45 58.5 C 47 58.5, 47 46, 50 46 S 54 27, 56.5 27"/></svg>' }
   };
   var ptimer = 0;
   function pitch(name) {
