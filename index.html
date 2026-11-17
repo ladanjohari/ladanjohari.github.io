@@ -78,7 +78,7 @@
     .work-row img, .work-row video { -webkit-user-drag: none; }
     .work-row:active { transform: scale(0.995); }
     /* WorkRow picture, enlarged 24 Oct 2026. The earlier size was 196 x 122. */
-    .work-thumb { position: relative; width: 236px; height: 147px; border-radius: 12px; overflow: hidden; flex-shrink: 0; border: 1px solid var(--rule); transition: border-color 0.12s ease-out; background: #111; }
+    .work-thumb { position: relative; width: 236px; height: 147px; border-radius: 12px; overflow: hidden; flex-shrink: 0; border: 1px solid var(--rule); transition: border-color 0.12s ease-out; background: var(--hover-row); }
     .work-thumb svg { width: 100%; height: 100%; display: block; }
     .work-info { flex: 1; min-width: 0; }
     .work-title { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
@@ -102,6 +102,12 @@
     .thumb-still { width: 100%; height: 100%; object-fit: cover; display: block; }
     .thumb-scrub { position: absolute; inset: 0; background: no-repeat 0 50% / 100% 2400%; opacity: 0; transition: opacity 0.22s ease-out; pointer-events: none; }
     .thumb-scrub.is-live { opacity: 1; }
+    /* Thumbnails follow the theme: a light drawing in light mode, the dark one in dark mode. */
+    .work-thumb .thumb-dark { display: none; }
+    @media (prefers-color-scheme: dark) {
+      .work-thumb .thumb-light { display: none; }
+      .work-thumb .thumb-dark { display: block; }
+    }
     .wf-step:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--accent); }
     .nav-name:focus-visible, .elsewhere-text a:focus-visible {
       outline: none; border-radius: 3px; box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
@@ -586,8 +592,66 @@
     <ul class="work-list">
 
       <li class="work-item reveal">
+        <a class="work-row" draggable="false"href="/projects/promptedfind.html">
+          <div class="work-thumb"><svg class="thumb-light" viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <rect width="196" height="122" fill="#EEF2FA"/>
+        <rect x="14" y="8" width="168" height="38" rx="6" fill="#FFFFFF" stroke="#D6DEEE" stroke-width=".6"/>
+        <path d="M93 21 L93 33 L104 27 Z" fill="#9FB0D4"/>
+        <text x="16" y="58" fill="#7686A8" font-family="Geist,sans-serif" font-size="5">0:00</text>
+        <text x="98" y="58" fill="#7686A8" font-family="Geist,sans-serif" font-size="5" text-anchor="middle">37:00</text>
+        <text x="180" y="58" fill="#7686A8" font-family="Geist,sans-serif" font-size="5" text-anchor="end">1:14:31</text>
+        <rect x="16" y="63" width="164" height="4.6" rx="2.3" fill="#D9E1F0"/>
+        <rect x="16" y="63" width="22" height="4.6" rx="2.3" fill="#8EA8E0"/><rect x="52" y="63" width="26" height="4.6" rx="2.3" fill="#8EA8E0"/><rect x="104" y="63" width="24" height="4.6" rx="2.3" fill="#8EA8E0"/><rect x="148" y="63" width="32" height="4.6" rx="2.3" fill="#8EA8E0"/>
+        <circle cx="119" cy="65.3" r="5.4" fill="#e0524d"/>
+        <rect x="16" y="84" width="36" height="16" rx="4.5" fill="#2e4d94"/><text x="34" y="94.6" fill="#fff" font-family="Geist,sans-serif" font-size="6.4" font-weight="600" text-anchor="middle">Why h&#8230;</text>
+        <rect x="56" y="84" width="40" height="16" rx="4.5" fill="#2e4d94"/><text x="76" y="94.6" fill="#fff" font-family="Geist,sans-serif" font-size="6.4" font-weight="600" text-anchor="middle">Mars at&#8230;</text>
+        <rect x="100" y="84" width="38" height="16" rx="4.5" fill="#d0433e"/><text x="119" y="94.6" fill="#fff" font-family="Geist,sans-serif" font-size="6.4" font-weight="600" text-anchor="middle">Deploy&#8230;</text>
+        <rect x="142" y="84" width="38" height="16" rx="4.5" fill="#2e4d94"/><text x="161" y="94.6" fill="#fff" font-family="Geist,sans-serif" font-size="6.4" font-weight="600" text-anchor="middle">Precision</text>
+      </svg><svg class="thumb-dark" viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <rect width="196" height="122" fill="#0d1424"/>
+        <!-- video player -->
+        <rect x="14" y="8" width="168" height="38" rx="6" fill="#101a32" stroke="#1e2d52" stroke-width=".6"/>
+        <path d="M93 21 L93 33 L104 27 Z" fill="#334a80"/>
+        <!-- ruler -->
+        <text x="16" y="58" fill="#44598a" font-family="Geist,sans-serif" font-size="5">0:00</text>
+        <text x="98" y="58" fill="#44598a" font-family="Geist,sans-serif" font-size="5" text-anchor="middle">37:00</text>
+        <text x="180" y="58" fill="#44598a" font-family="Geist,sans-serif" font-size="5" text-anchor="end">1:14:31</text>
+        <!-- track with segments (image 1) -->
+        <rect x="16" y="63" width="164" height="4.6" rx="2.3" fill="#1b2a4a"/>
+        <rect x="16" y="63" width="22" height="4.6" rx="2.3" fill="#2e4d94"/><rect x="52" y="63" width="26" height="4.6" rx="2.3" fill="#2e4d94"/><rect x="104" y="63" width="24" height="4.6" rx="2.3" fill="#2e4d94"/><rect x="148" y="63" width="32" height="4.6" rx="2.3" fill="#2e4d94"/>
+        <!-- red round playhead on the track -->
+        <circle cx="119" cy="65.3" r="5.4" fill="#e0524d"/>
+        <!-- moment pills, white labels (image 1) -->
+        <rect x="16" y="84" width="36" height="16" rx="4.5" fill="#2e4d94"/><text x="34" y="94.6" fill="#fff" font-family="Geist,sans-serif" font-size="6.4" font-weight="600" text-anchor="middle">Why h&#8230;</text>
+        <rect x="56" y="84" width="40" height="16" rx="4.5" fill="#2e4d94"/><text x="76" y="94.6" fill="#fff" font-family="Geist,sans-serif" font-size="6.4" font-weight="600" text-anchor="middle">Mars at&#8230;</text>
+        <rect x="100" y="84" width="38" height="16" rx="4.5" fill="#e0524d"/><text x="119" y="94.6" fill="#fff" font-family="Geist,sans-serif" font-size="6.4" font-weight="600" text-anchor="middle">Deploy&#8230;</text>
+        <rect x="142" y="84" width="38" height="16" rx="4.5" fill="#2e4d94"/><text x="161" y="94.6" fill="#fff" font-family="Geist,sans-serif" font-size="6.4" font-weight="600" text-anchor="middle">Precision</text>
+      </svg><video class="thumb-video" src="/assets/previews/promptedfind-frame.mp4" data-src-light="/assets/previews/promptedfind-frame.mp4" data-src-dark="/assets/previews/promptedfind-frame-dark.mp4" loop muted playsinline preload="metadata"></video></div>
+          <div class="work-info">
+            <h3 class="work-title">Prompted Find</h3>
+            <div class="work-desc">Find the moment you need in a long video by meaning, not keywords.</div>
+          </div>
+          <div class="work-meta">
+            <span class="work-status">View project <span class="work-arrow">&rarr;</span></span>
+          </div>
+        </a>
+      </li>
+
+      <li class="work-item reveal">
         <a class="work-row" draggable="false" href="/projects/starling.html">
-          <div class="work-thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <div class="work-thumb"><svg class="thumb-light" viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <rect width="196" height="122" fill="#ECEBE7"/>
+        <rect x="14" y="8" width="168" height="106" rx="7" fill="#FFFFFF" stroke="#DCDBD6" stroke-width=".6"/>
+        <circle cx="24" cy="20" r="2.2" fill="#28A745"/><rect x="30" y="18" width="40" height="4" rx="2" fill="#9A9AA0"/>
+        <rect x="24" y="27" width="112" height="5" rx="2.5" fill="#E2E2E6"/><rect x="24" y="36" width="94" height="5" rx="2.5" fill="#E2E2E6"/>
+        <circle cx="24" cy="50" r="2.2" fill="#F08A00"/><rect x="30" y="48" width="52" height="4" rx="2" fill="#9A9AA0"/>
+        <rect x="24" y="57" width="120" height="5" rx="2.5" fill="#E2E2E6"/><rect x="24" y="66" width="100" height="5" rx="2.5" fill="#E2E2E6"/>
+        <circle cx="24" cy="80" r="2.2" fill="#0071E3"/><rect x="30" y="78" width="36" height="4" rx="2" fill="#9A9AA0"/>
+        <rect x="24" y="87" width="108" height="5" rx="2.5" fill="#E2E2E6"/>
+        <rect x="56" y="98" width="84" height="11" rx="5.5" fill="#EFEFF2"/>
+        <path d="M78 101.2 L79 103.5 L81.3 104.5 L79 105.5 L78 107.8 L77 105.5 L74.7 104.5 L77 103.5 Z" fill="#1C1C1E"/>
+        <text x="85" y="106.6" fill="#1C1C1E" font-family="Geist,sans-serif" font-size="6.2" font-weight="600">Organize</text>
+      </svg><svg class="thumb-dark" viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
         <!-- a browser sidebar: tabs gathered into three named groups, the Organize pill below -->
         <rect width="196" height="122" fill="#101114"/>
         <rect x="14" y="8" width="168" height="106" rx="7" fill="#17181c" stroke="#26272d" stroke-width=".6"/>
@@ -613,7 +677,21 @@
 
       <li class="work-item reveal">
         <a class="work-row" draggable="false"href="/projects/session-indicator.html">
-          <div class="work-thumb"><svg viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <div class="work-thumb"><svg class="thumb-light" viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <rect width="196" height="122" fill="#ECECEE"/>
+        <rect width="196" height="15" fill="#F7F7F8"/><rect y="14.5" width="196" height=".5" fill="#D8D8DC"/>
+        <rect x="120" y="3.5" width="52" height="8.4" rx="4.2" fill="#FFFFFF" stroke="#D2D2D7" stroke-width=".5"/>
+        <circle cx="129" cy="7.7" r="1.9" fill="#FF3B30"/><circle cx="136.5" cy="7.7" r="1.9" fill="#E8952A"/><circle cx="144" cy="7.7" r="1.9" fill="#1C1C1E"/><circle cx="151.5" cy="7.7" r="1.9" fill="#34C759"/>
+        <text x="159" y="10" fill="#6E6E73" font-family="Geist,sans-serif" font-size="5" font-weight="600">+2</text>
+        <path d="M141 15 l4.5 6 l4.5 -6 Z" fill="#FFFFFF" transform="rotate(180 145.5 18)"/>
+        <rect x="52" y="21" width="128" height="86" rx="10" fill="#FFFFFF" stroke="#D8D8DC" stroke-width=".6"/>
+        <text x="62" y="35" fill="#6E6E73" font-family="Geist,sans-serif" font-size="6" font-weight="600" letter-spacing=".4">SESSIONS</text>
+        <text x="170" y="35" fill="#8E8E93" font-family="Geist,sans-serif" font-size="5.4" text-anchor="end">4 active</text>
+        <circle cx="65" cy="49" r="2.8" fill="#1C1C1E"/><text x="72" y="51.6" fill="#1C1C1E" font-family="Geist,sans-serif" font-size="6.6" font-weight="500">build-assets</text><text x="170" y="51.6" fill="#8E8E93" font-family="Geist,sans-serif" font-size="5.6" text-anchor="end">running &middot; 1m</text>
+        <circle cx="65" cy="64" r="2.8" fill="#E8952A"/><text x="72" y="66.6" fill="#1C1C1E" font-family="Geist,sans-serif" font-size="6.6" font-weight="500">run-tests</text><text x="170" y="66.6" fill="#B5650A" font-family="Geist,sans-serif" font-size="5.6" text-anchor="end">waiting &middot; 12m</text>
+        <circle cx="65" cy="79" r="2.8" fill="#FF3B30"/><text x="72" y="81.6" fill="#1C1C1E" font-family="Geist,sans-serif" font-size="6.6" font-weight="500">deploy-agent</text><text x="170" y="81.6" fill="#D70015" font-family="Geist,sans-serif" font-size="5.6" text-anchor="end">error &middot; 2m</text>
+        <circle cx="65" cy="94" r="2.8" fill="#34C759"/><text x="72" y="96.6" fill="#8E8E93" font-family="Geist,sans-serif" font-size="6.6" font-weight="500">lint-check</text><text x="170" y="96.6" fill="#8E8E93" font-family="Geist,sans-serif" font-size="5.6" text-anchor="end">done &middot; 1m</text>
+      </svg><svg class="thumb-dark" viewBox="0 0 196 122" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
         <rect width="196" height="122" fill="#0e0e12"/>
         <!-- menu bar hint with pill -->
         <rect width="196" height="15" fill="#17171c"/><rect y="14.5" width="196" height=".5" fill="#26262c"/>
@@ -642,7 +720,7 @@
 
       <li class="work-item reveal">
         <a class="work-row" draggable="false" href="/light-cube/">
-          <div class="work-thumb"><img class="thumb-still" src="/assets/previews/light-cube-night-still.webp" alt="" width="480" height="300" decoding="async" draggable="false"><div class="thumb-scrub" data-sprite="/assets/previews/light-cube-night-scrub.webp" data-frames="24" aria-hidden="true"></div></div>
+          <div class="work-thumb"><img class="thumb-still thumb-light" src="/assets/previews/light-cube-day-still.webp" alt="" width="480" height="300" decoding="async" draggable="false"><img class="thumb-still thumb-dark" src="/assets/previews/light-cube-night-still.webp" alt="" width="480" height="300" decoding="async" draggable="false"><div class="thumb-scrub" data-sprite="/assets/previews/light-cube-night-scrub.webp" data-sprite-light="/assets/previews/light-cube-day-scrub.webp" data-frames="24" aria-hidden="true"></div></div>
           <div class="work-info">
             <h3 class="work-title">Light Cube</h3>
             <div class="work-desc">Rooms of colored light from my MFA thesis, rebuilt so your screen becomes a window into them.</div>
@@ -862,7 +940,8 @@
     const row = scrub.closest('.work-row');
     const last = +scrub.dataset.frames - 1, rest = last / 2;
     let target = rest, shown = rest, raf = 0, sweepStart = 0, dwell = 0;
-    const load = () => { if (!scrub.style.backgroundImage) scrub.style.backgroundImage = `url(${scrub.dataset.sprite})`; };
+    const sprite = () => matchMedia('(prefers-color-scheme: dark)').matches ? scrub.dataset.sprite : (scrub.dataset.spriteLight || scrub.dataset.sprite);
+    const load = () => { const u = `url("${sprite()}")`; if (scrub.style.backgroundImage !== u) scrub.style.backgroundImage = u; };
     const paint = () => { scrub.style.backgroundPositionY = (Math.round(shown) / last) * 100 + '%'; };
     const tick = now => {
       if (sweepStart) target = rest + Math.sin((now - sweepStart) / 1400) * rest;
@@ -953,7 +1032,6 @@
   var host = document.querySelector("[data-lab-row]"); if (!host) return;
   // [name, word on the card, is a package, scene, card colour, accent on the card]
   var PIECES = [
-    ["Prompted Find", "Found.", false, "find", "#FF0000", "#111111"],
     ["Xcode Symbol Browser", "Mapped.", false, "cols", "#147EFB", "#FFFFFF"],
     ["Trails", "Linked.", false, "link", "#FFCC00", "#FF3B30"],
     ["Substrate", "Planned.", false, "plan", "#16305C", "#4D94FF"],
